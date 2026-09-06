@@ -1,5 +1,12 @@
 # SpotiFLAC Mobile Extension Development
 
+> Companion documents: [`ECOSYSTEM.md`](ECOSYSTEM.md) (on-device ecosystem
+> architecture), [`API_CONTRACTS.md`](API_CONTRACTS.md) (channel/bridge
+> contracts), [`SCHEMA.md`](SCHEMA.md) (database schemas). Runtime security
+> posture (permissions, signed packages, network allowlists, binary policy)
+> is enforced by the Go runtime — see the *Extension security* section of
+> [`architecture.md`](architecture.md).
+
 This guide defines the extension package and manifest contract implemented by
 the current SpotiFLAC Mobile codebase. The expanded runtime API reference is
 available at <https://spotiflac.zarz.moe/docs>.

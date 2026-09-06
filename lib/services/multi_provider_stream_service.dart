@@ -11,6 +11,7 @@ import 'package:spotimusic/engine/streaming_engine.dart'
     show AdaptiveBitrateSelector, StreamVariant;
 import 'package:spotimusic/models/track.dart';
 import 'package:spotimusic/services/provider_credentials.dart';
+import 'package:spotimusic/core/monitoring/crash_reporter.dart';
 import 'package:spotimusic/utils/logger.dart';
 
 final _log = AppLogger('MultiProviderStream');
@@ -1397,9 +1398,11 @@ class SoundCloudStreamHandler extends StreamProviderHandler {
 /// (not by synthetic pings): every success and failure observed while the app
 /// is in use updates it.
 ///
-/// Health is per-process state, intentionally not persisted: a fresh session
-/// deserves a fresh start, and a stale "provider is down" flag would
-/// permanently hide a service that recovered.
+/// Health *metrics* (counts, latency, last outcome) are persisted across
+/// sessions via [ProviderHealthStore]; the circuit state is deliberately not:
+/// a restored record always comes back *available* so a stale "provider is
+/// down" flag can never permanently hide a service that recovered while the
+/// app was closed.
 class StreamProviderHealth {
   const StreamProviderHealth({
     required this.provider,
@@ -1506,6 +1509,52 @@ class StreamProviderHealth {
       'cooldown_until': cooldownUntil!.toUtc().toIso8601String(),
     if (lastError != null) 'last_error': lastError,
   };
+
+  /// Restores a persisted record. Unknown provider names yield null (the
+  /// provider list evolves; stale entries must not crash a newer build).
+  ///
+  /// Hardening rules for data that has been on disk and may be corrupt or
+  /// hostile:
+  ///   * counters are clamped to sane ranges (0 … 1e9),
+  ///   * negative latencies are dropped,
+  ///   * [cooldownUntil] is ignored — a restored provider is always available
+  ///     (fresh session, fresh circuit state; see the class comment).
+  static StreamProviderHealth? fromJson(Map<String, dynamic> json) {
+    final providerName = json['provider'];
+    if (providerName is! String) return null;
+    StreamProviderId? id;
+    for (final candidate in StreamProviderId.values) {
+      if (candidate.name == providerName) {
+        id = candidate;
+        break;
+      }
+    }
+    if (id == null) return null;
+
+    const maxCounter = 1000000000;
+    int clampCounter(Object? raw) {
+      if (raw is! int || raw.isNegative) return 0;
+      return raw > maxCounter ? maxCounter : raw;
+    }
+
+    DateTime? parseUtc(Object? raw) {
+      if (raw is! String || raw.isEmpty) return null;
+      return DateTime.tryParse(raw)?.toUtc();
+    }
+
+    final latency = json['last_latency_ms'];
+    final lastError = json['last_error'];
+    return StreamProviderHealth(
+      provider: id,
+      successCount: clampCounter(json['success_count']),
+      failureCount: clampCounter(json['failure_count']),
+      consecutiveFailures: clampCounter(json['consecutive_failures']),
+      lastLatencyMs: latency is! int || latency < 0 ? null : latency,
+      lastSuccessAt: parseUtc(json['last_success_at']),
+      lastFailureAt: parseUtc(json['last_failure_at']),
+      lastError: lastError is String && lastError.isNotEmpty ? lastError : null,
+    );
+  }
 }
 
 /// Health rows for every provider, with bounded memory and a hard cooldown
@@ -1513,6 +1562,11 @@ class StreamProviderHealth {
 class StreamProviderHealthRegistry {
   final Map<StreamProviderId, StreamProviderHealth> _health =
       <StreamProviderId, StreamProviderHealth>{};
+
+  /// Change listeners (used by [ProviderHealthStore] to persist snapshots).
+  /// Listeners must never throw; mutations wrap notification in a try/catch
+  /// so a broken observer cannot take down playback.
+  final List<void Function()> _listeners = <void Function()>[];
 
   StreamProviderHealth of(StreamProviderId id) =>
       _health[id] ?? StreamProviderHealth(provider: id);
@@ -1527,6 +1581,7 @@ class StreamProviderHealthRegistry {
 
   void recordSuccess(StreamProviderId id, {int? latencyMs, DateTime? now}) {
     _health[id] = of(id).recordSuccess(latencyMs: latencyMs, now: now);
+    _notifyChanged();
   }
 
   void recordFailure(
@@ -1538,13 +1593,60 @@ class StreamProviderHealthRegistry {
     _health[id] = of(
       id,
     ).recordFailure(error: error, latencyMs: latencyMs, now: now);
+    _notifyChanged();
   }
 
   void reset(StreamProviderId id) {
     _health[id] = StreamProviderHealth(provider: id);
+    _notifyChanged();
   }
 
-  void resetAll() => _health.clear();
+  void resetAll() {
+    _health.clear();
+    _notifyChanged();
+  }
+
+  /// Subscribes to metric changes. Returns a function that unsubscribes.
+  void Function() addListener(void Function() listener) {
+    _listeners.add(listener);
+    return () {
+      _listeners.remove(listener);
+    };
+  }
+
+  void _notifyChanged() {
+    if (_listeners.isEmpty) return;
+    for (final listener in List<void Function()>.of(_listeners)) {
+      try {
+        listener();
+      } catch (e) {
+        _log.w('provider health listener failed: $e');
+      }
+    }
+  }
+
+  /// Merges persisted records into the live registry. Live (this-session)
+  /// observations always win over disk; persisted rows only seed providers
+  /// that have not been measured yet. Cooldowns are not restored.
+  ///
+  /// Returns the number of records merged (0 for corrupt/empty payloads).
+  int mergeRestored(Map<String, dynamic>? json) {
+    if (json == null) return 0;
+    final rows = json['providers'];
+    if (rows is! List) return 0;
+    var merged = 0;
+    for (final row in rows) {
+      if (row is! Map) continue;
+      final restored = StreamProviderHealth.fromJson(
+        Map<String, dynamic>.from(row),
+      );
+      if (restored == null) continue;
+      if (_health.containsKey(restored.provider)) continue;
+      _health[restored.provider] = restored;
+      merged++;
+    }
+    return merged;
+  }
 
   /// Immutable snapshot ordered by provider id (stable for the UI).
   List<StreamProviderHealth> snapshot() {
@@ -2088,6 +2190,32 @@ class MultiProviderStreamService {
       _cacheKey(preferred, request),
       lastError?.toString() ?? message,
     );
+    // Phase 10: full-chain failures are provider-category events (deduped by
+    // fingerprint so a provider outage reports once, not per track).
+    final reporter = CrashReporter.instance;
+    if (reporter.isEnabled) {
+      reporter.addBreadcrumb(
+        'stream resolution failed across all providers',
+        category: CrashCategory.streaming,
+        level: CrashSeverity.warning,
+        data: {'title': request.title},
+      );
+      unawaited(
+        reporter.captureError(
+          lastError ?? StateError(message),
+          null,
+          category: CrashCategory.provider,
+          severity: CrashSeverity.error,
+          context: {
+            'title': request.title,
+            'artist': request.artist,
+            'preferred': preferred.name,
+            'chain': [for (final id in order) id.name],
+          },
+          fingerprint: ['stream-resolution', preferred.name],
+        ),
+      );
+    }
     throw StreamResolutionException(message, cause: lastError);
   }
 

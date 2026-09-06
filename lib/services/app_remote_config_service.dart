@@ -12,11 +12,22 @@ class AppRemoteConfig {
   final RemoteAnnouncement? announcement;
   final DonateConfig donate;
 
-  const AppRemoteConfig({this.announcement, required this.donate});
+  /// Optional Sentry-compatible DSN delivered by the remote-config server
+  /// (Phase 10 crash monitoring). Absent → crash reporting stays disabled;
+  /// malformed → the bootstrap logs and stays disabled. The DSN never ships
+  /// in the app binary (Phase 11: no hardcoded secrets).
+  final String? crashReportingDsn;
+
+  const AppRemoteConfig({
+    this.announcement,
+    required this.donate,
+    this.crashReportingDsn,
+  });
 
   factory AppRemoteConfig.fromJson(Map<String, dynamic> json) {
     final announcementJson = json['announcement'];
     final donateJson = json['donate'];
+    final crashDsn = json['crash_reporting_dsn'];
 
     return AppRemoteConfig(
       announcement: announcementJson is Map
@@ -27,6 +38,10 @@ class AppRemoteConfig {
       donate: donateJson is Map
           ? DonateConfig.fromJson(Map<String, dynamic>.from(donateJson))
           : DonateConfig.fallback(),
+      crashReportingDsn:
+          crashDsn is String && crashDsn.trim().isNotEmpty
+          ? crashDsn.trim()
+          : null,
     );
   }
 }

@@ -50,7 +50,9 @@ class LibraryScanNDJSONFile {
   Future<void> delete() async {
     try {
       if (await file.exists()) await file.delete();
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 }
 
@@ -1201,7 +1203,9 @@ class PlatformBridge {
     if (!Platform.isIOS) return;
     try {
       await _channel.invokeMethod('beginBackgroundDownloadTask');
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   /// iOS only: stop the background-time extension (queue finished or paused).
@@ -1209,7 +1213,9 @@ class PlatformBridge {
     if (!Platform.isIOS) return;
     try {
       await _channel.invokeMethod('endBackgroundDownloadTask');
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   static Future<void> startNativeDownloadWorker({
@@ -1243,7 +1249,9 @@ class PlatformBridge {
       if (await file.exists()) {
         await file.delete();
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   static Future<Directory> _nativeWorkerPayloadDir() async {
@@ -1264,10 +1272,14 @@ class PlatformBridge {
         if (stat.modified.isBefore(cutoff)) {
           try {
             await entity.delete();
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   /// Battery/charging snapshot for the download scheduler. Never throws: an
@@ -1439,7 +1451,9 @@ class PlatformBridge {
       await _channel.invokeMethod(
         underPressure ? 'releaseMemoryUnderPressure' : 'releaseMemory',
       );
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   static Future<Map<String, dynamic>> getGoRuntimeMetrics() async {
@@ -1452,7 +1466,9 @@ class PlatformBridge {
   static Future<void> setMetadataLanguage(String tag) async {
     try {
       await _channel.invokeMethod('setMetadataLanguage', {'tag': tag});
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   static Future<void> setGoLoggingEnabled(bool enabled) async {
@@ -2160,7 +2176,9 @@ class PlatformBridge {
     } catch (_) {
       try {
         if (await output.exists()) await output.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
       rethrow;
     }
   }
@@ -2233,7 +2251,9 @@ class PlatformBridge {
       } finally {
         try {
           await file.delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
     }
     if (result is String &&

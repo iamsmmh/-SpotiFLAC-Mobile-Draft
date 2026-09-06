@@ -986,7 +986,9 @@ class HistoryDatabase {
     // auto_vacuum enabled).
     try {
       await db.execute('PRAGMA incremental_vacuum');
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
     _log.i('Cleared all history');
   }
 

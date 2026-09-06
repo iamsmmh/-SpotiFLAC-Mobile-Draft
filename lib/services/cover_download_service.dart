@@ -4,6 +4,9 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:spotimusic/models/settings.dart';
 import 'package:spotimusic/services/platform_bridge.dart';
+import 'package:spotimusic/utils/logger.dart';
+
+final _log = AppLogger('CoverDownload');
 
 class SavedCoverResult {
   final String fileName;
@@ -104,7 +107,9 @@ class CoverDownloadService {
       }
       try {
         if (await tempDir.exists()) await tempDir.delete(recursive: true);
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     }
   }
 

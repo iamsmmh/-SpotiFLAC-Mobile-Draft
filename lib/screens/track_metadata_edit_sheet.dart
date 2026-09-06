@@ -75,7 +75,9 @@ class _MetadataCandidateArtworkState extends State<_MetadataCandidateArtwork> {
     } catch (_) {
       try {
         await tempDir.delete(recursive: true);
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     }
   }
 
@@ -87,7 +89,9 @@ class _MetadataCandidateArtworkState extends State<_MetadataCandidateArtwork> {
         try {
           final directory = Directory(tempDir);
           if (await directory.exists()) await directory.delete(recursive: true);
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }());
     }
     super.dispose();
@@ -472,7 +476,9 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
       if (await directory.exists()) {
         await directory.delete(recursive: true);
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   void _showSheetSnackBar(String message) {
@@ -653,7 +659,9 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
       if (await dir.exists()) {
         await dir.delete(recursive: true);
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   Future<void> _cleanupCurrentCoverTemp() async {
@@ -671,7 +679,9 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
       if (await dir.exists()) {
         await dir.delete(recursive: true);
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   Future<void> _loadCurrentCoverPreview() async {
@@ -695,9 +705,13 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
       } else {
         try {
           await tempDir.delete(recursive: true);
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     if (!mounted) {
       if (newCoverDir != null) {
@@ -706,7 +720,9 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
           if (await dir.exists()) {
             await dir.delete(recursive: true);
           }
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
       return;
     }
@@ -731,7 +747,9 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
         if (await dir.exists()) {
           await dir.delete(recursive: true);
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     }
   }
 
@@ -769,7 +787,9 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
       if (!mounted) {
         try {
           await tempDir.delete(recursive: true);
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
         return;
       }
       setState(() {
@@ -1585,7 +1605,9 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
           if (deezerIsrc.isNotEmpty) {
             enriched['isrc'] = deezerIsrc;
           }
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
 
       if (!mounted) return;
@@ -2020,9 +2042,13 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
             } else {
               try {
                 await tempDir.delete(recursive: true);
-              } catch (_) {}
+              } catch (e) {
+                _log.d('best-effort step failed: $e');
+              }
             }
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
         }
 
         String? ffmpegResult;
@@ -2055,13 +2081,17 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
           final extractedFile = File(extractedCoverPath);
           try {
             await extractedFile.delete();
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           try {
             final dir = extractedFile.parent;
             if (await dir.exists()) {
               await dir.delete(recursive: true);
             }
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
         }
 
         if (ffmpegResult == null) {
@@ -2097,7 +2127,9 @@ class _EditMetadataSheetState extends State<_EditMetadataSheet> {
           if (await resizedCoverTempDir.exists()) {
             await resizedCoverTempDir.delete(recursive: true);
           }
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
       if (mounted) setState(() => _saving = false);
     }

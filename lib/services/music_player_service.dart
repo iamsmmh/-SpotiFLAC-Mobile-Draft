@@ -7,6 +7,7 @@ import 'package:audio_session/audio_session.dart'
     show AudioSession, AudioSessionConfiguration, AudioInterruptionType;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:spotimusic/core/data/background_playback_policy.dart';
+import 'package:spotimusic/core/monitoring/crash_reporter.dart';
 import 'package:spotimusic/engine/audio_characteristics.dart';
 import 'package:spotimusic/engine/crossfade_policy.dart';
 import 'package:spotimusic/engine/gapless_policy.dart';
@@ -544,6 +545,7 @@ class MusicPlayerHandler extends BaseAudioHandler
     _runtimeFailureGeneration = generation;
     final media = _media[_index];
     _log.e('Runtime playback error for ${media.title}: $error');
+    _reportPlaybackFailure('runtime-error', media, error);
     _cancelExpiryRefresh();
     _sourceReady = false;
     final listener = playbackFailureListener;
@@ -602,6 +604,48 @@ class MusicPlayerHandler extends BaseAudioHandler
         const StreamUrlExpiringSignal(),
       );
     });
+  }
+
+  /// Phase 10: playback failures feed the crash reporter (breadcrumb for
+  /// context + a non-fatal `playback` event). Reporting is best-effort and
+  /// disabled (no-op) unless a DSN was configured at bootstrap.
+  void _reportPlaybackFailure(String phase, PlayableMedia media, Object error) {
+    final reporter = CrashReporter.instance;
+    if (!reporter.isEnabled) return;
+    reporter.addBreadcrumb(
+      'playback failed: ${media.title}',
+      category: CrashCategory.playback,
+      level: CrashSeverity.warning,
+      data: {'phase': phase},
+    );
+    unawaited(
+      reporter.captureError(
+        error,
+        null,
+        category: CrashCategory.playback,
+        severity: CrashSeverity.error,
+        context: {
+          'phase': phase,
+          'title': media.title,
+          'artist': media.artist,
+          'is_remote': media.isRemoteHttp,
+          'is_deferred': media.isDeferredStream,
+        },
+        fingerprint: ['playback', phase],
+      ),
+    );
+  }
+
+  /// Phase 10: successful track starts are the single most useful breadcrumb
+  /// when triaging a later failure.
+  void _reportTrackStarted(PlayableMedia media) {
+    final reporter = CrashReporter.instance;
+    if (!reporter.isEnabled) return;
+    reporter.addBreadcrumb(
+      'playing: ${media.title}',
+      category: CrashCategory.playback,
+      data: {'artist': media.artist},
+    );
   }
 
   /// Configures the OS audio session and reacts to interruptions (e.g. another
@@ -1254,7 +1298,9 @@ class MusicPlayerHandler extends BaseAudioHandler
     try {
       final position = await _player.getCurrentPosition();
       if (position != null) return position;
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
     return playbackState.value.position;
   }
 
@@ -1481,6 +1527,7 @@ class MusicPlayerHandler extends BaseAudioHandler
     if (!_isCurrentPlayRequest(generation, media)) return;
     if (resolved == null) {
       _log.e('No playable source for ${media.title}');
+      _reportPlaybackFailure('resolve-source', media, StateError('no playable source'));
       _endCrossfade();
       _broadcastState(playerState: PlayerState.stopped);
       return;
@@ -1488,7 +1535,9 @@ class MusicPlayerHandler extends BaseAudioHandler
 
     try {
       await musicPlayerExclusiveAudioHook?.call();
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
     if (!_isCurrentPlayRequest(generation, media)) return;
 
     _switchingGeneration = generation;
@@ -1553,6 +1602,7 @@ class MusicPlayerHandler extends BaseAudioHandler
       }
       unawaited(_persistSession(position: effectiveStartPosition));
       _log.i('Playing: ${media.title}');
+      _reportTrackStarted(media);
       if (crossfade) _startCrossfadeRamp(generation);
       playbackSourceStartedListener?.call();
       _armExpiryRefresh(media, resolved, generation);
@@ -1566,6 +1616,7 @@ class MusicPlayerHandler extends BaseAudioHandler
       // (its completion is ignored by design, so it would never advance).
       _endCrossfade();
       _log.e('Playback failed for ${media.title}: $e');
+      _reportPlaybackFailure('start', media, e);
       // Engine hook (streaming failover) observes runtime failures first; the
       // player still goes to stopped so the UI never lies about state.
       playbackFailureListener?.call(media, e);

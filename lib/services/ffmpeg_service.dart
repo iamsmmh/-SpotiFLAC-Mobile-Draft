@@ -255,7 +255,9 @@ class FFmpegService {
           addCandidate(hex);
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     return candidates;
   }
@@ -360,7 +362,9 @@ class FFmpegService {
         );
         try {
           if (await output.exists()) await output.delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
         return false;
       }
       return true;
@@ -369,7 +373,9 @@ class FFmpegService {
       try {
         final output = File(outputPath);
         if (await output.exists()) await output.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
       return false;
     }
   }
@@ -636,7 +642,9 @@ class FFmpegService {
     if (result.success) {
       try {
         await File(inputPath).delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
       return outputPath;
     }
 
@@ -876,7 +884,9 @@ class FFmpegService {
         if (await tempFile.exists()) {
           await tempFile.delete();
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
       lastResult = result;
     }
 
@@ -1013,7 +1023,9 @@ class FFmpegService {
       if (await file.exists()) {
         await file.delete();
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   static Future<void> stopLiveDecryptedStream() async {
@@ -1031,7 +1043,9 @@ class FFmpegService {
         if (sessionId != null) {
           try {
             await FFmpegKit.cancel(sessionId);
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
         }
         _log.w('Failed to stop live decrypt session cleanly: $e');
       }
@@ -1043,7 +1057,9 @@ class FFmpegService {
         if (await file.exists()) {
           await file.delete();
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     }
   }
 
@@ -1086,7 +1102,9 @@ class FFmpegService {
       if (await file.exists()) {
         await file.delete();
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
     return null;
   }
 
@@ -1206,7 +1224,9 @@ class FFmpegService {
 
     try {
       await session.cancel();
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
     return null;
   }
 
@@ -1319,7 +1339,9 @@ class FFmpegService {
 
     try {
       await session.cancel();
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
     return null;
   }
 
@@ -1550,7 +1572,9 @@ class FFmpegService {
     try {
       final tempFile = File(tempOutput);
       if (await tempFile.exists()) await tempFile.delete();
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     return false;
   }
@@ -1584,7 +1608,9 @@ class FFmpegService {
       try {
         final tempFile = File(tempOutput);
         if (await tempFile.exists()) await tempFile.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     }
   }
 
@@ -1594,7 +1620,9 @@ class FFmpegService {
     try {
       final file = File(path);
       if (await file.exists()) await file.delete();
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   /// Map input #1 (the cover image) as attached picture art.
@@ -1724,7 +1752,9 @@ class FFmpegService {
       try {
         final tempFile = File(tempOutput);
         if (await tempFile.exists()) await tempFile.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
 
       final reencodeOutput = _nextTempEmbedPath(tempDir.path, '.mp3');
       result = await _runMp3Embed(
@@ -1748,7 +1778,9 @@ class FFmpegService {
       try {
         final tempFile = File(reencodeOutput);
         if (await tempFile.exists()) await tempFile.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
 
       _log.e('MP3 re-encode also failed: ${result.output}');
       return null;
@@ -2033,7 +2065,9 @@ class FFmpegService {
       try {
         final stale = File(tempOutput);
         if (await stale.exists()) await stale.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
       result = await _executeWithArguments(buildArgs(true));
     }
 

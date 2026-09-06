@@ -71,7 +71,9 @@ extension _DownloadQueuePaths on DownloadQueueNotifier {
       if (probe != null) {
         try {
           if (await probe.exists()) await probe.delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
     }
   }

@@ -4,6 +4,59 @@
 
 ### Added
 
+- **Crash & failure monitoring (Phase 10)**: dependency-free,
+  Sentry-envelope-compatible reporter (`lib/core/monitoring/crash_reporter.dart`)
+  built on `package:http` only — no new package dependencies and no change to
+  the native build surface. Opt-in by DSN supplied at build time
+  (`--dart-define=SPOTIMUSIC_SENTRY_DSN=…`) or via the remote-config
+  `crash_reporting_dsn` field (cached copy; no network on the cold-start
+  path); **no DSN ships in the binary**. Wired hooks: uncaught zone errors,
+  `FlutterError.onError`, `platformDispatcher.onError`, playback
+  start/runtime/no-source failures (fingerprinted per phase), full provider
+  chain exhaustion (fingerprint-deduped with the attempted chain attached),
+  download-queue restore failures, and native download-worker crashes.
+  Self-protection by design: bounded queue, sliding-window rate limit,
+  bounded retry with backoff for 429/5xx/network only, global auto-disable on
+  401/403, per-attempt timeout, recursive redaction of
+  token/secret/password/auth/cookie/api-key/credential keys, and length caps
+  on every payload string. 14 new unit tests.
+- **Provider health metric persistence (Phase 3)**:
+  `StreamProviderHealth.fromJson` (hostile-input hardened: unknown providers
+  dropped, counters clamped, negative latencies and bad dates discarded) and
+  `ProviderHealthStore` (`lib/services/provider_health_store.dart`) — metrics
+  (success/failure counts, latency, last outcome, last error) now survive
+  restarts via schema-versioned, debounced, size-capped SharedPreferences
+  writes, while **circuit-breaker cooldowns deliberately do not** (a provider
+  that recovered while the app was closed is immediately usable; live
+  in-session observations always beat restored rows). 13 new unit tests.
+- **`staticcheck` CI gate**: `staticcheck ./...` (pinned `2026.2.1`) now runs
+  between `go vet` and `go test` in CI; the Go tree carries a zero-findings
+  policy (audited 2026-09-02/05), so any report fails the build.
+- **Documentation consolidation (Phase 15)**: canonical docs are now
+  `docs/architecture.md`, `docs/streaming.md`, `docs/extensions.md`,
+  `docs/testing.md` and `docs/changelog.md` (moved with `git mv` from
+  `ARCHITECTURE.md`, `docs/streaming_engine.md`,
+  `docs/EXTENSION_DEVELOPMENT.md` and `TEST_REPORT.md`; root stubs keep old
+  links alive). `docs/PRODUCTION_READINESS_2026-09-06.md` records the full
+  15-phase production-readiness audit.
+
+### Changed
+
+- **No more silent failures (Phase 9)**: 126 `catch (_) {}` blocks across
+  `lib/services`, `lib/providers` and the metadata-edit screens now log at
+  debug level (`_log.d('best-effort step failed: $e')`) — identical
+  behavior, zero silence. Four files gained their first logger
+  (`cover_cache_manager`, `cover_download_service`,
+  `downloaded_embedded_cover_resolver`, `library_collections_provider`).
+  Remaining deliberate swallows (widget `dispose()` guards, fail-open URI
+  parsers, the logger's own parser) are classified in `docs/architecture.md`.
+
+### Fixed
+
+- `STATUS.md` claimed CI runs `go test` with `-shuffle`; it does not
+  (order-independence is follow-up #5). Corrected — `-race` is the enforced
+  gate.
+
 - **Podcast platform (Feature Group 9)**: full RSS/Atom ingestion
   (`lib/ecosystem/podcasts/`) — a pure `RssFeedParser` handling RSS 2.0, Atom,
   the `itunes:`/`media:` namespaces, RFC 822 + ISO-8601 dates and

@@ -182,7 +182,9 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
           if (last.isNotEmpty) return last;
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     final normalized = pathOrUri.replaceAll('\\', '/');
     if (normalized.contains('/')) {
@@ -635,7 +637,9 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
         if (coverResult['error'] == null) {
           coverPath = coverOutput;
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
 
       final albumMetadata = <String, String>{
         'artist': artist,
@@ -690,7 +694,9 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
       if (coverPath != null) {
         try {
           await File(coverPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
 
       if (mounted) {
@@ -711,12 +717,16 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
       if (safTempAudioPath != null) {
         try {
           await File(safTempAudioPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
       if (tempSplitDir != null) {
         try {
           await tempSplitDir.delete(recursive: true);
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
       if (mounted) {
         _setState(() => _isConverting = false);
@@ -852,7 +862,9 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
         if (coverResult['error'] == null) {
           coverPath = coverOutput;
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
 
       String workingPath = cleanFilePath;
       final isSaf = _isSafFile;
@@ -889,14 +901,18 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
       if (coverPath != null) {
         try {
           await File(coverPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
 
       if (newPath == null) {
         if (safTempPath != null) {
           try {
             await File(safTempPath).delete();
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
         }
         if (mounted) {
           _setState(() => _isConverting = false);
@@ -922,7 +938,9 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
               convertedMetadata['sample_rate'],
             );
           }
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
         convertedBitDepth ??= losslessQuality.effectiveBitDepth(bitDepth);
         convertedSampleRate ??= losslessQuality.effectiveSampleRate(sampleRate);
       }
@@ -983,11 +1001,15 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
         if (treeUri == null || treeUri.isEmpty) {
           try {
             await File(newPath).delete();
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           if (safTempPath != null) {
             try {
               await File(safTempPath).delete();
-            } catch (_) {}
+            } catch (e) {
+              _log.d('best-effort step failed: $e');
+            }
           }
           if (mounted) {
             _setState(() => _isConverting = false);
@@ -1011,11 +1033,15 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
         if (safUri == null || safUri.isEmpty) {
           try {
             await File(newPath).delete();
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           if (safTempPath != null) {
             try {
               await File(safTempPath).delete();
-            } catch (_) {}
+            } catch (e) {
+              _log.d('best-effort step failed: $e');
+            }
           }
           if (mounted) {
             _setState(() => _isConverting = false);
@@ -1065,11 +1091,15 @@ extension _TrackMetadataConvertAndCueSplit on _TrackMetadataScreenState {
 
         try {
           await File(newPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
         if (safTempPath != null) {
           try {
             await File(safTempPath).delete();
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
         }
       } else {
         if (!_isLocalItem) {

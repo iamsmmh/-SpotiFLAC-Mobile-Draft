@@ -458,7 +458,9 @@ extension _DownloadQueueFinalization on DownloadQueueNotifier {
       }
       try {
         await File(tempPath).delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     } catch (e) {
       _log.w('Failed to create external LRC in SAF: $e');
     }
@@ -555,7 +557,9 @@ extension _DownloadQueueFinalization on DownloadQueueNotifier {
     } finally {
       try {
         await File(tempPath).delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
       if (outPath != null) {
         producedTemps.add(outPath);
       }
@@ -563,7 +567,9 @@ extension _DownloadQueueFinalization on DownloadQueueNotifier {
         if (path == tempPath) continue;
         try {
           await File(path).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
     }
   }
@@ -872,7 +878,9 @@ extension _DownloadQueueFinalization on DownloadQueueNotifier {
       if (rawDecryptedPath == null) {
         try {
           await deleteFile(filePath);
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
         return const _DecryptOutcome(
           null,
           failStage: DownloadQueueNotifier._decryptStageDecrypt,
@@ -891,7 +899,9 @@ extension _DownloadQueueFinalization on DownloadQueueNotifier {
       }
       try {
         await deleteFile(filePath);
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
       return _DecryptOutcome(decryptedPath);
     }
 

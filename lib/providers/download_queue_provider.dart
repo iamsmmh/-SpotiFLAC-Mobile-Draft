@@ -34,6 +34,7 @@ import 'package:spotimusic/utils/int_utils.dart';
 import 'package:spotimusic/utils/extension_auth_launcher.dart';
 import 'package:spotimusic/utils/progress_stream_poller.dart';
 
+import 'package:spotimusic/core/monitoring/crash_reporter.dart';
 import 'package:spotimusic/core/data/audio_sanity.dart'
     show AudioMagicSanityChecker, detectAudioContainer;
 import 'package:spotimusic/core/data/network_switch_policy.dart';
@@ -556,6 +557,20 @@ class DownloadQueueNotifier extends Notifier<DownloadQueueState> {
       }
     } catch (e) {
       _log.e('Failed to load queue from storage: $e');
+      // Phase 10: queue-restore failures (crash-recovery path) are reported
+      // as `download` events — they are exactly the regressions the gate
+      // needs to see early.
+      if (CrashReporter.instance.isEnabled) {
+        unawaited(
+          CrashReporter.instance.captureError(
+            e,
+            null,
+            category: CrashCategory.download,
+            severity: CrashSeverity.error,
+            fingerprint: ['download-queue-restore'],
+          ),
+        );
+      }
     }
   }
 

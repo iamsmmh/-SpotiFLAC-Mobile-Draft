@@ -417,7 +417,9 @@ class LibraryCollectionsDatabase {
           if (coverUrl != null && coverUrl.isNotEmpty) {
             previewCoverByPlaylistId[playlistId] = coverUrl;
           }
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
     }
 

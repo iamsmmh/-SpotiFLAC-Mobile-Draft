@@ -1,6 +1,6 @@
 # SpotiFLAC Mobile — Current Status
 
-**Last updated:** 2026-09-05 · **App version:** 5.0.0+142 · **Branch:** `arena/01a07127-spotiflac-mobile`
+**Last updated:** 2026-09-06 · **App version:** 5.0.0+142 · **Branch:** `arena/01a0750a-spotiflac-mobile`
 
 This is the single current-state document. It supersedes the historical
 session reports now archived under `docs/history/` (`AUDIT_REPORT.md`,
@@ -8,7 +8,9 @@ session reports now archived under `docs/history/` (`AUDIT_REPORT.md`,
 `BUILD_FIXES.md`, `RELEASE_GATE_VERIFICATION_2026-09-02.md`),
 which are kept for archaeology but contain stale claims (e.g. "no green run
 exists", "cover/sidecar writes are non-atomic" — both fixed since).
-`TEST_REPORT.md` and `BUILD_REPORT.md` remain the CI evidence logs.
+CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
+2026-09-06 production-readiness audit is
+`docs/PRODUCTION_READINESS_2026-09-06.md`.
 
 ## What works out of the box (fresh install)
 
@@ -36,7 +38,12 @@ exists", "cover/sidecar writes are non-atomic" — both fixed since).
 | Favorite albums (album page bookmark, Library folder, DB v3, backup) | ✅ **new in this pass** |
 | For You: on-device recommendation engine + Library tile/screen (Phase 7) | ✅ **new in this pass** |
 | Search history + fuzzy local suggestions on Home (Phase 9) | ✅ **new in this pass** |
-| Cloud sync architecture: provider port, merge orchestrator, Settings page, adapter docs (Phase 6) | ✅ **new in this pass** (interfaces + local machinery; backend adapters pluggable) |
+| Cloud sync architecture: provider port, merge orchestrator, Settings page, adapter docs (Phase 6) | ✅ complete (interfaces + local machinery; backend adapters pluggable) |
+| Provider health metrics persist across sessions (counts/latency/last error; cooldowns deliberately reset) | ✅ **new in this pass** |
+| Crash & failure monitoring: dependency-free Sentry-compatible reporter (opt-in DSN, playback/download/provider/native events, breadcrumbs, redaction) | ✅ **new in this pass** (needs a Sentry DSN to activate — by design none ships) |
+| 126 previously-silent `catch (_) {}` paths now log (services, providers, metadata screens) | ✅ **new in this pass** |
+| `staticcheck ./...` (pinned 2026.2.1) added as a hard CI gate | ✅ **new in this pass** |
+| Docs consolidated: `docs/{architecture,streaming,extensions,testing,changelog}.md` (root docs are pointer stubs) | ✅ **new in this pass** |
 
 ## Engineering gates
 
@@ -44,9 +51,11 @@ exists", "cover/sidecar writes are non-atomic" — both fixed since).
 - `python3 scripts/release_gate.py` — pre-release gate (tag↔pubspec, AltStore feed integrity
   incl. bundle-ID match with Android/iOS config and RFC3339 `date`, CHANGELOG coverage,
   staged-strings budget, locale coverage floor). Wired into both release pipelines.
-- CI: `flutter analyze`, `flutter test` (+coverage summary), `go vet`, `go test`
-  with **`-race` and `-shuffle`** (+coverage summary), Android compile & native tests,
-  gomobile AAR/XCFramework builds (via `Build Mobile`).
+- CI: `flutter analyze`, `flutter test` (+coverage summary), `go vet`,
+  **`staticcheck` (pinned 2026.2.1, zero-findings policy)**, `go test` with
+  **`-race`** (+coverage summary), Android compile & native tests,
+  gomobile AAR/XCFramework builds (via `Build Mobile`). (`-shuffle` stays off
+  until follow-up 5 lands; `-race` is always on.)
 - Nightly `fuzz.yml`: bounded Go fuzzing of filename/template/manifest/CUE parsing;
   failed inputs are archived as artifacts and must land in `testdata/fuzz/` with the fix.
 - Weekly `emulator-smoke.yml`: boots a debug build on an emulator, grants runtime

@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide StreamProvider;import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotimusic/app.dart';
+import 'package:spotimusic/constants/app_info.dart';
 import 'package:spotimusic/core/data/android_storage_permission_policy.dart';
 import 'package:spotimusic/core/data/background_playback_policy.dart';
 import 'package:spotimusic/core/data/cold_start_policy.dart';
 import 'package:spotimusic/core/data/network_switch_policy.dart';
 import 'package:spotimusic/core/data/release_artifact_policy.dart';
 import 'package:spotimusic/core/data/secure_store.dart';
+import 'package:spotimusic/core/monitoring/crash_reporter.dart';
 import 'package:spotimusic/ecosystem/ecosystem.dart';
 import 'package:spotimusic/engine/advanced_audio.dart';
 import 'package:spotimusic/core/streaming/hybrid_playback.dart';
@@ -47,6 +49,7 @@ import 'package:spotimusic/providers/streaming_engine_provider.dart';
 import 'package:spotimusic/providers/theme_provider.dart';
 import 'package:spotimusic/services/notification_service.dart';
 import 'package:spotimusic/services/platform_bridge.dart';
+import 'package:spotimusic/services/app_remote_config_service.dart';
 import 'package:spotimusic/services/share_intent_service.dart';
 import 'package:spotimusic/services/cover_cache_manager.dart';
 import 'package:spotimusic/services/cache_auto_cleaner.dart' hide CacheEntry;import 'package:spotimusic/services/app_state_database.dart';
@@ -67,9 +70,36 @@ void main() {
       FlutterError.onError = (details) {
         previousOnError?.call(details);
         _log.e('Uncaught Flutter error: ${details.exceptionAsString()}');
+        // Phase 10: framework errors (widget build/layout failures) are
+        // reported as non-fatal `ui` events. Fire-and-forget — reporting
+        // must never delay or break error handling itself.
+        if (CrashReporter.instance.isEnabled) {
+          unawaited(
+            CrashReporter.instance.captureError(
+              details.exception,
+              details.stack,
+              category: CrashCategory.ui,
+              severity: CrashSeverity.error,
+              context: {
+                'library': details.library ?? 'flutter',
+                'context': details.context?.toString(),
+              },
+            ),
+          );
+        }
       };
       WidgetsBinding.instance.platformDispatcher.onError = (error, stack) {
         _log.e('Uncaught platform error: $error');
+        if (CrashReporter.instance.isEnabled) {
+          unawaited(
+            CrashReporter.instance.captureError(
+              error,
+              stack,
+              category: CrashCategory.app,
+              severity: CrashSeverity.fatal,
+            ),
+          );
+        }
         return true;
       };
 
@@ -92,6 +122,10 @@ void main() {
       _configureImageCache(runtimeProfile);
       _bindProductionHardening(runtimeProfile);
   _bindEcosystemSurface();
+      // Phase 10: opt-in crash reporting (no-op without a DSN — see
+      // [_configureCrashReporting]). Runs before runApp so the very first
+      // frame errors are already captured.
+      await _configureCrashReporting();
 
       runApp(
         ProviderScope(
@@ -121,8 +155,85 @@ void main() {
     },
     (error, stack) {
       _log.e('Uncaught zone error: $error');
+      // Phase 10: last-chance report for errors that escaped every handler,
+      // then give the transport a bounded window to deliver before the zone
+      // unwinds (the process is typically torn down after this returns).
+      final reporter = CrashReporter.instance;
+      if (reporter.isEnabled) {
+        unawaited(
+          reporter
+              .captureError(
+                error,
+                stack,
+                category: CrashCategory.app,
+                severity: CrashSeverity.fatal,
+              )
+              .then((_) => reporter.flush(timeout: const Duration(seconds: 4))),
+        );
+      }
     },
   );
+}
+
+/// Build-time DSN (`--dart-define=SPOTIMUSIC_SENTRY_DSN=…`). Empty → not
+/// configured at build time; the remote-config cache is the second source.
+const _kCrashReportingDsnDefine = String.fromEnvironment(
+  'SPOTIMUSIC_SENTRY_DSN',
+);
+
+/// Phase 10 bootstrap: enables [CrashReporter] when a DSN is available from
+/// `--dart-define` or the *cached* remote config (no network on the cold-start
+/// path — Phase 12 budget). Any failure keeps reporting disabled: monitoring
+/// must never be the reason the app does not start.
+Future<void> _configureCrashReporting() async {
+  final reporter = CrashReporter.instance;
+
+  // Keep `unreachable_from_main` honest for the reporting surface (same
+  // pinning trick as `_bindEcosystemSurface`): everything below ships, even
+  // though the bootstrap exercises only a subset of it.
+  final pinned = <Object?>[
+    CrashSeverity.values,
+    CrashCategory.values,
+    CrashBreadcrumb.new,
+    CrashReportDsn.parse,
+    reporter.captureMessage,
+    reporter.stats,
+    reporter.lastDeliveryError,
+  ];
+  assert(pinned.length == 7);
+
+  var dsn = _kCrashReportingDsnDefine.trim();
+  if (dsn.isEmpty) {
+    try {
+      final snapshot = await AppRemoteConfigService().readCachedConfig();
+      dsn = snapshot?.config.crashReportingDsn?.trim() ?? '';
+    } catch (e) {
+      _log.w('Crash reporting config read failed: $e');
+    }
+  }
+  if (dsn.isEmpty) {
+    _log.d('crash reporting disabled (no DSN configured)');
+    return;
+  }
+  try {
+    final parsed = reporter.configure(
+      dsn: dsn,
+      clientName: 'spotimusic',
+      release: 'spotimusic@${AppInfo.fullVersion}',
+      environment: kDebugMode ? 'debug' : 'release',
+    );
+    reporter.addBreadcrumb(
+      'app session started',
+      category: CrashCategory.app,
+      data: {'version': AppInfo.fullVersion},
+    );
+    _log.i(
+      'crash reporting enabled (${parsed.host}/project ${parsed.projectId})',
+    );
+  } on FormatException catch (e) {
+    reporter.reset();
+    _log.w('invalid crash reporting DSN; staying disabled: $e');
+  }
 }
 
 const _runtimeProfileTierKey = 'runtime_profile_tier_v1';

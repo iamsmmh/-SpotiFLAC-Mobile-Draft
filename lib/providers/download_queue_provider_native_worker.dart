@@ -219,7 +219,9 @@ extension _DownloadQueueNativeWorker on DownloadQueueNotifier {
         if (decoded is Map) {
           return decoded['run_id']?.toString() ?? '';
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     } else if (settingsJson is Map) {
       return settingsJson['run_id']?.toString() ?? '';
     }
@@ -667,6 +669,24 @@ extension _DownloadQueueNativeWorker on DownloadQueueNotifier {
         return false;
       }
       _log.e('Android native worker failed: $e', e, stack);
+      // Phase 10: native download failures are reported (deduped by the
+      // run id fingerprint so one broken batch reports once).
+      final reporter = CrashReporter.instance;
+      if (reporter.isEnabled) {
+        unawaited(
+          reporter.captureError(
+            e,
+            stack,
+            category: CrashCategory.native,
+            severity: CrashSeverity.error,
+            context: {
+              'queued_items': queuedItems.length,
+              'run_id': runId,
+            },
+            fingerprint: ['native-worker', runId],
+          ),
+        );
+      }
       // The native worker keeps downloading on its own; without cancelling
       // it here the batch we just marked failed would continue in the
       // background, its completions never reconciled, and the Dart queue

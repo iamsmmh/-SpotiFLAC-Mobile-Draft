@@ -84,7 +84,9 @@ extension _HistoryStartupMaintenance on DownloadHistoryNotifier {
       if (parsed.pathSegments.isNotEmpty) {
         return Uri.decodeComponent(parsed.pathSegments.last);
       }
-    } catch (_) {}
+    } catch (e) {
+      _historyLog.d('best-effort step failed: $e');
+    }
     return '';
   }
 
