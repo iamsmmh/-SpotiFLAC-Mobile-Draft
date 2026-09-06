@@ -64,7 +64,6 @@ class _DiscoveryHomeScreenState extends ConsumerState<DiscoveryHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeAsync = ref.watch(discoveryHomeProvider);
-    final colorScheme = Theme.of(context).colorScheme;
     final bottomInset = context.navBarBottomInset;
 
     return Scaffold(
@@ -225,7 +224,7 @@ class _DiscoveryHomeScreenState extends ConsumerState<DiscoveryHomeScreen> {
 
     final trending = _trendingEntries(home);
     if (trending.isNotEmpty) {
-      sections.addAll(_trendingSection(context, home, trending));
+      sections.addAll(_trendingSection(context, trending));
     }
 
     if (home.moods.isNotEmpty) {
@@ -456,7 +455,6 @@ class _DiscoveryHomeScreenState extends ConsumerState<DiscoveryHomeScreen> {
 
   List<Widget> _trendingSection(
     BuildContext context,
-    DiscoveryHome home,
     List<TrendingEntry> entries,
   ) {
     final scheme = Theme.of(context).colorScheme;
@@ -504,7 +502,7 @@ class _DiscoveryHomeScreenState extends ConsumerState<DiscoveryHomeScreen> {
                     ? entry.deltaLabel
                     : '${entry.playCount}',
                 isArtist: entry.isArtist,
-                onTap: () => _openTrending(context, home, entry),
+                onTap: () => _openTrending(context, entries, entry),
               ),
             );
           },
@@ -543,13 +541,7 @@ class _DiscoveryHomeScreenState extends ConsumerState<DiscoveryHomeScreen> {
                 name: item.title,
                 imageUrl: item.imageUrl,
                 index: index,
-                onTap: () => _openArtist(
-                  context,
-                  artistKey: item.id,
-                  name: item.title,
-                  imageUrl: item.imageUrl,
-                  providerId: item.providerId,
-                ),
+                onTap: () => _openLegacyArtist(context, item),
               );
             }
             return DiscoveryTrackCard(
@@ -795,28 +787,30 @@ class _DiscoveryHomeScreenState extends ConsumerState<DiscoveryHomeScreen> {
     );
   }
 
+  /// Tapping a trending row queues the visible trending list from that row, so
+  /// the user hears the chart they are looking at rather than an unrelated mix.
   void _openTrending(
     BuildContext context,
-    DiscoveryHome home,
+    List<TrendingEntry> entries,
     TrendingEntry entry,
   ) {
     if (entry.isArtist) {
       _openArtist(context, artistKey: entry.key, name: entry.label);
       return;
     }
-    final scored = <ScoredTrack>[
-      for (final candidate in <ScoredTrack>[
-        ...home.trendingWeek,
-        ...home.trendingMonth,
-        ...home.fastestGrowing,
-      ].map(_trendingToScored))
-        if (candidate.track.key == entry.key) candidate,
-    ];
-    if (scored.isNotEmpty) {
-      _playScored(context, scored, 0);
-      return;
+    final tracks = <ScoredTrack>[];
+    var startIndex = 0;
+    var found = false;
+    for (final candidate in entries) {
+      if (candidate.isArtist) continue;
+      if (!found && candidate.key == entry.key) {
+        startIndex = tracks.length;
+        found = true;
+      }
+      tracks.add(_trendingToScored(candidate));
     }
-    _openArtist(context, artistKey: entry.key, name: entry.label);
+    if (tracks.isEmpty) return;
+    _playScored(context, tracks, startIndex);
   }
 
   ScoredTrack _trendingToScored(TrendingEntry entry) {

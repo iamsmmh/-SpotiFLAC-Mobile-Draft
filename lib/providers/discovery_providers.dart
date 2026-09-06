@@ -531,7 +531,7 @@ DiscoverySubscriptions installDiscoveryRecording(WidgetRef ref) {
 PlayingItem? _currentPlayingItem(WidgetRef ref) {
   final item = ref.read(currentMediaItemProvider).value;
   if (item == null) return null;
-  final title = item.title ?? '';
+  final title = item.title;
   final artist = item.artist ?? '';
   if (title.isEmpty && artist.isEmpty) return null;
   final source = item.extras?['source']?.toString() ?? '';
