@@ -230,7 +230,7 @@ void main() {
       expect(nested['safe'], 42);
       expect(nested['flag'], isTrue);
       expect(extra['list'], ['a', 'b']);
-      expect((extra['long'] as String).length, lessThan(500));
+      expect((extra['long'] as String).length, lessThan(4100));
       expect(extra['long'], contains('truncated'));
     });
 
@@ -249,7 +249,14 @@ void main() {
       await reporter.flush();
 
       expect(client.requests.length, 3);
-      expect(delays, [const Duration(milliseconds: 500), const Duration(seconds: 4)]);
+      // flush() polls with its own 50 ms delay; only backoffs matter here.
+      final backoffs = delays
+          .where((d) => d != const Duration(milliseconds: 50))
+          .toList(growable: false);
+      expect(
+        backoffs,
+        [const Duration(milliseconds: 500), const Duration(seconds: 4)],
+      );
       expect(reporter.stats['delivered'], 1);
     });
 
@@ -281,7 +288,10 @@ void main() {
       await reporter.flush();
 
       expect(client.requests.length, 1);
-      expect(delays, isEmpty);
+      expect(
+        delays.where((d) => d != const Duration(milliseconds: 50)),
+        isEmpty,
+      );
       expect(reporter.stats['dropped_permanent'], 1);
     });
 

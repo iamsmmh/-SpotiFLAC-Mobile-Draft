@@ -53,6 +53,13 @@
 
 ### Fixed
 
+- **ChaCha20 §2.4.2 test asserted wrong ciphertext constants** (pre-existing
+  red CI on the 2026-09-05 lineage, PR #46): the two non-leading expected
+  slices did not match RFC 8439's published "Ciphertext Sunscreen" vector,
+  while the implementation matches it exactly (cross-checked against the RFC
+  text and an independent implementation). The test now asserts the RFC
+  bytes (plus the previously unchecked 16..32 slice); no production-code
+  change was needed.
 - `STATUS.md` claimed CI runs `go test` with `-shuffle`; it does not
   (order-independence is follow-up #5). Corrected — `-race` is the enforced
   gate.

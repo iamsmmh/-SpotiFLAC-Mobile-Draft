@@ -7,7 +7,8 @@ import 'package:spotimusic/services/provider_health_store.dart';
 /// In-memory [ProviderHealthKeyValueStore] fake with optional failure
 /// injection for the error-path tests.
 class _FakeStore implements ProviderHealthKeyValueStore {
-  _FakeStore({Map<String, String> initial = const {}}) : _data = initial;
+  _FakeStore({Map<String, String> initial = const {}})
+    : _data = Map<String, String>.of(initial);
 
   final Map<String, String> _data;
   int writes = 0;
