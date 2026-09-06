@@ -18,8 +18,6 @@ import 'package:spotiflac_android/ecosystem/cache/streaming_cache_manager.dart';
 import 'package:spotiflac_android/ecosystem/sync/sync_engine.dart'
     show ConnectivityNetworkGate;
 import 'package:spotiflac_android/engine/track_identity.dart';
-import 'package:spotiflac_android/models/track.dart';
-import 'package:spotiflac_android/providers/ecosystem_providers.dart';
 import 'package:spotiflac_android/providers/engine_settings_provider.dart';
 import 'package:spotiflac_android/providers/streaming_cache_providers.dart';
 import 'package:spotiflac_android/providers/streaming_engine_provider.dart';

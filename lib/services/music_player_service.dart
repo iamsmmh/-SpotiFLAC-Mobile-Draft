@@ -1115,8 +1115,8 @@ class MusicPlayerHandler extends BaseAudioHandler
     });
   }
 
-  // ReplayGain normalization: resolved path -> volume multiplier.
-  final Map<String, double> _normalizationVolumeCache = {};
+  // ReplayGain normalization: resolved path -> gain tags.
+  final Map<String, GainTagSet> _normalizationTagCache = {};
 
   /// Volume multiplier from the file's ReplayGain/R128 tags (track gain,
   /// album gain fallback; Opus R128 tags are converted to ReplayGain dB by
