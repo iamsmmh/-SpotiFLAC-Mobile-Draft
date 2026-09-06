@@ -21,6 +21,7 @@ jobs:
     outputs:
       dart: ${{ steps.filter.outputs.dart }}
       go: ${{ steps.filter.outputs.go }}
+      backend: ${{ steps.filter.outputs.backend }}
       android: ${{ steps.filter.outputs.android }}
     steps:
       - name: Checkout repository
@@ -43,6 +44,9 @@ jobs:
               - '.github/workflows/ci.yml'
             go:
               - 'go_backend/**'
+              - '.github/workflows/ci.yml'
+            backend:
+              - 'backend/**'
               - '.github/workflows/ci.yml'
             android:
               - 'android/**'
@@ -245,8 +249,20 @@ jobs:
         # Invoked via absolute GOPATH path so the step never depends on
         # whether setup-go put GOBIN on PATH.
         run: |
+          set -o pipefail
           go install honnef.co/go/tools/cmd/staticcheck@2026.2.1
-          "$(go env GOPATH)/bin/staticcheck" ./...
+          status=0
+          "$(go env GOPATH)/bin/staticcheck" ./... 2>&1 | tee staticcheck.log || status=$?
+          if [ "$status" -ne 0 ]; then
+            grep -oE '[^[:space:]]+\.go:[0-9]+:[0-9]+: .*' staticcheck.log | head -40 | while IFS= read -r line; do
+              file=$(printf '%s' "$line" | cut -d: -f1)
+              line_no=$(printf '%s' "$line" | cut -d: -f2)
+              col=$(printf '%s' "$line" | cut -d: -f3)
+              msg=$(printf '%s' "$line" | cut -d: -f4-)
+              echo "::error file=go_backend/${file},line=${line_no},col=${col}::staticcheck: ${msg}"
+            done
+          fi
+          exit "$status"
 
       - name: Run tests
         # Raw job logs are not reachable from every environment, so on
@@ -276,6 +292,70 @@ jobs:
         # (yet): some legacy tests share package-level singletons and depend
         # on file order — enabling shuffle requires fixing those first
         # (tracked in STATUS.md follow-ups).
+        run: go test -race -count=1 ./...
+
+  backend:
+    name: SpotiFLAC Cloud backend (vet & test)
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: backend/go.mod
+
+      - name: Check formatting
+        run: test -z "$(gofmt -l .)"
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Staticcheck
+        # Same pin as the go_backend job; zero-findings policy.
+        run: |
+          set -o pipefail
+          go install honnef.co/go/tools/cmd/staticcheck@2026.2.1
+          status=0
+          "$(go env GOPATH)/bin/staticcheck" ./... 2>&1 | tee staticcheck.log || status=$?
+          if [ "$status" -ne 0 ]; then
+            grep -oE '[^[:space:]]+\.go:[0-9]+:[0-9]+: .*' staticcheck.log | head -40 | while IFS= read -r line; do
+              file=$(printf '%s' "$line" | cut -d: -f1)
+              line_no=$(printf '%s' "$line" | cut -d: -f2)
+              col=$(printf '%s' "$line" | cut -d: -f3)
+              msg=$(printf '%s' "$line" | cut -d: -f4-)
+              echo "::error file=backend/${file},line=${line_no},col=${col}::staticcheck: ${msg}"
+            done
+          fi
+          exit "$status"
+
+      - name: Run tests
+        run: |
+          set -o pipefail
+          status=0
+          go test -covermode=atomic -coverprofile=coverage.out ./... 2>&1 | tee gotest.log || status=$?
+          if [ "$status" -eq 0 ]; then
+            go tool cover -func=coverage.out | tail -1 | \
+              awk '{printf "**SpotiFLAC Cloud backend line coverage:** %s\n", $NF}' >> "$GITHUB_STEP_SUMMARY"
+          else
+            grep -E "^--- FAIL|^(FAIL|ok).*[0-9]" gotest.log | head -30 | while IFS= read -r line; do
+              echo "::error::${line}"
+            done
+            grep -E "\.go:[0-9]+:" gotest.log | head -20 | while IFS= read -r line; do
+              echo "::error::${line}"
+            done
+          fi
+          exit "$status"
+
+      - name: Run tests (race)
         run: go test -race -count=1 ./...
 
   android:
