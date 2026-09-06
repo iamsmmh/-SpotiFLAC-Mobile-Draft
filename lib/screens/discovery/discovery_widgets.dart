@@ -288,7 +288,7 @@ class DiscoveryMixTile extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final covers = shelf.items
         .map((entry) => entry.track.coverUrl)
-        .where((url) => url != null && url!.isNotEmpty)
+        .where((url) => url != null && url.isNotEmpty)
         .take(4)
         .cast<String>()
         .toList(growable: false);

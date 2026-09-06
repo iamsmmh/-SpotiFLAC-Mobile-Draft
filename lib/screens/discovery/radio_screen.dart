@@ -123,8 +123,9 @@ class _RadioScreenState extends ConsumerState<RadioScreen> {
               IconButton(
                 tooltip: context.l10n.discoveryRadioStop,
                 onPressed: () async {
+                  final navigator = Navigator.of(context);
                   await ref.read(radioSessionProvider.notifier).stop();
-                  if (mounted) Navigator.of(context).maybePop();
+                  if (mounted) navigator.maybePop();
                 },
                 icon: const Icon(Icons.stop_circle_outlined),
               ),
