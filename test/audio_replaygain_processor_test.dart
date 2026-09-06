@@ -157,10 +157,11 @@ void main() {
             ),
           ),
         );
-      // Track gain -6 dB vs -18 reference → master is at -24 LUFS. At a -14
-      // target the required gain is -6 + 4 = -2 dB.
+      // Shipped loudness convention (test/advanced_audio_test.dart): the
+      // effective gain points away from the target by (target + 18) —
+      // tag -6 at a -14 target → -6 - 4 = -10 dB.
       final resolved = processor.resolve(context: ctx(), tags: tags);
-      expect(resolved.volume, closeTo(ReplayGain.dbToLinear(-2.0), 1e-9));
+      expect(resolved.volume, closeTo(ReplayGain.dbToLinear(-10.0), 1e-9));
     });
 
     test('configure reports whether the audible behaviour changed', () {

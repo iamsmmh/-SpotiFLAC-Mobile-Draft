@@ -175,7 +175,7 @@ void main() {
       // LRU eviction stays a separate counter.
       expect(report.expired, 1);
       expect(report.evicted, 0);
-      expect(executed.single, contains('ck-a'));
+      expect(executed.join(' '), contains('ck-a'));
       expect(metadata.maintenance?.expired, 1);
       expect(await manager.lastMaintenance(), isNotNull);
     });

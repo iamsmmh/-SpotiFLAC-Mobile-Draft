@@ -79,14 +79,14 @@ void main() {
             ),
           ),
         );
-      // -18 LUFS master tagged -6 dB → -24 LUFS absolute; at a -14 LUFS
-      // target the needed gain is -6 + 4 = -2 dB.
+      // Shipped loudness convention: gain = tag - (target + 18) →
+      // tag -6 at a -14 target lands at -10 dB.
       final plan = manager.planFor(
         processor: processor,
         context: const GainContext(trackId: 't'),
         tags: const GainTagSet(trackGainDb: -6.0),
       );
-      expect(plan.gainDb, closeTo(-2.0, 1e-9));
+      expect(plan.gainDb, closeTo(-10.0, 1e-9));
     });
 
     test('clamps the pre-amp to the shared ±6 dB window', () {

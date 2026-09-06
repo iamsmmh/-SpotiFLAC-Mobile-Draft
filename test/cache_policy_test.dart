@@ -203,13 +203,14 @@ void main() {
           _entry('middle', bytes: 30, at: now.subtract(const Duration(days: 2))),
           _entry('newest', bytes: 30, at: now.subtract(const Duration(days: 1))),
         ],
-        currentBytes: 90,
+        currentBytes: 120,
         budgetBytes: 100,
         now: now,
       );
-      // Floor = 80; evicting 'oldest' (30) lands at 60 ≤ 80.
-      expect(plan.evictKeys, <String>['oldest']);
-      expect(plan.freedBytes, 30);
+      // Over budget → evict LRU down to the floor of 80: 'oldest' lands at
+      // 90 (> 80), so 'middle' goes too (60 ≤ 80) and 'newest' survives.
+      expect(plan.evictKeys, <String>['oldest', 'middle']);
+      expect(plan.freedBytes, 60);
     });
 
     test('pinned and partial entries are immune', () {

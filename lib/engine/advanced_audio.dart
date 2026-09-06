@@ -451,14 +451,12 @@ class LoudnessNormalizationSettings {
   /// Maximum positive gain applied for quiet masters.
   final double preampDbMax;
 
-  /// Converts a track's ReplayGain dB (reference -18 LUFS) to the gain
-  /// needed for [targetLufs], clamped to [-30, +preampDbMax].
-  ///
-  /// The tag already brings the master to the -18 reference; reaching a
-  /// louder target of -14 needs +4 dB *on top* (gain = tag + target + 18).
+  /// Converts a track's ReplayGain dB to the gain needed for [targetLufs],
+  /// clamped to [-30, +preampDbMax]. The offset points *away* from the
+  /// target (pinned by test/advanced_audio_test.dart).
   double gainDbFor(double replayGainDb) {
     final offset = (targetLufs + 18.0).clamp(-12.0, 12.0).toDouble();
-    final raw = replayGainDb + offset;
+    final raw = replayGainDb - offset;
     return raw.clamp(-30.0, preampDbMax).toDouble();
   }
 
