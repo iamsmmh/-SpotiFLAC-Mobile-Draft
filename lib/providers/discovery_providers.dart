@@ -18,9 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spotiflac_android/ecosystem/discovery/continue_listening_repository.dart';
 import 'package:spotiflac_android/ecosystem/discovery/discovery_service.dart';
 import 'package:spotiflac_android/ecosystem/discovery/radio_service.dart';
-import 'package:spotiflac_android/ecosystem/discovery/recommendation_engine.dart';
 import 'package:spotiflac_android/ecosystem/discovery/recommendation_repository.dart';
-import 'package:spotiflac_android/ecosystem/discovery/trending_repository.dart';
 import 'package:spotiflac_android/engine/discovery/discovery_models.dart';
 import 'package:spotiflac_android/engine/discovery/mood_engine.dart';
 import 'package:spotiflac_android/engine/discovery/radio_engine.dart';
@@ -393,7 +391,7 @@ class ContinueListeningRecorder {
       albumName: item.album,
       coverUrl: item.artUri,
       durationSeconds: item.durationMs ~/ 1000,
-      localPath: item.isLocal ? item.extras?['path']?.toString() : null,
+      localPath: item.isLocal ? _localPathOf(item.extras) : null,
     );
     await write(
       ContinueListeningEntry(
@@ -410,6 +408,15 @@ class ContinueListeningRecorder {
       ),
     );
   }
+}
+
+/// The on-device file path a playing item carries, if it has one.
+///
+/// Split out of [ContinueListeningRecorder] so the conditional stays
+/// a single boolean test rather than a null-aware chain inside a ternary.
+String? _localPathOf(Map<String, Object?>? extras) {
+  final path = extras?['path']?.toString() ?? '';
+  return path.isEmpty ? null : path;
 }
 
 /// The minimum the recorder needs about the playing item.

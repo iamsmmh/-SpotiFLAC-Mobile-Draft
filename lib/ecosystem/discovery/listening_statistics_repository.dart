@@ -193,8 +193,8 @@ class ListeningStatisticsRepository {
       );
     });
 
-    _log.i('Rolled up ${events.length} listening events');
-    return events.length;
+    _log.i('Rolled up ${pairs.length} listening events');
+    return pairs.length;
   }
 
   void _accumulate(
@@ -525,7 +525,7 @@ class ListeningStatisticsRepository {
       if (started == null) continue;
       final playedMs = asInt(row, 'played_ms');
       if (previousStart == null ||
-          started.difference(previousStart!) > sessionGap) {
+          started.difference(previousStart) > sessionGap) {
         if (currentMs > 0) {
           sessionCount++;
           sessionMs += currentMs;

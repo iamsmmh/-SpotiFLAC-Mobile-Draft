@@ -11,7 +11,6 @@ import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
 import 'package:spotiflac_android/ecosystem/discovery/discovery_schema.dart';
 import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
-import 'package:spotiflac_android/engine/discovery/discovery_math.dart';
 import 'package:spotiflac_android/engine/discovery/discovery_models.dart';
 import 'package:spotiflac_android/engine/discovery/mood_engine.dart';
 

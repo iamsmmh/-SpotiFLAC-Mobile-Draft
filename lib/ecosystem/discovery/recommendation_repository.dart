@@ -18,7 +18,6 @@ library;
 
 import 'package:spotiflac_android/ecosystem/discovery/listening_statistics_repository.dart';
 import 'package:spotiflac_android/ecosystem/history/listening_history.dart';
-import 'package:spotiflac_android/engine/discovery/discovery_math.dart';
 import 'package:spotiflac_android/engine/discovery/discovery_models.dart';
 import 'package:spotiflac_android/engine/discovery/similarity_engine.dart';
 import 'package:spotiflac_android/services/library_database.dart';
