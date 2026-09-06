@@ -250,7 +250,18 @@ jobs:
         # whether setup-go put GOBIN on PATH.
         run: |
           go install honnef.co/go/tools/cmd/staticcheck@2026.2.1
-          "$(go env GOPATH)/bin/staticcheck" ./...
+          status=0
+          "$(go env GOPATH)/bin/staticcheck" ./... 2>&1 | tee staticcheck.log || status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            grep -oE '[^[:space:]]+\.go:[0-9]+:[0-9]+: .*' staticcheck.log | head -40 | while IFS= read -r line; do
+              file=$(printf '%s' "$line" | cut -d: -f1)
+              line_no=$(printf '%s' "$line" | cut -d: -f2)
+              col=$(printf '%s' "$line" | cut -d: -f3)
+              msg=$(printf '%s' "$line" | cut -d: -f4-)
+              echo "::error file=go_backend/${file},line=${line_no},col=${col}::staticcheck: ${msg}"
+            done
+          fi
+          exit "$status"
 
       - name: Run tests
         # Raw job logs are not reachable from every environment, so on
