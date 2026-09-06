@@ -98,7 +98,7 @@ func (s *BackupStore) Upload(_ context.Context, userID, deviceID string, payload
 	}
 	sum := sha256.Sum256(payload)
 	meta := Backup{
-		ID:        backupID(sum, s.ids()),
+		ID:        backupID(sum, s.ids),
 		DeviceID:  deviceID,
 		SizeBytes: len(payload),
 		SHA256:    hex.EncodeToString(sum[:]),
