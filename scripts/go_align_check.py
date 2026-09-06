@@ -23,7 +23,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 FIELD_RE = re.compile(
     r'^(?P<indent>\t+)(?P<name>[A-Za-z_][A-Za-z0-9_]*)(?P<pad1> +)'
-    r'(?P<type>(?:\[\]|\*|map\[[^\]]+\]|chan |func\([^)]*\)|[A-Za-z0-9_\.\[\]\*])+?)'
+    # Linear-time: one non-ambiguous character class instead of overlapping
+    # alternatives (avoids catastrophic backtracking on runs of '*').
+    r'(?P<type>[^ \t\x60]+)'
     r'(?P<pad2> +)(?P<tag>`[^`]*`),?$'
 )
 CONST_RE = re.compile(

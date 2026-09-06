@@ -334,7 +334,7 @@ class QueueManager {
     String Function()? idFactory,
   }) : _store = store,
        _retention = retention,
-       _clock = clock ?? () => DateTime.now().toUtc(),
+       _clock = clock ?? _clockNow,
        _idFactory = idFactory ?? _defaultIdFactory();
 
   final QueueSnapshotStore _store;

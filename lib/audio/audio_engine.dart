@@ -27,6 +27,7 @@ import 'package:spotiflac_android/audio/gapless_manager.dart';
 import 'package:spotiflac_android/audio/normalization_manager.dart';
 import 'package:spotiflac_android/audio/queue_manager.dart';
 import 'package:spotiflac_android/audio/replaygain_processor.dart';
+import 'package:spotiflac_android/engine/advanced_audio.dart';
 import 'package:spotiflac_android/engine/crossfade_policy.dart';
 import 'package:spotiflac_android/engine/gapless_policy.dart';
 
@@ -208,7 +209,7 @@ class AudioEngine {
 
     replayGain.overrides.clear();
     settings.gainOverrides.forEach((key, gainDb) {
-      if (key.startsWith('${ManualGainOverrides.trackKey('')}')) {
+      if (key.startsWith(ManualGainOverrides.trackKey(''))) {
         replayGain.overrides.setTrack(
           key.substring('track:'.length),
           gainDb,
