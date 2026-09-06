@@ -17,6 +17,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotiflac_android/audio/audio_engine.dart';
+import 'package:spotiflac_android/audio/crossfade_manager.dart';
 import 'package:spotiflac_android/audio/queue_manager.dart';
 import 'package:spotiflac_android/audio/replaygain_processor.dart';
 import 'package:spotiflac_android/models/settings.dart';

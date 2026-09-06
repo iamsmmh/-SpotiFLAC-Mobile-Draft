@@ -13,6 +13,7 @@ import 'package:audio_service/audio_service.dart' show MediaItem;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spotiflac_android/cache/cache.dart';
 import 'package:spotiflac_android/ecosystem/cache/cache_models.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_repository.dart';
 import 'package:spotiflac_android/ecosystem/cache/streaming_cache_manager.dart';
 import 'package:spotiflac_android/ecosystem/sync/sync_engine.dart'
     show ConnectivityNetworkGate;

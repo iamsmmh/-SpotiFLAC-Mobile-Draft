@@ -11,7 +11,6 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spotiflac_android/cloud/account_manager.dart';
-import 'package:spotiflac_android/cloud/backup_manager.dart';
 import 'package:spotiflac_android/cloud/cloud_service.dart';
 import 'package:spotiflac_android/cloud/sync_engine.dart';
 import 'package:spotiflac_android/cloud/sync_queue.dart';
@@ -100,10 +99,10 @@ class CloudSyncUiStateNotifier extends Notifier<CloudSyncUiState> {
 
   @override
   CloudSyncUiState build() {
-    ref.listen(cloudServerConfigProvider, (_, __) {
+    ref.listen(cloudServerConfigProvider, (_, _) {
       _refresh();
     });
-    ref.listen(accountStateProvider, (_, __) {
+    ref.listen(accountStateProvider, (_, _) {
       _refresh();
     });
     _startQueuePolling();
