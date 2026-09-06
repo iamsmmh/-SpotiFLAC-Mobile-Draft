@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:spotiflac_android/audio/crossfade_manager.dart';
+import 'package:spotiflac_android/audio/normalization_manager.dart';
+import 'package:spotiflac_android/audio/replaygain_processor.dart';
 import 'package:spotiflac_android/engine/audio_characteristics.dart';
 import 'package:spotiflac_android/engine/crossfade_policy.dart';
 import 'package:spotiflac_android/engine/smart_play.dart';
 import 'package:spotiflac_android/engine/streaming_engine.dart';
+import 'package:spotiflac_android/providers/audio_engine_provider.dart';
 import 'package:spotiflac_android/providers/engine_settings_provider.dart';
 import 'package:spotiflac_android/providers/playback_statistics_provider.dart';
 import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
 import 'package:spotiflac_android/screens/settings/listening_statistics_page.dart';
 import 'package:spotiflac_android/screens/settings/streaming_integrity_page.dart';
 import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/utils/gain_format.dart';
 import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 import 'package:spotiflac_android/widgets/liquid/liquid_glass.dart';
 import 'package:spotiflac_android/widgets/settings_group.dart';
@@ -98,6 +103,8 @@ class _StreamingSettingsPageState
     final settings = ref.watch(engineSettingsProvider);
     final notifier = ref.read(engineSettingsProvider.notifier);
     final diagnostics = ref.watch(engineDiagnosticsProvider);
+    final audio = ref.watch(audioEngineSettingsProvider);
+    final audioNotifier = ref.read(audioEngineSettingsProvider.notifier);
 
     return CustomScrollView(
       slivers: [
@@ -361,6 +368,104 @@ class _StreamingSettingsPageState
                 max: 8192,
                 step: 64,
                 onChanged: notifier.setPrebufferHeadBytesKb,
+              ),
+            ],
+          ),
+        ),
+        _section(
+          context,
+          'Gain & loudness',
+          SettingsGroup(
+            children: [
+              const SettingsSectionHeader(title: 'ReplayGain'),
+              SettingsChoiceGrid(
+                children: [
+                  for (final mode in ReplayGainMode.values)
+                    SettingsChoiceChip(
+                      label: mode.label,
+                      isSelected: audio.replayGainMode == mode,
+                      onTap: () => audioNotifier.setReplayGainMode(mode),
+                    ),
+                ],
+              ),
+              _DbStepperItem(
+                icon: Icons.add_chart_outlined,
+                title: 'Pre-amp',
+                subtitle: 'Extra gain applied on top of the selected tag',
+                value: audio.replayGainPreAmpDb,
+                min: ReplayGainConfig.minPreAmpDb,
+                max: ReplayGainConfig.maxPreAmpDb,
+                step: 0.5,
+                suffix: ' dB',
+                enabled: audio.replayGainMode != ReplayGainMode.off,
+                onChanged: audioNotifier.setPreAmpDb,
+              ),
+              SettingsSwitchItem(
+                icon: Icons.hearing_disabled_outlined,
+                title: 'Prevent clipping',
+                subtitle:
+                    'Pull the volume down when the tagged peak would clip',
+                value: audio.preventClipping,
+                enabled: audio.replayGainMode != ReplayGainMode.off,
+                onChanged: audio.replayGainMode != ReplayGainMode.off
+                    ? audioNotifier.setPreventClipping
+                    : null,
+              ),
+              const SettingsSectionHeader(title: 'Loudness normalization'),
+              SettingsSwitchItem(
+                icon: Icons.graphic_eq_outlined,
+                title: 'Normalize loudness',
+                subtitle:
+                    'Master switch for the engine gain path — ReplayGain and '
+                    'the target below both ride it',
+                value: audio.normalizationEnabled,
+                onChanged: audioNotifier.setNormalizationEnabled,
+              ),
+              SettingsChoiceGrid(
+                children: [
+                  for (final target in LoudnessTarget.values)
+                    SettingsChoiceChip(
+                      label: target.label,
+                      isSelected: audio.normalizationEnabled &&
+                          audio.loudnessTargetLufs == target.targetLufs,
+                      onTap: () => audioNotifier
+                          .setLoudnessTargetLufs(target.targetLufs),
+                    ),
+                ],
+              ),
+              const SettingsSectionHeader(title: 'Crossfade curve'),
+              SettingsSwitchItem(
+                icon: Icons.auto_awesome_motion_outlined,
+                title: 'Automatic curve',
+                subtitle:
+                    'Pick the curve from the fade length and the pair of tracks',
+                value: audio.fadeCurveAuto,
+                enabled: settings.crossfadeSeconds > 0,
+                onChanged: settings.crossfadeSeconds > 0
+                    ? (value) => audioNotifier.setFadeCurve(auto: value)
+                    : null,
+              ),
+              SettingsChoiceGrid(
+                children: [
+                  for (final curve in FadeCurveKind.values)
+                    SettingsChoiceChip(
+                      label: curve.label,
+                      isSelected: !audio.fadeCurveAuto &&
+                          audio.fadeCurve == curve,
+                      onTap: () => audioNotifier.setFadeCurve(
+                        curve: curve,
+                        auto: false,
+                      ),
+                    ),
+                ],
+              ),
+              SettingsInfoCard(
+                icon: Icons.info_outline,
+                message:
+                    'Gain comes from the ReplayGain/R128 tags read by the '
+                    'metadata engine. Tracks without tags play at their '
+                    'mastered level; use a manual override on the track menu '
+                    'to tune one song.',
               ),
             ],
           ),
@@ -973,6 +1078,84 @@ class _StepperItem extends StatelessWidget {
                 : () => onChanged((value + step).clamp(min, max)),
             visualDensity: VisualDensity.compact,
             color: colorScheme.onSurfaceVariant,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Settings row with − / + steppers for a fractional (dB) value.
+///
+/// Mirrors [_StepperItem] — the int-only stepper cannot express the 0.5 dB
+/// granularity of a ReplayGain pre-amp.
+class _DbStepperItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final double value;
+  final double min;
+  final double max;
+  final double step;
+  final String? suffix;
+  final bool enabled;
+  final ValueChanged<double> onChanged;
+
+  const _DbStepperItem({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.value,
+    required this.min,
+    required this.max,
+    required this.onChanged,
+    this.step = 0.5,
+    this.suffix,
+    this.enabled = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    // Stepping accumulates float error (0.1 + 0.2), so round to the step grid.
+    final snapped = ((value / step).round() * step).clamp(min, max).toDouble();
+    final foreground = enabled
+        ? colorScheme.onSurfaceVariant
+        : colorScheme.onSurfaceVariant.withValues(alpha: 0.4);
+    return SettingsItem(
+      icon: icon,
+      title: title,
+      subtitle: subtitle,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.remove_circle_outline),
+            tooltip: 'Decrease $title',
+            onPressed: !enabled || snapped <= min
+                ? null
+                : () => onChanged((snapped - step).clamp(min, max).toDouble()),
+            visualDensity: VisualDensity.compact,
+            color: foreground,
+          ),
+          SizedBox(
+            width: 72,
+            child: Text(
+              '${formatGainDb(snapped)}${suffix ?? ''}',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.add_circle_outline),
+            tooltip: 'Increase $title',
+            onPressed: !enabled || snapped >= max
+                ? null
+                : () => onChanged((snapped + step).clamp(min, max).toDouble()),
+            visualDensity: VisualDensity.compact,
+            color: foreground,
           ),
         ],
       ),
