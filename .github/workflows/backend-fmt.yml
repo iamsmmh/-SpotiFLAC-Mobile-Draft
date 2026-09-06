@@ -7,13 +7,20 @@ name: Backend gofmt autofix
 # annotation-first failure reporting, since job logs are not reachable from
 # every client).
 #
-# Manual only (workflow_dispatch): it never pushes to PRs on its own.
+# Manual only from the default branch; on pull_request it runs for same-repo
+# PRs touching backend/ and pushes the formatted result back to the PR branch
+# (GitHub suppresses downstream events for GITHUB_TOKEN pushes, so it cannot
+# loop; an empty follow-up commit re-runs the full CI on the fixed tree).
 
 on:
   workflow_dispatch:
     branches:
       - main
       - 'arena/**'
+  pull_request:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-fmt.yml'
 
 permissions:
   contents: write
@@ -57,16 +64,21 @@ jobs:
           fi
 
       - name: Commit and push formatting
+        # Same-repo PRs only (fork PRs arrive with a read-only token).
+        if: >-
+          github.event_name == 'workflow_dispatch' ||
+          github.event.pull_request.head.repo.full_name == github.repository
         run: |
           if git diff --quiet; then
             echo "Nothing to format."
             exit 0
           fi
+          branch="${{ github.event.pull_request.head.ref || github.ref_name }}"
           git config user.name "spotiflac-ci"
           git config user.email "actions@users.noreply.github.com"
           git add -A
           git commit -m "chore(backend): apply gofmt"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git push origin "HEAD:${branch}"
 
       - name: Vet
         run: go vet ./...
