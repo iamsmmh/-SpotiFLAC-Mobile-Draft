@@ -22,6 +22,7 @@ import 'package:spotiflac_android/core/streaming/stream_resolver.dart';
 import 'package:spotiflac_android/core/streaming/stream_session.dart';
 import 'package:spotiflac_android/core/streaming/streaming_service.dart';
 import 'package:spotiflac_android/providers/advanced_audio_provider.dart';
+import 'package:spotiflac_android/providers/cloud_providers.dart';
 import 'package:spotiflac_android/providers/ecosystem_providers.dart';
 import 'package:spotiflac_android/providers/hybrid_playback_provider.dart';
 import 'package:spotiflac_android/providers/music_servers_providers.dart';
@@ -145,6 +146,11 @@ void main() {
             initialThemeSettingsProvider.overrideWithValue(bootstrapTheme),
             initialEngineSettingsProvider.overrideWithValue(
               bootstrapEngineSettings,
+            ),
+            // Phase 3: bind the SpotiFLAC Cloud backend when a server is
+            // configured (null ⇒ cloudSyncBackendProvider stays NoOp).
+            cloudSyncBackendOverrideProvider.overrideWith(
+              (ref) => ref.watch(spotiFlacCloudServiceProvider),
             ),
           ],
           child: _EagerInitialization(
