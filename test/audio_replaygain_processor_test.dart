@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:spotiflac_android/audio/replaygain_processor.dart';
 import 'package:spotiflac_android/engine/advanced_audio.dart';
+import 'package:spotiflac_android/engine/replay_gain.dart';
 
 void main() {
   const tags = GainTagSet(

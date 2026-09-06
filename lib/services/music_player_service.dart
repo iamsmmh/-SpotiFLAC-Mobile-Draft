@@ -6,8 +6,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart'
     show AudioSession, AudioSessionConfiguration, AudioInterruptionType;
 import 'package:audioplayers/audioplayers.dart';
-import 'package:spotiflac_android/audio/audio_engine.dart'
-    show AudioEngineRuntime, GainRequest;
+import 'package:spotiflac_android/audio/audio_engine.dart' show GainRequest;
 import 'package:spotiflac_android/audio/replaygain_processor.dart' show GainTagSet;
 import 'package:spotiflac_android/core/data/background_playback_policy.dart';
 import 'package:spotiflac_android/core/monitoring/crash_reporter.dart';
@@ -2540,21 +2539,6 @@ Stream<PlaybackState> musicPlayerPlaybackStateEvents() async* {
   await for (final handler in _handlerReadyController.stream) {
     yield handler.playbackState.value;
     yield* handler.playbackState;
-    return;
-  }
-}
-
-Stream<List<MediaItem>> musicPlayerQueueEvents() async* {
-  final existing = _handler;
-  if (existing != null) {
-    yield existing.queue.value;
-    yield* existing.queue;
-    return;
-  }
-  yield const [];
-  await for (final handler in _handlerReadyController.stream) {
-    yield handler.queue.value;
-    yield* handler.queue;
     return;
   }
 }

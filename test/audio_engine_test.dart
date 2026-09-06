@@ -6,7 +6,6 @@ import 'package:spotiflac_android/audio/gapless_manager.dart';
 import 'package:spotiflac_android/audio/normalization_manager.dart';
 import 'package:spotiflac_android/audio/replaygain_processor.dart';
 import 'package:spotiflac_android/engine/audio_characteristics.dart';
-import 'package:spotiflac_android/engine/crossfade_policy.dart';
 import 'package:spotiflac_android/engine/gapless_policy.dart';
 
 class _Item implements GaplessQueueItem {
@@ -95,7 +94,7 @@ void main() {
     });
 
     test('SharedPreferences load/save round-trip', () async {
-      SharedPreferences.setMockInitialValues(<String, Object?>{});
+      SharedPreferences.setMockInitialValues(const <String, Object>{});
       final prefs = await SharedPreferences.getInstance();
       const settings = AudioEngineSettings(
         replayGainMode: ReplayGainMode.album,
@@ -110,7 +109,7 @@ void main() {
     });
 
     test('load tolerates a corrupt blob', () async {
-      SharedPreferences.setMockInitialValues(<String, Object?>{
+      SharedPreferences.setMockInitialValues(const <String, Object>{
         AudioEngineSettings.storageKey: '{{{',
       });
       final prefs = await SharedPreferences.getInstance();
