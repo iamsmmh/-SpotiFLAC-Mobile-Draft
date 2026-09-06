@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/engine/audio_effects.dart';
+import 'package:spotiflac_android/engine/audio_effects.dart';
 
 void main() {
   group('normalizeBandGains', () {

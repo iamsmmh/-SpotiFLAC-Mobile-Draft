@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/lyrics_metadata_helper.dart';
+import 'package:spotiflac_android/utils/lyrics_metadata_helper.dart';
 
 void main() {
   group('lyrics display normalization', () {

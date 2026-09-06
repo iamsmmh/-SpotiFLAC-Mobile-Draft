@@ -5,58 +5,58 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide StreamProvider;import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/app.dart';
-import 'package:spotimusic/constants/app_info.dart';
-import 'package:spotimusic/core/data/android_storage_permission_policy.dart';
-import 'package:spotimusic/core/data/background_playback_policy.dart';
-import 'package:spotimusic/core/data/cold_start_policy.dart';
-import 'package:spotimusic/core/data/network_switch_policy.dart';
-import 'package:spotimusic/core/data/release_artifact_policy.dart';
-import 'package:spotimusic/core/data/secure_store.dart';
-import 'package:spotimusic/core/monitoring/crash_reporter.dart';
-import 'package:spotimusic/ecosystem/ecosystem.dart';
-import 'package:spotimusic/engine/advanced_audio.dart';
-import 'package:spotimusic/core/streaming/hybrid_playback.dart';
-import 'package:spotimusic/core/streaming/stream_provider.dart';
-import 'package:spotimusic/core/streaming/stream_resolver.dart';
-import 'package:spotimusic/core/streaming/stream_session.dart';
-import 'package:spotimusic/core/streaming/streaming_service.dart';
-import 'package:spotimusic/providers/advanced_audio_provider.dart';
-import 'package:spotimusic/providers/ecosystem_providers.dart';
-import 'package:spotimusic/providers/hybrid_playback_provider.dart';
-import 'package:spotimusic/providers/music_servers_providers.dart';
-import 'package:spotimusic/providers/streaming_cache_providers.dart';
-import 'package:spotimusic/screens/ecosystem/advanced_audio_page.dart';
-import 'package:spotimusic/screens/ecosystem/ecosystem_hub_page.dart';
-import 'package:spotimusic/screens/ecosystem/servers_page.dart';
-import 'package:spotimusic/screens/ecosystem/smart_playlists_page.dart';
-import 'package:spotimusic/screens/ecosystem/unified_search_page.dart';
-import 'package:spotimusic/core/data/session_resource_budget.dart';
-import 'package:spotimusic/core/presentation/core_queue_providers.dart';
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/providers/audio_effects_provider.dart';
-import 'package:spotimusic/providers/download_schedule_settings_provider.dart';
-import 'package:spotimusic/providers/engine_settings_provider.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/providers/local_library_provider.dart';
-import 'package:spotimusic/providers/media_browse_provider.dart';
-import 'package:spotimusic/providers/playback_statistics_provider.dart';
-import 'package:spotimusic/providers/search_history_provider.dart';
-import 'package:spotimusic/providers/runtime_profile_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/providers/multi_provider_stream_provider.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart';
-import 'package:spotimusic/providers/theme_provider.dart';
-import 'package:spotimusic/services/notification_service.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/services/app_remote_config_service.dart';
-import 'package:spotimusic/services/share_intent_service.dart';
-import 'package:spotimusic/services/cover_cache_manager.dart';
-import 'package:spotimusic/services/cache_auto_cleaner.dart' hide CacheEntry;import 'package:spotimusic/services/app_state_database.dart';
-import 'package:spotimusic/utils/local_library_scan_prefs.dart';
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/utils/md5.dart';
+import 'package:spotiflac_android/app.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/core/data/android_storage_permission_policy.dart';
+import 'package:spotiflac_android/core/data/background_playback_policy.dart';
+import 'package:spotiflac_android/core/data/cold_start_policy.dart';
+import 'package:spotiflac_android/core/data/network_switch_policy.dart';
+import 'package:spotiflac_android/core/data/release_artifact_policy.dart';
+import 'package:spotiflac_android/core/data/secure_store.dart';
+import 'package:spotiflac_android/core/monitoring/crash_reporter.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem.dart';
+import 'package:spotiflac_android/engine/advanced_audio.dart';
+import 'package:spotiflac_android/core/streaming/hybrid_playback.dart';
+import 'package:spotiflac_android/core/streaming/stream_provider.dart';
+import 'package:spotiflac_android/core/streaming/stream_resolver.dart';
+import 'package:spotiflac_android/core/streaming/stream_session.dart';
+import 'package:spotiflac_android/core/streaming/streaming_service.dart';
+import 'package:spotiflac_android/providers/advanced_audio_provider.dart';
+import 'package:spotiflac_android/providers/ecosystem_providers.dart';
+import 'package:spotiflac_android/providers/hybrid_playback_provider.dart';
+import 'package:spotiflac_android/providers/music_servers_providers.dart';
+import 'package:spotiflac_android/providers/streaming_cache_providers.dart';
+import 'package:spotiflac_android/screens/ecosystem/advanced_audio_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/ecosystem_hub_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/servers_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/smart_playlists_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/unified_search_page.dart';
+import 'package:spotiflac_android/core/data/session_resource_budget.dart';
+import 'package:spotiflac_android/core/presentation/core_queue_providers.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/audio_effects_provider.dart';
+import 'package:spotiflac_android/providers/download_schedule_settings_provider.dart';
+import 'package:spotiflac_android/providers/engine_settings_provider.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/providers/local_library_provider.dart';
+import 'package:spotiflac_android/providers/media_browse_provider.dart';
+import 'package:spotiflac_android/providers/playback_statistics_provider.dart';
+import 'package:spotiflac_android/providers/search_history_provider.dart';
+import 'package:spotiflac_android/providers/runtime_profile_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/providers/multi_provider_stream_provider.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/providers/theme_provider.dart';
+import 'package:spotiflac_android/services/notification_service.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/services/app_remote_config_service.dart';
+import 'package:spotiflac_android/services/share_intent_service.dart';
+import 'package:spotiflac_android/services/cover_cache_manager.dart';
+import 'package:spotiflac_android/services/cache_auto_cleaner.dart' hide CacheEntry;import 'package:spotiflac_android/services/app_state_database.dart';
+import 'package:spotiflac_android/utils/local_library_scan_prefs.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/utils/md5.dart';
 
 final _log = AppLogger('Main');
 
@@ -147,7 +147,7 @@ void main() {
             ),
           ],
           child: _EagerInitialization(
-            child: SpotiMusicApp(
+            child: SpotiFLACApp(
               disableOverscrollEffects: runtimeProfile.disableOverscrollEffects,
             ),
           ),
@@ -176,10 +176,10 @@ void main() {
   );
 }
 
-/// Build-time DSN (`--dart-define=SPOTIMUSIC_SENTRY_DSN=…`). Empty → not
+/// Build-time DSN (`--dart-define=SPOTIFLAC_SENTRY_DSN=…`). Empty → not
 /// configured at build time; the remote-config cache is the second source.
 const _kCrashReportingDsnDefine = String.fromEnvironment(
-  'SPOTIMUSIC_SENTRY_DSN',
+  'SPOTIFLAC_SENTRY_DSN',
 );
 
 /// Phase 10 bootstrap: enables [CrashReporter] when a DSN is available from
@@ -219,8 +219,8 @@ Future<void> _configureCrashReporting() async {
   try {
     final parsed = reporter.configure(
       dsn: dsn,
-      clientName: 'spotimusic',
-      release: 'spotimusic@${AppInfo.fullVersion}',
+      clientName: 'spotiflac-mobile',
+      release: 'spotiflac-mobile@${AppInfo.fullVersion}',
       environment: kDebugMode ? 'debug' : 'release',
     );
     reporter.addBreadcrumb(
@@ -839,7 +839,7 @@ class _EagerInitializationState extends ConsumerState<_EagerInitialization>
     unawaited(ref.read(engineSavepointProvider.notifier).load());
     ref.read(streamingEngineControllerProvider).ensureFailureHook();
 
-    // SpotiMusic multi-provider streaming: restore the last selected
+    // Multi-provider streaming: restore the last selected
     // provider chip and build the 8-provider resolver (YouTube Explode +
     // universal fallback) before the first stream request.
     unawaited(ref.read(activeStreamProviderProvider.notifier).load());

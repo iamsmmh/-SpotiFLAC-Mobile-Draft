@@ -9,11 +9,11 @@ library;
 
 import 'dart:io';
 
-import 'package:spotimusic/ecosystem/ecosystem_database.dart';
-import 'package:spotimusic/ecosystem/recognition/fingerprint_engine.dart';
-import 'package:spotimusic/ecosystem/recognition/recognition_models.dart';
-import 'package:spotimusic/ecosystem/recognition/recognition_provider.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
+import 'package:spotiflac_android/ecosystem/recognition/fingerprint_engine.dart';
+import 'package:spotiflac_android/ecosystem/recognition/recognition_models.dart';
+import 'package:spotiflac_android/ecosystem/recognition/recognition_provider.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
 final _log = AppLogger('RecognitionService');

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('ShareIntent');
 
@@ -18,7 +18,7 @@ class ShareIntentService {
     caseSensitive: false,
   );
   static final RegExp _appDeepLinkPattern = RegExp(
-    "spotimusic://[^\\s<>\\\"']+",
+    "(?:spotiflac|spotimusic)://[^\\s<>\\\"']+",
     caseSensitive: false,
   );
 
@@ -92,7 +92,10 @@ class ShareIntentService {
     }
 
     final deepLinkMatch = _appDeepLinkPattern.firstMatch(text);
-    if (deepLinkMatch != null && text.trim().toLowerCase().startsWith('spotimusic')) {
+    final loweredText = text.trim().toLowerCase();
+    if (deepLinkMatch != null &&
+        (loweredText.startsWith('spotiflac') ||
+            loweredText.startsWith('spotimusic'))) {
       return deepLinkMatch.group(0);
     }
 

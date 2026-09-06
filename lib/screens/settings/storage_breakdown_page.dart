@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/providers/download_history_provider.dart';
-import 'package:spotimusic/services/library_database.dart';
-import 'package:spotimusic/services/storage_breakdown_service.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/providers/download_history_provider.dart';
+import 'package:spotiflac_android/services/library_database.dart';
+import 'package:spotiflac_android/services/storage_breakdown_service.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Settings → Files → Storage breakdown.
 ///

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Settings → Streaming & Glass → Streaming integrity.
 ///

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/utils/retail_barcode.dart';
+import 'package:spotiflac_android/utils/retail_barcode.dart';
 
 class MetadataBarcode extends StatelessWidget {
   final String value;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/services/app_remote_config_service.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/services/app_remote_config_service.dart';
 
 class AppAnnouncementDialog extends StatelessWidget {
   final RemoteAnnouncement announcement;

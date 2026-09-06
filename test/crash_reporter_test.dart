@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/core/monitoring/crash_reporter.dart';
+import 'package:spotiflac_android/core/monitoring/crash_reporter.dart';
 
 /// Scriptable HTTP client: [responses] are served in order (a pending
 /// completer stalls the request); every request is recorded.
@@ -127,7 +127,7 @@ void main() {
       final reporter = _reporter(client: client)
         ..configure(
           dsn: 'https://key@errors.test/9',
-          release: 'spotimusic@5.0.0+142',
+          release: 'spotiflac-mobile@5.0.0+142',
           environment: 'release',
         );
 
@@ -135,8 +135,8 @@ void main() {
       final queued = await reporter.captureError(
         StateError('audio pipeline died'),
         StackTrace.fromString(
-          '#0      MusicPlayerHandler._play (package:spotimusic/services/music_player_service.dart:1515:5)\n'
-          '#1      main (package:spotimusic/main.dart:80:9)',
+          '#0      MusicPlayerHandler._play (package:spotiflac_android/services/music_player_service.dart:1515:5)\n'
+          '#1      main (package:spotiflac_android/main.dart:80:9)',
         ),
         category: CrashCategory.playback,
         context: {'network': 'wifi'},
@@ -170,7 +170,7 @@ void main() {
       expect(event['level'], 'error');
       expect(event['logger'], 'playback');
       expect(event['tags'], {'category': 'playback'});
-      expect(event['release'], 'spotimusic@5.0.0+142');
+      expect(event['release'], 'spotiflac-mobile@5.0.0+142');
       expect(event['environment'], 'release');
       expect(event['fingerprint'], ['playback', 'start']);
       expect(event['extra'], {'network': 'wifi'});

@@ -12,13 +12,13 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/ecosystem/cache/cache_cleanup_worker.dart';
-import 'package:spotimusic/ecosystem/cache/cache_index.dart';
-import 'package:spotimusic/ecosystem/cache/cache_cipher.dart';
-import 'package:spotimusic/ecosystem/cache/cache_repository.dart';
-import 'package:spotimusic/ecosystem/cache/streaming_cache_manager.dart';
-import 'package:spotimusic/providers/ecosystem_providers.dart';
-import 'package:spotimusic/providers/provider_accounts_provider.dart'
+import 'package:spotiflac_android/ecosystem/cache/cache_cleanup_worker.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_index.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_cipher.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_repository.dart';
+import 'package:spotiflac_android/ecosystem/cache/streaming_cache_manager.dart';
+import 'package:spotiflac_android/providers/ecosystem_providers.dart';
+import 'package:spotiflac_android/providers/provider_accounts_provider.dart'
     show secureStoreProvider;
 
 /// Secret-store key holding the 64-hex-char ChaCha20 key.

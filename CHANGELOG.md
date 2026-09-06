@@ -2,13 +2,48 @@
 
 ## [Unreleased]
 
+### Changed
+
+- **SpotiFLAC identity restored.** The short-lived "SpotiMusic" rebrand
+  shipped in 5.0.0 has been reverted; the project is once again
+  **SpotiFLAC** (mobile product name **SpotiFLAC Mobile**).
+  - Dart package name back to `spotiflac_android`; app widget back to
+    `SpotiFLACApp`; `AppInfo.appName` back to `SpotiFLAC Mobile`.
+  - Android `applicationId` / `namespace` and iOS `PRODUCT_BUNDLE_IDENTIFIER`
+    back to `com.zarz.spotiflac`, so existing SpotiFLAC Mobile installs upgrade
+    in place. Kotlin sources moved back to `com/zarz/spotiflac/`.
+  - Launcher label / `CFBundleDisplayName` is now **SpotiFLAC**; localized
+    product copy (welcome, update notifications, dialogs) says
+    **SpotiFLAC Mobile** again.
+  - Platform channel names (`com.zarz.spotiflac/backend`, progress streams),
+    the playback notification channel id, the Block Store runtime key, and the
+    `DownloadService` intent actions are back on the `com.zarz.spotiflac`
+    prefix (these must match the application id for Flutter/Android wiring).
+  - Release artefacts are `SpotiFLAC-<version>-<abi>.apk`,
+    `SpotiFLAC-<version>.aab` and `SpotiFLAC-<version>-ios-unsigned.ipa`
+    again (the workflows never changed; `ReleaseArtifactPolicy` and the
+    in-app updater now agree with them).
+  - Crash-reporter build-time define renamed to `SPOTIFLAC_SENTRY_DSN`
+    (`SPOTIMUSIC_SENTRY_DSN` only existed on the unreleased branch).
+- **Deep links / OAuth redirects** use the canonical `spotiflac://` scheme
+  again. `spotimusic://` stays registered on both platforms as a
+  *legacy inbound alias* so links and provider OAuth redirects issued by 5.0.0
+  builds keep resolving; the app never generates `spotimusic://` links.
+- **Preferences written by 5.0.0** (`spotimusic.active_stream_provider`,
+  `spotimusic.provider_health_metrics.v1`) are read once as a fallback when
+  the canonical `spotiflac.*` key is empty. Nothing is deleted; the migration
+  is idempotent.
+- Extension packages: `.spotiflac-ext` remains the canonical suffix alongside
+  the short `.sflx` alias (unchanged — the rebrand never introduced a
+  `.spotimusic-ext` format).
+
 ### Added
 
 - **Crash & failure monitoring (Phase 10)**: dependency-free,
   Sentry-envelope-compatible reporter (`lib/core/monitoring/crash_reporter.dart`)
   built on `package:http` only — no new package dependencies and no change to
   the native build surface. Opt-in by DSN supplied at build time
-  (`--dart-define=SPOTIMUSIC_SENTRY_DSN=…`) or via the remote-config
+  (`--dart-define=SPOTIFLAC_SENTRY_DSN=…`) or via the remote-config
   `crash_reporting_dsn` field (cached copy; no network on the cold-start
   path); **no DSN ships in the binary**. Wired hooks: uncaught zone errors,
   `FlutterError.onError`, `platformDispatcher.onError`, playback

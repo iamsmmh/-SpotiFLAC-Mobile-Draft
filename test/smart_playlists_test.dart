@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/ecosystem_kv.dart';
-import 'package:spotimusic/ecosystem/favorites/favorites.dart';
-import 'package:spotimusic/ecosystem/history/listening_history.dart';
-import 'package:spotimusic/ecosystem/smart_playlists/smart_playlist_engine.dart';
-import 'package:spotimusic/ecosystem/smart_playlists/smart_playlist_models.dart';
-import 'package:spotimusic/ecosystem/smart_playlists/smart_playlist_store.dart';
-import 'package:spotimusic/engine/recommendations.dart';
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_kv.dart';
+import 'package:spotiflac_android/ecosystem/favorites/favorites.dart';
+import 'package:spotiflac_android/ecosystem/history/listening_history.dart';
+import 'package:spotiflac_android/ecosystem/smart_playlists/smart_playlist_engine.dart';
+import 'package:spotiflac_android/ecosystem/smart_playlists/smart_playlist_models.dart';
+import 'package:spotiflac_android/ecosystem/smart_playlists/smart_playlist_store.dart';
+import 'package:spotiflac_android/engine/recommendations.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 TrackHistory history(
   String key,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/l10n/app_localizations.dart';
-import 'package:spotimusic/widgets/audio_quality_badges.dart';
-import 'package:spotimusic/widgets/in_library_badge.dart';
+import 'package:spotiflac_android/l10n/app_localizations.dart';
+import 'package:spotiflac_android/widgets/audio_quality_badges.dart';
+import 'package:spotiflac_android/widgets/in_library_badge.dart';
 
 void main() {
   testWidgets('track metadata badges wrap on a narrow result row', (

@@ -10,11 +10,11 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/core/data/secure_store.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_models.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_registry.dart';
-import 'package:spotimusic/providers/ecosystem_providers.dart';
-import 'package:spotimusic/providers/provider_accounts_provider.dart'
+import 'package:spotiflac_android/core/data/secure_store.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_models.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_registry.dart';
+import 'package:spotiflac_android/providers/ecosystem_providers.dart';
+import 'package:spotiflac_android/providers/provider_accounts_provider.dart'
     show secureStoreProvider;
 
 /// Secure-store adapter for server credentials.

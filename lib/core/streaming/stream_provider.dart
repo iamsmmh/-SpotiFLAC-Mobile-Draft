@@ -13,7 +13,7 @@
 /// layer and feed instances of [StreamProvider] into [StreamingService].
 library;
 
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 /// Transport protocol a source uses.
 enum StreamProtocol {

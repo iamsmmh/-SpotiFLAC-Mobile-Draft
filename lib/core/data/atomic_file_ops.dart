@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:spotimusic/core/domain/entities.dart';
-import 'package:spotimusic/core/domain/ports.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
+import 'package:spotiflac_android/core/domain/ports.dart';
 
 /// Temporary-file suffix for every staged artifact in the pipeline.
 const String kStagingTempSuffix = '.tmp';

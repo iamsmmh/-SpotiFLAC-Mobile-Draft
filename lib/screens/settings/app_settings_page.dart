@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/screens/settings/cloud_sync_page.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/screens/settings/cloud_sync_page.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 
 class AppSettingsPage extends ConsumerWidget {
   const AppSettingsPage({super.key});

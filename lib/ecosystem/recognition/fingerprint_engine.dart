@@ -16,8 +16,8 @@ import 'package:ffmpeg_kit_flutter_new_full/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new_full/return_code.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/ecosystem/recognition/recognition_models.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/ecosystem/recognition/recognition_models.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('Fingerprint');
 

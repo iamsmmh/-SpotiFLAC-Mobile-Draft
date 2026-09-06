@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
 import 'package:flutter/services.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Bottom sheet listing every streaming platform song.link resolves for a

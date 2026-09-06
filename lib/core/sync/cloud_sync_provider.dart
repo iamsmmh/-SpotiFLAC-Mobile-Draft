@@ -18,7 +18,7 @@
 ///     [SyncAuthException] to the UI).
 library;
 
-import 'package:spotimusic/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
 
 /// Thrown when the backend rejects the current credentials and interactive
 /// sign-in is required again.

@@ -7,7 +7,7 @@
 /// freshness without re-running the engine.
 library;
 
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 /// The built-in smart playlists.
 enum SmartPlaylistKind {

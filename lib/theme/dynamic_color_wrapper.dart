@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:spotimusic/providers/theme_provider.dart';
-import 'package:spotimusic/theme/app_theme.dart';
+import 'package:spotiflac_android/providers/theme_provider.dart';
+import 'package:spotiflac_android/theme/app_theme.dart';
 
 class DynamicColorWrapper extends ConsumerWidget {
   final Widget Function(ThemeData light, ThemeData dark, ThemeMode mode)

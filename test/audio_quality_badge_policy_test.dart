@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/utils/audio_quality_badge_policy.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/utils/audio_quality_badge_policy.dart';
 
 void main() {
   group('Library audio quality badge color', () {

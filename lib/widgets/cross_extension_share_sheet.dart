@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/services/cross_extension_share_service.dart';
-import 'package:spotimusic/services/share_intent_service.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/services/cross_extension_share_service.dart';
+import 'package:spotiflac_android/services/share_intent_service.dart';
 
 class CrossExtensionShareSheet extends ConsumerStatefulWidget {
   final String name;

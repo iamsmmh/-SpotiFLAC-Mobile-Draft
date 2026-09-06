@@ -9,41 +9,41 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/models/download_item.dart';
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/services/app_navigation_service.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/providers/download_schedule_settings_provider.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/providers/download_verification_retry_guard.dart';
-import 'package:spotimusic/providers/download_queue_state.dart';
-import 'package:spotimusic/services/app_state_database.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/services/download_request_payload.dart';
-import 'package:spotimusic/services/ffmpeg_service.dart';
-import 'package:spotimusic/services/notification_service.dart';
-import 'package:spotimusic/utils/logger.dart' hide log;
-import 'package:spotimusic/utils/file_access.dart';
-import 'package:spotimusic/utils/string_utils.dart';
-import 'package:spotimusic/utils/artist_utils.dart';
-import 'package:spotimusic/utils/audio_format_utils.dart';
-import 'package:spotimusic/utils/audio_conversion_utils.dart';
-import 'package:spotimusic/utils/int_utils.dart';
-import 'package:spotimusic/utils/extension_auth_launcher.dart';
-import 'package:spotimusic/utils/progress_stream_poller.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/models/download_item.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/services/app_navigation_service.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/providers/download_schedule_settings_provider.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/providers/download_verification_retry_guard.dart';
+import 'package:spotiflac_android/providers/download_queue_state.dart';
+import 'package:spotiflac_android/services/app_state_database.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/services/download_request_payload.dart';
+import 'package:spotiflac_android/services/ffmpeg_service.dart';
+import 'package:spotiflac_android/services/notification_service.dart';
+import 'package:spotiflac_android/utils/logger.dart' hide log;
+import 'package:spotiflac_android/utils/file_access.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
+import 'package:spotiflac_android/utils/artist_utils.dart';
+import 'package:spotiflac_android/utils/audio_format_utils.dart';
+import 'package:spotiflac_android/utils/audio_conversion_utils.dart';
+import 'package:spotiflac_android/utils/int_utils.dart';
+import 'package:spotiflac_android/utils/extension_auth_launcher.dart';
+import 'package:spotiflac_android/utils/progress_stream_poller.dart';
 
-import 'package:spotimusic/core/monitoring/crash_reporter.dart';
-import 'package:spotimusic/core/data/audio_sanity.dart'
+import 'package:spotiflac_android/core/monitoring/crash_reporter.dart';
+import 'package:spotiflac_android/core/data/audio_sanity.dart'
     show AudioMagicSanityChecker, detectAudioContainer;
-import 'package:spotimusic/core/data/network_switch_policy.dart';
-import 'package:spotimusic/providers/download_history_provider.dart';
+import 'package:spotiflac_android/core/data/network_switch_policy.dart';
+import 'package:spotiflac_android/providers/download_history_provider.dart';
 
-export 'package:spotimusic/providers/download_history_provider.dart';
-export 'package:spotimusic/providers/download_queue_state.dart';
+export 'package:spotiflac_android/providers/download_history_provider.dart';
+export 'package:spotiflac_android/providers/download_queue_state.dart';
 
-export 'package:spotimusic/services/history_database.dart'
+export 'package:spotiflac_android/services/history_database.dart'
     show HistoryLookupRequest, HistoryBatchLookupRequest;
 
 part 'download_queue_provider_paths.dart';

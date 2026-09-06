@@ -190,10 +190,10 @@ class SharedPlaylist {
 
   bool get isCollaborative => mode == PlaylistShareMode.collaborate;
 
-  /// Canonical deep link, reusing the app's existing `spotimusic://` scheme so
+  /// Canonical deep link, reusing the app's existing `spotiflac://` scheme so
   /// links open in-app on both platforms with no new intent filters.
   Uri get link => Uri(
-    scheme: 'spotimusic',
+    scheme: 'spotiflac',
     host: 'playlist',
     pathSegments: <String>['shared', shareId],
   );
@@ -236,9 +236,14 @@ class SharedPlaylist {
     );
   }
 
-  /// Extracts a share id from a `spotimusic://playlist/shared/<id>` link.
+  /// Extracts a share id from a `spotiflac://playlist/shared/<id>` link
+  /// (the legacy `spotimusic://` scheme is accepted too).
   static String? shareIdFromLink(Uri uri) {
-    if (uri.scheme != 'spotimusic' || uri.host != 'playlist') return null;
+    final scheme = uri.scheme.toLowerCase();
+    if ((scheme != 'spotiflac' && scheme != 'spotimusic') ||
+        uri.host != 'playlist') {
+      return null;
+    }
     final segments = uri.pathSegments;
     if (segments.length < 2 || segments[0] != 'shared') return null;
     final id = segments[1];

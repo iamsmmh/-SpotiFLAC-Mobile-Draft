@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/models/download_item.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/download_queue_state.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/screens/home_search_logic.dart';
-import 'package:spotimusic/services/audio_metadata_mapper.dart';
-import 'package:spotimusic/services/ffmpeg_models.dart';
-import 'package:spotimusic/services/id3v23_lyrics.dart';
-import 'package:spotimusic/utils/artist_utils.dart';
+import 'package:spotiflac_android/models/download_item.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/download_queue_state.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/screens/home_search_logic.dart';
+import 'package:spotiflac_android/services/audio_metadata_mapper.dart';
+import 'package:spotiflac_android/services/ffmpeg_models.dart';
+import 'package:spotiflac_android/services/id3v23_lyrics.dart';
+import 'package:spotiflac_android/utils/artist_utils.dart';
 
 void main() {
   Track track({

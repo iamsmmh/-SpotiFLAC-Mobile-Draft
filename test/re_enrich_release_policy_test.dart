@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/re_enrich_release_policy.dart';
+import 'package:spotiflac_android/utils/re_enrich_release_policy.dart';
 
 void main() {
   test(

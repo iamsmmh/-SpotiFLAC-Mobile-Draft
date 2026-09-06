@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/application/download_manager.dart';
-import 'package:spotimusic/core/application/queue_engine.dart';
-import 'package:spotimusic/core/data/atomic_file_ops.dart';
-import 'package:spotimusic/core/data/audio_sanity.dart';
-import 'package:spotimusic/core/data/sha256.dart';
-import 'package:spotimusic/core/domain/core_errors.dart';
-import 'package:spotimusic/core/domain/entities.dart';
-import 'package:spotimusic/core/domain/ports.dart';
+import 'package:spotiflac_android/core/application/download_manager.dart';
+import 'package:spotiflac_android/core/application/queue_engine.dart';
+import 'package:spotiflac_android/core/data/atomic_file_ops.dart';
+import 'package:spotiflac_android/core/data/audio_sanity.dart';
+import 'package:spotiflac_android/core/data/sha256.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
+import 'package:spotiflac_android/core/domain/ports.dart';
 
 const _flacBytes = <int>[
   0x66, 0x4C, 0x61, 0x43, // fLaC

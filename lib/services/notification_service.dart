@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:spotimusic/constants/app_info.dart';
-import 'package:spotimusic/l10n/app_localizations.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/l10n/app_localizations.dart';
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();

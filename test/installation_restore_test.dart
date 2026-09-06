@@ -4,14 +4,14 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/app.dart';
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
+import 'package:spotiflac_android/app.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  const backendChannel = MethodChannel('com.zarz.spotimusic/backend');
+  const backendChannel = MethodChannel('com.zarz.spotiflac/backend');
 
   tearDown(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger

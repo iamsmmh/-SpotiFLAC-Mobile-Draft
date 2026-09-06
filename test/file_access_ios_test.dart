@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/file_access.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
 
 void main() {
   group('shouldValidateIosOutputDir', () {
@@ -42,7 +42,7 @@ void main() {
         shouldValidateIosOutputDir(
           isIOS: false,
           isSafMode: false,
-          outputDir: '/data/user/0/com.zarz.spotimusic/files/SpotiFLAC',
+          outputDir: '/data/user/0/com.zarz.spotiflac/files/SpotiFLAC',
           downloadDirectoryBookmark: '',
         ),
         isFalse,

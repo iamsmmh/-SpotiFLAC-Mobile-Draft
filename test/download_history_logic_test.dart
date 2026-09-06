@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
 
 DownloadHistoryItem _historyItem({
   required String id,

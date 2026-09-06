@@ -2,16 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/providers/download_schedule_settings_provider.dart';
-import 'package:spotimusic/screens/settings/download_fallback_extensions_page.dart';
-import 'package:spotimusic/screens/settings/download_schedule_settings_page.dart';
-import 'package:spotimusic/utils/audio_format_utils.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/providers/download_schedule_settings_provider.dart';
+import 'package:spotiflac_android/screens/settings/download_fallback_extensions_page.dart';
+import 'package:spotiflac_android/screens/settings/download_schedule_settings_page.dart';
+import 'package:spotiflac_android/utils/audio_format_utils.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 
 class DownloadSettingsPage extends ConsumerStatefulWidget {
   const DownloadSettingsPage({super.key});

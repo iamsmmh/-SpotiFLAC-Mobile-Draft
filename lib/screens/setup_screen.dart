@@ -5,16 +5,16 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:spotimusic/core/data/android_storage_permission_policy.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/screens/setup_extensions_step.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/l10n/supported_locales.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/adaptive_layout.dart';
-import 'package:spotimusic/utils/file_access.dart';
-import 'package:spotimusic/widgets/scroll_edge_fade.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/core/data/android_storage_permission_policy.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/screens/setup_extensions_step.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/l10n/supported_locales.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/adaptive_layout.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
+import 'package:spotiflac_android/widgets/scroll_edge_fade.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('SetupScreen');
 

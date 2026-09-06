@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/ecosystem/ecosystem.dart';
-import 'package:spotimusic/providers/music_servers_providers.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem.dart';
+import 'package:spotiflac_android/providers/music_servers_providers.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Self-hosted music servers (Jellyfin, Navidrome, Subsonic, Airsonic,
 /// Plex).

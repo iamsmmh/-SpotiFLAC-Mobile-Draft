@@ -1,11 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/data/bridge_extension_driver.dart';
-import 'package:spotimusic/core/data/ffmpeg_audio_transcoder.dart';
-import 'package:spotimusic/core/data/platform_metadata_pipeline.dart';
-import 'package:spotimusic/core/domain/cancellation_token.dart';
-import 'package:spotimusic/core/domain/core_errors.dart';
-import 'package:spotimusic/core/domain/entities.dart';
+import 'package:spotiflac_android/core/data/bridge_extension_driver.dart';
+import 'package:spotiflac_android/core/data/ffmpeg_audio_transcoder.dart';
+import 'package:spotiflac_android/core/data/platform_metadata_pipeline.dart';
+import 'package:spotiflac_android/core/domain/cancellation_token.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
 
 void main() {
   group('GomobileExtensionDriver', () {

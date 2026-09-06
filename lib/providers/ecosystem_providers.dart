@@ -9,11 +9,11 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/ecosystem/ecosystem.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
-import 'package:spotimusic/providers/provider_accounts_provider.dart'
+import 'package:spotiflac_android/ecosystem/ecosystem.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/providers/provider_accounts_provider.dart'
     show secureStoreProvider;
-import 'package:spotimusic/providers/sync_provider.dart';
+import 'package:spotiflac_android/providers/sync_provider.dart';
 
 // ---------------------------------------------------------------------------
 // Storage

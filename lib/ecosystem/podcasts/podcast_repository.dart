@@ -11,10 +11,10 @@
 library;
 
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/ecosystem/ecosystem_database.dart';
-import 'package:spotimusic/ecosystem/podcasts/podcast_models.dart';
-import 'package:spotimusic/ecosystem/podcasts/rss_provider.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/podcast_models.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/rss_provider.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
 final _log = AppLogger('PodcastRepo');
@@ -38,7 +38,7 @@ class HttpFeedFetcher implements FeedFetcher {
     final response = await _client
         .get(uri, headers: const <String, String>{
           'Accept': 'application/rss+xml, application/xml, text/xml, */*',
-          'User-Agent': 'SpotiMusic/5.0 (podcast client)',
+          'User-Agent': 'SpotiFLAC-Mobile/5.0 (podcast client)',
         })
         .timeout(_timeout);
     if (response.statusCode != 200) {

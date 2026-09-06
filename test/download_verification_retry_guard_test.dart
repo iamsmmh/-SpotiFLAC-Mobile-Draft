@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/providers/download_verification_retry_guard.dart';
+import 'package:spotiflac_android/providers/download_verification_retry_guard.dart';
 
 void main() {
   group('DownloadVerificationRetryGuard', () {

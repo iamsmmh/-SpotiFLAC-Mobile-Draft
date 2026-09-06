@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/core/sync/sync_entities.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/sync_provider.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/sync_provider.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Cloud sync settings page (Phase 6).
 ///

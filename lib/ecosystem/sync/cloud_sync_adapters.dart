@@ -15,11 +15,11 @@
 /// sync can never drift into two sessions.
 library;
 
-import 'package:spotimusic/core/sync/cloud_sync_provider.dart';
-import 'package:spotimusic/core/sync/sync_entities.dart';
-import 'package:spotimusic/ecosystem/account/account_service.dart';
-import 'package:spotimusic/ecosystem/account/auth_adapters.dart';
-import 'package:spotimusic/ecosystem/account/auth_provider.dart';
+import 'package:spotiflac_android/core/sync/cloud_sync_provider.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/ecosystem/account/account_service.dart';
+import 'package:spotiflac_android/ecosystem/account/auth_adapters.dart';
+import 'package:spotiflac_android/ecosystem/account/auth_provider.dart';
 
 /// Supplies the identity + token a sync adapter needs.
 abstract interface class SyncAuthBridge {

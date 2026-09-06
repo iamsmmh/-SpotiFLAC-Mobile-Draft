@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show ScrollDirection;
-import 'package:spotimusic/utils/lyrics_parser.dart';
-import 'package:spotimusic/utils/synced_lyrics_scroll.dart';
+import 'package:spotiflac_android/utils/lyrics_parser.dart';
+import 'package:spotiflac_android/utils/synced_lyrics_scroll.dart';
 
 /// A self-contained, real-time synchronized-lyrics viewer.
 ///

@@ -14,8 +14,8 @@
 ///   * `HH:MM:SS`, `MM:SS` and bare-seconds durations
 library;
 
-import 'package:spotimusic/ecosystem/podcasts/podcast_models.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/podcast_models.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 import 'package:xml/xml.dart';
 
 final _log = AppLogger('RssProvider');

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/data/secure_store.dart';
-import 'package:spotimusic/providers/provider_accounts_provider.dart';
-import 'package:spotimusic/services/provider_credentials.dart';
+import 'package:spotiflac_android/core/data/secure_store.dart';
+import 'package:spotiflac_android/providers/provider_accounts_provider.dart';
+import 'package:spotiflac_android/services/provider_credentials.dart';
 
 /// In-memory [SecureStore] fake. Implements the facade (not the
 /// plugin) so the test only depends on the app's own API.

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/favorites/favorites.dart';
+import 'package:spotiflac_android/ecosystem/favorites/favorites.dart';
 
 FavoriteEntry _entry(
   String key,

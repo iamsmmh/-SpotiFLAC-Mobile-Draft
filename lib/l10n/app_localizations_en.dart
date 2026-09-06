@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'SpotiMusic';
+  String get appName => 'SpotiFLAC Mobile';
 
   @override
   String get navHome => 'Home';
@@ -1910,7 +1910,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get libraryRemoveFolderMessage =>
-      'Remove this folder and its indexed tracks from SpotiMusic? Audio files on the storage will not be deleted.';
+      'Remove this folder and its indexed tracks from SpotiFLAC Mobile? Audio files on the storage will not be deleted.';
 
   @override
   String get libraryShowDuplicateIndicator => 'Show Duplicate Indicator';
@@ -2146,11 +2146,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get tutorialWelcomeTitle => 'Welcome to SpotiMusic!';
+  String get tutorialWelcomeTitle => 'Welcome to SpotiFLAC Mobile!';
 
   @override
   String get tutorialWelcomeDesc =>
-      'Learn how to find music with extensions, choose the quality you want, and manage downloads in SpotiMusic.';
+      'Learn how to find music with extensions, choose the quality you want, and manage downloads in SpotiFLAC Mobile.';
 
   @override
   String get tutorialWelcomeTip1 =>
@@ -3869,7 +3869,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String notifDownloadingUpdate(String version) {
-    return 'Downloading SpotiMusic v$version';
+    return 'Downloading SpotiFLAC Mobile v$version';
   }
 
   @override
@@ -3882,7 +3882,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String notifUpdateReadyBody(String version) {
-    return 'SpotiMusic v$version downloaded. Tap to install.';
+    return 'SpotiFLAC Mobile v$version downloaded. Tap to install.';
   }
 
   @override
@@ -4486,7 +4486,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get extensionCustomUrlHandlingShareHint =>
-      'Share links from these sites to SpotiMusic and this extension will handle them.';
+      'Share links from these sites to SpotiFLAC Mobile and this extension will handle them.';
 
   @override
   String extensionSettingsCount(int count) {
@@ -4648,7 +4648,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get libraryBuiltInPreviewPlayerSubtitle =>
-      'Only for quick local previews inside SpotiMusic, not recommended for regular listening';
+      'Only for quick local previews inside SpotiFLAC Mobile, not recommended for regular listening';
 
   @override
   String get libraryBuiltInPlayerInfo =>
@@ -4935,11 +4935,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get extensionVerificationHelpMessageManual =>
-      'SpotiMusic could not open the browser automatically. Open this link in your browser, or copy it manually.';
+      'SpotiFLAC Mobile could not open the browser automatically. Open this link in your browser, or copy it manually.';
 
   @override
   String get extensionVerificationHelpMessageWaiting =>
-      'If the browser did not open, or verification finished but did not return to SpotiMusic, open this link again or copy it manually.';
+      'If the browser did not open, or verification finished but did not return to SpotiFLAC Mobile, open this link again or copy it manually.';
 
   @override
   String get extensionVerificationClose => 'Close';

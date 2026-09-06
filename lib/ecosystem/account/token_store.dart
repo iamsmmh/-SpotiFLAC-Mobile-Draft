@@ -15,9 +15,9 @@ library;
 import 'dart:convert';
 
 import 'package:sqflite/sqflite.dart' show ConflictAlgorithm;
-import 'package:spotimusic/core/data/secure_store.dart';
-import 'package:spotimusic/ecosystem/account/account_models.dart';
-import 'package:spotimusic/ecosystem/ecosystem_database.dart';
+import 'package:spotiflac_android/core/data/secure_store.dart';
+import 'package:spotiflac_android/ecosystem/account/account_models.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
 
 /// Everything needed to silently restore a session, minus the secrets.
 class StoredCredentials {

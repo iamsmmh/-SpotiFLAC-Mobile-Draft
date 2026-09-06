@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:spotimusic/core/streaming/stream_provider.dart';
-import 'package:spotimusic/ecosystem/servers/jellyfin_provider.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_models.dart';
-import 'package:spotimusic/ecosystem/servers/plex_provider.dart';
-import 'package:spotimusic/ecosystem/servers/subsonic_provider.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/utils/md5.dart';
+import 'package:spotiflac_android/core/streaming/stream_provider.dart';
+import 'package:spotiflac_android/ecosystem/servers/jellyfin_provider.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_models.dart';
+import 'package:spotiflac_android/ecosystem/servers/plex_provider.dart';
+import 'package:spotiflac_android/ecosystem/servers/subsonic_provider.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/utils/md5.dart';
 
 class _FakeSecrets implements MusicServerSecretStore {
   final Map<String, String> _store = <String, String>{};

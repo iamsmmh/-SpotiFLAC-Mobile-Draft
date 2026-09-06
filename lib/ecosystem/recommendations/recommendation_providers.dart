@@ -17,8 +17,8 @@ import 'dart:convert';
 import 'dart:math' show sqrt;
 
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/engine/recommendations.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/engine/recommendations.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('Recommendations');
 

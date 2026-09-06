@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
 
 /// Error card shown by detail screens: a dedicated rate-limit presentation
 /// when the message looks like an HTTP 429, otherwise a generic error row.

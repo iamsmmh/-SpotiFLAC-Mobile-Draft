@@ -24,7 +24,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:label="SpotiMusic"
+        android:label="SpotiFLAC"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false"
@@ -88,11 +88,13 @@
                 <data android:scheme="https" android:host="listen.tidal.com" />
             </intent-filter>
 
-            <!-- App deep links: spotimusic://open?url=… / spotimusic://search?q=… -->
+            <!-- App deep links: spotiflac://open?url=… / spotiflac://search?q=… -->
+            <!-- (spotimusic:// is kept as a legacy alias for links issued by 5.0.0 builds.) -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="spotiflac" />
                 <data android:scheme="spotimusic" />
             </intent-filter>
 
@@ -104,23 +106,26 @@
                 <data android:scheme="https" android:host="music.youtube.com" />
             </intent-filter>
 
-            <!-- Extension OAuth (PKCE) redirect: spotimusic://callback?code=...&state=<extension_id> -->
+            <!-- Extension OAuth (PKCE) redirect: spotiflac://callback?code=...&state=<extension_id> -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="spotiflac" android:host="callback" />
                 <data android:scheme="spotimusic" android:host="callback" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="spotiflac" android:host="spotify-callback" />
                 <data android:scheme="spotimusic" android:host="spotify-callback" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="spotiflac" android:host="session-grant" />
                 <data android:scheme="spotimusic" android:host="session-grant" />
             </intent-filter>
         </activity>

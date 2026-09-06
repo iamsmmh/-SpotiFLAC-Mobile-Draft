@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
 
 void main() {
   group('albumCollectionKey', () {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/widgets/smoothed_progress.dart';
+import 'package:spotiflac_android/widgets/smoothed_progress.dart';
 
 Widget _testApp({
   required double progress,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
 
 /// Icon+label pill used in selection-mode bottom bars. Disabled state dims
 /// both the fill and the content to 50% alpha.

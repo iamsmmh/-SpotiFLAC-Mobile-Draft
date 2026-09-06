@@ -1,5 +1,5 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:spotimusic/services/music_player_service.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
 
 /// Browse tree exposed to Android Auto / Automotive OS, Bluetooth AVRCP
 /// browsers and (through audio_service) CarPlay-style clients over

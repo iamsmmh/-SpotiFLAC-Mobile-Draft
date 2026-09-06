@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/ecosystem/ecosystem.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/playback_provider.dart';
-import 'package:spotimusic/providers/smart_playlists_provider.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/cached_cover_image.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/playback_provider.dart';
+import 'package:spotiflac_android/providers/smart_playlists_provider.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/cached_cover_image.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Smart playlists (Feature Group 6): auto-updating views over history,
 /// favorites, the library and the recommendation engine.

@@ -9,10 +9,10 @@ library;
 
 import 'dart:convert';
 
-import 'package:spotimusic/core/data/sha256.dart';
-import 'package:spotimusic/ecosystem/ecosystem_database.dart';
-import 'package:spotimusic/ecosystem/ecosystem_kv.dart';
-import 'package:spotimusic/ecosystem/social/social_models.dart';
+import 'package:spotiflac_android/core/data/sha256.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_kv.dart';
+import 'package:spotiflac_android/ecosystem/social/social_models.dart';
 import 'package:sqflite/sqflite.dart';
 
 /// Remote operations the social layer needs. Implemented by whichever backend
@@ -252,7 +252,7 @@ class PlaylistSharing {
     return cached == null ? null : SharedPlaylist.tryParse(cached);
   }
 
-  /// Opens a `spotimusic://playlist/shared/<id>` link.
+  /// Opens a `spotiflac://playlist/shared/<id>` link.
   Future<SharedPlaylist?> resolveLink(Uri uri) async {
     final shareId = SharedPlaylist.shareIdFromLink(uri);
     if (shareId == null) return null;

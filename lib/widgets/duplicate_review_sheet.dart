@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/download_history_provider.dart';
-import 'package:spotimusic/providers/local_library_provider.dart';
-import 'package:spotimusic/services/downloaded_embedded_cover_resolver.dart';
-import 'package:spotimusic/services/library_database.dart';
-import 'package:spotimusic/utils/file_access.dart';
-import 'package:spotimusic/utils/path_match_keys.dart';
-import 'package:spotimusic/widgets/audio_quality_badges.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/download_history_provider.dart';
+import 'package:spotiflac_android/providers/local_library_provider.dart';
+import 'package:spotiflac_android/services/downloaded_embedded_cover_resolver.dart';
+import 'package:spotiflac_android/services/library_database.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
+import 'package:spotiflac_android/utils/path_match_keys.dart';
+import 'package:spotiflac_android/widgets/audio_quality_badges.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Bottom sheet listing tracks that exist more than once (same ISRC) across
 /// download history and the local library, with keep-best and per-copy

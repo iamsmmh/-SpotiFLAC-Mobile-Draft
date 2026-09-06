@@ -2,14 +2,14 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/widgets/preview_button.dart';
-import 'package:spotimusic/widgets/track_collection_quick_actions.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/widgets/preview_button.dart';
+import 'package:spotiflac_android/widgets/track_collection_quick_actions.dart';
 
 void main() {
   const track = Track(

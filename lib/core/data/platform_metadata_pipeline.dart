@@ -1,8 +1,8 @@
-import 'package:spotimusic/core/domain/cancellation_token.dart';
-import 'package:spotimusic/core/domain/core_errors.dart';
-import 'package:spotimusic/core/domain/entities.dart';
-import 'package:spotimusic/core/domain/ports.dart';
-import 'package:spotimusic/services/ffmpeg_service.dart';
+import 'package:spotiflac_android/core/domain/cancellation_token.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
+import 'package:spotiflac_android/core/domain/ports.dart';
+import 'package:spotiflac_android/services/ffmpeg_service.dart';
 
 /// Pluggable lookup used by [PlatformMetadataPipeline.enrich]. Returns the
 /// enriched envelope for [track]; the default implementation is the identity

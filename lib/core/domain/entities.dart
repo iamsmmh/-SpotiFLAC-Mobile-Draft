@@ -5,7 +5,7 @@
 /// and serialize if needed.
 library;
 
-import 'package:spotimusic/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
 
 // ---------------------------------------------------------------------------
 // Track identity

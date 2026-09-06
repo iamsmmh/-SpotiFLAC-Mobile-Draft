@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/screens/queue_library_refresh_policy.dart';
-import 'package:spotimusic/services/library_database.dart';
+import 'package:spotiflac_android/screens/queue_library_refresh_policy.dart';
+import 'package:spotiflac_android/services/library_database.dart';
 
 void main() {
   const empty = QueueLibraryCounts(

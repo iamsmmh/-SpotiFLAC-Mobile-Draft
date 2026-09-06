@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/download_size_estimate.dart';
+import 'package:spotiflac_android/utils/download_size_estimate.dart';
 
 void main() {
   group('bitrateKbpsForQuality', () {

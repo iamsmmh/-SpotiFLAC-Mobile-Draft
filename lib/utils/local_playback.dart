@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/providers/local_library_provider.dart';
-import 'package:spotimusic/providers/playback_provider.dart';
-import 'package:spotimusic/utils/file_access.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/local_library_provider.dart';
+import 'package:spotiflac_android/providers/playback_provider.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
 
 /// Plays [track] from download history or the local library when a matching
 /// file already exists on disk.

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('ApkDownloader');
 
@@ -40,7 +40,7 @@ class ApkDownloader {
         return null;
       }
 
-      final filePath = '${dir.path}/SpotiMusic-$version.apk';
+      final filePath = '${dir.path}/SpotiFLAC-$version.apk';
       final file = File(filePath);
 
       if (await file.exists()) {

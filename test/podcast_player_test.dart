@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/podcasts/podcast_models.dart';
-import 'package:spotimusic/ecosystem/podcasts/podcast_player.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/podcast_models.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/podcast_player.dart';
 
 void main() {
   group('speed handling', () {

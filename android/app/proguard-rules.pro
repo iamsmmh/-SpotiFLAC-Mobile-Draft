@@ -62,7 +62,7 @@
 -keep class kotlin.Metadata { *; }
 
 # Keep MainActivity and related classes
--keep class com.zarz.spotimusic.** { *; }
+-keep class com.zarz.spotiflac.** { *; }
 
 # Prevent R8 from removing metadata
 -keepattributes *Annotation*

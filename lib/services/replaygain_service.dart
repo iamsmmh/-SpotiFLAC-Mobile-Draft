@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:spotimusic/services/ffmpeg_service.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/file_access.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/services/ffmpeg_service.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 /// Standalone ReplayGain (re)scanning for existing audio files.
 ///

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/recognition/fingerprint_engine.dart';
-import 'package:spotimusic/ecosystem/recognition/recognition_models.dart';
-import 'package:spotimusic/ecosystem/recognition/recognition_provider.dart';
-import 'package:spotimusic/ecosystem/recognition/recognition_service.dart';
+import 'package:spotiflac_android/ecosystem/recognition/fingerprint_engine.dart';
+import 'package:spotiflac_android/ecosystem/recognition/recognition_models.dart';
+import 'package:spotiflac_android/ecosystem/recognition/recognition_provider.dart';
+import 'package:spotiflac_android/ecosystem/recognition/recognition_service.dart';
 
 /// Provider stub returning a canned attempt.
 class _StubProvider implements RecognitionProvider {
@@ -58,7 +58,7 @@ class _StubRecorder implements RecognitionRecorder {
   Future<RecognitionSample> record(Duration duration) async {
     // Points at a path that does not exist; the service deletes best-effort.
     return RecognitionSample(
-      filePath: '/tmp/spotimusic-test-sample-does-not-exist.wav',
+      filePath: '/tmp/spotiflac-test-sample-does-not-exist.wav',
       duration: duration,
     );
   }

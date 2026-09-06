@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/cache/cache_cipher.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_cipher.dart';
 
 void main() {
   group('ChaCha20 (RFC 8439)', () {

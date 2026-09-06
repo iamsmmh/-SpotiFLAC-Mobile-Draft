@@ -35,6 +35,43 @@
 
 ---
 
+## What is SpotiFLAC Mobile?
+
+**SpotiFLAC Mobile** is the Android/iOS edition of SpotiFLAC: an open-source,
+extension-driven music client written in Flutter with a Go backend compiled via
+`gomobile`. Everything below is present in this repository:
+
+| Area | What it does |
+| --- | --- |
+| **Music discovery** | Paste or share a Spotify / Deezer / Tidal / YouTube Music link, or search by text; metadata is resolved through installed extensions (Home tab). |
+| **Streaming** | Multi-provider streaming engine with per-provider health scoring and an ordered failover chain (`lib/engine/`, `lib/services/multi_provider_stream_service.dart`), progressive playback through `audio_service` + `audioplayers`. |
+| **Downloads** | Lossless FLAC (and other formats via extensions) with a native foreground `DownloadService`, background finalisation, ReplayGain, cover/lyrics embedding, SAF or app-private storage, scheduling and queue transfer. |
+| **Local library & offline playback** | Downloaded and locally indexed tracks (SQLite `library_database`), albums/artists/playlists, M3U import/export, offline network profile gating, playback of local files without a network. |
+| **Player** | Full player + mini player, queue, seek, background/lock-screen playback and media buttons, Smart Play (local → stream → download), gapless/crossfade policies, equaliser and advanced audio effects, optional Liquid Glass UI. |
+| **Extensions** | Installable `.spotiflac-ext` / `.sflx` packages (JavaScript, run in the Go backend), a decentralised Store with an official registry, provider priority, OAuth/signed-session callbacks, cross-extension sharing. |
+| **Ecosystem** | Podcasts, self-hosted servers (Subsonic / Jellyfin / Plex), favourites, listening history, smart playlists, optional cloud sync and music recognition (`lib/ecosystem/`). |
+| **Platforms** | Android (arm64, arm32, x86_64 APKs + AAB) and iOS (unsigned IPA for sideloading), both built by GitHub Actions. |
+
+### Installation
+
+- **Android** – download `SpotiFLAC-<version>-arm64.apk` (or `arm32` / `x86_64`)
+  from the [Releases](https://github.com/spotiflacapp/SpotiFLAC-Mobile/releases)
+  page and install it. The in-app updater fetches the matching artefact for
+  your device.
+- **iOS** – sideload `SpotiFLAC-<version>-ios-unsigned.ipa` with AltStore,
+  SideStore or Sideloadly, or add the AltStore source listed in the FAQ.
+- **From source** – see [Development](#development) and
+  [CONTRIBUTING.md](CONTRIBUTING.md).
+
+### Configuration
+
+First-run setup installs the recommended starter extensions from the official
+registry. Everything else lives under **Settings**: download folder and
+format, provider priority, streaming quality per network profile, Liquid Glass
+on/off, lyrics/metadata providers, notifications, backup & restore.
+
+---
+
 ## Streaming Engine & Liquid Glass
 
 SpotiFLAC Mobile now ships a unified **Track → Source → Playback Engine**

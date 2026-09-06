@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/domain/cancellation_token.dart';
+import 'package:spotiflac_android/core/domain/cancellation_token.dart';
 
 void main() {
   group('CancellationTokenSource', () {

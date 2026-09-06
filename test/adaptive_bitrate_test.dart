@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/engine/audio_characteristics.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
 
 StreamVariant _variant(int kbps, {DateTime? expiresAt}) => StreamVariant(
   uri: 'https://cdn/$kbps',

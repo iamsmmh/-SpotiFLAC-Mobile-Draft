@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/constants/app_info.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/extension_permission_gate.dart';
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/extension_permission_gate.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
 
 final _log = AppLogger('StoreProvider');
 final RegExp _leadingVersionPrefix = RegExp(r'^v');

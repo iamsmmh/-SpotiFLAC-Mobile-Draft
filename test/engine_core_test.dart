@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/engine/audio_characteristics.dart';
-import 'package:spotimusic/engine/playback_session.dart';
-import 'package:spotimusic/engine/smart_play.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
-import 'package:spotimusic/engine/track_identity.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/engine/playback_session.dart';
+import 'package:spotiflac_android/engine/smart_play.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
+import 'package:spotiflac_android/engine/track_identity.dart';
 
 void main() {
   group('TrackTextNormalizer', () {

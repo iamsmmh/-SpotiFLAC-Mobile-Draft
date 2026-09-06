@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/services/library_ledger_service.dart';
+import 'package:spotiflac_android/services/library_ledger_service.dart';
 
 void main() {
   group('LedgerEntry match keys', () {

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/ecosystem_database.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
 
 void main() {
   group('ecosystem migrations', () {

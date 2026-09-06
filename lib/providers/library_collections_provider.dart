@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/core/sync/sync_entities.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/sync_provider.dart';
-import 'package:spotimusic/services/ffmpeg_service.dart';
-import 'package:spotimusic/services/library_collections_database.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/sync_provider.dart';
+import 'package:spotiflac_android/services/ffmpeg_service.dart';
+import 'package:spotiflac_android/services/library_collections_database.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('LibraryCollections');
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/ecosystem/ecosystem.dart';
-import 'package:spotimusic/providers/ecosystem_providers.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem.dart';
+import 'package:spotiflac_android/providers/ecosystem_providers.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Account settings (Feature Group 1).
 ///
@@ -225,7 +225,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
   Future<void> _startOAuth(AccountService service, AuthMethod method) async {
     final uri = await service.beginOAuth(
       method,
-      redirectUri: 'spotimusic://oauth',
+      redirectUri: 'spotiflac://oauth',
     );
     if (uri == null) {
       if (!mounted) return;
@@ -248,7 +248,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
         content: TextField(
           controller: controller,
           decoration: const InputDecoration(
-            hintText: 'spotimusic://oauth?…',
+            hintText: 'spotiflac://oauth?…',
           ),
         ),
         actions: [

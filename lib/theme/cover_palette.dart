@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/cached_cover_image.dart';
+import 'package:spotiflac_android/widgets/cached_cover_image.dart';
 
 /// Colour scheme derived from cover art, used to theme detail-screen headers.
 ///

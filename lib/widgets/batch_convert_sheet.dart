@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/utils/audio_conversion_utils.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/utils/audio_conversion_utils.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Modern, card-based batch convert sheet shared by the queue and album
 /// screens, matching the single-track convert sheet styling.

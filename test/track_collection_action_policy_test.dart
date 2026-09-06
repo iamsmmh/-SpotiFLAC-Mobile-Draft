@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/widgets/track_collection_action_policy.dart';
+import 'package:spotiflac_android/widgets/track_collection_action_policy.dart';
 
 void main() {
   group('quality variant track menu', () {

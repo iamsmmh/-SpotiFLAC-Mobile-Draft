@@ -3317,7 +3317,7 @@
   "librarySourceScanCount": "{scanned} dari {total} file dipindai ({progress}%)",
   "libraryExternalStorage": "Storage eksternal",
   "libraryRemoveFolder": "Hapus folder library",
-  "libraryRemoveFolderMessage": "Hapus folder ini dan indeks lagunya dari SpotiMusic? File audio di storage tidak akan dihapus.",
+  "libraryRemoveFolderMessage": "Hapus folder ini dan indeks lagunya dari SpotiFLAC Mobile? File audio di storage tidak akan dihapus.",
   "@metadataProviderPriorityTitle": {
     "description": "Metadata priority page title"
   },
@@ -3421,7 +3421,7 @@
     "description": "Grid layout option"
   },
   "trackDownloaded": "Diunduh",
-  "extensionVerificationHelpMessageManual": "SpotiMusic could not open the browser automatically. Open this link in your browser, or copy it manually.",
+  "extensionVerificationHelpMessageManual": "SpotiFLAC Mobile could not open the browser automatically. Open this link in your browser, or copy it manually.",
   "setupDownloadLocationIosMessage": "Di iOS, unduhan disimpan ke folder Documents aplikasi. Anda dapat mengaksesnya melalui aplikasi Files.",
   "optionsArtistTagModeDescription": "Pilih bagaimana beberapa artis dicantumkan dalam tag yang disematkan.",
   "@optionsArtistTagModeDescription": {
@@ -4323,7 +4323,7 @@
     }
   },
   "libraryExternalPlayerSubtitle": "Recommended for listening, best quality, gapless playback, EQ, and wider format support",
-  "extensionCustomUrlHandlingShareHint": "Share links from these sites to SpotiMusic and this extension will handle them.",
+  "extensionCustomUrlHandlingShareHint": "Share links from these sites to SpotiFLAC Mobile and this extension will handle them.",
   "libraryFilterQuality": "Quality",
   "@libraryFilterQuality": {
     "description": "Filter section - audio quality"
@@ -4554,7 +4554,7 @@
   "@logIssueSummary": {
     "description": "Header for log issue analysis summary"
   },
-  "appName": "SpotiMusic",
+  "appName": "SpotiFLAC Mobile",
   "storeRepoDialogCurrent": "Repositori saat ini:",
   "@optionsExtensionStoreSubtitle": {
     "description": "Subtitle for extension repo toggle"
@@ -5197,7 +5197,7 @@
   "@setupStorageGranted": {
     "description": "Success message for storage permission"
   },
-  "tutorialWelcomeTitle": "Selamat Datang di SpotiMusic!",
+  "tutorialWelcomeTitle": "Selamat Datang di SpotiFLAC Mobile!",
   "a11ySelectAlbum": "Select album {albumName}",
   "@a11ySelectAlbum": {
     "description": "Accessibility label for selecting an album",
@@ -5508,7 +5508,7 @@
     "description": "Subtitle when all files access is enabled"
   },
   "extensionsSearchProvider": "Provider Pencarian",
-  "tutorialWelcomeDesc": "Pelajari cara menemukan musik dengan extension, memilih kualitas, dan mengelola unduhan di SpotiMusic.",
+  "tutorialWelcomeDesc": "Pelajari cara menemukan musik dengan extension, memilih kualitas, dan mengelola unduhan di SpotiFLAC Mobile.",
   "selectionBatchConvertConfirmTitle": "Batch Convert",
   "extensionMetadataProvider": "Provider Metadata",
   "queueDownloadedFileMissing": "Downloaded file missing",
@@ -5539,7 +5539,7 @@
   "@albumFolderStructureDescription": {
     "description": "Album folder structure picker description"
   },
-  "libraryBuiltInPreviewPlayerSubtitle": "Only for quick local previews inside SpotiMusic, not recommended for regular listening",
+  "libraryBuiltInPreviewPlayerSubtitle": "Only for quick local previews inside SpotiFLAC Mobile, not recommended for regular listening",
   "@libraryBuiltInPreviewPlayerSubtitle": {
     "description": "Subtitle for built-in preview player option"
   },
@@ -5662,7 +5662,7 @@
     "description": "Section header for about info"
   },
   "cueSplitNoAudioFile": "Audio file not found for this CUE sheet",
-  "notifUpdateReadyBody": "SpotiMusic v{version} downloaded. Tap to install.",
+  "notifUpdateReadyBody": "SpotiFLAC Mobile v{version} downloaded. Tap to install.",
   "appearanceSelectAccentColor": "Select accent color {hex}",
   "@homeAlbumInfoUnavailable": {
     "description": "Snackbar when album info cannot be loaded"
@@ -5840,7 +5840,7 @@
   "settingsDownloadNetworkAny": "WiFi + Data Seluler",
   "audioAnalysisDuration": "Duration",
   "audioAnalysisAnalyzing": "Analyzing audio...",
-  "extensionVerificationHelpMessageWaiting": "If the browser did not open, or verification finished but did not return to SpotiMusic, open this link again or copy it manually.",
+  "extensionVerificationHelpMessageWaiting": "If the browser did not open, or verification finished but did not return to SpotiFLAC Mobile, open this link again or copy it manually.",
   "editMetadataFieldDiscNum": "Disc #",
   "@editMetadataFieldDiscNum": {
     "description": "Chip label for disc number field in auto-fill selector"
@@ -5961,7 +5961,7 @@
   "settingsCache": "Storage & Cache",
   "providerPriorityFallbackExtensionsHint": "Hanya ekstensi yang diaktifkan dengan kemampuan penyedia unduhan yang tercantum di sini.",
   "libraryFilterAll": "All",
-  "notifDownloadingUpdate": "Downloading SpotiMusic v{version}",
+  "notifDownloadingUpdate": "Downloading SpotiFLAC Mobile v{version}",
   "extensionsProviderPrioritySection": "Prioritas Provider",
   "storeChangeRepoTooltip": "Ubah repositori",
   "snackbarFailedToInstall": "Gagal memasang ekstensi",

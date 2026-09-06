@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/data/secure_store.dart';
-import 'package:spotimusic/ecosystem/account/account_models.dart';
-import 'package:spotimusic/ecosystem/account/account_service.dart';
-import 'package:spotimusic/ecosystem/account/auth_adapters.dart';
-import 'package:spotimusic/ecosystem/account/auth_provider.dart';
-import 'package:spotimusic/ecosystem/account/token_store.dart';
-import 'package:spotimusic/ecosystem/ecosystem_kv.dart';
+import 'package:spotiflac_android/core/data/secure_store.dart';
+import 'package:spotiflac_android/ecosystem/account/account_models.dart';
+import 'package:spotiflac_android/ecosystem/account/account_service.dart';
+import 'package:spotiflac_android/ecosystem/account/auth_adapters.dart';
+import 'package:spotiflac_android/ecosystem/account/auth_provider.dart';
+import 'package:spotiflac_android/ecosystem/account/token_store.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_kv.dart';
 
 class FakeSecureStore implements SecureStore {
   final Map<String, String> values = <String, String>{};
@@ -177,7 +177,7 @@ void main() {
       expect(emailOnly.supportedMethods, <AuthMethod>{AuthMethod.email});
       expect(emailOnly.oauthStartUrl(
             AuthMethod.google,
-            redirectUri: 'spotimusic://oauth',
+            redirectUri: 'spotiflac://oauth',
           ), isNull);
 
       final withGoogle = FirebaseAuthAdapter(
@@ -192,7 +192,7 @@ void main() {
         withGoogle
             .oauthStartUrl(
               AuthMethod.google,
-              redirectUri: 'spotimusic://oauth',
+              redirectUri: 'spotiflac://oauth',
             )
             ?.queryParameters['client_id'],
         'client.apps.googleusercontent.com',

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/utils/adaptive_layout.dart';
-import 'package:spotimusic/widgets/discard_changes_dialog.dart';
-import 'package:spotimusic/widgets/priority_settings_scaffold.dart';
-import 'package:spotimusic/widgets/reorderable_priority_item.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/constants/music_services.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/utils/adaptive_layout.dart';
+import 'package:spotiflac_android/widgets/discard_changes_dialog.dart';
+import 'package:spotiflac_android/widgets/priority_settings_scaffold.dart';
+import 'package:spotiflac_android/widgets/reorderable_priority_item.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/constants/music_services.dart';
 
 class LyricsProviderPriorityPage extends ConsumerStatefulWidget {
   const LyricsProviderPriorityPage({super.key});

@@ -10,9 +10,9 @@
 ///   * `testConnection` powers the "Add server" settings flow.
 library;
 
-import 'package:spotimusic/core/streaming/stream_provider.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_models.dart';
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/core/streaming/stream_provider.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_models.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 /// Base contract shared by all server integrations.
 abstract class MusicServerProvider implements StreamProvider {

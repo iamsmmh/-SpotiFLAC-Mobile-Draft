@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/providers/explore_provider.dart';
+import 'package:spotiflac_android/providers/explore_provider.dart';
 
 void main() {
   test('home-feed models tolerate malformed optional extension fields', () {

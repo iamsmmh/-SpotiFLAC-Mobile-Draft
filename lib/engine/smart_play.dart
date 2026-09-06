@@ -1,6 +1,6 @@
 library;
-import 'package:spotimusic/engine/audio_characteristics.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
 
 /// Smart Play: the single decision path the player uses when the user hits
 /// Play.

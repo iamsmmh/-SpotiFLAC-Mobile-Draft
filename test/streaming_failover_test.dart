@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/services/multi_provider_stream_service.dart';
+import 'package:spotiflac_android/services/multi_provider_stream_service.dart';
 
 /// Handler that records every call and answers with a scripted result.
 class _FakeHandler extends StreamProviderHandler {

@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/theme/cover_palette.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/theme/cover_palette.dart';
 
 /// Collapsing album-detail header shared by the album, local-album, and
 /// downloaded-album screens: full-bleed [background] (optionally blurred and

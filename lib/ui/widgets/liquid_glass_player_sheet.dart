@@ -2,18 +2,19 @@ import 'package:audio_service/audio_service.dart' show MediaItem;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/providers/multi_provider_stream_provider.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/services/multi_provider_stream_service.dart';
-import 'package:spotimusic/services/music_player_service.dart';
-import 'package:spotimusic/ui/widgets/liquid_glass_container.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
-import 'package:spotimusic/widgets/player_artwork.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/multi_provider_stream_provider.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/services/multi_provider_stream_service.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
+import 'package:spotiflac_android/ui/widgets/liquid_glass_container.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/widgets/player_artwork.dart';
 
-/// Liquid Glass full-screen player modal sheet for SpotiMusic.
+/// Liquid Glass full-screen player modal sheet for SpotiFLAC Mobile.
 ///
 /// Dual-mode control surface:
 ///   * Streaming mode — pick any of the 8 ecosystem providers from the glass
@@ -81,7 +82,7 @@ class _LiquidGlassPlayerSheetState
   bool _downloadQueued = false;
 
   String get _title =>
-      widget.track?.name ?? widget.mediaItem?.title ?? 'SpotiMusic';
+      widget.track?.name ?? widget.mediaItem?.title ?? AppInfo.appName;
   String get _artist =>
       widget.track?.artistName ?? widget.mediaItem?.artist ?? '';
   String? get _artUri =>

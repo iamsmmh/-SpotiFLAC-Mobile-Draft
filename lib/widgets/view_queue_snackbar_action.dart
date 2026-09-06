@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/services/shell_navigation_service.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/services/shell_navigation_service.dart';
 
 SnackBarAction buildViewQueueSnackBarAction(BuildContext context) {
   return SnackBarAction(

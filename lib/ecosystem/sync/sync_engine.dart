@@ -18,10 +18,10 @@ library;
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:spotimusic/core/sync/cloud_sync_provider.dart';
-import 'package:spotimusic/core/sync/sync_entities.dart';
-import 'package:spotimusic/core/sync/sync_orchestrator.dart';
-import 'package:spotimusic/ecosystem/sync/sync_payloads.dart';
+import 'package:spotiflac_android/core/sync/cloud_sync_provider.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/core/sync/sync_orchestrator.dart';
+import 'package:spotiflac_android/ecosystem/sync/sync_payloads.dart';
 
 /// Why a cycle was requested. Recorded for diagnostics.
 enum SyncTrigger {

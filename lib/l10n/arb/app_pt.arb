@@ -1,7 +1,7 @@
 {
   "@@locale": "pt",
   "@@last_modified": "2026-01-16",
-  "appName": "SpotiMusic",
+  "appName": "SpotiFLAC Mobile",
   "@appName": {
     "description": "App name - DO NOT TRANSLATE"
   },
@@ -2506,7 +2506,7 @@
       }
     }
   },
-  "tutorialWelcomeTitle": "Boas-vindas ao SpotiMusic!",
+  "tutorialWelcomeTitle": "Boas-vindas ao SpotiFLAC Mobile!",
   "@tutorialWelcomeTitle": {
     "description": "Tutorial welcome page title"
   },
@@ -4155,7 +4155,7 @@
   "@notifLibraryScanStopped": {
     "description": "Notification body when library scan is cancelled"
   },
-  "notifDownloadingUpdate": "Downloading SpotiMusic v{version}",
+  "notifDownloadingUpdate": "Downloading SpotiFLAC Mobile v{version}",
   "@notifDownloadingUpdate": {
     "description": "Notification title while downloading an app update",
     "placeholders": {
@@ -4183,7 +4183,7 @@
   "@notifUpdateReady": {
     "description": "Notification title when app update download is complete"
   },
-  "notifUpdateReadyBody": "SpotiMusic v{version} downloaded. Tap to install.",
+  "notifUpdateReadyBody": "SpotiFLAC Mobile v{version} downloaded. Tap to install.",
   "@notifUpdateReadyBody": {
     "description": "Notification body when app update is ready to install",
     "placeholders": {

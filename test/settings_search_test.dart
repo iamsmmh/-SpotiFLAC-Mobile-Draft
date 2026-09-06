@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/l10n/app_localizations.dart';
-import 'package:spotimusic/screens/settings/about_page.dart';
-import 'package:spotimusic/screens/settings/settings_tab.dart';
-import 'package:spotimusic/theme/app_theme.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/l10n/app_localizations.dart';
+import 'package:spotiflac_android/screens/settings/about_page.dart';
+import 'package:spotiflac_android/screens/settings/settings_tab.dart';
+import 'package:spotiflac_android/theme/app_theme.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 void main() {
   setUp(() {

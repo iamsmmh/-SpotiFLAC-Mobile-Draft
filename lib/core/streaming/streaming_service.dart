@@ -12,10 +12,10 @@
 /// engine path and the hybrid playback manager.
 library;
 
-import 'package:spotimusic/core/streaming/stream_provider.dart';
-import 'package:spotimusic/core/streaming/stream_resolver.dart';
-import 'package:spotimusic/core/streaming/stream_session.dart';
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/core/streaming/stream_provider.dart';
+import 'package:spotiflac_android/core/streaming/stream_resolver.dart';
+import 'package:spotiflac_android/core/streaming/stream_session.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 /// Result of validating one candidate source.
 class StreamValidationOutcome {

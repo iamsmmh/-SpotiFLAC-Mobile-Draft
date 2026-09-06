@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/core/sync/cloud_sync_provider.dart';
-import 'package:spotimusic/core/sync/sync_entities.dart';
-import 'package:spotimusic/core/sync/sync_orchestrator.dart';
+import 'package:spotiflac_android/core/sync/cloud_sync_provider.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/core/sync/sync_orchestrator.dart';
 
 /// The registered cloud-sync backend (Phase 6, repository pattern).
 ///

@@ -1,4 +1,4 @@
-import 'package:spotimusic/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
 
 /// Plans transitions between consecutive queue items for gapless playback.
 ///

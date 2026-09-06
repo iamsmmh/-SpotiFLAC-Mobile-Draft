@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/l10n/staged_strings.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/providers/repo_provider.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/l10n/staged_strings.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/providers/repo_provider.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('SetupExtensionsStep');
 

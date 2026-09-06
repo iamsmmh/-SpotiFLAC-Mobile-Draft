@@ -17,17 +17,17 @@
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/unified_search.dart';
-import 'package:spotimusic/ecosystem/cache/cache_models.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_models.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/ecosystem_providers.dart';
-import 'package:spotimusic/providers/media_browse_provider.dart';
-import 'package:spotimusic/providers/music_servers_providers.dart';
-import 'package:spotimusic/providers/streaming_cache_providers.dart';
-import 'package:spotimusic/services/music_player_service.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/fuzzy_match.dart';
+import 'package:spotiflac_android/engine/unified_search.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_models.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_models.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/ecosystem_providers.dart';
+import 'package:spotiflac_android/providers/media_browse_provider.dart';
+import 'package:spotiflac_android/providers/music_servers_providers.dart';
+import 'package:spotiflac_android/providers/streaming_cache_providers.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/fuzzy_match.dart';
 
 final unifiedSearchEngineProvider = Provider<UnifiedSearchEngine>((ref) {
   return UnifiedSearchEngine(

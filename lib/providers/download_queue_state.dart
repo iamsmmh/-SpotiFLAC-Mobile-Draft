@@ -1,4 +1,4 @@
-import 'package:spotimusic/models/download_item.dart';
+import 'package:spotiflac_android/models/download_item.dart';
 
 /// Immutable queue state shared by the notifier and read-only UI consumers.
 ///

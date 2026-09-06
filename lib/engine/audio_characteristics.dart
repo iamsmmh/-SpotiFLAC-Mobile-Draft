@@ -1,5 +1,5 @@
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/utils/string_utils.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
 
 /// Audio quality ladder shared by the streaming and download engines.
 ///

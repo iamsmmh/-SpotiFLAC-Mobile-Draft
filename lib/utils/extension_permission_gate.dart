@@ -10,8 +10,8 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/staged_strings.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
+import 'package:spotiflac_android/l10n/staged_strings.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
 
 /// Pure diff helper: everything in [next] that is not in [current].
 List<String> diffPermissions(Iterable<String> current, Iterable<String> next) {

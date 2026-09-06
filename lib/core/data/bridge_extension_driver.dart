@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-import 'package:spotimusic/core/data/extension_payload.dart';
-import 'package:spotimusic/core/domain/cancellation_token.dart';
-import 'package:spotimusic/core/domain/core_errors.dart';
-import 'package:spotimusic/core/domain/entities.dart';
-import 'package:spotimusic/core/domain/ports.dart';
+import 'package:spotiflac_android/core/data/extension_payload.dart';
+import 'package:spotiflac_android/core/domain/cancellation_token.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
+import 'package:spotiflac_android/core/domain/ports.dart';
 
 /// Transport for one provider invocation against the native extension runtime.
 /// The bridge-side pieces (gomobile FFI, JS sandbox, request sequencing) stay

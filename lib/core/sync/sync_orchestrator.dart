@@ -20,7 +20,7 @@
 /// pushed twice under retry.
 library;
 
-import 'package:spotimusic/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
 
 /// What [SyncOrchestrator.mergeRemote] decided, per scope.
 class SyncMergeResult {

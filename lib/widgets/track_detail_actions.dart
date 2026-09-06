@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
-import 'package:spotimusic/providers/local_library_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/widgets/download_service_picker.dart';
-import 'package:spotimusic/widgets/view_queue_snackbar_action.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/providers/local_library_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/widgets/download_service_picker.dart';
+import 'package:spotiflac_android/widgets/view_queue_snackbar_action.dart';
 
 /// Shared single-track "add to queue" flow for detail screens: shows the
 /// quality/service picker when the user opted into it, otherwise resolves

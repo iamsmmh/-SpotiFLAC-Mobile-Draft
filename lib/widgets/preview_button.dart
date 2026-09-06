@@ -1,10 +1,10 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/providers/preview_player_provider.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/providers/preview_player_provider.dart';
 
 class PreviewButton extends ConsumerWidget {
   final Track track;

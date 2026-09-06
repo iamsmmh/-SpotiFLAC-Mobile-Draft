@@ -1,16 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/smart_play.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/providers/engine_settings_provider.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart';
-import 'package:spotimusic/services/library_database.dart';
-import 'package:spotimusic/services/history_database.dart';
-import 'package:spotimusic/services/music_player_service.dart';
-import 'package:spotimusic/utils/file_access.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/engine/smart_play.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/engine_settings_provider.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/services/library_database.dart';
+import 'package:spotiflac_android/services/history_database.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('PlaybackProvider');
 

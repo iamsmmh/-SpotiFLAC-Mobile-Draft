@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:spotimusic/core/application/retry_policy.dart';
-import 'package:spotimusic/core/domain/cancellation_token.dart';
-import 'package:spotimusic/core/domain/core_errors.dart';
-import 'package:spotimusic/core/domain/entities.dart';
+import 'package:spotiflac_android/core/application/retry_policy.dart';
+import 'package:spotiflac_android/core/domain/cancellation_token.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
 
 /// What the engine hands to the worker runner for one job execution.
 class QueueJobExecution {

@@ -215,7 +215,7 @@ func signedSessionConfigWithDefaults(config *SignedSessionConfig) SignedSessionC
 		resolved.Platform = "extension"
 	}
 	if resolved.CallbackURL == "" {
-		resolved.CallbackURL = "spotimusic://session-grant"
+		resolved.CallbackURL = "spotiflac://session-grant"
 	}
 	if resolved.SchemeLabel == "" {
 		resolved.SchemeLabel = "SPOTIFLAC-HMAC-V1"

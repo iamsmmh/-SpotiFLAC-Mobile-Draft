@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/extension_permission_gate.dart';
+import 'package:spotiflac_android/utils/extension_permission_gate.dart';
 
 void main() {
   group('diffPermissions', () {

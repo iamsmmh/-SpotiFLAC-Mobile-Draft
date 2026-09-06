@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/l10n.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
 
 /// "Disc N" chip with a trailing hairline, shown between disc groups in
 /// album track lists.

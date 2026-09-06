@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/data/audio_sanity.dart';
-import 'package:spotimusic/core/data/sha256.dart';
-import 'package:spotimusic/core/domain/cancellation_token.dart';
+import 'package:spotiflac_android/core/data/audio_sanity.dart';
+import 'package:spotiflac_android/core/data/sha256.dart';
+import 'package:spotiflac_android/core/domain/cancellation_token.dart';
 
 void main() {
   group('detectAudioContainer magic-byte matrix', () {

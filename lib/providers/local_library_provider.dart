@@ -3,16 +3,16 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/services/history_database.dart';
-import 'package:spotimusic/services/library_database.dart';
-import 'package:spotimusic/services/notification_service.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/utils/local_library_scan_prefs.dart';
-import 'package:spotimusic/utils/path_match_keys.dart';
-import 'package:spotimusic/utils/progress_stream_poller.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/services/history_database.dart';
+import 'package:spotiflac_android/services/library_database.dart';
+import 'package:spotiflac_android/services/notification_service.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/utils/local_library_scan_prefs.dart';
+import 'package:spotiflac_android/utils/path_match_keys.dart';
+import 'package:spotiflac_android/utils/progress_stream_poller.dart';
 
 final _log = AppLogger('LocalLibrary');
 

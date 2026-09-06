@@ -1,6 +1,22 @@
 # SpotiFLAC Mobile — Current Status
 
-**Last updated:** 2026-09-06 · **App version:** 5.0.0+142 · **Branch:** `arena/01a0750a-spotiflac-mobile`
+**Last updated:** 2026-09-06 · **App version:** 5.0.0+142 · **Branch:** `arena/01a07547-spotiflac-mobile`
+
+## Identity
+
+| Item | Value |
+|---|---|
+| Product | **SpotiFLAC** (mobile product name **SpotiFLAC Mobile**) |
+| Dart package | `spotiflac_android` |
+| Android `applicationId` / `namespace` | `com.zarz.spotiflac` (debug builds: `.debug` suffix) |
+| iOS `PRODUCT_BUNDLE_IDENTIFIER` | `com.zarz.spotiflac` |
+| Launcher label / `CFBundleDisplayName` | `SpotiFLAC` |
+| URL scheme | `spotiflac://` (canonical) · `spotimusic://` accepted inbound as a legacy alias from 5.0.0 builds |
+| Extension package suffix | `.spotiflac-ext` (canonical) · `.sflx` (short alias) |
+| Release artefacts | `SpotiFLAC-<ver>-{arm64,arm32,x86_64}.apk`, `SpotiFLAC-<ver>.aab`, `SpotiFLAC-<ver>-ios-unsigned.ipa` |
+
+The short-lived "SpotiMusic" rebrand (commit 3cd8ecdc) has been reverted; see
+the `[Unreleased]` entry in `CHANGELOG.md` for the compatibility shims kept.
 
 This is the single current-state document. It supersedes the historical
 session reports now archived under `docs/history/` (`AUDIT_REPORT.md`,
@@ -33,7 +49,7 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
 | Per-extension imported session cookies (opt-in, for CF challenges / own account) (#479/#499) | ✅ **new in this pass** |
 | Extension upgrades that expand permissions require explicit confirmation (Store + sideload) | ✅ **new in this pass** |
 | Opt-in read-only **LAN web player** for the download folder (Settings → Files) | ✅ **new in this pass** |
-| `spotimusic://` deep links (open/search/track-id forms, Android + iOS) | ✅ **new in this pass** |
+| `spotiflac://` deep links (open/search/track-id forms, Android + iOS) | ✅ **new in this pass** |
 | Re-enrich never re-embeds filesystem artifacts (issue #562 hardening) | ✅ **new in this pass** |
 | Favorite albums (album page bookmark, Library folder, DB v3, backup) | ✅ **new in this pass** |
 | For You: on-device recommendation engine + Library tile/screen (Phase 7) | ✅ **new in this pass** |

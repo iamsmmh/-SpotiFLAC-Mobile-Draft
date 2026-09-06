@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/constants/app_info.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 /// Parsed contents of a backup file.
 class BackupBundle {
@@ -92,7 +92,7 @@ class BackupService {
     return {
       'magic': magic,
       'format_version': formatVersion,
-      'app': 'SpotiMusic',
+      'app': 'SpotiFLAC Mobile',
       'app_version': AppInfo.displayVersion,
       'created_at': DateTime.now().toIso8601String(),
       'data': {

@@ -1,12 +1,12 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/audio_characteristics.dart';
-import 'package:spotimusic/engine/smart_play.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart';
-import 'package:spotimusic/services/music_player_service.dart';
-import 'package:spotimusic/utils/string_utils.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/engine/smart_play.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
 
 /// A single source of truth for the real-time playback/streaming metrics
 /// overlay: Codec, Bitrate, Sample Rate, Bit Depth, File Path and Source

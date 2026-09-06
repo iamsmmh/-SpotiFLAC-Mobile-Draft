@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/audio_characteristics.dart';
-import 'package:spotimusic/engine/crossfade_policy.dart';
-import 'package:spotimusic/engine/smart_play.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
-import 'package:spotimusic/providers/engine_settings_provider.dart';
-import 'package:spotimusic/providers/playback_statistics_provider.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart';
-import 'package:spotimusic/screens/settings/listening_statistics_page.dart';
-import 'package:spotimusic/screens/settings/streaming_integrity_page.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/liquid/liquid_glass.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/engine/crossfade_policy.dart';
+import 'package:spotiflac_android/engine/smart_play.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
+import 'package:spotiflac_android/providers/engine_settings_provider.dart';
+import 'package:spotiflac_android/providers/playback_statistics_provider.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/screens/settings/listening_statistics_page.dart';
+import 'package:spotiflac_android/screens/settings/streaming_integrity_page.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/liquid/liquid_glass.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Settings → Streaming & Glass.
 ///

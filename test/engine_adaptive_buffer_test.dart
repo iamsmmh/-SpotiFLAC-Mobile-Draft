@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/engine/adaptive_buffer.dart';
-import 'package:spotimusic/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/engine/adaptive_buffer.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
 
 void main() {
   const planner = AdaptiveBufferPlanner();

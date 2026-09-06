@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/constants/app_info.dart';
-import 'package:spotimusic/core/data/android_storage_permission_policy.dart';
-import 'package:spotimusic/core/data/background_playback_policy.dart';
-import 'package:spotimusic/core/data/cold_start_policy.dart';
-import 'package:spotimusic/core/data/network_switch_policy.dart';
-import 'package:spotimusic/core/data/release_artifact_policy.dart';
-import 'package:spotimusic/core/data/secure_store.dart';
-import 'package:spotimusic/core/data/session_resource_budget.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/core/data/android_storage_permission_policy.dart';
+import 'package:spotiflac_android/core/data/background_playback_policy.dart';
+import 'package:spotiflac_android/core/data/cold_start_policy.dart';
+import 'package:spotiflac_android/core/data/network_switch_policy.dart';
+import 'package:spotiflac_android/core/data/release_artifact_policy.dart';
+import 'package:spotiflac_android/core/data/secure_store.dart';
+import 'package:spotiflac_android/core/data/session_resource_budget.dart';
 
 void main() {
   group('SecureStorePolicy', () {
@@ -264,7 +264,7 @@ void main() {
       expect(BackgroundPlaybackPolicy.iosBackgroundMode, 'audio');
       expect(
         BackgroundPlaybackPolicy.androidPlaybackChannelId,
-        'com.zarz.spotimusic.playback',
+        'com.zarz.spotiflac.playback',
       );
     });
   });
@@ -286,11 +286,11 @@ void main() {
       expect(
         artifacts.map((a) => a.fileName),
         containsAll([
-          'SpotiMusic-v4.9.0-arm64.apk',
-          'SpotiMusic-v4.9.0-arm32.apk',
-          'SpotiMusic-v4.9.0-x86_64.apk',
-          'SpotiMusic-v4.9.0.aab',
-          'SpotiMusic-v4.9.0-ios-unsigned.ipa',
+          'SpotiFLAC-v4.9.0-arm64.apk',
+          'SpotiFLAC-v4.9.0-arm32.apk',
+          'SpotiFLAC-v4.9.0-x86_64.apk',
+          'SpotiFLAC-v4.9.0.aab',
+          'SpotiFLAC-v4.9.0-ios-unsigned.ipa',
         ]),
       );
       expect(
@@ -305,16 +305,16 @@ void main() {
         AppInfo.productionAndroidAbis,
         ReleaseArtifactPolicy.androidAbis,
       );
-      expect(AppInfo.releaseArtifactPrefix, 'SpotiMusic');
+      expect(AppInfo.releaseArtifactPrefix, 'SpotiFLAC');
     });
 
     test('SHA256SUMS parse + verify round-trips via sha256.dart', () {
       const bytes = <int>[0, 1, 2, 3, 4];
-      final line = ReleaseArtifactPolicy.checksumLine('SpotiMusic-v4.9.0-arm64.apk', bytes);
+      final line = ReleaseArtifactPolicy.checksumLine('SpotiFLAC-v4.9.0-arm64.apk', bytes);
       final parsed = ReleaseArtifactPolicy.parseChecksums('# comment\n$line\n');
       expect(
         ReleaseArtifactPolicy.verify(
-          fileName: 'SpotiMusic-v4.9.0-arm64.apk',
+          fileName: 'SpotiFLAC-v4.9.0-arm64.apk',
           bytes: bytes,
           checksums: parsed,
         ),

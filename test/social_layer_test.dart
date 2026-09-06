@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/ecosystem_kv.dart';
-import 'package:spotimusic/ecosystem/social/social_models.dart';
-import 'package:spotimusic/ecosystem/social/social_service.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_kv.dart';
+import 'package:spotiflac_android/ecosystem/social/social_models.dart';
+import 'package:spotiflac_android/ecosystem/social/social_service.dart';
 
 /// In-memory key/value store.
 class _MemoryStore implements KeyValueStore {
@@ -329,10 +329,10 @@ void main() {
       final shared =
           await sharing.share(playlistId: 'p', ownerId: 'o', title: 'T');
       expect(shared, isNotNull);
-      expect(shared!.link.scheme, 'spotimusic');
+      expect(shared!.link.scheme, 'spotiflac');
     });
 
-    test('builds and parses spotimusic share links', () {
+    test('builds and parses spotiflac share links', () {
       final shared = SharedPlaylist(
         shareId: 'abc123',
         playlistId: 'p',
@@ -340,7 +340,7 @@ void main() {
         title: 'T',
         sharedAt: DateTime.utc(2026),
       );
-      expect(shared.link.toString(), 'spotimusic://playlist/shared/abc123');
+      expect(shared.link.toString(), 'spotiflac://playlist/shared/abc123');
       expect(SharedPlaylist.shareIdFromLink(shared.link), 'abc123');
     });
 
@@ -350,11 +350,11 @@ void main() {
         isNull,
       );
       expect(
-        SharedPlaylist.shareIdFromLink(Uri.parse('spotimusic://track/1')),
+        SharedPlaylist.shareIdFromLink(Uri.parse('spotiflac://track/1')),
         isNull,
       );
       expect(
-        SharedPlaylist.shareIdFromLink(Uri.parse('spotimusic://playlist/x/1')),
+        SharedPlaylist.shareIdFromLink(Uri.parse('spotiflac://playlist/x/1')),
         isNull,
       );
     });

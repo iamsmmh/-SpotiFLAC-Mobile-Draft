@@ -58,7 +58,7 @@ POST /v1/auth/register
 ```
 ```http
 POST /v1/auth/oauth
-{ "provider": "google", "code": "…", "redirect_uri": "spotimusic://oauth" }
+{ "provider": "google", "code": "…", "redirect_uri": "spotiflac://oauth" }
 ```
 ```http
 POST /v1/auth/refresh

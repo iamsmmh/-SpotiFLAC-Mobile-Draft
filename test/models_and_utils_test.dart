@@ -2,23 +2,23 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/models/download_item.dart';
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/models/theme_settings.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/services/app_remote_config_service.dart';
-import 'package:spotimusic/services/download_request_payload.dart';
-import 'package:spotimusic/services/history_database.dart';
-import 'package:spotimusic/services/library_database.dart';
-import 'package:spotimusic/utils/artist_utils.dart';
-import 'package:spotimusic/utils/audio_conversion_utils.dart';
-import 'package:spotimusic/utils/audio_format_utils.dart';
-import 'package:spotimusic/utils/file_access.dart';
-import 'package:spotimusic/utils/mime_utils.dart';
-import 'package:spotimusic/utils/path_match_keys.dart';
-import 'package:spotimusic/utils/string_utils.dart';
+import 'package:spotiflac_android/models/download_item.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/models/theme_settings.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/services/app_remote_config_service.dart';
+import 'package:spotiflac_android/services/download_request_payload.dart';
+import 'package:spotiflac_android/services/history_database.dart';
+import 'package:spotiflac_android/services/library_database.dart';
+import 'package:spotiflac_android/utils/artist_utils.dart';
+import 'package:spotiflac_android/utils/audio_conversion_utils.dart';
+import 'package:spotiflac_android/utils/audio_format_utils.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
+import 'package:spotiflac_android/utils/mime_utils.dart';
+import 'package:spotiflac_android/utils/path_match_keys.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
 
 void main() {
   group('file deletion', () {
@@ -185,7 +185,7 @@ void main() {
 
   group('native worker contracts', () {
     final finalizerSource = File(
-      'android/app/src/main/kotlin/com/zarz/spotimusic/'
+      'android/app/src/main/kotlin/com/zarz/spotiflac/'
       'NativeDownloadFinalizer.kt',
     ).readAsStringSync();
     final historyDatabaseSource = File(

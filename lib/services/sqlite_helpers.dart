@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/utils/path_match_keys.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/utils/path_match_keys.dart';
 import 'package:sqflite/sqflite.dart';
 
 final _log = AppLogger('AppSqlite');

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/l10n.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
 
 /// Shows a delete-confirmation dialog, deletes the given [ids] one by one via
 /// [deleteItem], then shows a "deleted N tracks" snackbar.

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/services/ffmpeg_service.dart';
+import 'package:spotiflac_android/services/ffmpeg_service.dart';
 
 void main() {
   test('cover resize uses safe arguments and preserves aspect ratio', () {

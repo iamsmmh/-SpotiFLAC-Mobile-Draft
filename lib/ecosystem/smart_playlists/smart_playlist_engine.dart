@@ -6,11 +6,11 @@
 /// layer feeds real stores and persists the results' metadata.
 library;
 
-import 'package:spotimusic/ecosystem/favorites/favorites.dart';
-import 'package:spotimusic/ecosystem/history/listening_history.dart';
-import 'package:spotimusic/ecosystem/smart_playlists/smart_playlist_models.dart';
-import 'package:spotimusic/engine/recommendations.dart';
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/ecosystem/favorites/favorites.dart';
+import 'package:spotiflac_android/ecosystem/history/listening_history.dart';
+import 'package:spotiflac_android/ecosystem/smart_playlists/smart_playlist_models.dart';
+import 'package:spotiflac_android/engine/recommendations.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 /// A local-library row projected for the engine (the ecosystem layer must
 /// not import service models directly — the provider maps them).

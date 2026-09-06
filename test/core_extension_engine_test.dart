@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/application/extension_engine.dart';
-import 'package:spotimusic/core/application/retry_policy.dart';
-import 'package:spotimusic/core/domain/cancellation_token.dart';
-import 'package:spotimusic/core/domain/core_errors.dart';
-import 'package:spotimusic/core/domain/entities.dart';
-import 'package:spotimusic/core/domain/ports.dart';
+import 'package:spotiflac_android/core/application/extension_engine.dart';
+import 'package:spotiflac_android/core/application/retry_policy.dart';
+import 'package:spotiflac_android/core/domain/cancellation_token.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
+import 'package:spotiflac_android/core/domain/ports.dart';
 
 class _FakeDriver implements ExtensionDriver {
   _FakeDriver(this.providerId, {this.responder});

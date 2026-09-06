@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/data/channel_contracts.dart';
+import 'package:spotiflac_android/core/data/channel_contracts.dart';
 
 void main() {
   group('CoreChannelNames', () {
     test('matches the bridge channel established with MainActivity', () {
-      expect(CoreChannelNames.backend, 'com.zarz.spotimusic/backend');
+      expect(CoreChannelNames.backend, 'com.zarz.spotiflac/backend');
       expect(
         CoreChannelNames.downloadProgressEvents,
-        'com.zarz.spotimusic/download_progress_stream',
+        'com.zarz.spotiflac/download_progress_stream',
       );
     });
   });

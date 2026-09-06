@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/services/music_player_service.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/mime_utils.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/mime_utils.dart';
 
 /// Whether the queue should run its iOS output-directory path-shape check
 /// (which can replace [outputDir] with the default Documents folder when the

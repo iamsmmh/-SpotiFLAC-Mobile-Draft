@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/providers/ecosystem_providers.dart';
-import 'package:spotimusic/screens/ecosystem/account_page.dart';
-import 'package:spotimusic/screens/ecosystem/advanced_audio_page.dart';
-import 'package:spotimusic/screens/ecosystem/analytics_page.dart';
-import 'package:spotimusic/screens/ecosystem/cloud_sync_console_page.dart';
-import 'package:spotimusic/screens/ecosystem/favorites_page.dart';
-import 'package:spotimusic/screens/ecosystem/history_page.dart';
-import 'package:spotimusic/screens/ecosystem/servers_page.dart';
-import 'package:spotimusic/screens/ecosystem/smart_playlists_page.dart';
-import 'package:spotimusic/screens/ecosystem/unified_search_page.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/providers/ecosystem_providers.dart';
+import 'package:spotiflac_android/screens/ecosystem/account_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/advanced_audio_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/analytics_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/cloud_sync_console_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/favorites_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/history_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/servers_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/smart_playlists_page.dart';
+import 'package:spotiflac_android/screens/ecosystem/unified_search_page.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Entry point for the ecosystem features.
 ///

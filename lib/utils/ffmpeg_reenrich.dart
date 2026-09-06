@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:spotimusic/services/ffmpeg_service.dart';
-import 'package:spotimusic/services/library_database.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/lyrics_metadata_helper.dart';
+import 'package:spotiflac_android/services/ffmpeg_service.dart';
+import 'package:spotiflac_android/services/library_database.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/lyrics_metadata_helper.dart';
 
 bool _hasValue(String? value) => value != null && value.trim().isNotEmpty;
 

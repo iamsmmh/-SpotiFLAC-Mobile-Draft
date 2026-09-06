@@ -3349,7 +3349,7 @@
     "description": "Grid layout option"
   },
   "trackDownloaded": "Heruntergeladen",
-  "extensionVerificationHelpMessageManual": "SpotiMusic could not open the browser automatically. Open this link in your browser, or copy it manually.",
+  "extensionVerificationHelpMessageManual": "SpotiFLAC Mobile could not open the browser automatically. Open this link in your browser, or copy it manually.",
   "setupDownloadLocationIosMessage": "Auf iOS werden Downloads im Dokumentenordner der App gespeichert. Du kannst sie über die Datei-App aufrufen.",
   "optionsArtistTagModeDescription": "Wähle aus, wie mehrere Künstler in eingebetteten Tags geschrieben sind.",
   "@optionsArtistTagModeDescription": {
@@ -4214,7 +4214,7 @@
     }
   },
   "libraryExternalPlayerSubtitle": "Recommended for listening, best quality, gapless playback, EQ, and wider format support",
-  "extensionCustomUrlHandlingShareHint": "Teile Links von diesen Seiten mit SpotiMusic und diese Erweiterung wird sie verarbeiten.",
+  "extensionCustomUrlHandlingShareHint": "Teile Links von diesen Seiten mit SpotiFLAC Mobile und diese Erweiterung wird sie verarbeiten.",
   "libraryFilterQuality": "Qualität",
   "@libraryFilterQuality": {
     "description": "Filter section - audio quality"
@@ -4435,7 +4435,7 @@
   "@logIssueSummary": {
     "description": "Header for log issue analysis summary"
   },
-  "appName": "SpotiMusic",
+  "appName": "SpotiFLAC Mobile",
   "storeRepoDialogCurrent": "Aktuelles Repository:",
   "@optionsExtensionStoreSubtitle": {
     "description": "Subtitle for extension repo toggle"
@@ -5078,7 +5078,7 @@
   "@setupStorageGranted": {
     "description": "Success message for storage permission"
   },
-  "tutorialWelcomeTitle": "Willkommen bei SpotiMusic!",
+  "tutorialWelcomeTitle": "Willkommen bei SpotiFLAC Mobile!",
   "a11ySelectAlbum": "Wähle Album {albumName}",
   "@a11ySelectAlbum": {
     "description": "Accessibility label for selecting an album",
@@ -5415,7 +5415,7 @@
   "@albumFolderStructureDescription": {
     "description": "Album folder structure picker description"
   },
-  "libraryBuiltInPreviewPlayerSubtitle": "Only for quick local previews inside SpotiMusic, not recommended for regular listening",
+  "libraryBuiltInPreviewPlayerSubtitle": "Only for quick local previews inside SpotiFLAC Mobile, not recommended for regular listening",
   "@libraryBuiltInPreviewPlayerSubtitle": {
     "description": "Subtitle for built-in preview player option"
   },
@@ -5538,7 +5538,7 @@
     "description": "Section header for about info"
   },
   "cueSplitNoAudioFile": "Audiodatei für dieses CUE-Sheet nicht gefunden",
-  "notifUpdateReadyBody": "SpotiMusic v{version} heruntergeladen. Zum Installieren tippen.",
+  "notifUpdateReadyBody": "SpotiFLAC Mobile v{version} heruntergeladen. Zum Installieren tippen.",
   "appearanceSelectAccentColor": "Wähle Akzentfarbe {hex}",
   "@homeAlbumInfoUnavailable": {
     "description": "Snackbar when album info cannot be loaded"
@@ -5716,7 +5716,7 @@
   "settingsDownloadNetworkAny": "WLAN + Mobile Daten",
   "audioAnalysisDuration": "Länge",
   "audioAnalysisAnalyzing": "Audio wird analysiert...",
-  "extensionVerificationHelpMessageWaiting": "If the browser did not open, or verification finished but did not return to SpotiMusic, open this link again or copy it manually.",
+  "extensionVerificationHelpMessageWaiting": "If the browser did not open, or verification finished but did not return to SpotiFLAC Mobile, open this link again or copy it manually.",
   "editMetadataFieldDiscNum": "Disk #",
   "@editMetadataFieldDiscNum": {
     "description": "Chip label for disc number field in auto-fill selector"
@@ -5830,7 +5830,7 @@
   "settingsCache": "Speicher & Cache",
   "providerPriorityFallbackExtensionsHint": "Hier werden nur aktivierte Erweiterungen mit Download-Provider-Funktion aufgelistet.",
   "libraryFilterAll": "Alle",
-  "notifDownloadingUpdate": "SpotiMusic v{version} wird heruntergeladen",
+  "notifDownloadingUpdate": "SpotiFLAC Mobile v{version} wird heruntergeladen",
   "extensionsProviderPrioritySection": "Provider-Priorität",
   "storeChangeRepoTooltip": "Repository ändern",
   "snackbarFailedToInstall": "Erweiterung konnte nicht installiert werden",

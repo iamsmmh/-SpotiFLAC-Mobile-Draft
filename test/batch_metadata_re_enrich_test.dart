@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/services/batch_metadata_re_enrich.dart';
-import 'package:spotimusic/services/library_database.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/services/batch_metadata_re_enrich.dart';
+import 'package:spotiflac_android/services/library_database.dart';
 
 LocalLibraryItem _item({
   String? albumArtist,

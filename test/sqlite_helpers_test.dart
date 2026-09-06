@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/services/sqlite_helpers.dart';
+import 'package:spotiflac_android/services/sqlite_helpers.dart';
 
 void main() {
   group('SingleFlightInitializer', () {

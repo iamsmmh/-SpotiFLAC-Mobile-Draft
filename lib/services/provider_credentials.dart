@@ -1,4 +1,4 @@
-import 'package:spotimusic/core/data/secure_store.dart';
+import 'package:spotiflac_android/core/data/secure_store.dart';
 
 /// Secure-storage token names for user-supplied streaming credentials.
 ///

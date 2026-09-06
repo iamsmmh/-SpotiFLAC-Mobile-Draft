@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
-import 'package:spotimusic/services/search_history_store.dart';
-import 'package:spotimusic/utils/fuzzy_match.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/services/search_history_store.dart';
+import 'package:spotiflac_android/utils/fuzzy_match.dart';
 
 /// Search history state: most recent queries first, capped by the store.
 final searchHistoryProvider =

@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as p;
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/services/m3u_playlist_service.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/services/m3u_playlist_service.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 class CsvImportService {
   static final _log = AppLogger('CsvImportService');

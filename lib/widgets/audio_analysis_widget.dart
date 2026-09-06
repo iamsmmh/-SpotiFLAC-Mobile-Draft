@@ -9,11 +9,11 @@ import 'package:ffmpeg_kit_flutter_new_full/ffprobe_kit.dart';
 import 'package:ffmpeg_kit_flutter_new_full/return_code.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/string_utils.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
 
 part 'audio_analysis_models.dart';
 part 'audio_analysis_info_card.dart';

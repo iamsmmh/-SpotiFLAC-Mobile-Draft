@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:spotimusic/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
 
 /// Thrown by cooperative pipeline stages when their [CancellationToken] is
 /// cancelled. The queue engine maps this to [CoreErrorCategory.cancelled] and,

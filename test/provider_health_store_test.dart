@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/services/multi_provider_stream_service.dart';
-import 'package:spotimusic/services/provider_health_store.dart';
+import 'package:spotiflac_android/services/multi_provider_stream_service.dart';
+import 'package:spotiflac_android/services/provider_health_store.dart';
 
 /// In-memory [ProviderHealthKeyValueStore] fake with optional failure
 /// injection for the error-path tests.

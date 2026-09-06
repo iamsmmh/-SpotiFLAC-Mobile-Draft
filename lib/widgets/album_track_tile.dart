@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/widgets/track_card.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/widgets/track_card.dart';
 
 /// Album-style track row: track number, title/subtitle, and a trailing play
 /// button that's hidden once selection mode is active.

@@ -14,18 +14,18 @@
 /// tests.
 library;
 
-export 'package:spotimusic/core/domain/cancellation_token.dart';
-export 'package:spotimusic/core/domain/core_errors.dart';
-export 'package:spotimusic/core/domain/entities.dart';
-export 'package:spotimusic/core/domain/ports.dart';
-export 'package:spotimusic/core/application/download_manager.dart';
-export 'package:spotimusic/core/application/extension_engine.dart';
-export 'package:spotimusic/core/application/queue_engine.dart';
-export 'package:spotimusic/core/application/retry_policy.dart';
-export 'package:spotimusic/core/data/android_storage_permission_policy.dart';
-export 'package:spotimusic/core/data/background_playback_policy.dart';
-export 'package:spotimusic/core/data/cold_start_policy.dart';
-export 'package:spotimusic/core/data/network_switch_policy.dart';
-export 'package:spotimusic/core/data/release_artifact_policy.dart';
-export 'package:spotimusic/core/data/secure_store.dart';
-export 'package:spotimusic/core/data/session_resource_budget.dart';
+export 'package:spotiflac_android/core/domain/cancellation_token.dart';
+export 'package:spotiflac_android/core/domain/core_errors.dart';
+export 'package:spotiflac_android/core/domain/entities.dart';
+export 'package:spotiflac_android/core/domain/ports.dart';
+export 'package:spotiflac_android/core/application/download_manager.dart';
+export 'package:spotiflac_android/core/application/extension_engine.dart';
+export 'package:spotiflac_android/core/application/queue_engine.dart';
+export 'package:spotiflac_android/core/application/retry_policy.dart';
+export 'package:spotiflac_android/core/data/android_storage_permission_policy.dart';
+export 'package:spotiflac_android/core/data/background_playback_policy.dart';
+export 'package:spotiflac_android/core/data/cold_start_policy.dart';
+export 'package:spotiflac_android/core/data/network_switch_policy.dart';
+export 'package:spotiflac_android/core/data/release_artifact_policy.dart';
+export 'package:spotiflac_android/core/data/secure_store.dart';
+export 'package:spotiflac_android/core/data/session_resource_budget.dart';

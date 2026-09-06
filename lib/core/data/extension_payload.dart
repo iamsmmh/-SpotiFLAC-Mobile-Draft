@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import 'package:spotimusic/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
 
 /// Strict payload decoding for the extension driver layer.
 ///

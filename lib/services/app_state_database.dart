@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:spotimusic/services/sqlite_helpers.dart' as sqlite;
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/services/sqlite_helpers.dart' as sqlite;
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('AppStateDb');
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/l10n/l10n.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
 
 /// Small "In Library" chip shown next to a track that already exists in the
 /// local library or download history.

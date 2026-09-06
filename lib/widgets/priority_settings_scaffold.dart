@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/utils/adaptive_layout.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/utils/adaptive_layout.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 
 class PrioritySettingsScaffold extends StatelessWidget {
   final bool hasChanges;

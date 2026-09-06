@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/selection_bottom_bar.dart';
+import 'package:spotiflac_android/widgets/selection_bottom_bar.dart';
 
 /// Shared shell for every track-collection screen: album, playlist, local
 /// album, downloaded album and library folders.

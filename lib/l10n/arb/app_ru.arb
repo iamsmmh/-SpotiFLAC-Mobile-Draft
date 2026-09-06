@@ -3349,7 +3349,7 @@
     "description": "Grid layout option"
   },
   "trackDownloaded": "Скачано",
-  "extensionVerificationHelpMessageManual": "SpotiMusic could not open the browser automatically. Open this link in your browser, or copy it manually.",
+  "extensionVerificationHelpMessageManual": "SpotiFLAC Mobile could not open the browser automatically. Open this link in your browser, or copy it manually.",
   "setupDownloadLocationIosMessage": "В iOS загрузки сохраняются в папке Документы приложения. Вы можете получить к ним доступ через приложение Файлы.",
   "optionsArtistTagModeDescription": "Choose how multiple artists are written into embedded tags.",
   "@optionsArtistTagModeDescription": {
@@ -4214,7 +4214,7 @@
     }
   },
   "libraryExternalPlayerSubtitle": "Recommended for listening, best quality, gapless playback, EQ, and wider format support",
-  "extensionCustomUrlHandlingShareHint": "Share links from these sites to SpotiMusic and this extension will handle them.",
+  "extensionCustomUrlHandlingShareHint": "Share links from these sites to SpotiFLAC Mobile and this extension will handle them.",
   "libraryFilterQuality": "Качество",
   "@libraryFilterQuality": {
     "description": "Filter section - audio quality"
@@ -4435,7 +4435,7 @@
   "@logIssueSummary": {
     "description": "Header for log issue analysis summary"
   },
-  "appName": "SpotiMusic",
+  "appName": "SpotiFLAC Mobile",
   "storeRepoDialogCurrent": "Текущий репозиторий:",
   "@optionsExtensionStoreSubtitle": {
     "description": "Subtitle for extension repo toggle"
@@ -5078,7 +5078,7 @@
   "@setupStorageGranted": {
     "description": "Success message for storage permission"
   },
-  "tutorialWelcomeTitle": "Добро пожаловать в SpotiMusic!",
+  "tutorialWelcomeTitle": "Добро пожаловать в SpotiFLAC Mobile!",
   "a11ySelectAlbum": "Select album {albumName}",
   "@a11ySelectAlbum": {
     "description": "Accessibility label for selecting an album",
@@ -5415,7 +5415,7 @@
   "@albumFolderStructureDescription": {
     "description": "Album folder structure picker description"
   },
-  "libraryBuiltInPreviewPlayerSubtitle": "Only for quick local previews inside SpotiMusic, not recommended for regular listening",
+  "libraryBuiltInPreviewPlayerSubtitle": "Only for quick local previews inside SpotiFLAC Mobile, not recommended for regular listening",
   "@libraryBuiltInPreviewPlayerSubtitle": {
     "description": "Subtitle for built-in preview player option"
   },
@@ -5538,7 +5538,7 @@
     "description": "Section header for about info"
   },
   "cueSplitNoAudioFile": "Аудиофайл для этого CUE sheet не найден",
-  "notifUpdateReadyBody": "SpotiMusic v{version} downloaded. Tap to install.",
+  "notifUpdateReadyBody": "SpotiFLAC Mobile v{version} downloaded. Tap to install.",
   "appearanceSelectAccentColor": "Select accent color {hex}",
   "@homeAlbumInfoUnavailable": {
     "description": "Snackbar when album info cannot be loaded"
@@ -5716,7 +5716,7 @@
   "settingsDownloadNetworkAny": "WiFi и Мобильная сеть",
   "audioAnalysisDuration": "Продолжительность",
   "audioAnalysisAnalyzing": "Analyzing audio...",
-  "extensionVerificationHelpMessageWaiting": "If the browser did not open, or verification finished but did not return to SpotiMusic, open this link again or copy it manually.",
+  "extensionVerificationHelpMessageWaiting": "If the browser did not open, or verification finished but did not return to SpotiFLAC Mobile, open this link again or copy it manually.",
   "editMetadataFieldDiscNum": "Диск #",
   "@editMetadataFieldDiscNum": {
     "description": "Chip label for disc number field in auto-fill selector"
@@ -5830,7 +5830,7 @@
   "settingsCache": "Хранилище и кэш",
   "providerPriorityFallbackExtensionsHint": "Only enabled extensions with download-provider capability are listed here.",
   "libraryFilterAll": "Все",
-  "notifDownloadingUpdate": "Downloading SpotiMusic v{version}",
+  "notifDownloadingUpdate": "Downloading SpotiFLAC Mobile v{version}",
   "extensionsProviderPrioritySection": "Приоритет провайдера",
   "storeChangeRepoTooltip": "Изменить репозиторий",
   "snackbarFailedToInstall": "Не удалось установить расширение",

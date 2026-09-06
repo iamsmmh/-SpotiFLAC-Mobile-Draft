@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:spotimusic/services/app_remote_config_service.dart';
-import 'package:spotimusic/utils/adaptive_layout.dart';
-import 'package:spotimusic/widgets/donate_icons.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/services/app_remote_config_service.dart';
+import 'package:spotiflac_android/utils/adaptive_layout.dart';
+import 'package:spotiflac_android/widgets/donate_icons.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 
 class DonatePage extends StatefulWidget {
   final AppRemoteConfigService? remoteConfigService;

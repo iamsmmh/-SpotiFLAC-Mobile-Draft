@@ -1,5 +1,5 @@
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
 
 bool looksLikeUrlOrSpotifyUri(String text) =>
     text.startsWith('http') || text.startsWith('spotify:');

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
 
 /// The drag handle shown at the top of every modal sheet.
 ///

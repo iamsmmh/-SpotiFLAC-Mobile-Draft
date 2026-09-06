@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/services/multi_provider_stream_service.dart';
-import 'package:spotimusic/services/provider_credentials.dart';
+import 'package:spotiflac_android/services/multi_provider_stream_service.dart';
+import 'package:spotiflac_android/services/provider_credentials.dart';
 
 class _MapCredentials implements StreamCredentialResolver {
   _MapCredentials(this.values);

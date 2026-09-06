@@ -9,9 +9,9 @@ library;
 import 'dart:convert';
 
 import 'package:sqflite/sqflite.dart';
-import 'package:spotimusic/ecosystem/ecosystem_database.dart';
-import 'package:spotimusic/ecosystem/ecosystem_kv.dart';
-import 'package:spotimusic/ecosystem/smart_playlists/smart_playlist_models.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_kv.dart';
+import 'package:spotiflac_android/ecosystem/smart_playlists/smart_playlist_models.dart';
 
 /// Decides when a playlist should re-materialize.
 class SmartPlaylistRefreshPolicy {

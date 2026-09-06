@@ -6,36 +6,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/providers/engine_settings_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/providers/repo_provider.dart';
-import 'package:spotimusic/providers/runtime_profile_provider.dart';
-import 'package:spotimusic/providers/track_provider.dart';
-import 'package:spotimusic/providers/preview_player_provider.dart';
-import 'package:spotimusic/screens/home_tab.dart';
-import 'package:spotimusic/screens/repo_tab.dart';
-import 'package:spotimusic/screens/queue_tab.dart';
-import 'package:spotimusic/screens/settings/settings_tab.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/services/shell_navigation_service.dart';
-import 'package:spotimusic/services/share_intent_service.dart';
-import 'package:spotimusic/services/music_player_service.dart';
-import 'package:spotimusic/services/notification_service.dart';
-import 'package:spotimusic/services/app_remote_config_service.dart';
-import 'package:spotimusic/services/update_checker.dart';
-import 'package:spotimusic/widgets/app_announcement_dialog.dart';
-import 'package:spotimusic/widgets/update_dialog.dart';
-import 'package:spotimusic/widgets/animation_utils.dart';
-import 'package:spotimusic/ui/widgets/liquid_glass_container.dart';
-import 'package:spotimusic/widgets/liquid/liquid_glass.dart';
-import 'package:spotimusic/widgets/liquid/liquid_mini_player.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/widgets/mini_player.dart';
-import 'package:spotimusic/widgets/selection_bottom_bar.dart';
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/utils/deep_link.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/engine_settings_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/providers/repo_provider.dart';
+import 'package:spotiflac_android/providers/runtime_profile_provider.dart';
+import 'package:spotiflac_android/providers/track_provider.dart';
+import 'package:spotiflac_android/providers/preview_player_provider.dart';
+import 'package:spotiflac_android/screens/home_tab.dart';
+import 'package:spotiflac_android/screens/repo_tab.dart';
+import 'package:spotiflac_android/screens/queue_tab.dart';
+import 'package:spotiflac_android/screens/settings/settings_tab.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/services/shell_navigation_service.dart';
+import 'package:spotiflac_android/services/share_intent_service.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
+import 'package:spotiflac_android/services/notification_service.dart';
+import 'package:spotiflac_android/services/app_remote_config_service.dart';
+import 'package:spotiflac_android/services/update_checker.dart';
+import 'package:spotiflac_android/widgets/app_announcement_dialog.dart';
+import 'package:spotiflac_android/widgets/update_dialog.dart';
+import 'package:spotiflac_android/widgets/animation_utils.dart';
+import 'package:spotiflac_android/ui/widgets/liquid_glass_container.dart';
+import 'package:spotiflac_android/widgets/liquid/liquid_glass.dart';
+import 'package:spotiflac_android/widgets/liquid/liquid_mini_player.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/mini_player.dart';
+import 'package:spotiflac_android/widgets/selection_bottom_bar.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/utils/deep_link.dart';
 
 final _log = AppLogger('MainShell');
 
@@ -848,7 +848,7 @@ class _MainShellState extends ConsumerState<MainShell>
           },
           child: Stack(
             children: [
-              // SpotiMusic Liquid Glass aurora field: slow-drifting glows
+              // Liquid Glass aurora field: slow-drifting glows
               // over the surface that every glass layer refracts. Disabled
               // with the classic theme so the old Material look is unchanged.
               if (useLiquidGlass)

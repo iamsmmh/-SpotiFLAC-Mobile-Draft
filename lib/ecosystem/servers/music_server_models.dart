@@ -5,7 +5,7 @@
 /// [MusicServerSecretStore]) so a exported registry JSON leaks nothing.
 library;
 
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 /// Supported self-hosted back-ends.
 enum MusicServerKind {

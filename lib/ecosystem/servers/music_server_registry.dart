@@ -9,12 +9,12 @@ library;
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/ecosystem/ecosystem_kv.dart';
-import 'package:spotimusic/ecosystem/servers/jellyfin_provider.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_models.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_provider.dart';
-import 'package:spotimusic/ecosystem/servers/plex_provider.dart';
-import 'package:spotimusic/ecosystem/servers/subsonic_provider.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_kv.dart';
+import 'package:spotiflac_android/ecosystem/servers/jellyfin_provider.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_models.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_provider.dart';
+import 'package:spotiflac_android/ecosystem/servers/plex_provider.dart';
+import 'package:spotiflac_android/ecosystem/servers/subsonic_provider.dart';
 
 /// Builds one HTTP client per registry (closed with the registry).
 typedef ServerHttpClientFactory = http.Client Function();

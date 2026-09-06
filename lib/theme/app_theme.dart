@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spotimusic/models/theme_settings.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
+import 'package:spotiflac_android/models/theme_settings.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
 
 class AppTheme {
   static const Color defaultSeedColor = Color(kDefaultSeedColor);

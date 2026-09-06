@@ -11,8 +11,8 @@ library;
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/ecosystem/recognition/recognition_models.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/ecosystem/recognition/recognition_models.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('Recognition');
 

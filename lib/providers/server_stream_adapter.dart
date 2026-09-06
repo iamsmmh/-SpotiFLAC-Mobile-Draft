@@ -5,12 +5,12 @@
 /// chain gains every enabled server as one [StreamSourceAdapter].
 library;
 
-import 'package:spotimusic/core/streaming/stream_provider.dart';
-import 'package:spotimusic/engine/audio_characteristics.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_registry.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart'
+import 'package:spotiflac_android/core/streaming/stream_provider.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_registry.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart'
     show StreamSourceAdapter;
 
 class ServerStreamAdapter implements StreamSourceAdapter {
