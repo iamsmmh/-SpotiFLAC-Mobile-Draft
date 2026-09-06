@@ -118,7 +118,7 @@ func TestEndToEndSync(t *testing.T) {
 
 	// Push two records, one updated twice.
 	status, body := postJSON(t, server.URL+"/v1/sync/push", map[string]any{
-		"scope": "favorites",
+		"scope":   "favorites",
 		"records": []map[string]any{
 			{"recordId": "isrc:X", "revision": 1, "updatedAt": "2026-09-06T10:00:00Z", "deleted": false, "payload": map[string]any{"title": "Song X"}},
 			{"recordId": "isrc:Y", "revision": 1, "updatedAt": "2026-09-06T10:01:00Z", "deleted": false, "payload": map[string]any{}},
@@ -367,7 +367,7 @@ func TestBackupFlow(t *testing.T) {
 	}
 	resp.Body.Close()
 	status, _ = getJSON(t, server.URL+"/v1/backup?deviceId=device-A", token)
-	if backups, _ := fetchBackups(t, server, token); status != 200 || len(backups) != 0 {
+	if backups := fetchBackups(t, server, token); status != 200 || len(backups) != 0 {
 		t.Fatalf("backup not deleted: %v", backups)
 	}
 }
