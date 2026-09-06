@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:spotiflac_android/ecosystem/discovery/discovery_schema.dart';
 import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
 
 void main() {
@@ -66,6 +67,81 @@ void main() {
       expect(json['from'], 0);
       expect(json['to'], 1);
       expect(json['statements'], isA<List<Object?>>());
+    });
+
+    test('an existing v5 database gets exactly the discovery step', () {
+      final steps = migrationsBetween(5, ecosystemDatabaseVersion);
+      expect(steps.length, 1);
+      expect(steps.single.fromVersion, 5);
+      expect(steps.single.toVersion, 6);
+    });
+
+    test('v6 adds every discovery table without touching an existing one', () {
+      final migration = ecosystemMigrations.singleWhere(
+        (migration) => migration.fromVersion == 5,
+      );
+      final sql = migration.statements.join('\n').toUpperCase();
+
+      for (final table in <String>[
+        dsListeningStatistics,
+        dsUserProfiles,
+        dsRecommendationCache,
+        dsDailyMixes,
+        dsDiscoverWeekly,
+        dsRadioSessions,
+        dsArtistSimilarity,
+        dsTrackSimilarity,
+        dsMoodProfiles,
+        dsTrendingStatistics,
+        dsContinueListening,
+      ]) {
+        expect(
+          migration.statements.any(
+            (statement) => statement.contains(
+              'CREATE TABLE IF NOT EXISTS $table',
+            ),
+          ),
+          isTrue,
+          reason: '$table missing from the v6 migration',
+        );
+      }
+
+      // Additive only: no ALTER, no DROP against a table that existed at v5.
+      expect(sql.contains('ALTER'), isFalse, reason: 'v6 must not alter v5');
+      expect(sql.contains('DROP'), isFalse, reason: 'v6 must not drop anything');
+      for (final legacy in <String>[
+        tableListeningEvents,
+        tableTrackHistory,
+        tableFavoritePlaylists,
+        tableStreamCache,
+      ]) {
+        expect(
+          sql.contains(legacy.toUpperCase()),
+          isFalse,
+          reason: '$legacy must be untouched by the discovery migration',
+        );
+      }
+    });
+
+    test('every discovery table is also created on a fresh install', () {
+      // `_onCreate` replays `migrationsBetween(0, version)` and `_onUpgrade`
+      // runs `ecosystemSchemaV1` first, so a brand-new user and an upgraded one
+      // must both end up with the discovery tables.
+      final all = <String>[
+        ...ecosystemSchemaV1,
+        ...ecosystemMigrations.expand((migration) => migration.statements),
+      ].join('\n');
+      for (final table in <String>[
+        dsListeningStatistics,
+        dsContinueListening,
+        dsTrendingStatistics,
+      ]) {
+        expect(
+          all.contains('CREATE TABLE IF NOT EXISTS $table'),
+          isTrue,
+          reason: '$table is never created for a fresh install',
+        );
+      }
     });
   });
 }

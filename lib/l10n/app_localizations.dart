@@ -8356,6 +8356,240 @@ abstract class AppLocalizations {
   /// **'Sign out'**
   String get syncSignOut;
 
+  /// Discovery home: page heading
+  ///
+  /// In en, this message translates to:
+  /// **'Made for you'**
+  String get discoveryTitle;
+
+  /// Discovery home: heading before any listening data exists
+  ///
+  /// In en, this message translates to:
+  /// **'Your music, personalised'**
+  String get discoveryColdTitle;
+
+  /// Discovery home: explainer before any listening data exists
+  ///
+  /// In en, this message translates to:
+  /// **'Play a few tracks and SpotiFLAC builds Discover Weekly, Daily Mixes, mood playlists and radio from your own listening — entirely on this device.'**
+  String get discoveryColdSubtitle;
+
+  /// Discovery home: recently played shelf heading
+  ///
+  /// In en, this message translates to:
+  /// **'Recently played'**
+  String get discoverySectionRecent;
+
+  /// Discovery home: Daily Mixes shelf heading
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Mixes'**
+  String get discoverySectionDailyMixes;
+
+  /// Discovery home: new releases shelf heading
+  ///
+  /// In en, this message translates to:
+  /// **'New releases'**
+  String get discoverySectionNewReleases;
+
+  /// Discovery home: recommended-for-you shelf heading
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended for you'**
+  String get discoverySectionForYou;
+
+  /// Discovery home: trending shelf heading
+  ///
+  /// In en, this message translates to:
+  /// **'Trending now'**
+  String get discoverySectionTrending;
+
+  /// Discovery home: favorite artists shelf heading
+  ///
+  /// In en, this message translates to:
+  /// **'Artists you love'**
+  String get discoverySectionArtists;
+
+  /// Discovery home: favorite albums shelf heading
+  ///
+  /// In en, this message translates to:
+  /// **'Albums you love'**
+  String get discoverySectionAlbums;
+
+  /// Discovery home: saved radio stations shelf heading
+  ///
+  /// In en, this message translates to:
+  /// **'Radio stations'**
+  String get discoverySectionRadio;
+
+  /// Discovery home: moods and activities shelf heading
+  ///
+  /// In en, this message translates to:
+  /// **'Moods & activities'**
+  String get discoverySectionMoods;
+
+  /// Discovery home / artist page: similar artists heading
+  ///
+  /// In en, this message translates to:
+  /// **'Similar artists'**
+  String get discoverySectionSimilar;
+
+  /// Discovery home: trending period filter, this week
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get discoveryTrendingWeek;
+
+  /// Discovery home: trending period filter, this month
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get discoveryTrendingMonth;
+
+  /// Discovery home: trending period filter, fastest growing
+  ///
+  /// In en, this message translates to:
+  /// **'Fastest growing'**
+  String get discoveryTrendingVelocity;
+
+  /// Discovery home: trending period filter, emerging artists
+  ///
+  /// In en, this message translates to:
+  /// **'Emerging artists'**
+  String get discoveryTrendingEmerging;
+
+  /// Discovery home: how trending is computed
+  ///
+  /// In en, this message translates to:
+  /// **'Trending counts your own listening on this device.'**
+  String get discoveryTrendingNote;
+
+  /// Discover Weekly card: refresh cadence
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshes every Monday'**
+  String get discoveryWeeklyMonday;
+
+  /// Discovery: play a generated shelf from the top
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get discoveryPlayAll;
+
+  /// Discovery: shuffle a generated shelf
+  ///
+  /// In en, this message translates to:
+  /// **'Shuffle'**
+  String get discoveryShuffle;
+
+  /// Discovery: start radio from this shelf or artist
+  ///
+  /// In en, this message translates to:
+  /// **'Start radio'**
+  String get discoveryOpenRadio;
+
+  /// Discovery: a generated shelf came back empty
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here yet'**
+  String get discoveryEmptyShelf;
+
+  /// Discovery: why a generated shelf is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Keep listening — this shelf fills in as your profile grows.'**
+  String get discoveryEmptyShelfHint;
+
+  /// Radio mode: default station name
+  ///
+  /// In en, this message translates to:
+  /// **'Radio'**
+  String get discoveryRadioTitle;
+
+  /// Radio mode: header label
+  ///
+  /// In en, this message translates to:
+  /// **'On air'**
+  String get discoveryRadioPlaying;
+
+  /// Radio mode: the next batch is still being built
+  ///
+  /// In en, this message translates to:
+  /// **'Building the next batch…'**
+  String get discoveryRadioQueueEmpty;
+
+  /// Radio mode: stop and discard the station
+  ///
+  /// In en, this message translates to:
+  /// **'Stop radio'**
+  String get discoveryRadioStop;
+
+  /// Radio mode: artist-seeded station
+  ///
+  /// In en, this message translates to:
+  /// **'Artist radio'**
+  String get discoveryRadioArtist;
+
+  /// Radio mode: track-seeded station
+  ///
+  /// In en, this message translates to:
+  /// **'Track radio'**
+  String get discoveryRadioTrack;
+
+  /// Radio mode: genre-seeded station
+  ///
+  /// In en, this message translates to:
+  /// **'Genre radio'**
+  String get discoveryRadioGenre;
+
+  /// Radio mode: mood-seeded station
+  ///
+  /// In en, this message translates to:
+  /// **'Mood radio'**
+  String get discoveryRadioMood;
+
+  /// Similar artists: label under the similarity percentage
+  ///
+  /// In en, this message translates to:
+  /// **'similarity'**
+  String get discoverySimilarScore;
+
+  /// Similar artists: top tracks sub-heading
+  ///
+  /// In en, this message translates to:
+  /// **'Top tracks'**
+  String get discoverySimilarTopTracks;
+
+  /// Similar artists: recommended albums sub-heading
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended albums'**
+  String get discoverySimilarAlbums;
+
+  /// Similar artists: no grounded match found
+  ///
+  /// In en, this message translates to:
+  /// **'No similar artists yet'**
+  String get discoverySimilarNone;
+
+  /// Similar artists: why there is no match
+  ///
+  /// In en, this message translates to:
+  /// **'Similarity is computed from your own library, tags and listening patterns. Play more from this artist and neighbours will appear.'**
+  String get discoverySimilarNoneHint;
+
+  /// Discovery: play count under an artist or radio station
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 play} other{{count} plays}}'**
+  String discoveryPlayCount(int count);
+
+  /// Radio mode: skip the current track
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get discoveryRadioSkip;
+
   /// Cloud sync page: manual sync button
   ///
   /// In en, this message translates to:

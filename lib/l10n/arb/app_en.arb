@@ -6609,5 +6609,166 @@
   "syncNow": "Sync now",
   "@syncNow": {
     "description": "Cloud sync page: manual sync button"
+  },
+  "discoveryTitle": "Made for you",
+  "@discoveryTitle": {
+    "description": "Discovery home: page heading"
+  },
+  "discoveryColdTitle": "Your music, personalised",
+  "@discoveryColdTitle": {
+    "description": "Discovery home: heading before any listening data exists"
+  },
+  "discoveryColdSubtitle": "Play a few tracks and SpotiFLAC builds Discover Weekly, Daily Mixes, mood playlists and radio from your own listening — entirely on this device.",
+  "@discoveryColdSubtitle": {
+    "description": "Discovery home: explainer before any listening data exists"
+  },
+  "discoverySectionRecent": "Recently played",
+  "@discoverySectionRecent": {
+    "description": "Discovery home: recently played shelf heading"
+  },
+  "discoverySectionDailyMixes": "Daily Mixes",
+  "@discoverySectionDailyMixes": {
+    "description": "Discovery home: Daily Mixes shelf heading"
+  },
+  "discoverySectionNewReleases": "New releases",
+  "@discoverySectionNewReleases": {
+    "description": "Discovery home: new releases shelf heading"
+  },
+  "discoverySectionForYou": "Recommended for you",
+  "@discoverySectionForYou": {
+    "description": "Discovery home: recommended-for-you shelf heading"
+  },
+  "discoverySectionTrending": "Trending now",
+  "@discoverySectionTrending": {
+    "description": "Discovery home: trending shelf heading"
+  },
+  "discoverySectionArtists": "Artists you love",
+  "@discoverySectionArtists": {
+    "description": "Discovery home: favorite artists shelf heading"
+  },
+  "discoverySectionAlbums": "Albums you love",
+  "@discoverySectionAlbums": {
+    "description": "Discovery home: favorite albums shelf heading"
+  },
+  "discoverySectionRadio": "Radio stations",
+  "@discoverySectionRadio": {
+    "description": "Discovery home: saved radio stations shelf heading"
+  },
+  "discoverySectionMoods": "Moods & activities",
+  "@discoverySectionMoods": {
+    "description": "Discovery home: moods and activities shelf heading"
+  },
+  "discoverySectionSimilar": "Similar artists",
+  "@discoverySectionSimilar": {
+    "description": "Discovery home / artist page: similar artists heading"
+  },
+  "discoveryTrendingWeek": "This week",
+  "@discoveryTrendingWeek": {
+    "description": "Discovery home: trending period filter, this week"
+  },
+  "discoveryTrendingMonth": "This month",
+  "@discoveryTrendingMonth": {
+    "description": "Discovery home: trending period filter, this month"
+  },
+  "discoveryTrendingVelocity": "Fastest growing",
+  "@discoveryTrendingVelocity": {
+    "description": "Discovery home: trending period filter, fastest growing"
+  },
+  "discoveryTrendingEmerging": "Emerging artists",
+  "@discoveryTrendingEmerging": {
+    "description": "Discovery home: trending period filter, emerging artists"
+  },
+  "discoveryTrendingNote": "Trending counts your own listening on this device.",
+  "@discoveryTrendingNote": {
+    "description": "Discovery home: how trending is computed"
+  },
+  "discoveryWeeklyMonday": "Refreshes every Monday",
+  "@discoveryWeeklyMonday": {
+    "description": "Discover Weekly card: refresh cadence"
+  },
+  "discoveryPlayAll": "Play",
+  "@discoveryPlayAll": {
+    "description": "Discovery: play a generated shelf from the top"
+  },
+  "discoveryShuffle": "Shuffle",
+  "@discoveryShuffle": {
+    "description": "Discovery: shuffle a generated shelf"
+  },
+  "discoveryOpenRadio": "Start radio",
+  "@discoveryOpenRadio": {
+    "description": "Discovery: start radio from this shelf or artist"
+  },
+  "discoveryEmptyShelf": "Nothing here yet",
+  "@discoveryEmptyShelf": {
+    "description": "Discovery: a generated shelf came back empty"
+  },
+  "discoveryEmptyShelfHint": "Keep listening — this shelf fills in as your profile grows.",
+  "@discoveryEmptyShelfHint": {
+    "description": "Discovery: why a generated shelf is empty"
+  },
+  "discoveryRadioTitle": "Radio",
+  "@discoveryRadioTitle": {
+    "description": "Radio mode: default station name"
+  },
+  "discoveryRadioPlaying": "On air",
+  "@discoveryRadioPlaying": {
+    "description": "Radio mode: header label"
+  },
+  "discoveryRadioQueueEmpty": "Building the next batch…",
+  "@discoveryRadioQueueEmpty": {
+    "description": "Radio mode: the next batch is still being built"
+  },
+  "discoveryRadioStop": "Stop radio",
+  "@discoveryRadioStop": {
+    "description": "Radio mode: stop and discard the station"
+  },
+  "discoveryRadioArtist": "Artist radio",
+  "@discoveryRadioArtist": {
+    "description": "Radio mode: artist-seeded station"
+  },
+  "discoveryRadioTrack": "Track radio",
+  "@discoveryRadioTrack": {
+    "description": "Radio mode: track-seeded station"
+  },
+  "discoveryRadioGenre": "Genre radio",
+  "@discoveryRadioGenre": {
+    "description": "Radio mode: genre-seeded station"
+  },
+  "discoveryRadioMood": "Mood radio",
+  "@discoveryRadioMood": {
+    "description": "Radio mode: mood-seeded station"
+  },
+  "discoverySimilarScore": "similarity",
+  "@discoverySimilarScore": {
+    "description": "Similar artists: label under the similarity percentage"
+  },
+  "discoverySimilarTopTracks": "Top tracks",
+  "@discoverySimilarTopTracks": {
+    "description": "Similar artists: top tracks sub-heading"
+  },
+  "discoverySimilarAlbums": "Recommended albums",
+  "@discoverySimilarAlbums": {
+    "description": "Similar artists: recommended albums sub-heading"
+  },
+  "discoverySimilarNone": "No similar artists yet",
+  "@discoverySimilarNone": {
+    "description": "Similar artists: no grounded match found"
+  },
+  "discoverySimilarNoneHint": "Similarity is computed from your own library, tags and listening patterns. Play more from this artist and neighbours will appear.",
+  "@discoverySimilarNoneHint": {
+    "description": "Similar artists: why there is no match"
+  },
+  "discoveryPlayCount": "{count, plural, =1{1 play} other{{count} plays}}",
+  "@discoveryPlayCount": {
+    "description": "Discovery: play count under an artist or radio station",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "discoveryRadioSkip": "Skip",
+  "@discoveryRadioSkip": {
+    "description": "Radio mode: skip the current track"
   }
 }

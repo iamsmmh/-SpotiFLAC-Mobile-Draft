@@ -86,9 +86,16 @@ class PlaybackStatisticsNotifier extends Notifier<ListeningStats> {
 /// `PlayEvent` per completed listen or skip, keyed by the canonical track
 /// identity. Feature Group 7 (history) becomes live end-to-end without the
 /// audio handler learning about SQLite.
+/// [onTrackCompleted] / [onTrackSkipped] are optional, additive hooks (added
+/// for the discovery suite): they let a listener react to a finished or skipped
+/// track without this file learning about the recommendation layer. Both are
+/// invoked *after* the statistics and history writes, and a throw from either
+/// is swallowed so a downstream listener can never break recording.
 void installPlaybackStatisticsRecording(
   WidgetRef ref, {
   ListeningHistoryRepository? historyRepository,
+  void Function(String trackKey)? onTrackCompleted,
+  void Function(String trackKey)? onTrackSkipped,
 }) {
   final notifier = ref.read(playbackStatisticsProvider.notifier);
   setPlaybackStatsObserver(
@@ -140,6 +147,7 @@ void installPlaybackStatisticsRecording(
             ),
           );
         }
+        _notify(onTrackCompleted, _historyKeyFor(media));
       },
       onSkip: (media) {
         unawaited(notifier.recordSkip());
@@ -164,9 +172,20 @@ void installPlaybackStatisticsRecording(
             ),
           );
         }
+        _notify(onTrackSkipped, _historyKeyFor(media));
       },
     ),
   );
+}
+
+/// Runs an optional listener hook, isolating it from the recording path.
+void _notify(void Function(String trackKey)? hook, String trackKey) {
+  if (hook == null) return;
+  try {
+    hook(trackKey);
+  } catch (_) {
+    // A listener failure must never stop statistics from being recorded.
+  }
 }
 
 /// Start timestamps for the in-flight listen of each media id.

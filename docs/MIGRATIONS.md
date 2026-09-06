@@ -39,6 +39,8 @@ Rules for adding a migration:
 | 1 → 2 | Podcast episode progress + download bookkeeping; completion index on listening events |
 | 2 → 3 | Per-collection network policy for offline collections; stream-cache completion + source URL |
 | 3 → 4 | Podcast retention/notification policy; smart-playlist materialization results |
+| 4 → 5 | Stream-cache integrity + at-rest encryption bookkeeping (`sha256`, `encrypted`, `iv_hex`) |
+| 5 → 6 | **On-device discovery engine** (11 new `ds_*` tables, additive only): `ds_listening_statistics`, `ds_user_profiles`, `ds_recommendation_cache`, `ds_daily_mixes`, `ds_discover_weekly`, `ds_radio_sessions`, `ds_artist_similarity`, `ds_track_similarity`, `ds_mood_profiles`, `ds_trending_statistics`, `ds_continue_listening` |
 
 ## Verifying
 
@@ -47,8 +49,16 @@ flutter test test/ecosystem_migrations_test.dart
 ```
 
 The test asserts that the plan is contiguous (no gaps, no duplicate steps),
-that every statement is a single idempotent DDL statement, and that v1 creates
-every table the modules use.
+that every statement is a single idempotent DDL statement, that v1 creates
+every table the modules use, and that the 5 → 6 step creates all eleven
+discovery tables without altering or dropping any pre-existing one.
+
+The SQL shown in `docs/SCHEMA.md` is generated from the Dart source, not
+retyped:
+
+```bash
+python3 scripts/discovery_schema_doc.py
+```
 
 ## Roll-forward only
 

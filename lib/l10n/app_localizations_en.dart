@@ -5096,4 +5096,129 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get syncNow => 'Sync now';
+
+  @override
+  String get discoveryTitle => 'Made for you';
+
+  @override
+  String get discoveryColdTitle => 'Your music, personalised';
+
+  @override
+  String get discoveryColdSubtitle => 'Play a few tracks and SpotiFLAC builds Discover Weekly, Daily Mixes, mood playlists and radio from your own listening — entirely on this device.';
+
+  @override
+  String get discoverySectionRecent => 'Recently played';
+
+  @override
+  String get discoverySectionDailyMixes => 'Daily Mixes';
+
+  @override
+  String get discoverySectionNewReleases => 'New releases';
+
+  @override
+  String get discoverySectionForYou => 'Recommended for you';
+
+  @override
+  String get discoverySectionTrending => 'Trending now';
+
+  @override
+  String get discoverySectionArtists => 'Artists you love';
+
+  @override
+  String get discoverySectionAlbums => 'Albums you love';
+
+  @override
+  String get discoverySectionRadio => 'Radio stations';
+
+  @override
+  String get discoverySectionMoods => 'Moods & activities';
+
+  @override
+  String get discoverySectionSimilar => 'Similar artists';
+
+  @override
+  String get discoveryTrendingWeek => 'This week';
+
+  @override
+  String get discoveryTrendingMonth => 'This month';
+
+  @override
+  String get discoveryTrendingVelocity => 'Fastest growing';
+
+  @override
+  String get discoveryTrendingEmerging => 'Emerging artists';
+
+  @override
+  String get discoveryTrendingNote => 'Trending counts your own listening on this device.';
+
+  @override
+  String get discoveryWeeklyMonday => 'Refreshes every Monday';
+
+  @override
+  String get discoveryPlayAll => 'Play';
+
+  @override
+  String get discoveryShuffle => 'Shuffle';
+
+  @override
+  String get discoveryOpenRadio => 'Start radio';
+
+  @override
+  String get discoveryEmptyShelf => 'Nothing here yet';
+
+  @override
+  String get discoveryEmptyShelfHint => 'Keep listening — this shelf fills in as your profile grows.';
+
+  @override
+  String get discoveryRadioTitle => 'Radio';
+
+  @override
+  String get discoveryRadioPlaying => 'On air';
+
+  @override
+  String get discoveryRadioQueueEmpty => 'Building the next batch…';
+
+  @override
+  String get discoveryRadioStop => 'Stop radio';
+
+  @override
+  String get discoveryRadioArtist => 'Artist radio';
+
+  @override
+  String get discoveryRadioTrack => 'Track radio';
+
+  @override
+  String get discoveryRadioGenre => 'Genre radio';
+
+  @override
+  String get discoveryRadioMood => 'Mood radio';
+
+  @override
+  String get discoverySimilarScore => 'similarity';
+
+  @override
+  String get discoverySimilarTopTracks => 'Top tracks';
+
+  @override
+  String get discoverySimilarAlbums => 'Recommended albums';
+
+  @override
+  String get discoverySimilarNone => 'No similar artists yet';
+
+  @override
+  String get discoverySimilarNoneHint => 'Similarity is computed from your own library, tags and listening patterns. Play more from this artist and neighbours will appear.';
+
+  @override
+  String discoveryPlayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plays',
+      one: '1 play',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get discoveryRadioSkip => 'Skip';
 }

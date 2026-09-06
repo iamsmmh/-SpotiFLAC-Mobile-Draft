@@ -35,6 +35,7 @@ import 'package:spotiflac_android/core/data/session_resource_budget.dart';
 import 'package:spotiflac_android/core/presentation/core_queue_providers.dart';
 import 'package:spotiflac_android/models/settings.dart';
 import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/discovery_providers.dart';
 import 'package:spotiflac_android/providers/audio_effects_provider.dart';
 import 'package:spotiflac_android/providers/download_schedule_settings_provider.dart';
 import 'package:spotiflac_android/providers/engine_settings_provider.dart';
@@ -737,6 +738,7 @@ class _EagerInitialization extends ConsumerStatefulWidget {
 class _EagerInitializationState extends ConsumerState<_EagerInitialization>
     with WidgetsBindingObserver {
   ProviderSubscription<bool>? _localLibraryEnabledSub;
+  DiscoverySubscriptions? _discoverySubscriptions;
   Timer? _downloadHistoryWarmupTimer;
   Timer? _localLibraryWarmupTimer;
   bool _localLibraryWarmupScheduled = false;
@@ -759,6 +761,7 @@ class _EagerInitializationState extends ConsumerState<_EagerInitialization>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _localLibraryEnabledSub?.close();
+    _discoverySubscriptions?.close();
     _downloadHistoryWarmupTimer?.cancel();
     _localLibraryWarmupTimer?.cancel();
     super.dispose();
@@ -872,7 +875,19 @@ class _EagerInitializationState extends ConsumerState<_EagerInitialization>
       historyRepository: ListeningHistoryRepository(
         database: EcosystemDatabase.instance,
       ),
+      // Discovery hooks: a finished or skipped track invalidates the profile,
+      // so the personalised shelves refresh in the background (debounced
+      // inside DiscoveryService). Purely additive — the recording behaviour
+      // above is unchanged.
+      onTrackCompleted: (_) => ref.read(playbackTickProvider.notifier).tick(),
+      onTrackSkipped: (_) => ref.read(playbackTickProvider.notifier).tick(),
     );
+
+    // Discovery & recommendations: roll up listening statistics, rebuild the
+    // listening profile and generate the personalised shelves (Discover
+    // Weekly, Daily Mixes, moods, trending, radio, continue listening).
+    // Everything is on-device, debounced and off the first-paint path.
+    _discoverySubscriptions = installDiscoveryRecording(ref);
 
     // Search history (Phase 9): restore the on-device query log that powers
     // recent searches and local suggestions on the Home tab.
