@@ -16,7 +16,6 @@ import 'dart:math' as math;
 
 import 'package:spotiflac_android/engine/audio_characteristics.dart';
 import 'package:spotiflac_android/engine/crossfade_policy.dart';
-import 'package:spotiflac_android/engine/gapless_policy.dart';
 
 /// Fade curve family.
 enum FadeCurveKind {

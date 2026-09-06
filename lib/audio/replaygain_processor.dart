@@ -148,7 +148,7 @@ class ManualGainOverrides {
 
   double? forTrack(String trackId) => _byKey[trackKey(trackId)];
 
-  double? forAlbum(String albumKey) => _byKey[albumKey(albumKey)];
+  double? forAlbum(String album) => _byKey[albumKey(album)];
 
   /// First match wins: track overrides beat album overrides.
   double? lookup({required String trackId, required String albumKey}) {
@@ -158,12 +158,12 @@ class ManualGainOverrides {
   void setTrack(String trackId, double gainDb) =>
       _byKey[trackKey(trackId)] = _clamp(gainDb);
 
-  void setAlbum(String albumKey, double gainDb) =>
-      _byKey[albumKey(albumKey)] = _clamp(gainDb);
+  void setAlbum(String album, double gainDb) =>
+      _byKey[albumKey(album)] = _clamp(gainDb);
 
   void removeTrack(String trackId) => _byKey.remove(trackKey(trackId));
 
-  void removeAlbum(String albumKey) => _byKey.remove(albumKey(albumKey));
+  void removeAlbum(String album) => _byKey.remove(albumKey(album));
 
   void clear() => _byKey.clear();
 
@@ -213,7 +213,7 @@ class ReplayGainConfig {
     final loudnessRaw = json['loudness'];
     return ReplayGainConfig(
       mode: ReplayGainMode.fromName(json['mode']),
-      preAmpDb: (GainTagSet._finite(json['preamp_db']) ?? 0.0).clamp(
+      preAmpDb: (GainTagSet.parseFinite(json['preamp_db']) ?? 0.0).clamp(
         minPreAmpDb,
         maxPreAmpDb,
       ),

@@ -16,6 +16,7 @@ library;
 
 import 'package:spotiflac_android/cache/cache_database.dart';
 import 'package:spotiflac_android/cache/cache_policy.dart';
+import 'package:spotiflac_android/cache/stream_cache.dart';
 import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('SmartCacheManager');
@@ -80,12 +81,14 @@ class SmartCacheManager {
   }) : _bytes = bytes,
        _policy = policy,
        _metadata = metadata,
-       _clock = clock ?? () => DateTime.now().toUtc();
+       _clock = clock ?? _defaultClock;
 
   final StreamByteCache _bytes;
   final SmartCachePolicy _policy;
   final CacheMetadataStore _metadata;
   final DateTime Function() _clock;
+
+  static DateTime _defaultClock() => DateTime.now().toUtc();
 
   SmartCachePolicy get policy => _policy;
 

@@ -25,7 +25,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotiflac_android/audio/crossfade_manager.dart';
 import 'package:spotiflac_android/audio/gapless_manager.dart';
 import 'package:spotiflac_android/audio/normalization_manager.dart';
-import 'package:spotiflac_android/audio/queue_manager.dart';
 import 'package:spotiflac_android/audio/replaygain_processor.dart';
 import 'package:spotiflac_android/engine/advanced_audio.dart';
 import 'package:spotiflac_android/engine/crossfade_policy.dart';
