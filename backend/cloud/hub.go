@@ -136,20 +136,24 @@ func (h *Hub) Broadcast(ctx context.Context, userID string, event Event) {
 // subscribers, without re-publishing it (which would loop forever).
 func (h *Hub) DeliverLocal(userID string, event Event) { h.deliverLocal(userID, event) }
 
+// deliverLocal sends to every eligible subscriber *while holding the read
+// lock*.
+//
+// Sending after releasing the lock would race with Close/unsubscribe closing
+// the same channel — a send on a closed channel, which panics. Holding
+// RLock across the send makes delivery mutually exclusive with the writers
+// that close channels, and the send itself can never block because it is a
+// non-blocking select, so the lock is held for a bounded time.
 func (h *Hub) deliverLocal(userID string, event Event) {
 	h.mu.RLock()
-	targets := make([]*subscriber, 0, len(h.subscribers[userID]))
+	defer h.mu.RUnlock()
+
 	for _, sub := range h.subscribers[userID] {
 		// A device never needs its own echo: it already applied the change
 		// locally before pushing it.
 		if event.Origin != "" && sub.deviceID == event.Origin {
 			continue
 		}
-		targets = append(targets, sub)
-	}
-	h.mu.RUnlock()
-
-	for _, sub := range targets {
 		select {
 		case sub.events <- event:
 		default:

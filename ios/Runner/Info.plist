@@ -117,6 +117,47 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<!-- Cross-device playback continuity keeps the event socket alive
+		     briefly after backgrounding so a hand-off started on another
+		     device is picked up without a cold launch. -->
+		<string>processing</string>
 	</array>
+
+	<!-- Siri: "Hey Siri, play <song> on SpotiFLAC" (Milestone 2).
+	     INPlayMediaIntent is handled in-process by SiriIntentHandler, so no
+	     separate Intents extension target is required. -->
+	<key>NSSiriUsageDescription</key>
+	<string>SpotiFLAC uses Siri so you can ask to play songs, albums, artists and playlists hands-free.</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>INPlayMediaIntent</string>
+	</array>
+
+	<!-- Apple Music / media library is NOT accessed; the app plays its own
+	     library. The key is intentionally absent so the permission is never
+	     requested. -->
+
+	<!-- CarPlay audio app (Milestone 2). The matching
+	     com.apple.developer.carplay-audio entitlement must be granted by
+	     Apple before a build can run in CarPlay; see docs/apple_targets.md. -->
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<true/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>CPTemplateApplicationSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneClassName</key>
+					<string>CPTemplateApplicationScene</string>
+					<key>UISceneConfigurationName</key>
+					<string>CarPlay</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
 </dict>
 </plist>
