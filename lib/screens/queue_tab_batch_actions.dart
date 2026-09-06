@@ -388,7 +388,18 @@ extension _QueueTabBatchActions on _QueueTabState {
         } else {
           await PlatformBridge.shareMultipleContentUris(safUris);
         }
-      } catch (_) {}
+      } catch (e) {
+        // A failed SAF share intent must not look like a successful share.
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                context.l10n.snackbarCannotOpenFile(context.friendlyError(e)),
+              ),
+            ),
+          );
+        }
+      }
     }
 
     if (filesToShare.isNotEmpty) {

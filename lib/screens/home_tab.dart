@@ -583,6 +583,7 @@ class _HomeTabState extends ConsumerState<HomeTab>
   }
 
   void _navigateToDetailIfNeeded() {
+    if (!mounted) return;
     final trackState = ref.read(trackProvider);
 
     if (trackState.albumId != null &&

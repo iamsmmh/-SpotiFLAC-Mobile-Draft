@@ -631,12 +631,22 @@ class _ImportedCookiesCardState extends State<_ImportedCookiesCard> {
   }
 
   Future<void> _clearCookies() async {
+    String? error;
     try {
       await PlatformBridge.clearExtensionImportedCookies(widget.extensionId);
-    } catch (_) {}
+    } catch (e) {
+      // Never report a successful clear when the bridge rejected it.
+      error = '$e';
+    }
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text(StagedStrings.cookiesCleared)),
+      SnackBar(
+        content: Text(
+          error == null
+              ? StagedStrings.cookiesCleared
+              : '${StagedStrings.cookiesImportFailed}: $error',
+        ),
+      ),
     );
     await _load();
   }
