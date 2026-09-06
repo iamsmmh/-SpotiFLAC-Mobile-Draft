@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotiflac_android/audio/audio_engine.dart';
+import 'package:spotiflac_android/audio/crossfade_manager.dart';
 import 'package:spotiflac_android/audio/gapless_manager.dart';
 import 'package:spotiflac_android/audio/normalization_manager.dart';
 import 'package:spotiflac_android/audio/replaygain_processor.dart';
@@ -9,21 +10,16 @@ import 'package:spotiflac_android/engine/crossfade_policy.dart';
 import 'package:spotiflac_android/engine/gapless_policy.dart';
 
 class _Item implements GaplessQueueItem {
-  const _Item(
-    this.id, {
-    this.album = 'album',
-    this.characteristics = _flac,
-    this.isRemote = false,
-  });
+  const _Item(this.id, {this.characteristics = _flac});
 
   @override
   final String id;
   @override
-  final String album;
+  final String album = 'album';
   @override
   final AudioCharacteristics characteristics;
   @override
-  final bool isRemote;
+  final bool isRemote = false;
 }
 
 const AudioCharacteristics _flac = AudioCharacteristics(

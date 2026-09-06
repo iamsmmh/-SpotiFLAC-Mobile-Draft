@@ -1190,8 +1190,6 @@ class MusicPlayerHandler extends BaseAudioHandler
       trackGainDb: trackGainDb,
       albumGainDb: albumGainDb,
       trackPeak: trackPeak,
-      preferAlbumGain: _playbackPreferAlbumGain,
-      preAmpDb: _playbackPreAmpDb,
     );
   }
 
@@ -2557,19 +2555,6 @@ Stream<List<MediaItem>> musicPlayerQueueEvents() async* {
   await for (final handler in _handlerReadyController.stream) {
     yield handler.queue.value;
     yield* handler.queue;
-    return;
-  }
-}
- {
-  final existing = _handler;
-  if (existing != null) {
-    yield existing.playbackState.value;
-    yield* existing.playbackState;
-    return;
-  }
-  await for (final handler in _handlerReadyController.stream) {
-    yield handler.playbackState.value;
-    yield* handler.playbackState;
     return;
   }
 }
