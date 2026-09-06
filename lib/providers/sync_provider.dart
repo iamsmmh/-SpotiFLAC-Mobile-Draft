@@ -13,8 +13,19 @@ import 'package:spotiflac_android/core/sync/sync_orchestrator.dart';
 /// honestly "not configured"). A Firebase / Supabase / self-hosted adapter
 /// (see `docs/CLOUD_SYNC.md`) overrides this provider at start-up and every
 /// sync surface activates without further changes.
+///
+/// The SpotiFLAC Cloud module (`lib/providers/cloud_providers.dart`) binds
+/// its concrete service through [cloudSyncBackendOverrideProvider] at the
+/// `ProviderScope` in `main.dart`; this keeps the import graph one-directional
+/// (`sync_provider` stays independent of the cloud module).
 final cloudSyncBackendProvider = Provider<CloudSyncProvider>((ref) {
-  return const NoOpCloudSyncProvider();
+  return ref.watch(cloudSyncBackendOverrideProvider) ??
+      const NoOpCloudSyncProvider();
+});
+
+/// Binding hook installed via `ProviderScope.overrides` (null ⇒ not bound).
+final cloudSyncBackendOverrideProvider = Provider<CloudSyncProvider?>((ref) {
+  return null;
 });
 
 /// One app-wide orchestrator holding the conflict replica + offline outbox.

@@ -8,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotiflac_android/l10n/l10n.dart';
 import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/audio_engine_provider.dart';
+import 'package:spotiflac_android/providers/smart_cache_providers.dart';
 import 'package:spotiflac_android/providers/engine_settings_provider.dart';
 import 'package:spotiflac_android/providers/settings_provider.dart';
 import 'package:spotiflac_android/providers/repo_provider.dart';
@@ -691,6 +693,14 @@ class _MainShellState extends ConsumerState<MainShell>
     ) {
       setPlaybackCrossfade(crossfade);
     });
+    // Premium audio engine (Phase 1): installs gain resolution + keeps the
+    // engine managers in sync with the persisted settings. Re-runs whenever
+    // any of its watched settings change.
+    ref.watch(audioEngineBindingProvider);
+    // Smart stream cache (Phase 2): policy-driven maintenance + predictive
+    // queue warming (the latter only when the user allowed stream caching).
+    ref.watch(cacheMaintenanceBindingProvider);
+    ref.watch(predictiveCacheBindingProvider);
     final queueState = ref.watch(
       downloadQueueProvider.select((s) => s.queuedCount),
     );

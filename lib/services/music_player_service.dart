@@ -6,6 +6,8 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart'
     show AudioSession, AudioSessionConfiguration, AudioInterruptionType;
 import 'package:audioplayers/audioplayers.dart';
+import 'package:spotiflac_android/audio/audio_engine.dart' show GainRequest;
+import 'package:spotiflac_android/audio/replaygain_processor.dart' show GainTagSet;
 import 'package:spotiflac_android/core/data/background_playback_policy.dart';
 import 'package:spotiflac_android/core/monitoring/crash_reporter.dart';
 import 'package:spotiflac_android/engine/audio_characteristics.dart';
@@ -58,6 +60,18 @@ void setPlaybackGaplessEnabled(bool enabled) {
 /// [CrossfadePolicy] for when smart mode skips the overlap.
 void setPlaybackCrossfade(CrossfadeSettings settings) {
   _playbackCrossfade = settings;
+}
+
+/// Resolves the normalization volume through the premium audio engine
+/// (Phase 1). Installed by `providers/audio_engine_provider.dart`; returning
+/// null defers to the legacy tag-only path unchanged.
+typedef PlaybackGainResolver = double? Function(GainRequest request);
+
+PlaybackGainResolver? _playbackGainResolver;
+
+void setPlaybackGainResolver(PlaybackGainResolver? resolver) {
+  _playbackGainResolver = resolver;
+  _activeMusicPlayerHandler?.reapplyNormalization();
 }
 
 /// Parses a dynamic value to a finite double, or returns null. Accepts [num]
@@ -156,6 +170,10 @@ class PlayableMedia {
   static const String deferredStreamScheme = 'deferred-stream';
 
   bool get isDeferredStream => source.startsWith('$deferredStreamScheme://');
+
+  /// Stable album grouping key for smart gain detection and album-run
+  /// planning (case-folded album title).
+  String get albumKey => album.trim().toLowerCase();
 
   /// Builds a deferred queue item for [trackId]. The engine owns the mapping
   /// media id → track and resolves a concrete source at play time.
@@ -1096,8 +1114,8 @@ class MusicPlayerHandler extends BaseAudioHandler
     });
   }
 
-  // ReplayGain normalization: resolved path -> volume multiplier.
-  final Map<String, double> _normalizationVolumeCache = {};
+  // ReplayGain normalization: resolved path -> gain tags.
+  final Map<String, GainTagSet> _normalizationTagCache = {};
 
   /// Volume multiplier from the file's ReplayGain/R128 tags (track gain,
   /// album gain fallback; Opus R128 tags are converted to ReplayGain dB by
@@ -1107,44 +1125,85 @@ class MusicPlayerHandler extends BaseAudioHandler
   /// Remote streams carry their gain on [PlayableMedia] (from the resolved
   /// `StreamDescriptor`); local files are probed here.
   Future<double> _normalizationVolumeFor(String path, PlayableMedia media) async {
+    if (!_playbackNormalizationEnabled && _playbackGainResolver == null) {
+      return 1.0;
+    }
+
+    // Resolve the tag set first: remote sources carry their gains on the
+    // media, local files are probed (cached by path).
+    double? trackGainDb = media.trackGainDb;
+    double? albumGainDb = media.albumGainDb;
+    double? trackPeak = media.trackPeak;
+    final remoteTags = media.isRemoteHttp ||
+        (media.isDeferredStream && _isHttpSource(path));
+    if (!remoteTags) {
+      final cachedTags = _normalizationTagCache[path];
+      if (cachedTags != null) {
+        trackGainDb = cachedTags.trackGainDb;
+        albumGainDb = cachedTags.albumGainDb;
+        trackPeak = cachedTags.trackPeak;
+      } else {
+        try {
+          final metadata = await PlatformBridge.readFileMetadata(path);
+          trackGainDb = ReplayGain.parseGainDb(
+            metadata['replaygain_track_gain'],
+          );
+          albumGainDb = ReplayGain.parseGainDb(
+            metadata['replaygain_album_gain'],
+          );
+          trackPeak = ReplayGain.parsePeak(metadata['replaygain_track_peak']);
+        } catch (e) {
+          _log.w('Failed to read gain tags for normalization: $e');
+        }
+        if (_normalizationTagCache.length > 128) {
+          _normalizationTagCache.clear();
+        }
+        _normalizationTagCache[path] = GainTagSet(
+          trackGainDb: trackGainDb,
+          albumGainDb: albumGainDb,
+          trackPeak: trackPeak,
+        );
+      }
+    }
+
+    // Premium audio engine (Phase 1): mode/smart/override/loudness-aware
+    // resolution. Null = engine path disabled → legacy behaviour below.
+    final resolver = _playbackGainResolver;
+    if (resolver != null) {
+      final volume = resolver(
+        GainRequest(
+          trackId: media.id,
+          albumKey: media.albumKey,
+          isAlbumContext: _isAlbumContext(media),
+          shuffle: _shuffle,
+          trackGainDb: trackGainDb,
+          albumGainDb: albumGainDb,
+          trackPeak: trackPeak,
+        ),
+      );
+      if (volume != null) return volume.clamp(0.0, 1.0);
+    }
+
     if (!_playbackNormalizationEnabled) return 1.0;
+    return ReplayGain.volume(
+      trackGainDb: trackGainDb,
+      albumGainDb: albumGainDb,
+      trackPeak: trackPeak,
+    );
+  }
 
-    if (media.isRemoteHttp) {
-      return ReplayGain.volume(
-        trackGainDb: media.trackGainDb,
-        albumGainDb: media.albumGainDb,
-        trackPeak: media.trackPeak,
-      );
+  /// True when the previous or next queue item belongs to the same album as
+  /// [media] — the context signal smart gain detection uses to prefer the
+  /// album gain.
+  bool _isAlbumContext(PlayableMedia media) {
+    final album = media.album.trim();
+    if (album.isEmpty) return false;
+    for (final offset in const [-1, 1]) {
+      final index = _index + offset;
+      if (index < 0 || index >= _media.length) continue;
+      if (_media[index].album.trim() == album) return true;
     }
-    if (media.isDeferredStream && _isHttpSource(path)) {
-      // Deferred queue item that resolved to a stream URL: gains were carried
-      // on the media by the engine, exactly like a pre-resolved URL source.
-      return ReplayGain.volume(
-        trackGainDb: media.trackGainDb,
-        albumGainDb: media.albumGainDb,
-        trackPeak: media.trackPeak,
-      );
-    }
-
-    final cached = _normalizationVolumeCache[path];
-    if (cached != null) return cached;
-
-    var volume = 1.0;
-    try {
-      final metadata = await PlatformBridge.readFileMetadata(path);
-      volume = ReplayGain.volume(
-        trackGainDb: ReplayGain.parseGainDb(metadata['replaygain_track_gain']),
-        albumGainDb: ReplayGain.parseGainDb(metadata['replaygain_album_gain']),
-        trackPeak: ReplayGain.parsePeak(metadata['replaygain_track_peak']),
-      );
-    } catch (e) {
-      _log.w('Failed to read gain tags for normalization: $e');
-    }
-    if (_normalizationVolumeCache.length > 128) {
-      _normalizationVolumeCache.clear();
-    }
-    _normalizationVolumeCache[path] = volume;
-    return volume;
+    return false;
   }
 
   /// Re-applies normalization to the playing track when the setting flips.
