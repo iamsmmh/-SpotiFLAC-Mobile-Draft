@@ -81,7 +81,26 @@ jobs:
           git push origin "HEAD:${branch}"
 
       - name: Vet
-        run: go vet ./...
+        run: |
+          status=0
+          go vet ./... 2>&1 | tee vet.log || status=$?
+          if [ "$status" -ne 0 ]; then
+            # vet errors look like: path/file.go:12:3: message
+            grep -oE '[^[:space:]]+\.go:[0-9]+:[0-9]+: .*' vet.log | head -30 | while IFS= read -r line; do
+              file=$(printf '%s' "$line" | cut -d: -f1)
+              line_no=$(printf '%s' "$line" | cut -d: -f2)
+              col=$(printf '%s' "$line" | cut -d: -f3)
+              msg=$(printf '%s' "$line" | cut -d: -f4-)
+              echo "::error file=backend/${file},line=${line_no},col=${col}::vet: ${msg}"
+            done
+          fi
+          exit "$status"
+
+      - name: Staticcheck
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@2026.2.1
+          "$(go env GOPATH)/bin/staticcheck" ./... 2>&1 | tee staticcheck.log
+          exit "${PIPESTATUS[0]}"
 
       - name: Run tests
         run: |
