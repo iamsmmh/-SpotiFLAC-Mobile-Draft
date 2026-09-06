@@ -134,11 +134,10 @@ jobs:
           key: pub-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
           restore-keys: pub-${{ runner.os }}-
 
-      - name: Cache Android NDK
-        uses: actions/cache@v5
-        with:
-          path: /usr/local/lib/android/sdk/ndk/${{ env.ANDROID_NDK_VERSION }}
-          key: ndk-${{ env.ANDROID_NDK_VERSION }}
+      # NDK 29.0.14206865 is preinstalled on the ubuntu-latest runner image at
+      # /usr/local/lib/android/sdk/ndk/${{ env.ANDROID_NDK_VERSION }}, so it is
+      # not cached here (restoring over existing files makes /usr/bin/tar exit
+      # code 2). setup-android-sdk.sh detects it and skips installation.
 
       - name: Install Android SDK components
         run: |

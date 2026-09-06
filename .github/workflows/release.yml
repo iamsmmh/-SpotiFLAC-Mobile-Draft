@@ -90,11 +90,10 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: gradle-${{ runner.os }}-
 
-      - name: Cache Android NDK
-        uses: actions/cache@v5
-        with:
-          path: /usr/local/lib/android/sdk/ndk/29.0.14206865
-          key: ndk-29.0.14206865
+      # NDK 29.0.14206865 is preinstalled on the ubuntu-latest runner image at
+      # /usr/local/lib/android/sdk/ndk/29.0.14206865, so it is not cached here
+      # (restoring over existing files makes /usr/bin/tar exit 2). setup-
+      # android-sdk.sh detects the preinstalled NDK and skips installation.
 
       - name: Install Android SDK & NDK
         run: |
