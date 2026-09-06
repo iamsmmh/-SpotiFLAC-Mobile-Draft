@@ -417,6 +417,9 @@ class CrashReporter {
             return;
           case _SendOutcome.retryExhausted:
           case _SendOutcome.permanent:
+          case _SendOutcome.transient:
+            // transient is unreachable here (retry is handled inside
+            // _sendWithRetry), but the switch stays exhaustive by design.
             _queue.remove(job);
             _droppedPermanent++;
         }

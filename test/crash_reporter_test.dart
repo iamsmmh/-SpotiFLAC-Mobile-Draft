@@ -11,29 +11,35 @@ import 'package:spotimusic/core/monitoring/crash_reporter.dart';
 class _ScriptedClient extends http.BaseClient {
   _ScriptedClient(this.responses);
 
-  final List<Object> responses; // http.Response or Future<Response> or error
-  final List<http.Request> requests = <http.Request>[];
+  final List<Object> responses; // http.Response, Completer<StreamedResponse> or error
+  final List<http.BaseRequest> requests = <http.BaseRequest>[];
   final List<String> bodies = <String>[];
 
   @override
-  Future<http.Response> send(http.Request request) async {
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
     requests.add(request);
-    bodies.add(request.body);
+    bodies.add(request is http.Request ? request.body : '');
     if (responses.isEmpty) {
-      return http.Response('ok', 200);
+      return _streamed(_resp(200));
     }
     final next = responses.removeAt(0);
-    if (next is Completer<http.Response>) {
+    if (next is Completer<http.StreamedResponse>) {
       return next.future;
     }
     if (next is http.Response) {
-      return next;
+      return _streamed(next);
     }
     throw next; // a scripted error object: the request itself fails
   }
+
 }
 
 http.Response _resp(int status) => http.Response('body', status);
+
+http.StreamedResponse _streamed(http.Response response) => http.StreamedResponse(
+  http.ByteStream.fromBytes(response.bodyBytes),
+  response.statusCode,
+);
 
 CrashReporter _reporter({
   required http.Client client,
@@ -323,7 +329,7 @@ void main() {
     });
 
     test('bounds the send queue (oldest dropped first)', () async {
-      final stall = Completer<http.Response>();
+      final stall = Completer<http.StreamedResponse>();
       final client = _ScriptedClient([stall]);
       final reporter = _reporter(client: client, maxQueueLength: 2)
         ..configure(dsn: 'https://key@errors.test/9');
@@ -336,7 +342,7 @@ void main() {
       expect(reporter.stats['dropped_queue_limit'], 1);
       expect(reporter.stats['queued'], 2);
 
-      stall.complete(_resp(200)); // unblock drain; "two"/"three" follow.
+      stall.complete(_streamed(_resp(200))); // unblock drain; "two"/"three" follow.
       await reporter.flush();
       expect(client.requests.length, 3);
       expect(reporter.stats['delivered'], 3);

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide StreamProvider;import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
