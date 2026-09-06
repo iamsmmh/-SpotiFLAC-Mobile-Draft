@@ -129,12 +129,11 @@ jobs:
           key: pub-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
           restore-keys: pub-${{ runner.os }}-
 
-      - name: Cache Android NDK
-        uses: actions/cache@v5
-        with:
-          path: /usr/local/lib/android/sdk/ndk/${{ env.ANDROID_NDK_VERSION }}
-          key: ndk-${{ env.ANDROID_NDK_VERSION }}
-
+      # Android NDK ${{ env.ANDROID_NDK_VERSION }} is preinstalled on the
+      # ubuntu-latest runner image at /usr/local/lib/android/sdk/ndk/... so it
+      # is NOT cached here: restoring a cache over those existing files makes
+      # /usr/bin/tar fail (exit code 2, "Cannot open: File exists").
+      # setup-android-sdk.sh detects the preinstalled NDK and skips install.
       # --- Android SDK components ------------------------------------------
       - name: Install Android SDK & NDK
         run: |
