@@ -155,7 +155,7 @@ func TestResolveFailsWhenRecordDeletedOrPrivate(t *testing.T) {
 	if _, err := store.Push(ctx, userID, "playlists", []sync.Record{{
 		RecordID:  "pl-1",
 		UpdatedAt: time.Now().UTC().Add(time.Second),
-		Payload:   map[string]any{
+		Payload: map[string]any{
 			"playlistId": "pl-1",
 			"title":      "Road trip",
 			"trackKeys":  []any{"isrc:X"},
