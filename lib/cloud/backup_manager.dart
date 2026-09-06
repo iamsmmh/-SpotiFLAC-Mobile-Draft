@@ -96,9 +96,11 @@ class CloudBackupManager {
       return BackupService.buildEnvelope(
         settings: _asMap(settings),
         history: _asList(history),
-        collections: _asMap(collections),
-        playlistCovers: _asMap(playlistCovers),
-        extensions: _asMap(extensions),
+        collections:
+            _asMap(collections) ?? const <String, dynamic>{},
+        playlistCovers:
+            _asMap(playlistCovers) ?? const <String, dynamic>{},
+        extensions: _asMap(extensions) ?? const <String, dynamic>{},
       );
     } catch (error) {
       _log.w('backup envelope build failed: $error');
@@ -106,9 +108,10 @@ class CloudBackupManager {
     }
   }
 
-  Object? _load(String key) async {
+  Future<Object?> _load(String key) async {
     final loader = _sections.loaders[key];
-    return loader == null ? null : loader();
+    if (loader == null) return null;
+    return loader();
   }
 
   Map<String, dynamic>? _asMap(Object? value) =>

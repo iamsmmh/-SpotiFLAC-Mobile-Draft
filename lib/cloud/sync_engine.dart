@@ -10,6 +10,7 @@
 /// state, so a cycle is safe to interrupt at any point.
 library;
 
+import 'package:spotiflac_android/core/sync/cloud_sync_provider.dart';
 import 'package:spotiflac_android/core/sync/sync_entities.dart';
 import 'package:spotiflac_android/core/sync/sync_orchestrator.dart';
 import 'package:spotiflac_android/ecosystem/sync/sync_engine.dart';

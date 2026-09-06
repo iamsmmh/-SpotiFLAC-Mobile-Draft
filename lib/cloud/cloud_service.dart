@@ -46,7 +46,7 @@ class CloudPlaylistShare {
     return CloudPlaylistShare(
       slug: slug,
       payload: Map<String, Object?>.from(
-        (map['payload'] as Map?) ?? const <String, Object?>{},
+        (map['payload'] ?? const <String, Object?>{}) as Map,
       ),
       views: (map['views'] as num?)?.toInt() ?? 0,
     );
@@ -88,7 +88,7 @@ class CloudBackupSummary {
 
   static List<CloudBackupSummary> listFrom(Object? raw) {
     if (raw is! Map) return const <CloudBackupSummary>[];
-    final backups = (raw as Map)['backups'];
+    final backups = raw['backups'];
     if (backups is! List) return const <CloudBackupSummary>[];
     return <CloudBackupSummary>[
       for (final entry in backups) ?CloudBackupSummary.tryParse(entry),
