@@ -5,9 +5,11 @@ package sync
 
 import (
 	"context"
+	"crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"sort"
 	"sync"
 	"time"
@@ -54,9 +56,33 @@ func NewBackupStore(clock func() time.Time, ids func() string) *BackupStore {
 		clock = time.Now
 	}
 	if ids == nil {
-		ids = func() string { return NewUserID() }
+		ids = NewBackupID
 	}
 	return &BackupStore{blobs: map[string][]*backupBlob{}, clock: clock, ids: ids}
+}
+
+// NewBackupID generates a random identifier for a stored backup.
+func NewBackupID() string {
+	buf := make([]byte, 12)
+	if _, err := rand.Read(buf); err != nil {
+		// Fall back to a timestamp-based id; uniqueness only matters for
+		// colliding uploads within the same process.
+		return fmt.Sprintf("b%d", time.Now().UnixNano())
+	}
+	return hex.EncodeToString(buf)
+}
+
+// backupID embeds a content fingerprint plus a random suffix so the id is
+// both dedupable and unique even across replacement uploads.
+func backupID(sum [sha256.Size]byte, idFactory func() string) string {
+	suffix := idFactory()
+	if len(suffix) > 4 {
+		suffix = suffix[4:]
+	}
+	if suffix == "" {
+		suffix = NewBackupID()
+	}
+	return "bkp_" + hex.EncodeToString(sum[:6]) + "_" + suffix
 }
 
 // Upload stores an envelope, pruning to KeptBackupsPerDevice.
@@ -72,7 +98,7 @@ func (s *BackupStore) Upload(_ context.Context, userID, deviceID string, payload
 	}
 	sum := sha256.Sum256(payload)
 	meta := Backup{
-		ID:        "bkp_" + hex.EncodeToString(sum[:6]) + "_" + s.ids()[4:],
+		ID:        backupID(sum, s.ids()),
 		DeviceID:  deviceID,
 		SizeBytes: len(payload),
 		SHA256:    hex.EncodeToString(sum[:]),
