@@ -236,6 +236,18 @@ jobs:
       - name: Vet
         run: go vet ./...
 
+      - name: Staticcheck
+        # Pinned (not @latest) so a new staticcheck release can never turn a
+        # dependency bump into a surprise red build; bump the pin deliberately.
+        # 2026.2.1 supports the go.mod toolchain (1.26.x). The codebase is
+        # kept at zero findings (all checks; see docs/history audits), so any
+        # report here is a real regression and fails the build.
+        # Invoked via absolute GOPATH path so the step never depends on
+        # whether setup-go put GOBIN on PATH.
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@2026.2.1
+          "$(go env GOPATH)/bin/staticcheck" ./...
+
       - name: Run tests
         # Raw job logs are not reachable from every environment, so on
         # failure each "--- FAIL" test name and first error lines are

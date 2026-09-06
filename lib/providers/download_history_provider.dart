@@ -630,7 +630,9 @@ class DownloadHistoryNotifier extends Notifier<DownloadHistoryState> {
       if (candidatePath == originalPath) continue;
       try {
         if (await fileExists(candidatePath)) return candidatePath;
-      } catch (_) {}
+      } catch (e) {
+        _historyLog.d('best-effort step failed: $e');
+      }
     }
     return null;
   }

@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:spotimusic/services/multi_provider_stream_service.dart';
 import 'package:spotimusic/services/provider_credentials.dart';
+import 'package:spotimusic/services/provider_health_store.dart';
 
 /// App-wide [MultiProviderStreamService] instance (YouTube Explode + HTTP are
 /// kept for the app lifetime and disposed only with the provider container).
@@ -10,12 +13,20 @@ import 'package:spotimusic/services/provider_credentials.dart';
 /// Credentialed providers (Tidal, Qobuz, Apple, Deezer, Amazon) resolve
 /// user-supplied tokens from secure storage at request time — see
 /// Settings → Provider accounts.
+///
+/// Provider health metrics (success/failure counts, latency, last error) are
+/// restored from local storage on creation and re-persisted (debounced) on
+/// every resolution outcome; cooldowns always reset per session.
 final multiProviderStreamServiceProvider =
     Provider<MultiProviderStreamService>((ref) {
       final service = MultiProviderStreamService(
         credentials: SecureStoreStreamCredentials(),
       );
-      ref.onDispose(service.dispose);
+      final healthStore = ProviderHealthStore.attachTo(service.health);
+      ref.onDispose(() {
+        unawaited(healthStore.dispose());
+        service.dispose();
+      });
       return service;
     });
 

@@ -6,6 +6,9 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:spotimusic/core/data/session_resource_budget.dart';
+import 'package:spotimusic/utils/logger.dart';
+
+final _log = AppLogger('CoverCache');
 
 /// Persistent cache manager for album/track cover images.
 ///
@@ -102,7 +105,9 @@ class CoverCacheManager {
         try {
           totalSize -= stats[file]!.size;
           await file.delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
       debugPrint('CoverCacheManager: Swept cover cache over byte cap');
     } catch (e) {
@@ -212,13 +217,19 @@ class CoverCacheManager {
       for (final entity in entities) {
         try {
           await entity.delete(recursive: true);
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     try {
       await directory.create(recursive: true);
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 }
 

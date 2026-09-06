@@ -169,9 +169,13 @@ extension _TrackMetadataCover on _TrackMetadataScreenState {
       } else {
         try {
           await tempDir.delete(recursive: true);
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     final oldPreviewPath = _embeddedCoverPreviewPath;
     if (!mounted ||

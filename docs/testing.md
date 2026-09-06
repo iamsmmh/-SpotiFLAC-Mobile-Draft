@@ -1,4 +1,70 @@
-# TEST_REPORT.md
+# Testing & Verification
+
+Single home for *how the repository is verified* plus the recorded CI
+evidence. Build/signing evidence stays in [`../BUILD_REPORT.md`](../BUILD_REPORT.md);
+release history in [`changelog.md`](changelog.md).
+
+## Gates (all must be green)
+
+| Gate | Where | What it catches |
+|---|---|---|
+| `flutter analyze` | CI (`ci.yml`, strict: casts/inference/raw-types, `unreachable_from_main`) | Static Dart errors, dead declarations, lint regressions |
+| `flutter test` | CI, with coverage summary | Unit/widget tests — 124+ files across streaming, downloads, failover, queue, library, metadata, cache, crash reporting, provider health |
+| `gofmt -l .` | CI | Formatting drift |
+| `go vet ./...` | CI | Standard Go static analysis |
+| **`staticcheck ./...`** (pinned `2026.2.1`) | CI | Bug patterns (SA), simplifications, unused code — zero-findings policy; any report fails the build |
+| `go test ./...` + `-race` | CI, coverage summary | Go backend incl. extension runtime, downloads, metadata, fuzz-found regressions |
+| `flutter build apk --debug` + `:app:testDebugUnitTest` | CI (Android job) | Compile + Kotlin policy tests |
+| gomobile AAR / XCFramework | `build-mobile.yml` | Native bridge builds for both platforms |
+| Nightly Go fuzzing (`fuzz.yml`) | nightly | Parser robustness (filename/template/manifest/CUE) |
+| Weekly emulator smoke | `emulator-smoke.yml` | Boot, permissions, process aliveness |
+| `python3 scripts/local_quality_gate.py` | local, toolchain-free | 64 structural checks (YAML, pins, versions, hygiene, i18n) |
+| `python3 scripts/release_gate.py` | release pipeline | tag↔pubspec, AltStore feed integrity, CHANGELOG coverage, staged-strings budget, locale floor |
+
+## Running locally
+
+```bash
+flutter analyze                 # must report zero findings
+flutter test                    # full Dart suite
+cd go_backend
+gofmt -l .                      # no output
+go vet ./...
+go test -race -count=1 ./...    # race detector on
+staticcheck ./...               # pinned in ci.yml; zero findings policy
+cd ..
+python3 scripts/local_quality_gate.py   # works without any toolchain
+```
+
+## Test suite layout (Dart)
+
+Streaming/playback: `core_streaming_test.dart`, `streaming_failover_test.dart`,
+`streaming_provider_health_test.dart`, `multi_provider_stream_service_test.dart`,
+`stream_validation_test.dart`, `streaming_resolution_cache_test.dart`,
+`hybrid_playback_test.dart`, `adaptive_bitrate_test.dart`, `gapless`/`crossfade`
+policy tests, `music_player_*`, `streaming_cache_test.dart`.
+
+Failover & health (new in this pass): `provider_health_store_test.dart`
+(persistence round-trip, cooldown reset-on-restore, corrupt snapshots,
+debounce coalescing, write-failure containment).
+
+Crash monitoring (new in this pass): `crash_reporter_test.dart` (DSN parsing,
+envelope shape, redaction/truncation, retry/backoff, 4xx-drop, 401-disable,
+rate limiting, queue bounds, breadcrumb ring, flush, reset).
+
+Downloads: `core_download_manager_test.dart`, `download_*` policy/guard tests,
+`core_atomic_file_ops_test.dart`, `core_sha256_test.dart`,
+`download_verification_retry_guard_test.dart`.
+
+Library/metadata: `library_*`, `batch_*`, `metadata_*`, `csv/m3u import`,
+`default_registry_test.dart`.
+
+Native (Go): 100+ `*_test.go` files incl. `-race` and fuzz corpora under
+`testdata/fuzz/`.
+
+---
+
+# Evidence log (CI runs)
+
 
 > **Status: GREEN.** On PR #35 (branch commit **855787f**, 2026-09-04) the
 > `Flutter analyze & test` job passed: `flutter analyze` reported zero findings

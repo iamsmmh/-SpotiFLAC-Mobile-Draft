@@ -278,3 +278,41 @@ The anonymous fallback providers (YouTube, SoundCloud) score every candidate
 (Topic/official markers, duration drift, cover/karaoke/live penalties) and
 **reject low-confidence matches** instead of playing an unrelated track: the
 resolution falls through to the next provider or fails with a clear reason.
+
+## Provider health metrics persistence (Phase 3, 2026-09-06)
+
+Health is fed by *real* resolution attempts and now also survives restarts:
+
+- `StreamProviderHealth.toJson()/fromJson()` round-trips per-provider
+  metrics (counts, latency, last outcome, last error) with hostile-input
+  hardening: unknown provider names dropped, counters clamped to 0…10⁹,
+  negative latencies and unparsable dates dropped.
+- `StreamProviderHealthRegistry.mergeRestored()` seeds providers that have
+  not yet been measured this session; live observations always win.
+- **Cooldowns are never restored** — circuit state is per-session by design,
+  so a provider that recovered while the app was closed is immediately
+  usable (a stale quarantine flag must not outlive the outage).
+- `ProviderHealthStore` (`lib/services/provider_health_store.dart`) owns the
+  lifecycle: restore on attach, debounced (3 s) best-effort saves on every
+  metric change, schema-versioned payload, 32 KB size cap, corrupt-snapshot
+  discard, and a final flush on dispose. Persistence failures are logged and
+  swallowed — they can never break playback.
+- Full-chain resolution failures (every provider exhausted) additionally
+  feed the crash reporter as a fingerprint-deduped `provider` event with the
+  attempted chain attached.
+
+## Crash & playback telemetry (Phase 10, 2026-09-06)
+
+The playback path emits breadcrumbs and events through
+`lib/core/monitoring/crash_reporter.dart` (Sentry-envelope compatible, DSN
+opt-in — see `docs/architecture.md`):
+
+| Point | Signal |
+|---|---|
+| Track start | breadcrumb `playing: <title>` (`playback`) |
+| `play()` failure, no-source, runtime engine error | `playback` error event with phase + track context, fingerprinted per phase |
+| Provider chain exhausted | `provider` error event + breadcrumb (`streaming`), chain attached |
+| Native download worker crash / queue-restore failure | `native` / `download` error events |
+
+All reporting is fire-and-forget, bounded and redacted; it is disabled
+entirely unless a DSN was configured.

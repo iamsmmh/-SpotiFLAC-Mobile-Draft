@@ -25,7 +25,7 @@ Deliverable builds for SpotiFLAC-Mobile (`spotimusic` 5.0.0+142), produced by
 | 33799261375 | `iOS build` | ✅ success (unsigned IPA) |
 | 33799261394 | `Android compile & native tests` | ✅ success (`flutter build apk --debug`, then `:app:testDebugUnitTest`) |
 | 33799261394 | `Flutter analyze & test` → step **Analyze** | ✅ success (no analyzer findings in `lib/` or `test/`) |
-| 33799261394 | `Flutter analyze & test` → step **Run tests** | ❌ failure at the time — 693 passed / 11 failed; **all fixed and now green** (run 33804227296, see `TEST_REPORT.md`) |
+| 33799261394 | `Flutter analyze & test` → step **Run tests** | ❌ failure at the time — 693 passed / 11 failed; **all fixed and now green** (run 33804227296, see `docs/testing.md`) |
 
 Earlier run **33797687130** (same code lineage, commit `3802fb0`) failed at
 `Build release APKs`, `Archive Runner without code signing` and

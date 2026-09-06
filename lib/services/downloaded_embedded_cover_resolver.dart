@@ -5,6 +5,9 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:spotimusic/services/platform_bridge.dart';
 import 'package:spotimusic/utils/file_access.dart';
+import 'package:spotimusic/utils/logger.dart';
+
+final _log = AppLogger('EmbeddedCoverResolver');
 
 class _EmbeddedCoverCacheEntry {
   final String previewPath;
@@ -223,10 +226,16 @@ class DownloadedEmbeddedCoverResolver {
       final file = File(coverPath);
       try {
         await file.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
       try {
         await file.parent.delete(recursive: true);
-      } catch (_) {}
-    } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 }

@@ -126,7 +126,9 @@ class PreviewPlayerController extends Notifier<PreviewPlayerState> {
     if (player != null) {
       try {
         player.dispose();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     }
   }
 
@@ -170,7 +172,9 @@ class PreviewPlayerController extends Notifier<PreviewPlayerState> {
 
     try {
       await musicPlayerHandler?.pause();
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     state = PreviewPlayerState(
       activeUrl: trimmed,

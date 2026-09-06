@@ -165,7 +165,9 @@ class CacheAutoCleaner {
               await file.delete();
               return entry.sizeBytes;
             }
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           return 0;
         }),
       );

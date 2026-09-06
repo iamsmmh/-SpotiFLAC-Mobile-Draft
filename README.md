@@ -50,7 +50,7 @@ low-end devices and respects reduce-motion / high-contrast settings, and can
 be switched off (Settings → Streaming & Glass) to return to the classic
 player.
 
-See [`docs/streaming_engine.md`](docs/streaming_engine.md) for the
+See [`docs/streaming.md`](docs/streaming.md) for the
 architecture and [`docs/ROADMAP.md`](docs/ROADMAP.md) for the full feature
 map. Community-suggested improvements are catalogued in
 [`docs/SUGGESTED_FEATURES.md`](docs/SUGGESTED_FEATURES.md). Streaming provider
@@ -77,7 +77,7 @@ Extensions let the community add new music sources and features without waiting 
 
 > [!NOTE]
 > Want to build your own extension? Start with the
-> [Extension Development Guide](docs/EXTENSION_DEVELOPMENT.md). The
+> [Extension Development Guide](docs/extensions.md). The
 > [documentation site](https://spotiflac.zarz.moe/docs) contains the expanded
 > API reference.
 

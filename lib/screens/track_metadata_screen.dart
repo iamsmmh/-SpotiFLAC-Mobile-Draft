@@ -208,7 +208,9 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen>
         exists = true;
         size = stat.size;
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     if (mounted &&
         generation == _metadataLoadGeneration &&
@@ -275,13 +277,17 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen>
       if (await file.exists()) {
         await file.delete();
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
     try {
       final dir = file.parent;
       if (await dir.exists()) {
         await dir.delete(recursive: true);
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   Future<void> _cleanupTempFileAndParentIfNotCached(String? path) async {

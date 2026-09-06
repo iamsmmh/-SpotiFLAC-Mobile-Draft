@@ -543,7 +543,9 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
           if (coverResult['error'] == null) {
             coverPath = coverOutput;
           }
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
 
         final artistTagMode = ref.read(settingsProvider).artistTagMode;
         String? ffmpegResult;
@@ -617,12 +619,16 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
       if (coverPath != null) {
         try {
           await File(coverPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
       if (safTempPath != null) {
         try {
           await File(safTempPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
     }
   }
@@ -715,7 +721,9 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
           }
           try {
             await Directory(tempDir.path).delete(recursive: true);
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           return;
         }
 
@@ -731,7 +739,9 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
           );
           try {
             await Directory(tempDir.path).delete(recursive: true);
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           if (mounted) {
             if (safUri != null) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -750,7 +760,9 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
         } else {
           try {
             await Directory(tempDir.path).delete(recursive: true);
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -867,7 +879,9 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
           }
           try {
             await Directory(tempDir.path).delete(recursive: true);
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           return;
         }
 
@@ -883,7 +897,9 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
           );
           try {
             await Directory(tempDir.path).delete(recursive: true);
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           if (mounted) {
             if (safUri != null) {
               ScaffoldMessenger.of(context)
@@ -910,7 +926,9 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
         } else {
           try {
             await Directory(tempDir.path).delete(recursive: true);
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           if (mounted) {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
@@ -1086,9 +1104,13 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
               } else {
                 try {
                   await tempDir.delete(recursive: true);
-                } catch (_) {}
+                } catch (e) {
+                  _log.d('best-effort step failed: $e');
+                }
               }
-            } catch (_) {}
+            } catch (e) {
+              _log.d('best-effort step failed: $e');
+            }
           }
           final metadata = (result['metadata'] as Map<String, dynamic>?)?.map(
             (k, v) => MapEntry(k, v.toString()),
@@ -1165,7 +1187,9 @@ extension _TrackMetadataLyricsAndSaving on _TrackMetadataScreenState {
             if (!_hasPath(path)) continue;
             try {
               await File(path!).delete();
-            } catch (_) {}
+            } catch (e) {
+              _log.d('best-effort step failed: $e');
+            }
           }
           if (_hasPath(extractedCoverPath)) {
             await _cleanupTempFileAndParent(extractedCoverPath);

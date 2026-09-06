@@ -1393,6 +1393,15 @@ void main() {
       expect(config.donate.methods.last.isWallet, isTrue);
       expect(config.donate.supporters, ['Alice', 'Bob']);
       expect(config.donate.notices, ['No paywalls']);
+      // The crash-reporting DSN is optional: absent → null (reporting stays
+      // disabled), present → trimmed and surfaced to the bootstrap.
+      expect(config.crashReportingDsn, isNull);
+      final withDsn = AppRemoteConfig.fromJson({
+        'crash_reporting_dsn': '  https://key@errors.example.test/9  ',
+      });
+      expect(withDsn.crashReportingDsn, 'https://key@errors.example.test/9');
+      final blankDsn = AppRemoteConfig.fromJson({'crash_reporting_dsn': '  '});
+      expect(blankDsn.crashReportingDsn, isNull);
     });
 
     test('requires enabled announcement CTA with label and url', () {

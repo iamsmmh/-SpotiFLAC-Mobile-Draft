@@ -10,6 +10,9 @@ import 'package:spotimusic/models/track.dart';
 import 'package:spotimusic/providers/sync_provider.dart';
 import 'package:spotimusic/services/ffmpeg_service.dart';
 import 'package:spotimusic/services/library_collections_database.dart';
+import 'package:spotimusic/utils/logger.dart';
+
+final _log = AppLogger('LibraryCollections');
 
 const _playlistCoverMaxDimension = 1024;
 const _playlistCoverMaxStoredBytes = 2 * 1024 * 1024;
@@ -622,7 +625,9 @@ class LibraryCollectionsNotifier extends Notifier<LibraryCollectionsState> {
             if (decoded is Map) {
               previewCover = decoded['coverUrl']?.toString();
             }
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
         }
 
         playlists.add(
@@ -832,7 +837,9 @@ class LibraryCollectionsNotifier extends Notifier<LibraryCollectionsState> {
       ref
           .read(syncStateProvider.notifier)
           .recordLocalWrite(SyncScope.favorites, key, payload);
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   void _recordFavoritesSyncDelete(String key) {
@@ -840,7 +847,9 @@ class LibraryCollectionsNotifier extends Notifier<LibraryCollectionsState> {
       ref
           .read(syncStateProvider.notifier)
           .recordLocalDelete(SyncScope.favorites, key);
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
   }
 
   Future<bool> toggleWishlist(Track track) => _toggleTrackEntry(
@@ -1233,7 +1242,9 @@ class LibraryCollectionsNotifier extends Notifier<LibraryCollectionsState> {
       try {
         final previous = File(previousCoverPath);
         if (await previous.exists()) await previous.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     }
   }
 
@@ -1286,7 +1297,9 @@ class LibraryCollectionsNotifier extends Notifier<LibraryCollectionsState> {
       try {
         final temp = File(tempPath);
         if (await temp.exists()) await temp.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     }
   }
 
@@ -1408,7 +1421,9 @@ class LibraryCollectionsNotifier extends Notifier<LibraryCollectionsState> {
               } finally {
                 try {
                   if (await source.exists()) await source.delete();
-                } catch (_) {}
+                } catch (e) {
+                  _log.d('best-effort step failed: $e');
+                }
               }
             } catch (_) {
               newCoverPath = null;

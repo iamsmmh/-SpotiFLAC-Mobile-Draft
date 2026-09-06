@@ -440,7 +440,9 @@ class LocalLibraryNotifier extends Notifier<LocalLibraryState> {
     DateTime? legacyLastScannedAt;
     try {
       legacyLastScannedAt = readLocalLibraryLastScannedAt(await _prefs);
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
     await _db.migrateLegacySource(
       path: path,
       displayName: _displayNameForPath(path),
@@ -466,7 +468,9 @@ class LocalLibraryNotifier extends Notifier<LocalLibraryState> {
         if (relative.trim().isNotEmpty) {
           return relative.split('/').last;
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
       return 'Music';
     }
     final normalized = path
@@ -836,7 +840,9 @@ class LocalLibraryNotifier extends Notifier<LocalLibraryState> {
           if (snapshotPath != null) {
             try {
               await File(snapshotPath).delete();
-            } catch (_) {}
+            } catch (e) {
+              _log.d('best-effort step failed: $e');
+            }
           }
         }
 
@@ -1160,7 +1166,9 @@ class LocalLibraryNotifier extends Notifier<LocalLibraryState> {
     var decoded = raw;
     try {
       decoded = Uri.decodeFull(raw);
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     final slashIdx = decoded.lastIndexOf('/');
     final backslashIdx = decoded.lastIndexOf('\\');
@@ -1360,7 +1368,9 @@ class LocalLibraryNotifier extends Notifier<LocalLibraryState> {
             if (stat.type == FileSystemEntityType.file) {
               return MapEntry(path, stat.modified.millisecondsSinceEpoch);
             }
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
           return null;
         }),
       );

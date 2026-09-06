@@ -501,7 +501,9 @@ class ExtensionNotifier extends Notifier<ExtensionState> {
     String registryUrl = '';
     try {
       registryUrl = await PlatformBridge.getRepoRegistryUrl();
-    } catch (_) {}
+    } catch (e) {
+      _log.d('best-effort step failed: $e');
+    }
 
     List<Map<String, dynamic>> installed;
     try {
@@ -520,7 +522,9 @@ class ExtensionNotifier extends Notifier<ExtensionState> {
       Map<String, dynamic> settings = {};
       try {
         settings = await PlatformBridge.getExtensionSettings(id);
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
 
       final filtered = <String, dynamic>{};
       var omittedSecret = false;
@@ -645,7 +649,9 @@ class ExtensionNotifier extends Notifier<ExtensionState> {
 
       try {
         await setExtensionEnabled(id, enabled);
-      } catch (_) {}
+      } catch (e) {
+        _log.d('best-effort step failed: $e');
+      }
     }
 
     await refreshExtensions();

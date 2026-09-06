@@ -253,7 +253,9 @@ Future<void> _performBatchConversion(
         if (result['error'] == null) {
           mergePlatformMetadataForTagEmbed(target: metadata, source: result);
         }
-      } catch (_) {}
+      } catch (e) {
+        _batchActionsLog.d('best-effort step failed: $e');
+      }
       await ensureLyricsMetadataForConversion(
         metadata: metadata,
         sourcePath: item.filePath,
@@ -277,7 +279,9 @@ Future<void> _performBatchConversion(
         if (coverResult['error'] == null) {
           coverPath = coverOutput;
         }
-      } catch (_) {}
+      } catch (e) {
+        _batchActionsLog.d('best-effort step failed: $e');
+      }
 
       String workingPath = item.filePath;
       final isSaf = isContentUri(item.filePath);
@@ -336,7 +340,9 @@ Future<void> _performBatchConversion(
               convertedMetadata['sample_rate'],
             );
           }
-        } catch (_) {}
+        } catch (e) {
+          _batchActionsLog.d('best-effort step failed: $e');
+        }
         convertedBitDepth ??= losslessQuality.effectiveBitDepth(sourceBitDepth);
         convertedSampleRate ??= losslessQuality.effectiveSampleRate(
           sourceSampleRate,
@@ -378,7 +384,9 @@ Future<void> _performBatchConversion(
           if (!keepOriginal && !isSameContentUri(item.filePath, safUri)) {
             try {
               await PlatformBridge.safDelete(item.filePath);
-            } catch (_) {}
+            } catch (e) {
+              _batchActionsLog.d('best-effort step failed: $e');
+            }
           }
 
           await ConversionLibraryService.persistHistoryConversion(
@@ -400,11 +408,15 @@ Future<void> _performBatchConversion(
         }
         try {
           await File(newPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _batchActionsLog.d('best-effort step failed: $e');
+        }
         if (safTempPath != null) {
           try {
             await File(safTempPath).delete();
-          } catch (_) {}
+          } catch (e) {
+            _batchActionsLog.d('best-effort step failed: $e');
+          }
         }
       } else if (isSaf && item.localItem != null) {
         failureStage = 'publish SAF output';
@@ -466,7 +478,9 @@ Future<void> _performBatchConversion(
           if (!keepOriginal && !isSameContentUri(item.filePath, safUri)) {
             try {
               await PlatformBridge.safDelete(item.filePath);
-            } catch (_) {}
+            } catch (e) {
+              _batchActionsLog.d('best-effort step failed: $e');
+            }
           }
           await LibraryDatabase.instance.replaceWithConvertedItem(
             item: item.localItem!,
@@ -486,11 +500,15 @@ Future<void> _performBatchConversion(
 
         try {
           await File(newPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _batchActionsLog.d('best-effort step failed: $e');
+        }
         if (safTempPath != null) {
           try {
             await File(safTempPath).delete();
-          } catch (_) {}
+          } catch (e) {
+            _batchActionsLog.d('best-effort step failed: $e');
+          }
         }
       } else if (item.historyItem != null) {
         await ConversionLibraryService.persistHistoryConversion(
@@ -626,7 +644,9 @@ Future<void> runBatchReplayGain(
     try {
       final ok = await ReplayGainService.applyToFile(item.filePath);
       if (ok) successCount++;
-    } catch (_) {}
+    } catch (e) {
+      _batchActionsLog.d('best-effort step failed: $e');
+    }
   }
 
   onExitSelectionMode();

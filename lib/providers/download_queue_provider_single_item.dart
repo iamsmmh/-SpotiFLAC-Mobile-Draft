@@ -1509,7 +1509,9 @@ class _DownloadRun {
             probedFinalMetadata = await PlatformBridge.readFileMetadata(
               tempPath,
             );
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
 
           return (tempPath, newFileName);
         },

@@ -101,7 +101,9 @@ class ReplayGainService {
       if (safTempPath != null) {
         try {
           await File(safTempPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.d('best-effort step failed: $e');
+        }
       }
     }
   }

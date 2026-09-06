@@ -206,7 +206,9 @@ extension _DownloadQueueReplayGain on DownloadQueueNotifier {
           try {
             final tmp = File(tempPath!);
             if (await tmp.exists()) await tmp.delete();
-          } catch (_) {}
+          } catch (e) {
+            _log.d('best-effort step failed: $e');
+          }
         }
       } else {
         _log.w('FFmpeg album ReplayGain write failed for SAF: $filePath');
