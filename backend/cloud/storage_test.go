@@ -5,6 +5,7 @@ import (
 	"strings"
 	"testing"
 	"time"
+	"unicode/utf8"
 )
 
 func TestSchemaIsEmbeddedAndComplete(t *testing.T) {
@@ -126,15 +127,19 @@ func TestTruncateRespectsRuneBoundaries(t *testing.T) {
 	}
 }
 
-func TestUTF8Start(t *testing.T) {
-	if !utf8Start('a') {
-		t.Error("ASCII is a valid start byte")
-	}
-	if utf8Start(0x80) {
-		t.Error("0x80 is a continuation byte")
-	}
-	if !utf8Start(0xC3) {
-		t.Error("0xC3 begins a two-byte sequence")
+func TestTruncateAlwaysYieldsValidUTF8(t *testing.T) {
+	// Sweep every cut point across mixed-width text: each result must be
+	// valid UTF-8 and no longer than the limit.
+	for _, input := range []string{"ééé", "あいう", "a😀b", "naïve café"} {
+		for limit := 0; limit <= len(input)+2; limit++ {
+			got := truncate(input, limit)
+			if !utf8.ValidString(got) {
+				t.Fatalf("truncate(%q, %d) = %q, which is not valid UTF-8", input, limit, got)
+			}
+			if len(got) > limit && len(input) > limit {
+				t.Fatalf("truncate(%q, %d) = %q exceeds the limit", input, limit, got)
+			}
+		}
 	}
 }
 

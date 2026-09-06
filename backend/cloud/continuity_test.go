@@ -4,6 +4,7 @@ import (
 	"strings"
 	"testing"
 	"time"
+	"unicode/utf8"
 )
 
 var testNow = time.Date(2026, 9, 7, 12, 0, 0, 0, time.UTC)
@@ -41,12 +42,14 @@ func TestContinuityNormalizeTruncatesStrings(t *testing.T) {
 }
 
 func TestContinuityTruncationKeepsValidUTF8(t *testing.T) {
-	// 512 is not a multiple of 3, so a naive cut lands mid-rune.
+	// "あ" is 3 bytes and the 512-byte cap is not a multiple of 3, so a
+	// naive cut lands mid-rune.
 	state := ContinuityState{Title: strings.Repeat("あ", 400)}.Normalize(testNow)
-	for _, r := range state.Title {
-		if r == '\uFFFD' {
-			t.Fatal("truncation produced an invalid rune")
-		}
+	if !utf8.ValidString(state.Title) {
+		t.Fatalf("truncation produced invalid UTF-8: %q", state.Title)
+	}
+	if len(state.Title) > 512 {
+		t.Fatalf("title exceeded the cap: %d bytes", len(state.Title))
 	}
 }
 

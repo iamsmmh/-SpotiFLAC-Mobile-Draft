@@ -3,6 +3,7 @@ package cloud
 import (
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 // ContinuityState is the cross-device "resume from the exact timestamp"
@@ -126,18 +127,25 @@ func (c ContinuityState) ResumePosition(now time.Time) time.Duration {
 	return position
 }
 
+// truncate caps a string at limit *bytes* without splitting a rune.
+//
+// Cutting at a byte offset can land anywhere inside a multi-byte sequence,
+// leaving either orphaned continuation bytes or a dangling lead byte — both
+// of which make the value invalid UTF-8 and, for a JSONB column, unwritable.
+// DecodeLastRuneInString reports an incomplete trailing sequence as
+// RuneError with size 1, which is exactly the condition to strip.
 func truncate(value string, limit int) string {
 	if len(value) <= limit {
 		return value
 	}
-	// Trim on a rune boundary so the stored string stays valid UTF-8.
 	cut := value[:limit]
-	for len(cut) > 0 && !utf8Start(cut[len(cut)-1]) {
-		cut = cut[:len(cut)-1]
+	for len(cut) > 0 {
+		r, size := utf8.DecodeLastRuneInString(cut)
+		if r == utf8.RuneError && size <= 1 {
+			cut = cut[:len(cut)-1]
+			continue
+		}
+		break
 	}
 	return cut
 }
-
-// utf8Start reports whether b can begin a UTF-8 sequence (i.e. is not a
-// continuation byte 10xxxxxx).
-func utf8Start(b byte) bool { return b&0xC0 != 0x80 }
