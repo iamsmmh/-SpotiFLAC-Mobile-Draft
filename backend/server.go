@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/zarz/spotiflac_android/backend/auth"
+	"github.com/zarz/spotiflac_android/backend/cloud"
 	"github.com/zarz/spotiflac_android/backend/history"
 	"github.com/zarz/spotiflac_android/backend/playlists"
 	"github.com/zarz/spotiflac_android/backend/settings"
@@ -18,6 +19,19 @@ import (
 // newHandler wires the complete backend (routes + CORS). Split from main so
 // tests exercise the exact production wiring.
 func newHandler(secret []byte, clock func() time.Time, newID func() string) http.Handler {
+	return newHandlerWithCloud(secret, clock, newID, nil)
+}
+
+// newHandlerWithCloud is newHandler plus the optional durable/realtime layer
+// (Milestone 1). A nil runtime keeps the exact pre-existing behaviour: the
+// in-memory stores stay authoritative and the /v1/cloud endpoints report
+// 501 rather than pretending to persist.
+func newHandlerWithCloud(
+	secret []byte,
+	clock func() time.Time,
+	newID func() string,
+	runtime *cloud.Runtime,
+) http.Handler {
 	if clock == nil {
 		clock = time.Now
 	}
@@ -35,7 +49,31 @@ func newHandler(secret []byte, clock func() time.Time, newID func() string) http
 	authHandler.Routes(mux)
 
 	syncStore := sync.NewStore(clock)
-	sync.NewHandler(syncStore).Routes(mux, authHandler.Middleware)
+	syncHandler := sync.NewHandler(syncStore)
+
+	// Realtime layer. The hub always exists (single-process fan-out is
+	// useful on its own); durable storage and the Redis bridge only when
+	// the deployment configured them.
+	var (
+		hub     *cloud.Hub
+		storage cloud.Storage
+	)
+	if runtime != nil {
+		hub, storage = runtime.Hub, runtime.Storage
+	}
+	if hub == nil {
+		hub = cloud.NewHub(nil, clock)
+	}
+	cloudHandler := cloud.NewHandler(hub, storage, clock)
+	cloudHandler.Routes(mux, authHandler.Middleware)
+
+	// Push → sync log + wake the user's other devices. Attached before the
+	// handler serves traffic (see sync.Handler.SetObserver).
+	if storage != nil || hub != nil {
+		syncHandler.SetObserver(cloud.NewSyncObserver(hub, storage))
+	}
+
+	syncHandler.Routes(mux, authHandler.Middleware)
 
 	shareService := playlists.NewService(syncStore, clock)
 	playlists.NewHandler(shareService).Routes(mux, authHandler.Middleware)

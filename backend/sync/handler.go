@@ -3,6 +3,7 @@ package sync
 import (
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/zarz/spotiflac_android/backend/internal/httpx"
 )
@@ -10,6 +11,9 @@ import (
 // Handler serves the /v1/sync/* endpoints.
 type Handler struct {
 	store *Store
+	// observer is the optional realtime hook (see observer.go). It is set
+	// once during wiring and read without a lock on the push path.
+	observer PushObserver
 }
 
 // NewHandler wires the sync handler.
@@ -94,6 +98,9 @@ func (h *Handler) Push(w http.ResponseWriter, r *http.Request) {
 	for recordID, result := range results {
 		revisions[recordID] = result.Revision
 	}
+
+	h.notify(r, userID, req.Scope, req.Records, results)
+
 	httpx.WriteJSON(w, http.StatusOK, pushResponse{Revisions: revisions})
 }
 
@@ -115,4 +122,36 @@ func (h *Handler) Routes(mux *http.ServeMux, middleware func(http.Handler) http.
 	mux.Handle("POST /v1/sync/pull", protected(h.Pull))
 	mux.Handle("POST /v1/sync/push", protected(h.Push))
 	mux.Handle("GET /v1/sync/me", protected(h.Me))
+}
+
+// notify feeds the realtime observer. It reports every record's outcome for
+// the sync log, then a single scope-advanced event so N pushed records cost
+// one wake-up on the other devices rather than N.
+func (h *Handler) notify(r *http.Request, userID, scope string, records []Record, results map[string]PushResult) {
+	if h.observer == nil {
+		return
+	}
+	ctx := r.Context()
+	deviceID := strings.TrimSpace(r.Header.Get(DeviceHeader))
+	now := h.store.clock().UTC()
+
+	var maxRevision int64
+	var changed bool
+	for i := range records {
+		result, ok := results[records[i].RecordID]
+		if !ok {
+			continue
+		}
+		h.observer.ObservePush(ctx, userID, deviceID, scope, records[i].RecordID,
+			result.Revision, result.Accepted, records[i].Deleted, now)
+		if result.Accepted {
+			changed = true
+			if result.Revision > maxRevision {
+				maxRevision = result.Revision
+			}
+		}
+	}
+	if changed {
+		h.observer.ObserveScopeAdvanced(ctx, userID, deviceID, scope, maxRevision, now)
+	}
 }
