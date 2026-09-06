@@ -119,8 +119,15 @@ class WarmRequestRecord {
       jsonEncode(<Object?>[for (final r in records) r.toJson()]);
 
   static List<WarmRequestRecord> decodeList(String payload) {
-    final decoded = jsonDecode(payload);
-    if (decoded is! List) return const <WarmRequestRecord>[];
+    // Persisted blobs can be corrupt/truncated; a read path must never throw.
+    List<dynamic> decoded;
+    try {
+      final value = jsonDecode(payload);
+      if (value is! List) return const <WarmRequestRecord>[];
+      decoded = value;
+    } on FormatException {
+      return const <WarmRequestRecord>[];
+    }
     return <WarmRequestRecord>[
       for (final raw in decoded)
         ?WarmRequestRecord.tryParseJson(raw),

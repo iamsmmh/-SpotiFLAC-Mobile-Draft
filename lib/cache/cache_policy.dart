@@ -215,16 +215,18 @@ class SmartCachePolicy {
   }) {
     final clock = now ?? DateTime.now();
     final expired = expiredKeys(entries, clock);
-    if (budgetBytes <= 0 || currentBytes <= budgetBytes) {
+    final floor = budgetBytes > config.evictionHeadroomBytes
+        ? budgetBytes - config.evictionHeadroomBytes
+        : 0;
+    // Eviction drives usage *under the floor* (headroom), not merely under
+    // the budget — otherwise the next insert re-triggers cleanup.
+    if (budgetBytes <= 0 || currentBytes <= floor) {
       return CacheEvictionPlan(
         evictKeys: const <String>[],
         expireKeys: expired,
         freedBytes: 0,
       );
     }
-    final floor = budgetBytes > config.evictionHeadroomBytes
-        ? budgetBytes - config.evictionHeadroomBytes
-        : 0;
     final evict = <String>[];
     var projected = currentBytes;
     final candidates = entries.where((entry) {

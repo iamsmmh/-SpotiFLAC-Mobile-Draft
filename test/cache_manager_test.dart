@@ -171,10 +171,12 @@ void main() {
           executed.addAll(['expired:${expired.toList()}', 'evicted:${evicted.toList()}']);
         },
       );
-      expect(report.evicted, 1);
-      expect(report.freedBytes, 100);
+      // The entry is TTL-expired, so it is removed via the expired list;
+      // LRU eviction stays a separate counter.
+      expect(report.expired, 1);
+      expect(report.evicted, 0);
       expect(executed.single, contains('ck-a'));
-      expect(metadata.maintenance?.evicted, 1);
+      expect(metadata.maintenance?.expired, 1);
       expect(await manager.lastMaintenance(), isNotNull);
     });
 

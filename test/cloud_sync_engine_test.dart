@@ -208,7 +208,9 @@ void main() {
   });
 
   test('CloudSyncOperation.withFailure bumps attempts and schedules backoff', () {
-    final base = DateTime.utc(2026, 9, 6, 12);
+    // Relative to the real clock so isDue's internal DateTime.now() compare
+    // holds regardless of when the test runs.
+    final base = DateTime.now();
     final op = CloudSyncOperation(
       scope: SyncScope.favorites,
       recordId: 't1',
