@@ -610,7 +610,7 @@ class DailyMixProvider implements RecommendationProvider {
 
     final items = <RecommendedItem>[];
     for (var mix = 0; mix < mixCount; mix++) {
-      final offset = rotationFor(profile.dailySeed, mix);
+      final offset = rotationFor(profile.dailySeed ?? 0, mix);
       for (var slot = 0; slot < maxItemsPerSection; slot++) {
         final index = (offset + slot * 3) % artists.length;
         final artist = artists[index];

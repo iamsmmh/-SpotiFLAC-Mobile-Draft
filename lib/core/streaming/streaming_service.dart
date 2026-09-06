@@ -109,7 +109,7 @@ class StreamingService {
   StreamingService({
     required StreamSourceValidator validator,
     StreamProtocolResolver resolver = const StreamProtocolResolver(),
-    ManifestFetcher manifestFetch,
+    ManifestFetcher? manifestFetch,
     List<StreamProvider> providers = const <StreamProvider>[],
   }) : _validator = validator,
        _resolver = resolver,

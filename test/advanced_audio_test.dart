@@ -62,6 +62,10 @@ void main() {
 
   group('ParametricEqualizer cascade', () {
     test('sums the gains of stacked bands', () {
+      // Two peaking bands at the same centre each contribute their full
+      // gain there, so the cascade must sum to ~6 dB at 100 Hz. (A shelf
+      // at 90 Hz would only add ~1.2 dB at 100 Hz — shelves reach full
+      // gain below their corner, not at it.)
       const eq = ParametricEqualizer(
         bands: <ParametricBand>[
           ParametricBand(
@@ -70,10 +74,9 @@ void main() {
             gainDb: 3,
           ),
           ParametricBand(
-            type: ParametricFilterType.lowShelf,
-            frequencyHz: 90,
+            type: ParametricFilterType.peaking,
+            frequencyHz: 100,
             gainDb: 3,
-            q: 0.7,
           ),
         ],
       );

@@ -14,6 +14,7 @@ library;
 
 import 'dart:convert';
 
+import 'package:sqflite/sqflite.dart' show ConflictAlgorithm;
 import 'package:spotimusic/core/data/secure_store.dart';
 import 'package:spotimusic/ecosystem/account/account_models.dart';
 import 'package:spotimusic/ecosystem/ecosystem_database.dart';

@@ -8,16 +8,12 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spotimusic/ecosystem/ecosystem.dart';
-import 'package:spotimusic/ecosystem/smart_playlists/smart_playlist_engine.dart';
-import 'package:spotimusic/ecosystem/smart_playlists/smart_playlist_models.dart';
-import 'package:spotimusic/ecosystem/smart_playlists/smart_playlist_store.dart';
 import 'package:spotimusic/providers/ecosystem_providers.dart';
 import 'package:spotimusic/models/track.dart';
 import 'package:spotimusic/providers/library_collections_provider.dart';
 import 'package:spotimusic/providers/playback_statistics_provider.dart';
 import 'package:spotimusic/providers/recommendation_provider.dart';
 import 'package:spotimusic/services/library_database.dart';
-import 'package:spotimusic/services/library_database_models.dart';
 
 final smartPlaylistStoreProvider = Provider<SmartPlaylistStore>((ref) {
   return SmartPlaylistStore(
@@ -54,7 +50,7 @@ Future<SmartPlaylistInput> buildSmartPlaylistInput(Ref ref) async {
     // 'newest' → the query builder's default ordering (added, descending).
     QueueLibraryDbQuery(limit: 200, sortMode: 'newest'),
   );
-  final library = <SmartLibraryEntry>[
+  final library = <SmartLibraryEntry?>[
     for (final row in recent)
       () {
         final source = row['source']?.toString() ?? '';

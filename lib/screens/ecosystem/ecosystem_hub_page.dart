@@ -24,9 +24,9 @@ class EcosystemHubPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final account = ref.watch(accountStateProvider).valueOrNull;
-    final favorites = ref.watch(favoritesIndexProvider).valueOrNull;
-    final insights = ref.watch(insightsProvider(30)).valueOrNull;
+    final account = ref.watch(accountStateProvider).value;
+    final favorites = ref.watch(favoritesIndexProvider).value;
+    final insights = ref.watch(insightsProvider(30)).value;
 
     return Scaffold(
       body: CustomScrollView(

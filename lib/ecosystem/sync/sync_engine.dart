@@ -349,17 +349,19 @@ class SyncEngine {
       return _finish(SyncCycleReport.skippedCycle(trigger, 'disabled'), null);
     }
 
-    final network = await _network.current();
-    if (!network.online) {
-      return _finish(SyncCycleReport.skippedCycle(trigger, 'offline'), null);
-    }
-    if (network.metered && !_policy.allowMetered) {
-      return _finish(SyncCycleReport.skippedCycle(trigger, 'metered'), null);
-    }
-
+    // Claim the cycle before the first await: a guard that is checked and
+    // set across await points lets two concurrent callers both pass it.
     _running = true;
     _emitStats(_current.copyWith(lastAttemptAt: DateTime.now().toUtc()));
     try {
+      final network = await _network.current();
+      if (!network.online) {
+        return _finish(SyncCycleReport.skippedCycle(trigger, 'offline'), null);
+      }
+      if (network.metered && !_policy.allowMetered) {
+        return _finish(SyncCycleReport.skippedCycle(trigger, 'metered'), null);
+      }
+
       final scopes = SyncScope.values
           .where(_policy.isEnabled)
           .toList(growable: false);

@@ -100,7 +100,7 @@ void main() {
       final salt = uri.queryParameters['s']!;
       expect(token, md5Hex('secret$salt'));
       expect(uri.queryParameters['v'], '1.16.1');
-      expect(source!.protocol, StreamProtocol.progressive);
+      expect(source.protocol, StreamProtocol.progressive);
       expect(source.cachePermitted, isTrue);
       expect(seenUrls, isNotEmpty);
     });

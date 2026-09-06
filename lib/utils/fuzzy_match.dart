@@ -79,6 +79,15 @@ double fuzzyScore(String query, String candidate) {
     return kPrefixFloor + (1 - kPrefixFloor) * coverage;
   }
 
+  // Contiguous substring fast path: the whole query appearing anywhere in
+  // the candidate ('light' inside 'Daylight') is the next-strongest signal
+  // after a prefix, so it gets the same floor scaled by coverage instead
+  // of the subsequence walk (which would rank it below scattered hits).
+  if (c.contains(q)) {
+    return (kPrefixFloor + (1 - kPrefixFloor) * (q.length / c.length))
+        .clamp(0.0, 1.0);
+  }
+
   // Subsequence walk with contiguity + word-boundary bonuses.
   var qi = 0;
   var runLength = 0;
@@ -155,7 +164,7 @@ List<FuzzyHit<T>> fuzzyRank<T>(
   int limit = 20,
 }) {
   if (normalizeFuzzyText(query).isEmpty || limit <= 0) {
-    return const <FuzzyHit<T>>[];
+    return <FuzzyHit<T>>[];
   }
   final hits = <FuzzyHit<T>>[];
   for (final item in items) {

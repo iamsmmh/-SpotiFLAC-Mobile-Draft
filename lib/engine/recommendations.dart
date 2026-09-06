@@ -372,7 +372,7 @@ class LocalRecommendationEngine implements RecommendationProvider {
     );
   }
 
-  /// "Because you listened to <artist>" — seeded by the artist with the
+  /// "Because you listened to `<artist>`" — seeded by the artist with the
   /// strongest recent play weight, filled with tracks from *other* artists
   /// that share affinity (album neighbours and the affinity pool behind
   /// `_similarArtists`), so the shelf explains itself and still surprises.

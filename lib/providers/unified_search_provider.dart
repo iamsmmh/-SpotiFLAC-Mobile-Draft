@@ -197,7 +197,7 @@ Future<List<UnifiedSearchItem>> _searchPodcasts(
 ) async {
   final search = ref.read(podcastSearchProvider);
   try {
-    final results = await search(query, limit: 10);
+    final results = await search.search(query, limit: 10);
     return <UnifiedSearchItem>[
       for (var i = 0; i < results.length; i++)
         UnifiedSearchItem(

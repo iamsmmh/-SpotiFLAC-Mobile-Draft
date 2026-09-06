@@ -228,7 +228,7 @@ class HybridPlaybackManager {
     // Swap only when this session is still the live one.
     final current = sessions[trackKeyOf(track)];
     if (current == null || !identical(current, session)) return;
-    if (!session.isStreaming) return;
+    if (!session.phase.isStreaming) return;
 
     final hit = await manager.lookupPlayable(entry.trackKey);
     if (hit == null) return;

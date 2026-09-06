@@ -341,7 +341,7 @@ class AnonymousAuthAdapter implements AuthProvider {
 /// ID token the OAuth browser flow returns.
 class FirebaseAuthAdapter implements AuthProvider {
   FirebaseAuthAdapter({
-    required this.apiKey,
+    required String apiKey,
     AuthHttp? httpClient,
     this.googleClientId = '',
     this.appleClientId = '',

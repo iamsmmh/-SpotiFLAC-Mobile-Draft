@@ -24,6 +24,7 @@ import 'package:spotimusic/providers/settings_provider.dart';
 import 'package:spotimusic/providers/streaming_cache_providers.dart';
 import 'package:spotimusic/ecosystem/cache/cache_cleanup_worker.dart';
 import 'package:spotimusic/ecosystem/cache/cache_models.dart';
+import 'package:spotimusic/ecosystem/cache/streaming_cache_manager.dart';
 import 'package:spotimusic/services/library_database.dart';
 import 'package:spotimusic/services/multi_provider_stream_service.dart';
 import 'package:spotimusic/services/music_player_service.dart';

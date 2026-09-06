@@ -53,7 +53,7 @@ class UnifiedSearchItem {
     this.imageUrl,
     this.track,
     this.sourceScore = 0.5,
-    this playableLocally = false,
+    this.playableLocally = false,
   });
 
   final UnifiedSearchSourceKind kind;

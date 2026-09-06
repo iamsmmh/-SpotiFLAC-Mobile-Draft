@@ -19,6 +19,7 @@ import 'package:spotimusic/core/sync/cloud_sync_provider.dart';
 import 'package:spotimusic/core/sync/sync_entities.dart';
 import 'package:spotimusic/ecosystem/account/account_service.dart';
 import 'package:spotimusic/ecosystem/account/auth_adapters.dart';
+import 'package:spotimusic/ecosystem/account/auth_provider.dart';
 
 /// Supplies the identity + token a sync adapter needs.
 abstract interface class SyncAuthBridge {
@@ -109,7 +110,7 @@ abstract class RestSyncAdapter implements CloudSyncProvider {
     Uri uri, {
     Map<String, String>? headers,
   }) async {
-    return _guard(() => _http.getJson(uri, headers: await authHeaders()));
+    return _guard(() async => _http.getJson(uri, headers: await authHeaders()));
   }
 
   Future<Map<String, Object?>> postJson(
@@ -117,12 +118,12 @@ abstract class RestSyncAdapter implements CloudSyncProvider {
     Map<String, Object?> body, {
     Map<String, String>? headers,
   }) async {
+    final mergedHeaders = <String, String>{
+      ...?headers,
+      ...await authHeaders(),
+    };
     return _guard(
-      () => _http.postJson(
-        uri,
-        body: body,
-        headers: <String, String>{...?headers, ...await authHeaders()},
-      ),
+      () => _http.postJson(uri, body: body, headers: mergedHeaders),
     );
   }
 
@@ -163,9 +164,9 @@ abstract class RestSyncAdapter implements CloudSyncProvider {
 
   @override
   Future<Map<String, int>> push(SyncScope scope, List<SyncRecord> records) {
-    if (records.isEmpty) return Future<Map<String, int>>.value(
-      const <String, int>{},
-    );
+    if (records.isEmpty) {
+      return Future<Map<String, int>>.value(const <String, int>{});
+    }
     return uploadRecords(scope, records);
   }
 }
@@ -178,10 +179,10 @@ abstract class RestSyncAdapter implements CloudSyncProvider {
 class FirebaseSyncAdapter extends RestSyncAdapter {
   FirebaseSyncAdapter({
     required this.projectId,
-    required SyncAuthBridge auth,
-    AuthHttp? http,
+    required super.auth,
+    super.http,
     this.databaseId = '(default)',
-  }) : super(auth: auth, http: http);
+  });
 
   final String projectId;
   final String databaseId;
@@ -370,10 +371,9 @@ class SupabaseSyncAdapter extends RestSyncAdapter {
   SupabaseSyncAdapter({
     required String baseUrl,
     required this.anonKey,
-    required SyncAuthBridge auth,
-    AuthHttp? http,
-  }) : _baseUrl = baseUrl.trim().replaceAll(RegExp(r'/+$'), ''),
-       super(auth: auth, http: http);
+    required super.auth,
+    super.http,
+  }) : _baseUrl = baseUrl.trim().replaceAll(RegExp(r'/+$'), '');
 
   final String _baseUrl;
   final String anonKey;
@@ -534,9 +534,9 @@ class SelfHostedSyncConfig {
 class SelfHostedSyncAdapter extends RestSyncAdapter {
   SelfHostedSyncAdapter({
     required this.config,
-    required SyncAuthBridge auth,
-    AuthHttp? http,
-  }) : super(auth: auth, http: http);
+    required super.auth,
+    super.http,
+  });
 
   SelfHostedSyncConfig config;
 
@@ -564,7 +564,7 @@ class SelfHostedSyncAdapter extends RestSyncAdapter {
       Uri.parse('$_base${config.pullPath}'),
       <String, Object?>{
         'scope': scope.wireId,
-        if (sinceRevision != null) 'sinceRevision': sinceRevision,
+        'sinceRevision': ?sinceRevision,
       },
       headers: _extraHeaders,
     );

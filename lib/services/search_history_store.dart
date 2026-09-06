@@ -16,6 +16,17 @@ class SearchHistoryEntry {
   };
 
   static SearchHistoryEntry? tryParse(Object? raw) {
+    // Bare strings are accepted as a legacy payload shape (query only, no
+    // timestamp); everything else that is not a well-formed map is dropped
+    // individually so one junk entry never blanks the whole history.
+    if (raw is String) {
+      final legacy = raw.trim();
+      if (legacy.isEmpty) return null;
+      return SearchHistoryEntry(
+        query: legacy,
+        searchedAt: DateTime.fromMillisecondsSinceEpoch(0),
+      );
+    }
     if (raw is! Map) return null;
     final query = raw['query']?.toString().trim() ?? '';
     if (query.isEmpty) return null;
@@ -52,7 +63,7 @@ class SearchHistoryStore {
   final SharedPreferences? _preferencesOverride;
 
   Future<SharedPreferences> get _prefs =>
-      Future<SharedPreferences>.value(
+      Future<SharedPreferences?>.value(
         _preferencesOverride,
       ).then((override) => override ?? SharedPreferences.getInstance());
 

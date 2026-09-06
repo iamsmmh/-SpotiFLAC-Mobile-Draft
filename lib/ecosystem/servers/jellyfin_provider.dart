@@ -18,7 +18,7 @@ import 'package:spotimusic/ecosystem/servers/music_server_models.dart';
 import 'package:spotimusic/ecosystem/servers/music_server_provider.dart';
 import 'package:spotimusic/models/track.dart';
 
-class JellyfinProvider implements MusicServerProvider {
+class JellyfinProvider extends MusicServerProvider {
   JellyfinProvider({
     required this.config,
     required this.secrets,
@@ -147,7 +147,7 @@ class JellyfinProvider implements MusicServerProvider {
       {int limit = 20}) async {
     final trimmed = query.trim();
     if (trimmed.isEmpty) return const <ServerTrack>[];
-    final decoded = await _getJson('/Items', <String, String>{
+    final decoded = await _getJson('/Items', params: <String, String>{
       'searchTerm': trimmed,
       'IncludeItemTypes': 'Audio',
       'Recursive': 'true',
@@ -197,7 +197,8 @@ class JellyfinProvider implements MusicServerProvider {
                 0
           : 0,
       codec: _audioCodecOf(item),
-      lossless: _audioCodecOf(item).contains('flac'),
+      // _audioCodecOf upper-cases the container; compare case-insensitively.
+      lossless: _audioCodecOf(item).toLowerCase().contains('flac'),
       year: (item['ProductionYear'] as num?)?.toInt(),
     );
   }

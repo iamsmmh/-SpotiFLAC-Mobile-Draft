@@ -428,7 +428,7 @@ extension _QueueTabCollectionItemWidgets on _QueueTabState {
   /// Total recommendation items across all For You shelves (0 when the engine
   /// is cold or still resolving): gates the For You collection tile.
   int get _forYouItemCount {
-    final sections = ref.watch(forYouSectionsProvider).valueOrNull;
+    final sections = ref.watch(forYouSectionsProvider).value;
     if (sections == null) return 0;
     var count = 0;
     for (final section in sections) {

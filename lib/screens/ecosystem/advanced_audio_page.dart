@@ -261,7 +261,7 @@ class _BandRow extends StatelessWidget {
   });
 
   final ParametricBand band;
-  final ValueChanged<ParametricBand> onChanged;
+  final ValueChanged<ParametricBand>? onChanged;
   final VoidCallback? onRemove;
 
   @override

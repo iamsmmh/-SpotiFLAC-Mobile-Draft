@@ -246,9 +246,20 @@ class FavoritesCatalog {
       case FavoriteSortOrder.title:
         return _natural(a.title).compareTo(_natural(b.title));
       case FavoriteSortOrder.artist:
-        final artistCompare = _natural(a.subtitle).compareTo(
-          _natural(b.subtitle),
-        );
+        // Entries without a subtitle (e.g. favorited artists, whose name is
+        // the title) carry no artist metadata — they sort last, not first.
+        final aArtist = _natural(a.subtitle);
+        final bArtist = _natural(b.subtitle);
+        int artistCompare;
+        if (aArtist.isEmpty && bArtist.isEmpty) {
+          artistCompare = 0;
+        } else if (aArtist.isEmpty) {
+          artistCompare = 1;
+        } else if (bArtist.isEmpty) {
+          artistCompare = -1;
+        } else {
+          artistCompare = aArtist.compareTo(bArtist);
+        }
         return artistCompare != 0
             ? artistCompare
             : _natural(a.title).compareTo(_natural(b.title));

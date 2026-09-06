@@ -53,7 +53,7 @@ void main() {
 video_720.m3u8
 #EXT-X-STREAM-INF:BANDWIDTH=128000,CODECS="mp4a.40.2"
 audio_128.m3u8
-#EXT-X-STREAM-INF:BANDWIDTH=640000,CODECS="mp4a.40.2"
+#EXT-X-STREAM-INF:BANDWIDTH=320000,CODECS="mp4a.40.2"
 audio_320.m3u8
 ''';
 
@@ -79,7 +79,7 @@ audio_320.m3u8
       expect(playlist.bestVariant(400000)!.bitrateKbps, 320);
       expect(playlist.bestVariant(330000)!.bitrateKbps, 320);
       // Below the smallest audio tier the smallest still wins (never null).
-      expect(playlist.bestVariant(100000)!.bitrateKbps, 320);
+      expect(playlist.bestVariant(100000)!.bitrateKbps, 128);
     });
 
     test('media playlists parse to empty (pass-through)', () {
@@ -425,12 +425,16 @@ class _FakeProvider implements StreamProvider {
   @override
   final String id;
 
+  @override
   final bool enabled;
   final StreamSource? source;
   int calls = 0;
 
   @override
   String get displayName => 'Fake $id';
+
+  @override
+  int get priority => 0;
 
   @override
   Future<StreamSource?> resolveTrack(Track track) async {

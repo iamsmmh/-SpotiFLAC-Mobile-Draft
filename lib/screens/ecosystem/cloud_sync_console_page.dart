@@ -59,7 +59,7 @@ class _CloudSyncConsolePageState extends ConsumerState<CloudSyncConsolePage> {
 
   @override
   Widget build(BuildContext context) {
-    final stats = ref.watch(syncEngineStatsProvider).valueOrNull;
+    final stats = ref.watch(syncEngineStatsProvider).value;
     final snapshot = ref.watch(syncStateProvider);
     final backend = ref.watch(cloudSyncBackendProvider);
 

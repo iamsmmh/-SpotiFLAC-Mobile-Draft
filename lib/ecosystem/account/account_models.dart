@@ -158,7 +158,7 @@ class AccountUser {
 
 /// An authenticated session: profile + refreshable credentials.
 class AccountSession {
-  const AccountSession({
+  AccountSession({
     required this.user,
     this.accessToken,
     this.refreshToken,
@@ -218,7 +218,7 @@ class AccountSession {
 
 /// Immutable UI-facing account snapshot.
 class AccountState {
-  const AccountState({
+  AccountState({
     this.status = AccountStatus.signedOut,
     this.user,
     this.backend = AccountBackendKind.none,
@@ -229,7 +229,7 @@ class AccountState {
 
   static final DateTime _epoch = DateTime.fromMillisecondsSinceEpoch(0);
 
-  static const AccountState initial = AccountState();
+  static final AccountState initial = AccountState();
 
   final AccountStatus status;
   final AccountUser? user;

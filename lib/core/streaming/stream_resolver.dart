@@ -57,7 +57,7 @@ class StreamProtocolDetector {
     if (contentType == null) return null;
     final mime = contentType.split(';').first.trim().toLowerCase();
     if (_hlsContentTypes.contains(mime)) return StreamProtocol.hls;
-    if (mime == 'application/dash+xml') return StreamProtocol.dash;
+    if (_dashContentTypes.contains(mime)) return StreamProtocol.dash;
     return null;
   }
 
@@ -69,8 +69,9 @@ class StreamProtocolDetector {
   /// misreport. Used by the service to keep dash+xml authoritative.
   static bool isDashContentType(String? contentType) {
     if (contentType == null) return false;
-    return contentType.split(';').first.trim().toLowerCase() ==
-        'application/dash+xml';
+    return _dashContentTypes.contains(
+      contentType.split(';').first.trim().toLowerCase(),
+    );
   }
 }
 
@@ -155,6 +156,9 @@ class HlsMasterPlaylist {
       }
     }
 
+    // Stable, useful order: best (highest-bandwidth) variant first, so
+    // consumers can take variants.first as "top quality" without sorting.
+    variants.sort((a, b) => b.bandwidthBps.compareTo(a.bandwidthBps));
     return HlsMasterPlaylist(variants: variants);
   }
 
@@ -182,9 +186,8 @@ class HlsMasterPlaylist {
 
   static String? _attribute(String line, String name) {
     // #EXT-X-STREAM-INF:BANDWIDTH=1280000,CODECS="mp4a.40.2",…
-    final body = line.split(':', 2).length > 1
-        ? line.split(':', 2)[1]
-        : '';
+    final colon = line.indexOf(':');
+    final body = colon >= 0 ? line.substring(colon + 1) : '';
     for (var part in body.split(',')) {
       part = part.trim();
       if (!part.toUpperCase().startsWith('$name=')) continue;
@@ -338,7 +341,7 @@ class DashManifest {
     return lower.contains('video/') && !lower.contains('audio/');
   }
 
-  /// Best-effort: the opening <AdaptationSet …> tag containing [offset].
+  /// Best-effort: the opening `<AdaptationSet …>` tag containing [offset].
   static String _parentAdaptationMime(String text, int offset) {
     final setStart = text.lastIndexOf('<AdaptationSet', offset);
     if (setStart < 0) return '';

@@ -6459,6 +6459,10 @@
   "@collectionFavoriteAlbums": {
     "description": "Collection folder title for favorite albums"
   },
+  "collectionRemoveFromFavoriteAlbums": "Remove from Favorite Albums",
+  "@collectionRemoveFromFavoriteAlbums": {
+    "description": "Tooltip for the un-favorite button on a favorite album"
+  },
   "collectionFavoriteAlbumsEmptyTitle": "No favorite albums yet",
   "@collectionFavoriteAlbumsEmptyTitle": {
     "description": "Empty state title for favorite albums screen"

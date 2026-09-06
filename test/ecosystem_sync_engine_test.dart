@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:spotimusic/core/sync/cloud_sync_provider.dart';
 import 'package:spotimusic/core/sync/sync_entities.dart';

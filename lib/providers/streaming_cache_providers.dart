@@ -52,7 +52,15 @@ final streamingCacheManagerProvider = Provider<StreamingCacheManager>((ref) {
     },
   );
   ref.onDispose(manager.disposeClient);
-  unawaited(manager.refreshIndex());
+  // Best-effort eager index rebuild: without a platform database factory
+  // (flutter test) or on a first run the hot index simply starts empty —
+  // lookupPlayable repopulates lazily from the repository. A failure here
+  // must never escape into the surrounding zone.
+  unawaited(
+    manager.refreshIndex().catchError((Object _) {
+      // Intentionally swallowed; see comment above.
+    }),
+  );
   return manager;
 });
 

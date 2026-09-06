@@ -49,7 +49,7 @@ class AnalyticsPage extends ConsumerWidget {
                         selected: window == days,
                         onSelected: (_) => ref
                             .read(_analyticsWindowProvider.notifier)
-                            .state = days,
+                            .set(days),
                       ),
                     ),
                 ],
@@ -166,7 +166,19 @@ class AnalyticsPage extends ConsumerWidget {
   }
 }
 
-final _analyticsWindowProvider = StateProvider<int>((ref) => 30);
+/// Selection of the analytics window (days); Riverpod 3 removed
+/// StateProvider, so this follows the repo's NotifierProvider convention.
+class _AnalyticsWindowNotifier extends Notifier<int> {
+  @override
+  int build() => 30;
+
+  void set(int days) => state = days;
+}
+
+final _analyticsWindowProvider =
+    NotifierProvider<_AnalyticsWindowNotifier, int>(
+      _AnalyticsWindowNotifier.new,
+    );
 
 class _SummaryGrid extends StatelessWidget {
   const _SummaryGrid({required this.insights});

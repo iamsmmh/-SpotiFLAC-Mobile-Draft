@@ -13,7 +13,6 @@
 /// entirely on-device unless the user enables the history sync scope.
 library;
 
-import 'package:sqflite/sqflite.dart';
 import 'package:spotimusic/ecosystem/ecosystem_database.dart';
 
 /// One playback session of one track.

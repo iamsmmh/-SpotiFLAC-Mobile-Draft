@@ -12,7 +12,7 @@ concurrency:
 
 permissions:
   contents: read
-  pull-requests: read
+  pull-requests: write
 
 jobs:
   changes:
@@ -85,18 +85,52 @@ jobs:
         run: flutter pub get
 
       - name: Analyze
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          set -o pipefail
-          if ! flutter analyze 2>&1 | tee analyze.log; then
-            # Surface analyzer findings as annotations so failures are
-            # diagnosable from the Checks API (not just the raw log).
-            findings=$(grep -E "^[[:space:]]*(error|warning|info) " analyze.log | head -40)
-            [ -n "$findings" ] || findings=$(tail -n 20 analyze.log)
-            printf '%s\n' "$findings" | while IFS= read -r line; do
-              echo "::error::${line}"
-            done
-            exit 1
+          # Diagnostics must never be the reason a step dies: errexit stays
+          # off and every helper is best-effort.
+          set +e
+          flutter analyze > analyze.log 2>&1
+          status=$?
+          if [ "$status" -eq 0 ]; then
+            exit 0
           fi
+          cat analyze.log
+
+          findings=$(grep -E "^[[:space:]]*(error|warning|info)[ :-]" analyze.log | head -60)
+          if [ -z "$findings" ]; then
+            findings=$(tail -n 60 analyze.log)
+          fi
+
+          # 1) Annotations (Checks API) —
+          printf '%s\n' "$findings" | while IFS= read -r line; do
+            echo "::error::${line}"
+          done
+
+          # 2) Step summary —
+          {
+            echo '## flutter analyze failed (exit '"$status"')'
+            echo '```'
+            printf '%s\n' "$findings"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          # 3) PR comment — the raw job log lives on a storage backend that
+          #    is not reachable from every client, so mirror the findings
+          #    where they are always readable.
+          if [ -n "$PR_NUMBER" ] && [ -n "$GITHUB_TOKEN" ]; then
+            body=$(printf '## flutter analyze failed (exit %s)\n```\n%s\n```\n' "$status" "$findings")
+            payload=$(jq -n --arg b "$body" '{body: $b}')
+            curl -fsS -X POST \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -d "$payload" \
+              "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+              > /dev/null || true
+          fi
+          exit 1
 
       - name: Run tests
         # The github reporter emits each *located* failing test as an ::error
@@ -105,6 +139,9 @@ jobs:
         # storage backend. On failure, re-emit each failing test as its own
         # small annotation (name + first ~60 detail lines) so the Checks API
         # names the culprit with enough context to debug without raw-log access.
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -o pipefail
           status=0
@@ -152,6 +189,25 @@ jobs:
           if m:
               print('::error::' + m.group(0).replace('%', '%25').replace('\n', '%0A'))
           PY
+          # PR comment with every failing test title — the Checks API caps
+          # annotations at 10, which hides failures when more tests fail.
+          if [ -n "$PR_NUMBER" ] && [ -n "$GITHUB_TOKEN" ]; then
+            {
+              echo '## flutter test failed'
+              echo '```'
+              grep -oE '::group::❌.*' test.log | sed 's/^::group::❌ //' | sort -u
+              grep -E '(Some tests failed|[0-9]+ tests? passed)' test.log | tail -1
+              echo '```'
+            } > failing_tests.md
+            body=$(cat failing_tests.md)
+            payload=$(jq -n --arg b "$body" '{body: $b}')
+            curl -fsS -X POST \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -d "$payload" \
+              "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+              > /dev/null || true
+          fi
           fi
           exit "$status"
   go:

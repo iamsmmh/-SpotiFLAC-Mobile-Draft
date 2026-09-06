@@ -47,7 +47,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(accountStateProvider).valueOrNull;
+    final state = ref.watch(accountStateProvider).value;
     final service = ref.watch(accountServiceProvider);
     final methods = state?.availableMethods ?? const <AuthMethod>{};
     final isBusy = state?.status.isBusy ?? false;

@@ -19,7 +19,7 @@ import 'package:spotimusic/models/track.dart';
 import 'package:spotimusic/utils/md5.dart';
 
 /// Shared HTTP behaviour for the Subsonic dialect.
-class SubsonicProvider implements MusicServerProvider {
+class SubsonicProvider extends MusicServerProvider {
   SubsonicProvider({
     required this.config,
     required this.secrets,
@@ -129,7 +129,7 @@ class SubsonicProvider implements MusicServerProvider {
       {int limit = 20}) async {
     final trimmed = query.trim();
     if (trimmed.isEmpty) return const <ServerTrack>[];
-    final envelope = await _getJson('search3', <String, String>{
+    final envelope = await _getJson('search3', params: <String, String>{
       'query': trimmed,
       'songCount': '$limit',
       'artistCount': '0',
@@ -146,7 +146,7 @@ class SubsonicProvider implements MusicServerProvider {
   }
 
   Future<ServerTrack> _songById(String itemId) async {
-    final envelope = await _getJson('getSong', <String, String>{
+    final envelope = await _getJson('getSong', params: <String, String>{
       'id': itemId,
     });
     final song = envelope['song'];

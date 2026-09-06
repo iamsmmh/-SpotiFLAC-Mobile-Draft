@@ -37,10 +37,10 @@ class AccountService {
   }) : _tokens = tokenStore,
        _prefs =
            preferences ??
-           const NamespacedKeyValueStore(
-             MemoryKeyValueStore(),
-             'ecosystem.account.',
-           ),
+            NamespacedKeyValueStore(
+              MemoryKeyValueStore(),
+              'ecosystem.account.',
+            ),
        _refreshLead = refreshLead {
     for (final provider in providers ?? const <AuthProvider>[]) {
       register(provider);
@@ -359,7 +359,6 @@ class AccountService {
         user: session.user,
         backend: provider.kind,
         availableMethods: _availableMethods(provider),
-        clearError: true,
         updatedAt: DateTime.now(),
       ),
     );

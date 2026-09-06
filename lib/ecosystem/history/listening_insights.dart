@@ -132,7 +132,7 @@ class ListeningInsights {
   final int longestStreakDays;
   final int currentStreakDays;
 
-  static const ListeningInsights empty = ListeningInsights(
+  static final ListeningInsights empty = ListeningInsights(
     rangeStart: _epoch,
     rangeEnd: _epoch,
     totalListenedMs: 0,
@@ -532,8 +532,7 @@ class _ArtistAlbumAccumulator {
 }
 
 class _Accumulator {
-  _Accumulator({required this.title, this.subtitle = '', String? coverUrl})
-    : coverUrl = coverUrl;
+  _Accumulator({required this.title, this.subtitle = '', this.coverUrl});
 
   final String title;
   final String subtitle;

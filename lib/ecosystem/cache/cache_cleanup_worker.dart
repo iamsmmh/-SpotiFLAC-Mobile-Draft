@@ -50,7 +50,7 @@ class CacheCleanupPlan {
 class CacheCleanupPlanner {
   const CacheCleanupPlanner({
     this.budgetBytes = 2 * 1024 * 1024 * 1024,
-    this.stalePartialAge = Duration(hours: 12),
+    this.stalePartialAge = const Duration(hours: 12),
   });
 
   final int budgetBytes;
@@ -118,7 +118,7 @@ class CacheCleanupWorker {
       await repository.delete(entry.cacheKey);
       await _deleteQuietly(entry.fileName);
     }
-    for (entry in plan.sweepPartials) {
+    for (final entry in plan.sweepPartials) {
       await repository.delete(entry.cacheKey);
       await _deleteQuietly(entry.fileName);
       await _deleteQuietly('${entry.fileName}.part');

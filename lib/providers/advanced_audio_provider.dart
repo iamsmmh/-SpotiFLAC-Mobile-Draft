@@ -8,7 +8,6 @@
 /// When the chain is disabled the previous 10-band state is restored.
 library;
 
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -196,7 +195,7 @@ final dspPresetsProvider = FutureProvider<List<DspPreset>>((ref) async {
   try {
     final decoded = jsonDecode(raw);
     if (decoded is! List) return builtIns;
-    final user = <DspPreset>[
+    final user = <DspPreset?>[
       for (final Object? entry in decoded) DspPreset.fromJson(entry),
     ].whereType<DspPreset>().toList(growable: false);
     return <DspPreset>[...builtIns, ...user];
@@ -207,7 +206,7 @@ final dspPresetsProvider = FutureProvider<List<DspPreset>>((ref) async {
 
 Future<int> saveDspPreset(String name, AdvancedAudioChain chain) async {
   final prefs = await SharedPreferences.getInstance();
-  final existing = <DspPreset>[
+  final existing = <DspPreset?>[
     for (final Object? entry in _decodePresets(prefs))
       DspPreset.fromJson(entry),
   ].whereType<DspPreset>().toList(growable: false);
@@ -224,7 +223,7 @@ Future<int> saveDspPreset(String name, AdvancedAudioChain chain) async {
 
 Future<void> deleteDspPreset(String name) async {
   final prefs = await SharedPreferences.getInstance();
-  final existing = <DspPreset>[
+  final existing = <DspPreset?>[
     for (final Object? entry in _decodePresets(prefs)) DspPreset.fromJson(entry),
   ].whereType<DspPreset>().toList(growable: false);
   await prefs.setString(_presetsKey, jsonEncode(<Map<String, Object?>>[

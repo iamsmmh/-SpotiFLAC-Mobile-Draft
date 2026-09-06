@@ -15,7 +15,7 @@ import 'package:spotimusic/ecosystem/servers/music_server_models.dart';
 import 'package:spotimusic/ecosystem/servers/music_server_provider.dart';
 import 'package:spotimusic/models/track.dart';
 
-class PlexProvider implements MusicServerProvider {
+class PlexProvider extends MusicServerProvider {
   PlexProvider({
     required this.config,
     required this.secrets,
@@ -136,7 +136,7 @@ class PlexProvider implements MusicServerProvider {
   Future<List<ServerTrack>> search(String query, {int limit = 20}) async {
     final trimmed = query.trim();
     if (trimmed.isEmpty) return const <ServerTrack>[];
-    final decoded = await _getJson('/hubs/search', <String, String>{
+    final decoded = await _getJson('/hubs/search', params: <String, String>{
       'query': trimmed,
       'includeExternalMedia': '0',
       'limit': '$limit',

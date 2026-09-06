@@ -46,7 +46,7 @@ void main() {
   final input = SmartPlaylistInput(
     history: <TrackHistory>[
       history('k1', 'Favourite', 'A', plays: 20, lastPlayed: DateTime(2026, 6, 1)),
-      history('k2', 'Often', 'B', plays: 10, lastPlayed: DateTime(2026, 6, 2)),
+      history('k2', 'Often', 'B', plays: 10, lastPlayed: DateTime(2026, 6, 15)),
       history('k3', 'Once', 'A', plays: 1, lastPlayed: DateTime(2026, 6, 3)),
       history('k4', 'Skippy', 'C', plays: 10, skips: 9,
           lastPlayed: DateTime(2026, 6, 4)),
@@ -124,7 +124,7 @@ void main() {
     // Window: 30 days back from 2026-07-03 → cutoff 2026-06-03.
     // 'Favourite' (Jun 1) falls out; 'Once' (Jun 3, midnight) is not
     // strictly after the cutoff; 'Skippy' (skip rate 0.9 > 0.6 with more
-    // than 2 plays) is filtered. Only 'Often' survives.
+    // than 2 plays) is filtered. Only 'Often' (Jun 15) survives.
     final titles = playlist.tracks.map((row) => row.track.name).toList();
     expect(titles, <String>['Often']);
   });
