@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spotiflac_android/l10n/l10n.dart';
 import 'package:spotiflac_android/ecosystem/discovery/discovery_service.dart';
-import 'package:spotiflac_android/engine/discovery/discovery_models.dart';
 import 'package:spotiflac_android/engine/discovery/similarity_engine.dart';
 import 'package:spotiflac_android/models/track.dart';
 import 'package:spotiflac_android/providers/discovery_providers.dart';
