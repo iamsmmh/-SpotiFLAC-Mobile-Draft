@@ -67,13 +67,13 @@ func doJSON(t *testing.T, method, url string, body any, token string) (int, mapR
 	return resp.StatusCode, decoded
 }
 
-func register(t *testing.T, server *httptest.Server, email string) (string, string) {
+func register(t *testing.T, server *httptest.Server, email, deviceID string) (string, string) {
 	t.Helper()
 	status, body := postJSON(t, server.URL+"/v1/auth/register", map[string]any{
 		"email":       email,
 		"password":    "hunter22boo",
 		"displayName": "Tester",
-		"deviceId":    "device-A",
+		"deviceId":    deviceID,
 		"deviceName":  "Pixel",
 		"platform":    "android",
 	}, "")
@@ -100,9 +100,27 @@ func TestHealthz(t *testing.T) {
 	}
 }
 
+func signIn(t *testing.T, server *httptest.Server, email, deviceID string) (string, string) {
+	t.Helper()
+	status, body := postJSON(t, server.URL+"/v1/auth/email", map[string]any{
+		"email":    email,
+		"password": "hunter22boo",
+		"deviceId": deviceID,
+	}, "")
+	if status != http.StatusOK {
+		t.Fatalf("sign-in status = %d (%v)", status, body)
+	}
+	session, _ := body["accessToken"].(string)
+	if session == "" {
+		t.Fatal("no access token returned")
+	}
+	refresh, _ := body["refreshToken"].(string)
+	return session, refresh
+}
+
 func TestEndToEndSync(t *testing.T) {
 	server := testServer(t)
-	tokenA, refreshA := register(t, server, "a@example.com")
+	tokenA, refreshA := register(t, server, "a@example.com", "device-A")
 
 	// /v1/auth/me with the bearer token.
 	status, me := getJSON(t, server.URL+"/v1/auth/me", tokenA)
@@ -156,8 +174,9 @@ func TestEndToEndSync(t *testing.T) {
 		t.Fatalf("delta pull should be empty: %v", pull)
 	}
 
-	// Device B signs in, registers, pulls the same data (multi-device).
-	tokenB, refreshB := register(t, server, "a@example.com")
+	// Device B signs in to the same account from another device and pulls
+	// the same data (multi-device).
+	tokenB, refreshB := signIn(t, server, "a@example.com", "device-B")
 	_, _ = refreshB, refreshA
 	status, pull = postJSON(t, server.URL+"/v1/sync/pull", map[string]any{
 		"scope": "favorites",
@@ -189,7 +208,7 @@ func TestEndToEndSync(t *testing.T) {
 
 func TestPlaylistShareFlow(t *testing.T) {
 	server := testServer(t)
-	token, _ := register(t, server, "share@example.com")
+	token, _ := register(t, server, "share@example.com", "device-A")
 
 	playlistPayload := map[string]any{
 		"playlistId": "pl-1",
@@ -243,7 +262,7 @@ func TestPlaylistShareFlow(t *testing.T) {
 
 func TestHistorySummary(t *testing.T) {
 	server := testServer(t)
-	token, _ := register(t, server, "history@example.com")
+	token, _ := register(t, server, "history@example.com", "device-A")
 
 	historyRecords := []map[string]any{
 		{"recordId": "trackA", "revision": 1, "updatedAt": "2026-09-06T10:00:00Z", "payload": map[string]any{
@@ -287,7 +306,7 @@ func TestSettingsSchemaAndValidation(t *testing.T) {
 		t.Fatal("empty allowlist")
 	}
 
-	token, _ := register(t, server, "settings@example.com")
+	token, _ := register(t, server, "settings@example.com", "device-A")
 	// Allowed key.
 	status, body := postJSON(t, server.URL+"/v1/settings/validate", map[string]any{
 		"key":   "theme.mode",
@@ -308,7 +327,7 @@ func TestSettingsSchemaAndValidation(t *testing.T) {
 
 func TestBackupFlow(t *testing.T) {
 	server := testServer(t)
-	token, _ := register(t, server, "backup@example.com")
+	token, _ := register(t, server, "backup@example.com", "device-A")
 
 	envelope := []byte(`{"format":"spotiflac.backup","version":1,"data":{"playlists":[1,2,3]}}`)
 	req, err := http.NewRequest(http.MethodPut, server.URL+"/v1/backup?deviceId=device-A", bytes.NewReader(envelope))
