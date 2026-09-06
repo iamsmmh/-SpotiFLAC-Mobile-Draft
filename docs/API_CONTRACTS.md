@@ -89,6 +89,18 @@ The client also accepts flat variants (`{id, email, name, photoUrl}`) and
 Firebase-style field names (`idToken`, `localId`) so a thin shim in front of an
 existing identity provider is enough.
 
+#### Devices (Phase 3, reference backend)
+
+```http
+POST   /v1/auth/devices            { "deviceId": "…", "name": "…", "platform": "android" }
+GET    /v1/auth/devices            → { "devices": [ { "id", "name", "platform", "lastSeenAt" } ] }
+DELETE /v1/auth/devices/{deviceId}
+```
+
+Registration is an upsert keyed by `deviceId`; a deployment keeps at most 32
+devices per user (LRU eviction). Revoking a device also invalidates its
+refresh tokens.
+
 ---
 
 ## 2. Synchronization
@@ -195,7 +207,62 @@ unconfigured without ever producing an error dialog.
 
 ---
 
-## 4. Reserved for follow-ups
+## 4. SpotiFLAC Cloud services (Phase 3, reference backend)
+
+Implemented by the Go module in `backend/` (in-memory reference) and expected
+of any durable deployment backed by `server/schema.sql`. All responses use the
+common error envelope `{"error":{"message":"…"}}`.
+
+### 4.1 Playlist sharing
+
+```http
+POST   /v1/playlists/share          { "recordId": "pl-1", "payload": { …playlists record… } }
+200/201  →  { "share": { "slug": "pl_…", "urlPath": "/s/pl_…", "recordId": "pl-1" } }
+DELETE /v1/playlists/share/{slug}                     (owner only)
+GET    /v1/playlists/shared/{slug}                    (public; QR / deep link)
+200    →  { "share": { "slug", "views", "payload": { …playlist… } } }
+```
+
+`slug` matches `^pl_[A-Za-z0-9_-]{20,64}$`. Publishing requires the playlists
+record to carry `isPublic: true`; resolving re-verifies that the record still
+exists and is public, so unpublishing propagates instantly.
+
+### 4.2 Listening-history summary
+
+```http
+GET  /v1/history/summary?limit=50     →  { "totalPlays": 123, "tracks": [ … ] }
+POST /v1/history/invalidate           (drop the server-side aggregate cache)
+```
+
+Tracks merge by stable `trackKey` (`playCount`/`skipCount`/`totalPlayedMs` are
+summed, `averageCompletion` keeps the max) and rank by `playCount` desc.
+`limit` defaults to 50 and caps at 500.
+
+### 4.3 Settings validation
+
+```http
+GET  /v1/settings/schema   →  { "keys": [ …allowlist… ], "maxRecordBytes": 16384 }
+POST /v1/settings/validate  { "key": "theme.mode", "value": "dark" }
+                            | { "theme.mode": "dark", … }
+200 → { "records": [ { "key", "value" } ] }
+422 on unknown keys or oversized payloads
+```
+
+### 4.4 Backups
+
+```http
+PUT    /v1/backup?deviceId=…    raw body (≤ 8 MiB) → 201 { "backup": { "id", "deviceId", "sizeBytes", "sha256", "createdAt" } }
+GET    /v1/backup?deviceId=…    →  { "backups": [ … newest first … ] }
+GET    /v1/backup/{id}          →  application/octet-stream (+ `X-Backup-SHA256`)
+DELETE /v1/backup/{id}
+```
+
+A deployment keeps the newest three backups per device; the id embeds the
+SHA-256 of the content.
+
+---
+
+## 5. Reserved for follow-ups
 
 These contracts are not implemented yet; they are published here so the storage
 and sync layers already match them.
