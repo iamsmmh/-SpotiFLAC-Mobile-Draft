@@ -18,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotiflac_android/audio/audio_engine.dart';
 import 'package:spotiflac_android/audio/queue_manager.dart';
+import 'package:spotiflac_android/audio/replaygain_processor.dart';
 import 'package:spotiflac_android/models/settings.dart';
 import 'package:spotiflac_android/providers/engine_settings_provider.dart';
 import 'package:spotiflac_android/providers/settings_provider.dart';

@@ -10,6 +10,7 @@
 /// state, so a cycle is safe to interrupt at any point.
 library;
 
+import 'package:spotiflac_android/cloud/sync_queue.dart';
 import 'package:spotiflac_android/core/sync/cloud_sync_provider.dart';
 import 'package:spotiflac_android/core/sync/sync_entities.dart';
 import 'package:spotiflac_android/core/sync/sync_orchestrator.dart';
@@ -58,16 +59,16 @@ class CloudSyncEngine {
     required SyncOrchestrator orchestrator,
     required CloudSyncOutbox queue,
     NetworkGate? networkGate,
-    Set<SyncScope> scopes = SyncScope.values.toSet(),
+    Set<SyncScope>? scopes,
   }) : _provider = provider,
        _orchestrator = orchestrator,
        _queue = queue,
        _networkGate = networkGate ?? StaticNetworkGate(SyncNetworkState.wifi),
-       _scopes = scopes;
+       _scopes = scopes ?? SyncScope.values.toSet();
 
   final CloudSyncProvider _provider;
   final SyncOrchestrator _orchestrator;
-  final CloudSyncQueue _queue;
+  final CloudSyncOutbox _queue;
   final NetworkGate _networkGate;
   final Set<SyncScope> _scopes;
 
