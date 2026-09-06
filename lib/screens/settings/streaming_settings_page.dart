@@ -1118,7 +1118,8 @@ class _DbStepperItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     // Stepping accumulates float error (0.1 + 0.2), so round to the step grid.
-    final snapped = ((value / step).round() * step).clamp(min, max).toDouble();
+    // `double.clamp(double, double)` is statically a `double`.
+    final snapped = ((value / step).round() * step).clamp(min, max);
     final foreground = enabled
         ? colorScheme.onSurfaceVariant
         : colorScheme.onSurfaceVariant.withValues(alpha: 0.4);
@@ -1134,7 +1135,7 @@ class _DbStepperItem extends StatelessWidget {
             tooltip: 'Decrease $title',
             onPressed: !enabled || snapped <= min
                 ? null
-                : () => onChanged((snapped - step).clamp(min, max).toDouble()),
+                : () => onChanged((snapped - step).clamp(min, max)),
             visualDensity: VisualDensity.compact,
             color: foreground,
           ),
@@ -1153,7 +1154,7 @@ class _DbStepperItem extends StatelessWidget {
             tooltip: 'Increase $title',
             onPressed: !enabled || snapped >= max
                 ? null
-                : () => onChanged((snapped + step).clamp(min, max).toDouble()),
+                : () => onChanged((snapped + step).clamp(min, max)),
             visualDensity: VisualDensity.compact,
             color: foreground,
           ),

@@ -62,11 +62,11 @@ class _TrackGainOverrideSheetState extends ConsumerState<TrackGainOverrideSheet>
 
     final key = ManualGainOverrides.trackKey(widget.track.id);
     final stored = settings.gainOverrides[key];
-    final value =
-        (_draft ?? stored ?? 0.0).clamp(
-          ManualGainOverrides.minDb,
-          ManualGainOverrides.maxDb,
-        ) as double;
+    // `double.clamp(double, double)` is statically a `double`, so no cast.
+    final value = (_draft ?? stored ?? 0.0).clamp(
+      ManualGainOverrides.minDb,
+      ManualGainOverrides.maxDb,
+    );
 
     return SafeArea(
       child: Padding(
