@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:spotimusic/core/data/session_resource_budget.dart';
-import 'package:spotimusic/services/cover_cache_manager.dart';
+import 'package:spotiflac_android/core/data/session_resource_budget.dart';
+import 'package:spotiflac_android/services/cover_cache_manager.dart';
 
 class CachedCoverImage extends StatelessWidget {
   final String imageUrl;

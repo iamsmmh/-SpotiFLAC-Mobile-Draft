@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:spotimusic/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
 
 /// Deterministic exponential-backoff retry policy used by the queue engine
 /// and the extension engine.

@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/services/cover_cache_manager.dart';
-import 'package:spotimusic/utils/local_playback.dart';
-import 'package:spotimusic/widgets/playlist_picker_sheet.dart';
-import 'package:spotimusic/widgets/track_collection_action_policy.dart';
-import 'package:spotimusic/widgets/track_detail_actions.dart';
-import 'package:spotimusic/utils/clickable_metadata.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/services/cover_cache_manager.dart';
+import 'package:spotiflac_android/utils/local_playback.dart';
+import 'package:spotiflac_android/widgets/playlist_picker_sheet.dart';
+import 'package:spotiflac_android/widgets/track_collection_action_policy.dart';
+import 'package:spotiflac_android/widgets/track_detail_actions.dart';
+import 'package:spotiflac_android/utils/clickable_metadata.dart';
 
 class TrackCollectionQuickActions extends ConsumerWidget {
   final Track track;

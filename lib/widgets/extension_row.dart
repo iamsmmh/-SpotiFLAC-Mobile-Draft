@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
 
 /// Square extension icon with a tinted fallback.
 ///

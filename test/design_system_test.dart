@@ -7,18 +7,18 @@ import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/source/line_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/l10n/app_localizations.dart';
-import 'package:spotimusic/theme/app_theme.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/theme/cover_palette.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
-import 'package:spotimusic/widgets/app_search_field.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/collection_scaffold.dart';
-import 'package:spotimusic/widgets/selection_action_button.dart';
-import 'package:spotimusic/widgets/selection_bottom_bar.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/widgets/track_card.dart';
+import 'package:spotiflac_android/l10n/app_localizations.dart';
+import 'package:spotiflac_android/theme/app_theme.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/theme/cover_palette.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/widgets/app_search_field.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/collection_scaffold.dart';
+import 'package:spotiflac_android/widgets/selection_action_button.dart';
+import 'package:spotiflac_android/widgets/selection_bottom_bar.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/track_card.dart';
 
 /// Every Dart source file under `lib/`, used by the source-level contracts
 /// below. Those contracts exist because the duplication they guard against was

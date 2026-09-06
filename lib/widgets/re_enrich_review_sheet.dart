@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/services/batch_metadata_re_enrich.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/services/batch_metadata_re_enrich.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 Future<bool> showReEnrichReviewSheet(
   BuildContext context, {

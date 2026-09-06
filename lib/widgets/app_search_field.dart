@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// The standard search field used by top-level app surfaces.
 ///

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/data/sha256.dart';
+import 'package:spotiflac_android/core/data/sha256.dart';
 
 void main() {
   group('sha256Hex one-shot', () {

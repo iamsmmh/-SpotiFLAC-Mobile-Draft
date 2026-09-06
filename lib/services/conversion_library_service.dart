@@ -1,7 +1,7 @@
-import 'package:spotimusic/providers/download_history_provider.dart';
-import 'package:spotimusic/services/history_database.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/audio_conversion_utils.dart';
+import 'package:spotiflac_android/providers/download_history_provider.dart';
+import 'package:spotiflac_android/services/history_database.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/audio_conversion_utils.dart';
 
 class ConversionLibraryService {
   const ConversionLibraryService._();

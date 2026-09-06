@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/constants/app_info.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('AppRemoteConfig');
 

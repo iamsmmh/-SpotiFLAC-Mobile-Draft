@@ -3,10 +3,10 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/services/app_navigation_service.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/services/app_navigation_service.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final _log = AppLogger('ExtensionAuthLauncher');
@@ -451,7 +451,7 @@ String? _firstRegexGroup(String input, RegExp regex) {
 }
 
 /// Opens an extension auth/verification page. On iOS this prefers an
-/// ASWebAuthenticationSession, which captures the spotimusic:// callback
+/// ASWebAuthenticationSession, which captures the spotiflac:// callback
 /// in-process — required for environments where the app's URL scheme is not
 /// registered with the OS (sideload containers like LiveContainer) and nicer
 /// everywhere else (the sheet closes itself once the challenge completes).

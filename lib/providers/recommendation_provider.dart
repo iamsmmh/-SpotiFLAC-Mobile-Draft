@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/playback_session.dart';
-import 'package:spotimusic/engine/recommendations.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
-import 'package:spotimusic/providers/playback_statistics_provider.dart';
+import 'package:spotiflac_android/engine/playback_session.dart';
+import 'package:spotiflac_android/engine/recommendations.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/providers/playback_statistics_provider.dart';
 
 /// The app's recommendation service (Phase 7).
 ///

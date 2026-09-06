@@ -33,7 +33,7 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
 | Per-extension imported session cookies (opt-in, for CF challenges / own account) (#479/#499) | ✅ **new in this pass** |
 | Extension upgrades that expand permissions require explicit confirmation (Store + sideload) | ✅ **new in this pass** |
 | Opt-in read-only **LAN web player** for the download folder (Settings → Files) | ✅ **new in this pass** |
-| `spotimusic://` deep links (open/search/track-id forms, Android + iOS) | ✅ **new in this pass** |
+| `spotiflac://` deep links (open/search/track-id forms, Android + iOS) | ✅ **new in this pass** |
 | Re-enrich never re-embeds filesystem artifacts (issue #562 hardening) | ✅ **new in this pass** |
 | Favorite albums (album page bookmark, Library folder, DB v3, backup) | ✅ **new in this pass** |
 | For You: on-device recommendation engine + Library tile/screen (Phase 7) | ✅ **new in this pass** |

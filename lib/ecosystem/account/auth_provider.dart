@@ -13,8 +13,8 @@
 ///     UI surfaces a configuration prompt instead of an error toast.
 library;
 
-import 'package:spotimusic/ecosystem/account/account_models.dart';
-import 'package:spotimusic/ecosystem/account/token_store.dart';
+import 'package:spotiflac_android/ecosystem/account/account_models.dart';
+import 'package:spotiflac_android/ecosystem/account/token_store.dart';
 
 /// Base class for every account failure.
 class AuthException implements Exception {

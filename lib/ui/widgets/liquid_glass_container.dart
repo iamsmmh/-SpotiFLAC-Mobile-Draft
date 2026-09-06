@@ -2,7 +2,7 @@ import 'dart:ui' as ui show ImageFilter;
 
 import 'package:flutter/material.dart';
 
-/// SpotiMusic — Liquid Glass design system.
+/// SpotiFLAC Mobile — Liquid Glass design system.
 ///
 /// [LiquidGlassContainer] is the canonical reusable glass surface: a frosted
 /// [BackdropFilter] (blur sigma 18) stacked under a semi-transparent tint, a
@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 /// used from sheets, overlays, scaffolds and tests alike. The richer,
 /// capability-aware [GlassSurface] used by the existing Liquid UI remains
 /// available; this widget is the lightweight, spec-aligned building block the
-/// SpotiMusic screens are constructed from.
+/// SpotiFLAC Mobile screens are constructed from.
 class LiquidGlassContainer extends StatelessWidget {
   /// The content floating on the glass.
   final Widget child;

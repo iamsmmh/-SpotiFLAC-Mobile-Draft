@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/providers/local_library_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/utils/clickable_metadata.dart';
-import 'package:spotimusic/utils/local_playback.dart';
-import 'package:spotimusic/widgets/audio_quality_badges.dart';
-import 'package:spotimusic/widgets/track_card.dart';
-import 'package:spotimusic/widgets/in_library_badge.dart';
-import 'package:spotimusic/widgets/preview_button.dart';
-import 'package:spotimusic/widgets/track_collection_quick_actions.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/providers/local_library_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/utils/clickable_metadata.dart';
+import 'package:spotiflac_android/utils/local_playback.dart';
+import 'package:spotiflac_android/widgets/audio_quality_badges.dart';
+import 'package:spotiflac_android/widgets/track_card.dart';
+import 'package:spotiflac_android/widgets/in_library_badge.dart';
+import 'package:spotiflac_android/widgets/preview_button.dart';
+import 'package:spotiflac_android/widgets/track_collection_quick_actions.dart';
 
 /// Track row shared by the album and playlist screens. Tap offers another
 /// download when quality variants are enabled, otherwise it plays the local

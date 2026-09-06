@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/audio_conversion_utils.dart';
-import 'package:spotimusic/utils/audio_format_utils.dart';
+import 'package:spotiflac_android/utils/audio_conversion_utils.dart';
+import 'package:spotiflac_android/utils/audio_format_utils.dart';
 
 void main() {
   group('same-format lossless conversion', () {

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/sync/cloud_sync_provider.dart';
-import 'package:spotimusic/core/sync/sync_entities.dart';
-import 'package:spotimusic/core/sync/sync_orchestrator.dart';
-import 'package:spotimusic/ecosystem/ecosystem.dart';
+import 'package:spotiflac_android/core/sync/cloud_sync_provider.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/core/sync/sync_orchestrator.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem.dart';
 
 /// In-memory backend that can be told to fail a number of times.
 class FakeSyncBackend implements CloudSyncProvider {

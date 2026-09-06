@@ -5,7 +5,7 @@
 /// yearly-recap builder reuses the same code with a 365-day window.
 library;
 
-import 'package:spotimusic/ecosystem/history/listening_history.dart';
+import 'package:spotiflac_android/ecosystem/history/listening_history.dart';
 
 /// Aggregated listening stats for one ranking dimension.
 class ListeningRanking {

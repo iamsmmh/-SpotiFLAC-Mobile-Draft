@@ -1,7 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/services/media_browse_tree.dart';
-import 'package:spotimusic/services/music_player_service.dart';
+import 'package:spotiflac_android/services/media_browse_tree.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
 
 PlayableMedia _media(String id, {String title = 'Song', String artist = 'A'}) =>
     PlayableMedia(id: id, source: '/music/$id.flac', title: title, artist: artist);

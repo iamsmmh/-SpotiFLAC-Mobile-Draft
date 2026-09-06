@@ -1,6 +1,6 @@
 # FIX_REPORT.md
 
-Scope: complete the existing SpotiFLAC-Mobile (`spotimusic`) app and remove
+Scope: complete the existing SpotiFLAC-Mobile (`spotiflac_android`) app and remove
 production-blocking defects, **without rewriting the app or redesigning its
 architecture**. Every change below is additive or corrective; no working
 feature was removed.

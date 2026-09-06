@@ -5,7 +5,7 @@
 /// fails the Dart suite instead of shipping a silently misnamed APK.
 library;
 
-import 'package:spotimusic/core/data/sha256.dart';
+import 'package:spotiflac_android/core/data/sha256.dart';
 
 class ReleaseArtifact {
   const ReleaseArtifact({
@@ -22,7 +22,7 @@ class ReleaseArtifact {
 }
 
 abstract final class ReleaseArtifactPolicy {
-  static const String appName = 'SpotiMusic';
+  static const String appName = 'SpotiFLAC';
 
   /// Android ABI splits required for the v1.0 production channel.
   static const List<String> androidAbis = <String>[

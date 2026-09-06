@@ -7,13 +7,13 @@
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/ecosystem/ecosystem.dart';
-import 'package:spotimusic/providers/ecosystem_providers.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
-import 'package:spotimusic/providers/playback_statistics_provider.dart';
-import 'package:spotimusic/providers/recommendation_provider.dart';
-import 'package:spotimusic/services/library_database.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem.dart';
+import 'package:spotiflac_android/providers/ecosystem_providers.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/providers/playback_statistics_provider.dart';
+import 'package:spotiflac_android/providers/recommendation_provider.dart';
+import 'package:spotiflac_android/services/library_database.dart';
 
 final smartPlaylistStoreProvider = Provider<SmartPlaylistStore>((ref) {
   return SmartPlaylistStore(

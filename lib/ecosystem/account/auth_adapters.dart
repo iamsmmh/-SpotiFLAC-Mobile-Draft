@@ -11,9 +11,9 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/ecosystem/account/account_models.dart';
-import 'package:spotimusic/ecosystem/account/auth_provider.dart';
-import 'package:spotimusic/ecosystem/account/token_store.dart';
+import 'package:spotiflac_android/ecosystem/account/account_models.dart';
+import 'package:spotiflac_android/ecosystem/account/auth_provider.dart';
+import 'package:spotiflac_android/ecosystem/account/token_store.dart';
 
 // ---------------------------------------------------------------------------
 // Shared JSON plumbing

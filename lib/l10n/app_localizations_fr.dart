@@ -9,7 +9,7 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get appName => 'SpotiMusic';
+  String get appName => 'SpotiFLAC Mobile';
 
   @override
   String get navHome => 'Accueil';
@@ -1961,7 +1961,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get libraryRemoveFolderMessage =>
-      'Remove this folder and its indexed tracks from SpotiMusic? Audio files on the storage will not be deleted.';
+      'Remove this folder and its indexed tracks from SpotiFLAC Mobile? Audio files on the storage will not be deleted.';
 
   @override
   String get libraryShowDuplicateIndicator =>
@@ -2199,7 +2199,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get tutorialWelcomeTitle => 'Bienvenue dans SpotiMusic !';
+  String get tutorialWelcomeTitle => 'Bienvenue dans SpotiFLAC Mobile !';
 
   @override
   String get tutorialWelcomeDesc =>
@@ -4596,7 +4596,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get extensionCustomUrlHandlingShareHint =>
-      'Partagez des liens provenant de ces sites vers SpotiMusic et cette extension s\'en chargera.';
+      'Partagez des liens provenant de ces sites vers SpotiFLAC Mobile et cette extension s\'en chargera.';
 
   @override
   String extensionSettingsCount(int count) {
@@ -4761,7 +4761,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get libraryBuiltInPreviewPlayerSubtitle =>
-      'Uniquement pour des écoutes rapides et locales dans SpotiMusic ; non recommandé pour une écoute régulière';
+      'Uniquement pour des écoutes rapides et locales dans SpotiFLAC Mobile ; non recommandé pour une écoute régulière';
 
   @override
   String get libraryBuiltInPlayerInfo =>
@@ -5050,11 +5050,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get extensionVerificationHelpMessageManual =>
-      'SpotiMusic n\'a pas pu ouvrir automatiquement le navigateur. Ouvrez ce lien dans votre navigateur ou copiez-le manuellement.';
+      'SpotiFLAC Mobile n\'a pas pu ouvrir automatiquement le navigateur. Ouvrez ce lien dans votre navigateur ou copiez-le manuellement.';
 
   @override
   String get extensionVerificationHelpMessageWaiting =>
-      'Si le navigateur ne s\'est pas ouvert, ou si la vérification s\'est terminée sans que vous ne soyez redirigé vers SpotiMusic, ouvrez à nouveau ce lien ou copiez-le manuellement.';
+      'Si le navigateur ne s\'est pas ouvert, ou si la vérification s\'est terminée sans que vous ne soyez redirigé vers SpotiFLAC Mobile, ouvrez à nouveau ce lien ou copiez-le manuellement.';
 
   @override
   String get extensionVerificationClose => 'Fermer';

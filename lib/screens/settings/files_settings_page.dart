@@ -1,20 +1,20 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/l10n/staged_strings.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/l10n/staged_strings.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/screens/settings/storage_breakdown_page.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/file_access.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/screens/settings/storage_breakdown_page.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 
 class FilesSettingsPage extends ConsumerStatefulWidget {
   const FilesSettingsPage({super.key});

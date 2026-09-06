@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/screens/now_playing_screen.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/screens/now_playing_screen.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  const backendChannel = MethodChannel('com.zarz.spotimusic/backend');
+  const backendChannel = MethodChannel('com.zarz.spotiflac/backend');
   late StreamController<MediaItem?> mediaItems;
 
   setUp(() {

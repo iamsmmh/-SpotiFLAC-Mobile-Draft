@@ -252,6 +252,6 @@ shipped; what is left is the application service plus its page:
    service + on-device fallback) writing to `ec_recognition_history`, then
    "open in app" through the existing search pipeline.
 6. **Social (11)** — `SocialProvider` port with a disabled default; sharing a
-   playlist works today through `share_plus` + the existing `spotimusic://`
+   playlist works today through `share_plus` + the existing `spotiflac://`
    deep-link handling, and the follower/activity surfaces plug into the same
    port once a backend exists.

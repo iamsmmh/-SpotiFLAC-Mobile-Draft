@@ -21,7 +21,7 @@
 /// (`ManifestFetcher`) so tests (and callers) stay hermetic.
 library;
 
-import 'package:spotimusic/core/streaming/stream_provider.dart';
+import 'package:spotiflac_android/core/streaming/stream_provider.dart';
 
 /// Fetches manifest text for a URL. Returns null on any transport failure.
 typedef ManifestFetcher = Future<String?> Function(Uri uri);

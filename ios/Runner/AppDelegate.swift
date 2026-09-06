@@ -24,12 +24,12 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
-    private let CHANNEL = "com.zarz.spotimusic/backend"
-    private let DOWNLOAD_PROGRESS_STREAM_CHANNEL = "com.zarz.spotimusic/download_progress_stream"
-    private let LIBRARY_SCAN_PROGRESS_STREAM_CHANNEL = "com.zarz.spotimusic/library_scan_progress_stream"
+    private let CHANNEL = "com.zarz.spotiflac/backend"
+    private let DOWNLOAD_PROGRESS_STREAM_CHANNEL = "com.zarz.spotiflac/download_progress_stream"
+    private let LIBRARY_SCAN_PROGRESS_STREAM_CHANNEL = "com.zarz.spotiflac/library_scan_progress_stream"
     private let LARGE_JSON_RESULT_FILE_KEY = "__json_file"
     private let LARGE_JSON_RESULT_FILE_THRESHOLD_BYTES = 256 * 1024
-    private let streamQueue = DispatchQueue(label: "com.zarz.spotimusic.progress_stream", qos: .utility)
+    private let streamQueue = DispatchQueue(label: "com.zarz.spotiflac.progress_stream", qos: .utility)
     private var downloadProgressTimer: DispatchSourceTimer?
     private var downloadProgressEventSink: FlutterEventSink?
     private var lastDownloadProgressPayload: String?
@@ -161,8 +161,8 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
     }
 
     /// Extension return URLs:
-    /// - OAuth: spotimusic://callback?code=...&state=<extension_id>
-    /// - Signed session: spotimusic://session-grant?grant=...&state=<extension_id>
+    /// - OAuth: spotiflac://callback?code=...&state=<extension_id>
+    /// - Signed session: spotiflac://session-grant?grant=...&state=<extension_id>
     @discardableResult
     private func handleExtensionOAuthRedirect(url: URL) -> Bool {        guard let route = ExtensionCallbackParser.parse(url) else { return false }
         streamQueue.async {
@@ -450,7 +450,7 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
         case "startWebAuthSession":
             let args = call.arguments as? [String: Any] ?? [:]
             let urlString = (args["url"] as? String) ?? ""
-            let callbackScheme = (args["callback_scheme"] as? String) ?? "spotimusic"
+            let callbackScheme = (args["callback_scheme"] as? String) ?? "spotiflac"
             startWebAuthSession(
                 urlString: urlString,
                 callbackScheme: callbackScheme,
@@ -495,7 +495,7 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
             result(false)
             return
         }
-        let scheme = callbackScheme.isEmpty ? "spotimusic" : callbackScheme
+        let scheme = callbackScheme.isEmpty ? "spotiflac" : callbackScheme
         let session = ASWebAuthenticationSession(
             url: url,
             callbackURLScheme: scheme

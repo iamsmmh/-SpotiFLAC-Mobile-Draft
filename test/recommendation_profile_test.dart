@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/engine/playback_session.dart';
-import 'package:spotimusic/engine/recommendations.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/library_collections_provider.dart';
-import 'package:spotimusic/providers/recommendation_provider.dart';
+import 'package:spotiflac_android/engine/playback_session.dart';
+import 'package:spotiflac_android/engine/recommendations.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/library_collections_provider.dart';
+import 'package:spotiflac_android/providers/recommendation_provider.dart';
 
 void main() {
   Track track(String id, String name, String artist) => Track(

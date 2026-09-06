@@ -11,22 +11,22 @@ library;
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/core/streaming/hybrid_playback.dart';
-import 'package:spotimusic/core/streaming/stream_provider.dart';
-import 'package:spotimusic/core/streaming/stream_resolver.dart';
-import 'package:spotimusic/core/streaming/stream_session.dart';
-import 'package:spotimusic/ecosystem/cache/cache_models.dart';
-import 'package:spotimusic/ecosystem/cache/streaming_cache_manager.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
-import 'package:spotimusic/engine/track_identity.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/engine_settings_provider.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/providers/playback_provider.dart';
-import 'package:spotimusic/providers/streaming_cache_providers.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart';
-import 'package:spotimusic/services/music_player_service.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/core/streaming/hybrid_playback.dart';
+import 'package:spotiflac_android/core/streaming/stream_provider.dart';
+import 'package:spotiflac_android/core/streaming/stream_resolver.dart';
+import 'package:spotiflac_android/core/streaming/stream_session.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_models.dart';
+import 'package:spotiflac_android/ecosystem/cache/streaming_cache_manager.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
+import 'package:spotiflac_android/engine/track_identity.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/engine_settings_provider.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/providers/playback_provider.dart';
+import 'package:spotiflac_android/providers/streaming_cache_providers.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('HybridPlayback');
 

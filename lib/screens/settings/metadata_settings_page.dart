@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/utils/artist_utils.dart';
-import 'package:spotimusic/screens/settings/metadata_provider_priority_page.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/utils/artist_utils.dart';
+import 'package:spotiflac_android/screens/settings/metadata_provider_priority_page.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 
 class MetadataSettingsPage extends ConsumerWidget {
   const MetadataSettingsPage({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/user_facing_error.dart';
+import 'package:spotiflac_android/utils/user_facing_error.dart';
 
 void main() {
   group('userFacingErrorMessage', () {

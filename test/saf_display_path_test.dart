@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/saf_display_path.dart';
+import 'package:spotiflac_android/utils/saf_display_path.dart';
 
 void main() {
   group('SAF display paths', () {

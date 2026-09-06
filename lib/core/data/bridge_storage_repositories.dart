@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:spotimusic/core/data/atomic_file_ops.dart';
-import 'package:spotimusic/core/domain/entities.dart';
-import 'package:spotimusic/core/domain/ports.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
+import 'package:spotiflac_android/core/data/atomic_file_ops.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
+import 'package:spotiflac_android/core/domain/ports.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
 
 /// Android SAF [StorageRepository].
 ///

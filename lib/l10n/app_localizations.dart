@@ -121,7 +121,7 @@ abstract class AppLocalizations {
   /// App name - DO NOT TRANSLATE
   ///
   /// In en, this message translates to:
-  /// **'SpotiMusic'**
+  /// **'SpotiFLAC Mobile'**
   String get appName;
 
   /// Bottom navigation - Home tab
@@ -3457,7 +3457,7 @@ abstract class AppLocalizations {
   /// Confirmation shown before removing a library source
   ///
   /// In en, this message translates to:
-  /// **'Remove this folder and its indexed tracks from SpotiMusic? Audio files on the storage will not be deleted.'**
+  /// **'Remove this folder and its indexed tracks from SpotiFLAC Mobile? Audio files on the storage will not be deleted.'**
   String get libraryRemoveFolderMessage;
 
   /// Toggle for duplicate indicator in search
@@ -3841,13 +3841,13 @@ abstract class AppLocalizations {
   /// Tutorial welcome page title
   ///
   /// In en, this message translates to:
-  /// **'Welcome to SpotiMusic!'**
+  /// **'Welcome to SpotiFLAC Mobile!'**
   String get tutorialWelcomeTitle;
 
   /// Tutorial welcome page description
   ///
   /// In en, this message translates to:
-  /// **'Learn how to find music with extensions, choose the quality you want, and manage downloads in SpotiMusic.'**
+  /// **'Learn how to find music with extensions, choose the quality you want, and manage downloads in SpotiFLAC Mobile.'**
   String get tutorialWelcomeDesc;
 
   /// Tutorial welcome tip 1
@@ -6411,7 +6411,7 @@ abstract class AppLocalizations {
   /// Notification title while downloading an app update
   ///
   /// In en, this message translates to:
-  /// **'Downloading SpotiMusic v{version}'**
+  /// **'Downloading SpotiFLAC Mobile v{version}'**
   String notifDownloadingUpdate(String version);
 
   /// Notification body showing update download progress
@@ -6429,7 +6429,7 @@ abstract class AppLocalizations {
   /// Notification body when app update is ready to install
   ///
   /// In en, this message translates to:
-  /// **'SpotiMusic v{version} downloaded. Tap to install.'**
+  /// **'SpotiFLAC Mobile v{version} downloaded. Tap to install.'**
   String notifUpdateReadyBody(String version);
 
   /// Notification title when app update download fails
@@ -7347,7 +7347,7 @@ abstract class AppLocalizations {
   /// Extension detail hint explaining share-to-app URL handling
   ///
   /// In en, this message translates to:
-  /// **'Share links from these sites to SpotiMusic and this extension will handle them.'**
+  /// **'Share links from these sites to SpotiFLAC Mobile and this extension will handle them.'**
   String get extensionCustomUrlHandlingShareHint;
 
   /// Count of settings exposed by an extension quality option
@@ -7635,7 +7635,7 @@ abstract class AppLocalizations {
   /// Subtitle for built-in preview player option
   ///
   /// In en, this message translates to:
-  /// **'Only for quick local previews inside SpotiMusic, not recommended for regular listening'**
+  /// **'Only for quick local previews inside SpotiFLAC Mobile, not recommended for regular listening'**
   String get libraryBuiltInPreviewPlayerSubtitle;
 
   /// Info note explaining the built-in player is for previews only
@@ -8107,13 +8107,13 @@ abstract class AppLocalizations {
   /// Dialog message when automatic browser launch for verification fails
   ///
   /// In en, this message translates to:
-  /// **'SpotiMusic could not open the browser automatically. Open this link in your browser, or copy it manually.'**
+  /// **'SpotiFLAC Mobile could not open the browser automatically. Open this link in your browser, or copy it manually.'**
   String get extensionVerificationHelpMessageManual;
 
   /// Dialog message when verification may need manual browser help
   ///
   /// In en, this message translates to:
-  /// **'If the browser did not open, or verification finished but did not return to SpotiMusic, open this link again or copy it manually.'**
+  /// **'If the browser did not open, or verification finished but did not return to SpotiFLAC Mobile, open this link again or copy it manually.'**
   String get extensionVerificationHelpMessageWaiting;
 
   /// Button to dismiss the extension verification help dialog

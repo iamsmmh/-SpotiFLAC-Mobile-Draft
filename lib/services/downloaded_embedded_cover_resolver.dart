@@ -3,9 +3,9 @@ import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/file_access.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('EmbeddedCoverResolver');
 

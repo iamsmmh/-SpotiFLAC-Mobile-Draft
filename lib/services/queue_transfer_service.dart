@@ -5,8 +5,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:spotimusic/models/download_item.dart';
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/models/download_item.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 /// Cross-device queue transfer.
 ///

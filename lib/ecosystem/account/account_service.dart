@@ -13,12 +13,12 @@ library;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:spotimusic/ecosystem/account/account_models.dart';
-import 'package:spotimusic/ecosystem/account/auth_adapters.dart';
-import 'package:spotimusic/ecosystem/account/auth_provider.dart';
-import 'package:spotimusic/ecosystem/account/token_store.dart';
-import 'package:spotimusic/ecosystem/ecosystem_kv.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/ecosystem/account/account_models.dart';
+import 'package:spotiflac_android/ecosystem/account/auth_adapters.dart';
+import 'package:spotiflac_android/ecosystem/account/auth_provider.dart';
+import 'package:spotiflac_android/ecosystem/account/token_store.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_kv.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('AccountService');
 

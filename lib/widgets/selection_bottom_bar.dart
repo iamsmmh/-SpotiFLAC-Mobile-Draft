@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/widgets/app_bottom_sheet.dart';
-import 'package:spotimusic/l10n/l10n.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/widgets/app_bottom_sheet.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
 
 /// Hosts selection bars above the shell navigation while keeping modal routes
 /// above the bar. A raw entry in the root [Overlay] stays above routes pushed

@@ -15,11 +15,11 @@ library;
 
 import 'dart:convert';
 
-import 'package:spotimusic/ecosystem/ecosystem_kv.dart';
-import 'package:spotimusic/ecosystem/podcasts/podcast_models.dart';
-import 'package:spotimusic/ecosystem/podcasts/podcast_repository.dart';
-import 'package:spotimusic/services/music_player_service.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_kv.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/podcast_models.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/podcast_repository.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('PodcastPlayer');
 

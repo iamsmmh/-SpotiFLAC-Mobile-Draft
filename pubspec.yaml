@@ -1,4 +1,4 @@
-name: spotimusic
+name: spotiflac_android
 description: Dual-mode music streaming and lossless FLAC download client with a Liquid Glass interface
 publish_to: "none"
 version: 5.0.0+142
@@ -70,7 +70,7 @@ dependencies:
   flutter_local_notifications: ^22.2.0
   audioplayers: ^6.8.1
 
-  # Multi-provider streaming engine (SpotiMusic)
+  # Multi-provider streaming engine
   # A single audio pipeline: audioplayers renders both local files and
   # progressive stream URLs through the audio_service handler. audio_service
   # 0.18.x targets audio_session 0.1.x (^0.1.16), so the direct pin stays on

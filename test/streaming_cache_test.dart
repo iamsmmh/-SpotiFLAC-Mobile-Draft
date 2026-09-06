@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/cache/cache_cleanup_worker.dart';
-import 'package:spotimusic/ecosystem/cache/cache_index.dart';
-import 'package:spotimusic/ecosystem/cache/cache_models.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_cleanup_worker.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_index.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_models.dart';
 
 CacheEntry entry(
   String key, {

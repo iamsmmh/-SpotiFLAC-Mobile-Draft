@@ -5,8 +5,8 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import 'package:spotimusic/core/data/session_resource_budget.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/core/data/session_resource_budget.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('CoverCache');
 

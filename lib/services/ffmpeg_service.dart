@@ -9,15 +9,15 @@ import 'package:ffmpeg_kit_flutter_new_full/ffprobe_kit.dart';
 import 'package:ffmpeg_kit_flutter_new_full/return_code.dart';
 import 'package:ffmpeg_kit_flutter_new_full/session_state.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/services/audio_metadata_mapper.dart';
-import 'package:spotimusic/services/ffmpeg_models.dart';
-import 'package:spotimusic/services/id3v23_lyrics.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/artist_utils.dart';
-import 'package:spotimusic/utils/audio_conversion_utils.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/services/audio_metadata_mapper.dart';
+import 'package:spotiflac_android/services/ffmpeg_models.dart';
+import 'package:spotiflac_android/services/id3v23_lyrics.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/artist_utils.dart';
+import 'package:spotiflac_android/utils/audio_conversion_utils.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
-export 'package:spotimusic/services/ffmpeg_models.dart';
+export 'package:spotiflac_android/services/ffmpeg_models.dart';
 
 final _log = AppLogger('FFmpeg');
 

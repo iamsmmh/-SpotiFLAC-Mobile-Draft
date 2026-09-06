@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/engine/advanced_audio.dart';
+import 'package:spotiflac_android/engine/advanced_audio.dart';
 
 void main() {
   group('BiquadCoefficients (RBJ cookbook)', () {

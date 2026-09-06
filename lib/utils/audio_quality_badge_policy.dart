@@ -1,6 +1,6 @@
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/utils/audio_format_utils.dart';
-import 'package:spotimusic/utils/string_utils.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/utils/audio_format_utils.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
 
 const highQualityBadgeBitrateThresholdKbps = 900;
 

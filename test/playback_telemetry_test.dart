@@ -1,10 +1,10 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/engine/audio_characteristics.dart';
-import 'package:spotimusic/engine/smart_play.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
-import 'package:spotimusic/providers/playback_telemetry_provider.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/engine/smart_play.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
+import 'package:spotiflac_android/providers/playback_telemetry_provider.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
 
 StreamingDiagnostics _emptyDiagnostics() => StreamingDiagnostics(
   health: ProviderHealthRegistry(),

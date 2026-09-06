@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 part 'download_item.g.dart';
 

@@ -5,9 +5,9 @@ import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/providers/engine_settings_provider.dart';
-import 'package:spotimusic/providers/runtime_profile_provider.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/providers/engine_settings_provider.dart';
+import 'package:spotiflac_android/providers/runtime_profile_provider.dart';
 
 /// Liquid Glass design system — Apple-style layered glass implemented natively
 /// in Flutter (no plugins, no shaders, no platform code).

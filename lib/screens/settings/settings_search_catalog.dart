@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/app_localizations.dart';
+import 'package:spotiflac_android/l10n/app_localizations.dart';
 
 /// A control or submenu that can be discovered from the root Settings search.
 ///

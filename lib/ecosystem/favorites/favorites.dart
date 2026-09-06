@@ -15,7 +15,7 @@
 ///     identity the sync layer already uses for favorites.
 library;
 
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 /// The four favorite domains.
 enum FavoriteKind {

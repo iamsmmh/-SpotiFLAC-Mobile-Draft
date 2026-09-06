@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/streaming/hybrid_playback.dart';
+import 'package:spotiflac_android/core/streaming/hybrid_playback.dart';
 
 HybridPlaybackFacts facts({
   bool hasLocalFile = false,

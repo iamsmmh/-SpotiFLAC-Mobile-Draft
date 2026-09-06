@@ -6,8 +6,8 @@
 library;
 
 import 'package:sqflite/sqflite.dart';
-import 'package:spotimusic/ecosystem/ecosystem_database.dart';
-import 'package:spotimusic/ecosystem/favorites/favorites.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
+import 'package:spotiflac_android/ecosystem/favorites/favorites.dart';
 
 class FavoritePlaylistEntry {
   const FavoritePlaylistEntry({

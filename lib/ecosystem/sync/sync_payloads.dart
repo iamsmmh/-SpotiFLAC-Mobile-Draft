@@ -6,7 +6,7 @@
 /// exactly once and both sides (local store ↔ backend) agree on the shape.
 library;
 
-import 'package:spotimusic/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
 
 /// Human/UI metadata for a scope: what the toggle on the sync page says and
 /// whether it is on by default.

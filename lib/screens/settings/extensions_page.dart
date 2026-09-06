@@ -1,22 +1,22 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/extension_row.dart';
-import 'package:spotimusic/utils/extension_permission_gate.dart';
+import 'package:spotiflac_android/widgets/extension_row.dart';
+import 'package:spotiflac_android/utils/extension_permission_gate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/providers/explore_provider.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
-import 'package:spotimusic/screens/settings/download_fallback_extensions_page.dart';
-import 'package:spotimusic/screens/settings/extension_detail_page.dart';
-import 'package:spotimusic/screens/settings/metadata_provider_priority_page.dart';
-import 'package:spotimusic/screens/settings/provider_priority_page.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/providers/explore_provider.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
+import 'package:spotiflac_android/screens/settings/download_fallback_extensions_page.dart';
+import 'package:spotiflac_android/screens/settings/extension_detail_page.dart';
+import 'package:spotiflac_android/screens/settings/metadata_provider_priority_page.dart';
+import 'package:spotiflac_android/screens/settings/provider_priority_page.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 
 class ExtensionsPage extends ConsumerStatefulWidget {
   const ExtensionsPage({super.key});

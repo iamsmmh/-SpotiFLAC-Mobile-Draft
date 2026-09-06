@@ -1,7 +1,7 @@
 {
   "@@locale": "ko",
   "@@last_modified": "2026-04-28",
-  "appName": "SpotiMusic",
+  "appName": "SpotiFLAC Mobile",
   "@appName": {
     "description": "App name - DO NOT TRANSLATE"
   },
@@ -2670,7 +2670,7 @@
       }
     }
   },
-  "tutorialWelcomeTitle": "SpotiMusic에 오신 것을 환영합니다!",
+  "tutorialWelcomeTitle": "SpotiFLAC Mobile에 오신 것을 환영합니다!",
   "@tutorialWelcomeTitle": {
     "description": "Tutorial welcome page title"
   },
@@ -4699,7 +4699,7 @@
   "@notifLibraryScanStopped": {
     "description": "Notification body when library scan is cancelled"
   },
-  "notifDownloadingUpdate": "SpotiMusic v{version}을 다운로드하는 중",
+  "notifDownloadingUpdate": "SpotiFLAC Mobile v{version}을 다운로드하는 중",
   "@notifDownloadingUpdate": {
     "description": "Notification title while downloading an app update",
     "placeholders": {
@@ -4727,7 +4727,7 @@
   "@notifUpdateReady": {
     "description": "Notification title when app update download is complete"
   },
-  "notifUpdateReadyBody": "SpotiMusic v{version} 다운로드 완료. 설치하려면 탭하세요",
+  "notifUpdateReadyBody": "SpotiFLAC Mobile v{version} 다운로드 완료. 설치하려면 탭하세요",
   "@notifUpdateReadyBody": {
     "description": "Notification body when app update is ready to install",
     "placeholders": {
@@ -5399,7 +5399,7 @@
   "@extensionCustomUrlHandlingSubtitle": {
     "description": "Extension detail subtitle for custom URL handling"
   },
-  "extensionCustomUrlHandlingShareHint": "이 사이트의 링크를 SpotiMusic로 공유하면 이 확장 프로그램이 처리합니다",
+  "extensionCustomUrlHandlingShareHint": "이 사이트의 링크를 SpotiFLAC Mobile로 공유하면 이 확장 프로그램이 처리합니다",
   "@extensionCustomUrlHandlingShareHint": {
     "description": "Extension detail hint explaining share-to-app URL handling"
   },
@@ -5609,7 +5609,7 @@
   "@libraryBuiltInPreviewPlayer": {
     "description": "Setting option to use the built-in preview player"
   },
-  "libraryBuiltInPreviewPlayerSubtitle": "SpotiMusic에서 빠른 로컬 미리듣기 전용이며, 일반적인 음악 감상에는 권장되지 않습니다",
+  "libraryBuiltInPreviewPlayerSubtitle": "SpotiFLAC Mobile에서 빠른 로컬 미리듣기 전용이며, 일반적인 음악 감상에는 권장되지 않습니다",
   "@libraryBuiltInPreviewPlayerSubtitle": {
     "description": "Subtitle for built-in preview player option"
   },
@@ -5989,11 +5989,11 @@
   "@extensionVerificationHelpTitleWaiting": {
     "description": "Dialog title when verification is taking longer than expected"
   },
-  "extensionVerificationHelpMessageManual": "SpotiMusic에서 브라우저를 자동으로 열지 못하였습니다. 아래 링크를 브라우저에서 열거나 직접 복사하세요",
+  "extensionVerificationHelpMessageManual": "SpotiFLAC Mobile에서 브라우저를 자동으로 열지 못하였습니다. 아래 링크를 브라우저에서 열거나 직접 복사하세요",
   "@extensionVerificationHelpMessageManual": {
     "description": "Dialog message when automatic browser launch for verification fails"
   },
-  "extensionVerificationHelpMessageWaiting": "브라우저가 열리지 않았거나 인증을 완료한 후에도 SpotiMusic로 돌아오지 않았다면, 아래 링크를 다시 열거나 직접 복사하세요",
+  "extensionVerificationHelpMessageWaiting": "브라우저가 열리지 않았거나 인증을 완료한 후에도 SpotiFLAC Mobile로 돌아오지 않았다면, 아래 링크를 다시 열거나 직접 복사하세요",
   "@extensionVerificationHelpMessageWaiting": {
     "description": "Dialog message when verification may need manual browser help"
   },

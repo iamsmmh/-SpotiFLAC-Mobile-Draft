@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('M3uPlaylist');
 

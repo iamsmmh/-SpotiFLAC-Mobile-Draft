@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/services/multi_provider_stream_service.dart';
+import 'package:spotiflac_android/services/multi_provider_stream_service.dart';
 
 /// HTTP client that answers a ranged request from a scripted response.
 class _FakeHttpClient extends http.BaseClient {

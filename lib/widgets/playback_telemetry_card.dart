@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spotimusic/engine/streaming_engine.dart';
-import 'package:spotimusic/providers/playback_telemetry_provider.dart';
+import 'package:spotiflac_android/engine/streaming_engine.dart';
+import 'package:spotiflac_android/providers/playback_telemetry_provider.dart';
 
 /// Real-time streaming/playback metrics overlay.
 ///

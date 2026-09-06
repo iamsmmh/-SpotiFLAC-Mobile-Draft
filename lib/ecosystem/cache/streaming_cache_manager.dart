@@ -19,12 +19,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/core/data/sha256.dart';
-import 'package:spotimusic/ecosystem/cache/cache_cipher.dart';
-import 'package:spotimusic/ecosystem/cache/cache_cleanup_worker.dart';
-import 'package:spotimusic/ecosystem/cache/cache_index.dart';
-import 'package:spotimusic/ecosystem/cache/cache_models.dart';
-import 'package:spotimusic/ecosystem/cache/cache_repository.dart';
+import 'package:spotiflac_android/core/data/sha256.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_cipher.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_cleanup_worker.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_index.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_models.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_repository.dart';
 
 /// Injected filesystem layout (production: path_provider-backed; tests:
 /// temp dirs or fakes).

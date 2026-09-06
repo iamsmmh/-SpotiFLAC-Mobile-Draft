@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/services/cache_auto_cleaner.dart';
+import 'package:spotiflac_android/services/cache_auto_cleaner.dart';
 
 void main() {
   CacheEntry entry(String path, int size, DateTime modified) => CacheEntry(

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/md5.dart';
+import 'package:spotiflac_android/utils/md5.dart';
 
 void main() {
   test('RFC 1321 test suite', () {

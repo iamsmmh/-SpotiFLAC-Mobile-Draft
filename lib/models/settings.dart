@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:spotimusic/utils/artist_utils.dart';
+import 'package:spotiflac_android/utils/artist_utils.dart';
 
 part 'settings.g.dart';
 

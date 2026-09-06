@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/data/extension_payload.dart';
-import 'package:spotimusic/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/data/extension_payload.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
 
 void main() {
   group('ExtensionPayloadDecoder', () {

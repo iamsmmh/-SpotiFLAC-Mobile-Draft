@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/extension_auth_launcher.dart';
+import 'package:spotiflac_android/utils/extension_auth_launcher.dart';
 
 void main() {
   test('extracts the extension that raised a verification challenge', () {

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:spotimusic/services/cover_cache_manager.dart';
+import 'package:spotiflac_android/services/cover_cache_manager.dart';
 
 class PlayerArtwork extends StatelessWidget {
   final String? artUri;

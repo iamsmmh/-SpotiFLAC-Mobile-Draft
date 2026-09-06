@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/download_history_provider.dart';
-import 'package:spotimusic/screens/track_metadata_screen.dart';
-import 'package:spotimusic/widgets/album_detail_header.dart';
-import 'package:spotimusic/widgets/audio_quality_badges.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/download_history_provider.dart';
+import 'package:spotiflac_android/screens/track_metadata_screen.dart';
+import 'package:spotiflac_android/widgets/album_detail_header.dart';
+import 'package:spotiflac_android/widgets/audio_quality_badges.dart';
 
 void main() {
   testWidgets('metadata hero keeps technical text legible in light theme', (

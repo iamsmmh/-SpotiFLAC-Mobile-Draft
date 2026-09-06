@@ -42,7 +42,7 @@ abstract final class BackgroundPlaybackPolicy {
   static const String iosBackgroundMode = 'audio';
 
   /// Android audio_service channel that must stay as a `mediaPlayback` FGS.
-  static const String androidPlaybackChannelId = 'com.zarz.spotimusic.playback';
+  static const String androidPlaybackChannelId = 'com.zarz.spotiflac.playback';
 
   /// How the handler should react when an interruption *begins*.
   static BackgroundPlaybackDecision onInterruptionBegan(

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/fuzzy_match.dart';
+import 'package:spotiflac_android/utils/fuzzy_match.dart';
 
 void main() {
   group('normalizeFuzzyText', () {

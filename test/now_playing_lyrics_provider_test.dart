@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/providers/now_playing_lyrics_provider.dart';
-import 'package:spotimusic/services/music_player_service.dart';
-import 'package:spotimusic/utils/lyrics_parser.dart';
+import 'package:spotiflac_android/providers/now_playing_lyrics_provider.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
+import 'package:spotiflac_android/utils/lyrics_parser.dart';
 
 void main() {
   MediaItem item({

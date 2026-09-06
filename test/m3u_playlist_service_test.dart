@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/services/m3u_playlist_service.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/services/m3u_playlist_service.dart';
 
 void main() {
   group('parseM3u', () {

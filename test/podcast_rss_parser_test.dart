@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/podcasts/podcast_models.dart';
-import 'package:spotimusic/ecosystem/podcasts/rss_provider.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/podcast_models.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/rss_provider.dart';
 
 const String _rssFeed = '''
 <?xml version="1.0" encoding="UTF-8"?>

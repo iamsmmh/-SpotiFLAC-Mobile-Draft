@@ -3349,7 +3349,7 @@
     "description": "Grid layout option"
   },
   "trackDownloaded": "Téléchargé",
-  "extensionVerificationHelpMessageManual": "SpotiMusic n'a pas pu ouvrir automatiquement le navigateur. Ouvrez ce lien dans votre navigateur ou copiez-le manuellement.",
+  "extensionVerificationHelpMessageManual": "SpotiFLAC Mobile n'a pas pu ouvrir automatiquement le navigateur. Ouvrez ce lien dans votre navigateur ou copiez-le manuellement.",
   "setupDownloadLocationIosMessage": "Sous iOS, les fichiers téléchargés sont enregistrés dans le dossier « Documents » de l'application. Vous pouvez y accéder via l'application Fichiers.",
   "optionsArtistTagModeDescription": "Choisissez comment les noms de plusieurs artistes doivent apparaître dans les balises intégrées.",
   "@optionsArtistTagModeDescription": {
@@ -4214,7 +4214,7 @@
     }
   },
   "libraryExternalPlayerSubtitle": "Recommandé pour l'écoute, la meilleure qualité, la lecture en continu, l'égaliseur et la prise en charge d'un plus grand nombre de formats",
-  "extensionCustomUrlHandlingShareHint": "Partagez des liens provenant de ces sites vers SpotiMusic et cette extension s'en chargera.",
+  "extensionCustomUrlHandlingShareHint": "Partagez des liens provenant de ces sites vers SpotiFLAC Mobile et cette extension s'en chargera.",
   "libraryFilterQuality": "Qualité",
   "@libraryFilterQuality": {
     "description": "Filter section - audio quality"
@@ -4435,7 +4435,7 @@
   "@logIssueSummary": {
     "description": "Header for log issue analysis summary"
   },
-  "appName": "SpotiMusic",
+  "appName": "SpotiFLAC Mobile",
   "storeRepoDialogCurrent": "Dépôt actuel :",
   "@optionsExtensionStoreSubtitle": {
     "description": "Subtitle for extension repo toggle"
@@ -5078,7 +5078,7 @@
   "@setupStorageGranted": {
     "description": "Success message for storage permission"
   },
-  "tutorialWelcomeTitle": "Bienvenue dans SpotiMusic !",
+  "tutorialWelcomeTitle": "Bienvenue dans SpotiFLAC Mobile !",
   "a11ySelectAlbum": "Sélectionnez l'album {albumName}",
   "@a11ySelectAlbum": {
     "description": "Accessibility label for selecting an album",
@@ -5415,7 +5415,7 @@
   "@albumFolderStructureDescription": {
     "description": "Album folder structure picker description"
   },
-  "libraryBuiltInPreviewPlayerSubtitle": "Uniquement pour des écoutes rapides et locales dans SpotiMusic ; non recommandé pour une écoute régulière",
+  "libraryBuiltInPreviewPlayerSubtitle": "Uniquement pour des écoutes rapides et locales dans SpotiFLAC Mobile ; non recommandé pour une écoute régulière",
   "@libraryBuiltInPreviewPlayerSubtitle": {
     "description": "Subtitle for built-in preview player option"
   },
@@ -5716,7 +5716,7 @@
   "settingsDownloadNetworkAny": "Wi-Fi + données mobiles",
   "audioAnalysisDuration": "Durée",
   "audioAnalysisAnalyzing": "Analyse audio en cours...",
-  "extensionVerificationHelpMessageWaiting": "Si le navigateur ne s'est pas ouvert, ou si la vérification s'est terminée sans que vous ne soyez redirigé vers SpotiMusic, ouvrez à nouveau ce lien ou copiez-le manuellement.",
+  "extensionVerificationHelpMessageWaiting": "Si le navigateur ne s'est pas ouvert, ou si la vérification s'est terminée sans que vous ne soyez redirigé vers SpotiFLAC Mobile, ouvrez à nouveau ce lien ou copiez-le manuellement.",
   "editMetadataFieldDiscNum": "Disque n°",
   "@editMetadataFieldDiscNum": {
     "description": "Chip label for disc number field in auto-fill selector"

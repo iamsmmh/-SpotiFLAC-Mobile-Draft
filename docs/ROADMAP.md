@@ -131,7 +131,7 @@ pre-buffer) · ✅ live bandwidth sampling (preflight + head-warmup estimates in
 ✅ backup/restore, M3U/M3U8/JSON/CSV (existing) · ✅ queue share/import (portable JSON)
 
 ## 46–47. Sharing & deep links
-✅ share_plus, receive_sharing_intent, SongLink (existing) · 🚀 `spotimusic://` deep-link routes (open / search / provider-entity forms)
+✅ share_plus, receive_sharing_intent, SongLink (existing) · 🚀 `spotiflac://` deep-link routes (open / search / provider-entity forms)
 
 ## 48. UI/UX
 ✅ Material 3, dark/light/AMOLED/dynamic color, bottom nav, mini player, full player

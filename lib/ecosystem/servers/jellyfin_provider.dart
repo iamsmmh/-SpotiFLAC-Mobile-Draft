@@ -13,10 +13,10 @@ library;
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:spotimusic/core/streaming/stream_provider.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_models.dart';
-import 'package:spotimusic/ecosystem/servers/music_server_provider.dart';
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/core/streaming/stream_provider.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_models.dart';
+import 'package:spotiflac_android/ecosystem/servers/music_server_provider.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 class JellyfinProvider extends MusicServerProvider {
   JellyfinProvider({

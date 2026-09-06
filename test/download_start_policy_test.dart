@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
 
 void main() {
   group('download storage recovery', () {

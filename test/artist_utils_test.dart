@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/artist_utils.dart';
+import 'package:spotiflac_android/utils/artist_utils.dart';
 
 void main() {
   test('primary artist prefers the first album artist', () {

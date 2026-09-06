@@ -36,6 +36,23 @@ class RunnerTests: XCTestCase {
         )
     }
 
+    func testAcceptsLegacySpotiMusicSchemeAlias() {
+        // 5.0.0 builds registered `spotimusic://`; redirects issued for that
+        // scheme must keep resolving after the SpotiFLAC identity restoration.
+        let route = ExtensionCallbackParser.parse(
+            URL(string: "spotimusic://callback?code=auth-code&state=spotify-web")!
+        )
+
+        XCTAssertEqual(
+            route,
+            ExtensionCallbackRoute(
+                code: "auth-code",
+                extensionId: "spotify-web",
+                isSessionGrant: false
+            )
+        )
+    }
+
     func testRejectsUntrustedOrIncompleteCallbacks() {
         XCTAssertNil(
             ExtensionCallbackParser.parse(

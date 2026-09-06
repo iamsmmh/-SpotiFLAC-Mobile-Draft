@@ -1,6 +1,6 @@
 # BUILD_REPORT.md
 
-Deliverable builds for SpotiFLAC-Mobile (`spotimusic` 5.0.0+142), produced by
+Deliverable builds for SpotiFLAC-Mobile (`spotiflac_android` 5.0.0+142), produced by
 `.github/workflows/build-mobile.yml`.
 
 > **Status: the three requested builds — Android release APKs, Android App

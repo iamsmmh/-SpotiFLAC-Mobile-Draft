@@ -3,16 +3,16 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:spotimusic/core/application/download_manager.dart';
-import 'package:spotimusic/core/application/queue_engine.dart';
-import 'package:spotimusic/core/application/retry_policy.dart';
-import 'package:spotimusic/core/data/atomic_file_ops.dart';
-import 'package:spotimusic/core/data/audio_sanity.dart';
-import 'package:spotimusic/core/data/bridge_download_backend.dart';
-import 'package:spotimusic/core/data/bridge_storage_repositories.dart';
-import 'package:spotimusic/core/domain/entities.dart';
-import 'package:spotimusic/core/domain/ports.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
+import 'package:spotiflac_android/core/application/download_manager.dart';
+import 'package:spotiflac_android/core/application/queue_engine.dart';
+import 'package:spotiflac_android/core/application/retry_policy.dart';
+import 'package:spotiflac_android/core/data/atomic_file_ops.dart';
+import 'package:spotiflac_android/core/data/audio_sanity.dart';
+import 'package:spotiflac_android/core/data/bridge_download_backend.dart';
+import 'package:spotiflac_android/core/data/bridge_storage_repositories.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
+import 'package:spotiflac_android/core/domain/ports.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
 
 // Presentation wiring for the Stage 2 core engine.
 //

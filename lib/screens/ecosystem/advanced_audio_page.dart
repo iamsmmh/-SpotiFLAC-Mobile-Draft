@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/advanced_audio.dart';
-import 'package:spotimusic/providers/advanced_audio_provider.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/engine/advanced_audio.dart';
+import 'package:spotiflac_android/providers/advanced_audio_provider.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 /// Advanced audio (Feature Group: advanced audio): parametric EQ, bass and
 /// vocal boost, headphone profiles, crossfeed, convolver, loudness target

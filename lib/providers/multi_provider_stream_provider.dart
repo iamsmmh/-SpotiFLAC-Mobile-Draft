@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:spotimusic/services/multi_provider_stream_service.dart';
-import 'package:spotimusic/services/provider_credentials.dart';
-import 'package:spotimusic/services/provider_health_store.dart';
+import 'package:spotiflac_android/services/multi_provider_stream_service.dart';
+import 'package:spotiflac_android/services/provider_credentials.dart';
+import 'package:spotiflac_android/services/provider_health_store.dart';
 
 /// App-wide [MultiProviderStreamService] instance (YouTube Explode + HTTP are
 /// kept for the app lifetime and disposed only with the provider container).
@@ -32,7 +32,11 @@ final multiProviderStreamServiceProvider =
 
 /// The currently selected streaming provider chip. Persisted across launches.
 class ActiveStreamProviderNotifier extends Notifier<StreamProviderId> {
-  static const String _prefsKey = 'spotimusic.active_stream_provider';
+  static const String _prefsKey = 'spotiflac.active_stream_provider';
+
+  /// Key written by the short-lived 5.0.0 (SpotiMusic) builds. Read once as a
+  /// fallback so an in-place upgrade keeps the user's chip; never written.
+  static const String _legacyPrefsKey = 'spotimusic.active_stream_provider';
 
   @override
   StreamProviderId build() {
@@ -52,7 +56,8 @@ class ActiveStreamProviderNotifier extends Notifier<StreamProviderId> {
   /// Restores the persisted choice (called during eager startup).
   Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
-    final stored = prefs.getString(_prefsKey);
+    final stored =
+        prefs.getString(_prefsKey) ?? prefs.getString(_legacyPrefsKey);
     final parsed = _parseProvider(stored);
     if (parsed != null) state = parsed;
   }

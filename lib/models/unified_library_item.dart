@@ -1,8 +1,8 @@
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/download_history_provider.dart';
-import 'package:spotimusic/services/library_database.dart';
-import 'package:spotimusic/utils/audio_quality_badge_policy.dart';
-import 'package:spotimusic/utils/string_utils.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/download_history_provider.dart';
+import 'package:spotiflac_android/services/library_database.dart';
+import 'package:spotiflac_android/utils/audio_quality_badge_policy.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
 
 enum LibraryItemSource { downloaded, local }
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/progress_stream_poller.dart';
+import 'package:spotiflac_android/utils/progress_stream_poller.dart';
 
 void main() {
   test('stop and restart ignore stale in-flight poll results', () async {

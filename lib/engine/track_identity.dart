@@ -1,7 +1,7 @@
 library;
 import 'dart:math' as math;
 
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 /// Canonical track identity: the key architectural upgrade that turns
 /// "Spotify metadata" → "provider metadata" → "download source" → "local FLAC"

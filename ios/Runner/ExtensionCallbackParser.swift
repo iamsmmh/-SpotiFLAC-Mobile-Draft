@@ -8,7 +8,10 @@ struct ExtensionCallbackRoute: Equatable {
 
 enum ExtensionCallbackParser {
     static func parse(_ url: URL) -> ExtensionCallbackRoute? {
-        guard url.scheme?.lowercased() == "spotimusic" else {
+        // Canonical scheme is `spotiflac`; `spotimusic` is accepted as a legacy
+        // alias so OAuth redirects registered by 5.0.0 builds keep working.
+        guard let scheme = url.scheme?.lowercased(),
+              scheme == "spotiflac" || scheme == "spotimusic" else {
             return nil
         }
 

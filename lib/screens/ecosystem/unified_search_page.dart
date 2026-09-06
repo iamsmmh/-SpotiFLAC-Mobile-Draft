@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/unified_search.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/hybrid_playback_provider.dart';
-import 'package:spotimusic/providers/playback_provider.dart';
-import 'package:spotimusic/providers/unified_search_provider.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/app_search_field.dart';
-import 'package:spotimusic/widgets/cached_cover_image.dart';
+import 'package:spotiflac_android/engine/unified_search.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/hybrid_playback_provider.dart';
+import 'package:spotiflac_android/providers/playback_provider.dart';
+import 'package:spotiflac_android/providers/unified_search_provider.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/app_search_field.dart';
+import 'package:spotiflac_android/widgets/cached_cover_image.dart';
 
 /// Unified search (Feature Group: search): one ranked list across the
 /// local library, downloads, extensions, self-hosted servers, podcasts

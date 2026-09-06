@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/providers/engine_settings_provider.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/ui/widgets/liquid_glass_container.dart';
-import 'package:spotimusic/utils/adaptive_layout.dart';
+import 'package:spotiflac_android/providers/engine_settings_provider.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/ui/widgets/liquid_glass_container.dart';
+import 'package:spotiflac_android/utils/adaptive_layout.dart';
 
 /// Background fill for grouped cards, matching the Settings group look. Blends a
 /// translucent overlay over the surface so it stays visible on AMOLED (pure
@@ -213,7 +213,7 @@ class SettingsGroup extends ConsumerWidget {
         );
 
     if (useGlass) {
-      // SpotiMusic Liquid Glass card: translucent tint + dynamic gradient
+      // Liquid Glass card: translucent tint + dynamic gradient
       // border (white @ 18%). Blur stays off per-card (the backdrops already
       // frost) so scrolling long settings/store lists stays fluid.
       return LayoutBuilder(

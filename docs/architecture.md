@@ -156,7 +156,7 @@ search bar → `_performSearch` (dedup, live-search lock) → extension provider
 `lib/core/monitoring/crash_reporter.dart` is a dependency-free,
 Sentry-envelope-compatible reporter (`package:http` only):
 
-- **Opt-in by DSN** — `--dart-define=SPOTIMUSIC_SENTRY_DSN=…` or the
+- **Opt-in by DSN** — `--dart-define=SPOTIFLAC_SENTRY_DSN=…` or the
   remote-config `crash_reporting_dsn` field (cached copy; no network on the
   cold-start path). No DSN → every entry point is a no-op. The DSN never
   ships in the binary.

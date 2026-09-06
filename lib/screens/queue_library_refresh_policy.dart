@@ -1,4 +1,4 @@
-import 'package:spotimusic/services/library_database.dart';
+import 'package:spotiflac_android/services/library_database.dart';
 
 bool queueLibraryCountsHaveContent(QueueLibraryCounts counts) =>
     counts.allTrackCount > 0 ||

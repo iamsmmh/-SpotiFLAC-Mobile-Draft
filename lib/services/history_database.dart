@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/services/sqlite_helpers.dart' as sqlite;
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/utils/path_match_keys.dart';
+import 'package:spotiflac_android/services/sqlite_helpers.dart' as sqlite;
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/utils/path_match_keys.dart';
 
 final _log = AppLogger('HistoryDatabase');
 final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();

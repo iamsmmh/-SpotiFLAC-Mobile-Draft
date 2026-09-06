@@ -5,9 +5,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/services/platform_bridge.dart';
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/providers/settings_provider.dart';
+import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/providers/settings_provider.dart';
 
 part 'extension_models.dart';
 part 'extension_provider_priority.dart';

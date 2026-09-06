@@ -10,8 +10,8 @@
 library;
 
 import 'package:sqflite/sqflite.dart';
-import 'package:spotimusic/ecosystem/cache/cache_models.dart';
-import 'package:spotimusic/ecosystem/ecosystem_database.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_models.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
 
 class CacheRepository {
   CacheRepository({EcosystemDatabase? database})

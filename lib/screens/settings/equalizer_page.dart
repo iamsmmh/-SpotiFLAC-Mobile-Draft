@@ -7,13 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart' show ShareParams, SharePlus, XFile;
-import 'package:spotimusic/engine/audio_effects.dart';
-import 'package:spotimusic/providers/audio_effects_provider.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
-import 'package:spotimusic/widgets/liquid/liquid_glass.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/engine/audio_effects.dart';
+import 'package:spotiflac_android/providers/audio_effects_provider.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/liquid/liquid_glass.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 final _log = AppLogger('EqualizerPage');
 

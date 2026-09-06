@@ -16,10 +16,10 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/core/data/sha256.dart';
-import 'package:spotimusic/ecosystem/podcasts/podcast_models.dart';
-import 'package:spotimusic/ecosystem/podcasts/podcast_repository.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/core/data/sha256.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/podcast_models.dart';
+import 'package:spotiflac_android/ecosystem/podcasts/podcast_repository.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('PodcastLibrary');
 
@@ -156,7 +156,7 @@ class PodcastLibrary {
     IOSink? sink;
     try {
       final request = http.Request('GET', Uri.parse(episode.audioUrl))
-        ..headers['User-Agent'] = 'SpotiMusic/5.0 (podcast client)';
+        ..headers['User-Agent'] = 'SpotiFLAC-Mobile/5.0 (podcast client)';
       final response = await _client.send(request);
       if (response.statusCode != 200) {
         throw HttpException('HTTP ${response.statusCode}');

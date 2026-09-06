@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/utils/app_bar_layout.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/utils/app_bar_layout.dart';
 
 /// The collapsing header used by every top-level tab and every settings-style
 /// sub-page.

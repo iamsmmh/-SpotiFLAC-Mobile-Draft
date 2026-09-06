@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/ecosystem/history/listening_history.dart';
-import 'package:spotimusic/ecosystem/history/listening_insights.dart';
+import 'package:spotiflac_android/ecosystem/history/listening_history.dart';
+import 'package:spotiflac_android/ecosystem/history/listening_insights.dart';
 
 const _calculator = InsightsCalculator();
 

@@ -9,7 +9,7 @@ class AppLocalizationsKo extends AppLocalizations {
   AppLocalizationsKo([String locale = 'ko']) : super(locale);
 
   @override
-  String get appName => 'SpotiMusic';
+  String get appName => 'SpotiFLAC Mobile';
 
   @override
   String get navHome => '홈';
@@ -1870,7 +1870,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get libraryRemoveFolderMessage =>
-      'Remove this folder and its indexed tracks from SpotiMusic? Audio files on the storage will not be deleted.';
+      'Remove this folder and its indexed tracks from SpotiFLAC Mobile? Audio files on the storage will not be deleted.';
 
   @override
   String get libraryShowDuplicateIndicator => '중복 표시기 표시';
@@ -2104,7 +2104,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get tutorialWelcomeTitle => 'SpotiMusic에 오신 것을 환영합니다!';
+  String get tutorialWelcomeTitle => 'SpotiFLAC Mobile에 오신 것을 환영합니다!';
 
   @override
   String get tutorialWelcomeDesc =>
@@ -3762,7 +3762,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String notifDownloadingUpdate(String version) {
-    return 'SpotiMusic v$version을 다운로드하는 중';
+    return 'SpotiFLAC Mobile v$version을 다운로드하는 중';
   }
 
   @override
@@ -3775,7 +3775,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String notifUpdateReadyBody(String version) {
-    return 'SpotiMusic v$version 다운로드 완료. 설치하려면 탭하세요';
+    return 'SpotiFLAC Mobile v$version 다운로드 완료. 설치하려면 탭하세요';
   }
 
   @override
@@ -4360,7 +4360,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get extensionCustomUrlHandlingShareHint =>
-      '이 사이트의 링크를 SpotiMusic로 공유하면 이 확장 프로그램이 처리합니다';
+      '이 사이트의 링크를 SpotiFLAC Mobile로 공유하면 이 확장 프로그램이 처리합니다';
 
   @override
   String extensionSettingsCount(int count) {
@@ -4521,7 +4521,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get libraryBuiltInPreviewPlayerSubtitle =>
-      'SpotiMusic에서 빠른 로컬 미리듣기 전용이며, 일반적인 음악 감상에는 권장되지 않습니다';
+      'SpotiFLAC Mobile에서 빠른 로컬 미리듣기 전용이며, 일반적인 음악 감상에는 권장되지 않습니다';
 
   @override
   String get libraryBuiltInPlayerInfo =>
@@ -4804,11 +4804,11 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get extensionVerificationHelpMessageManual =>
-      'SpotiMusic에서 브라우저를 자동으로 열지 못하였습니다. 아래 링크를 브라우저에서 열거나 직접 복사하세요';
+      'SpotiFLAC Mobile에서 브라우저를 자동으로 열지 못하였습니다. 아래 링크를 브라우저에서 열거나 직접 복사하세요';
 
   @override
   String get extensionVerificationHelpMessageWaiting =>
-      '브라우저가 열리지 않았거나 인증을 완료한 후에도 SpotiMusic로 돌아오지 않았다면, 아래 링크를 다시 열거나 직접 복사하세요';
+      '브라우저가 열리지 않았거나 인증을 완료한 후에도 SpotiFLAC Mobile로 돌아오지 않았다면, 아래 링크를 다시 열거나 직접 복사하세요';
 
   @override
   String get extensionVerificationClose => '닫기';

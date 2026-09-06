@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 75
     env:
-      APP_ID: com.zarz.spotimusic
+      APP_ID: com.zarz.spotiflac
       ANDROID_NDK_VERSION: "29.0.14206865"
       ANDROID_PLATFORM: "platforms;android-37"
       ANDROID_BUILD_TOOLS: "build-tools;35.0.0"

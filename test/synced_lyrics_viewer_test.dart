@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/lyrics_parser.dart';
-import 'package:spotimusic/widgets/synced_lyrics_viewer.dart';
+import 'package:spotiflac_android/utils/lyrics_parser.dart';
+import 'package:spotiflac_android/widgets/synced_lyrics_viewer.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

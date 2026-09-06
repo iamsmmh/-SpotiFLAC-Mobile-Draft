@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/services/search_history_store.dart';
+import 'package:spotiflac_android/services/search_history_store.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

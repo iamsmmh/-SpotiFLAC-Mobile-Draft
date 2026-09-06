@@ -18,8 +18,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/services/multi_provider_stream_service.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/services/multi_provider_stream_service.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('ProviderHealthStore');
 
@@ -54,7 +54,11 @@ class ProviderHealthStore {
   }) : _store = store,
        _now = now ?? DateTime.now;
 
-  static const String prefsKey = 'spotimusic.provider_health_metrics.v1';
+  static const String prefsKey = 'spotiflac.provider_health_metrics.v1';
+
+  /// Key written by the short-lived 5.0.0 (SpotiMusic) builds. Read once as a
+  /// fallback when the canonical key is empty; never written.
+  static const String legacyPrefsKey = 'spotimusic.provider_health_metrics.v1';
   static const int schemaVersion = 1;
 
   /// Upper bound for the persisted payload. Health rows are tiny (≈200 bytes
@@ -92,7 +96,10 @@ class ProviderHealthStore {
 
     var restored = 0;
     try {
-      final raw = await _store.read(prefsKey);
+      var raw = await _store.read(prefsKey);
+      if (raw == null || raw.isEmpty) {
+        raw = await _store.read(legacyPrefsKey);
+      }
       if (raw != null && raw.isNotEmpty) {
         final decoded = jsonDecode(raw);
         if (decoded is Map<String, dynamic>) {

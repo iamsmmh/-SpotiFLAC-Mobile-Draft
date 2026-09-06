@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/screens/now_playing_screen.dart';
-import 'package:spotimusic/utils/string_utils.dart';
-import 'package:spotimusic/widgets/audio_quality_badges.dart';
-import 'package:spotimusic/widgets/player_artwork.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/screens/now_playing_screen.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
+import 'package:spotiflac_android/widgets/audio_quality_badges.dart';
+import 'package:spotiflac_android/widgets/player_artwork.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
 
 class MiniPlayer extends ConsumerStatefulWidget {
   const MiniPlayer({super.key});

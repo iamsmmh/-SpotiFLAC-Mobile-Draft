@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/constants/app_info.dart';
-import 'package:spotimusic/providers/repo_provider.dart';
-import 'package:spotimusic/screens/setup_extensions_step.dart';
-import 'package:spotimusic/utils/user_facing_error.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/providers/repo_provider.dart';
+import 'package:spotiflac_android/screens/setup_extensions_step.dart';
+import 'package:spotiflac_android/utils/user_facing_error.dart';
 
 void main() {
   group('default extension registry', () {

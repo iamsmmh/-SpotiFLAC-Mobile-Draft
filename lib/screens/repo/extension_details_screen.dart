@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/utils/extension_permission_gate.dart';
-import 'package:spotimusic/providers/repo_provider.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/utils/adaptive_layout.dart';
-import 'package:spotimusic/utils/nav_bar_inset.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/utils/extension_permission_gate.dart';
+import 'package:spotiflac_android/providers/repo_provider.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/utils/adaptive_layout.dart';
+import 'package:spotiflac_android/utils/nav_bar_inset.dart';
 
 class ExtensionDetailsScreen extends ConsumerStatefulWidget {
   final RepoExtension extension;

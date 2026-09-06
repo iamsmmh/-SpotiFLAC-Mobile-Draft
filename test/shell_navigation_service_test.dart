@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/l10n/app_localizations.dart';
-import 'package:spotimusic/services/shell_navigation_service.dart';
-import 'package:spotimusic/widgets/view_queue_snackbar_action.dart';
+import 'package:spotiflac_android/l10n/app_localizations.dart';
+import 'package:spotiflac_android/services/shell_navigation_service.dart';
+import 'package:spotiflac_android/widgets/view_queue_snackbar_action.dart';
 
 void main() {
   group('ShellNavigationService tab requests', () {

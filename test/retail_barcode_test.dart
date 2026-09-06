@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/utils/retail_barcode.dart';
-import 'package:spotimusic/widgets/metadata_barcode.dart';
+import 'package:spotiflac_android/utils/retail_barcode.dart';
+import 'package:spotiflac_android/widgets/metadata_barcode.dart';
 
 void main() {
   test('encodes a valid UPC-A with its native retail symbology', () {

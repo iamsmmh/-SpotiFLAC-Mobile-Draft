@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/engine/unified_search.dart';
-import 'package:spotimusic/models/track.dart';
+import 'package:spotiflac_android/engine/unified_search.dart';
+import 'package:spotiflac_android/models/track.dart';
 
 Track _track(String id, String name) => Track(
   id: id,

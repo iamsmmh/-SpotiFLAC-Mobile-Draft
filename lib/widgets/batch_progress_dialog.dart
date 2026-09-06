@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/l10n.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
 
 class _BatchProgress {
   final int current;

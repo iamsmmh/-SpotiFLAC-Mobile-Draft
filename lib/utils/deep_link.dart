@@ -1,12 +1,15 @@
-/// `spotimusic://` deep-link parsing.
+/// `spotiflac://` deep-link parsing.
 ///
 /// Accepted shapes (extra query params are ignored):
-///   spotimusic://open?url=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F…
-///   spotimusic://open?link=…            (alias)
-///   spotimusic://search?q=artist%20title
-///   spotimusic://search/artist%20title
-///   spotimusic://track?spotify=ID  /  album?spotify=ID  /  playlist?spotify=ID
-///   spotimusic://…raw https or spotify URI…         (passthrough)
+///   spotiflac://open?url=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F…
+///   spotiflac://open?link=…            (alias)
+///   spotiflac://search?q=artist%20title
+///   spotiflac://search/artist%20title
+///   spotiflac://track?spotify=ID  /  album?spotify=ID  /  playlist?spotify=ID
+///   spotiflac://…raw https or spotify URI…         (passthrough)
+///
+/// `spotimusic://` is accepted as a legacy alias for links that were issued
+/// by 5.0.0 builds; new links are always generated with [kAppDeepLinkScheme].
 ///
 /// Anything that cannot be parsed is simply *not* a deep link (null) so the
 /// caller can fall back to the normal shared-URL pipeline.
@@ -24,6 +27,22 @@ class DeepLinkAction {
   final String payload;
 }
 
+/// Canonical app URL scheme (also registered in AndroidManifest.xml and
+/// Info.plist).
+const String kAppDeepLinkScheme = 'spotiflac';
+
+/// Legacy scheme registered by the short-lived 5.0.0 "SpotiMusic" builds.
+/// Kept for inbound compatibility only.
+const String kLegacyAppDeepLinkScheme = 'spotimusic';
+
+const List<String> kAppDeepLinkSchemes = <String>[
+  kAppDeepLinkScheme,
+  kLegacyAppDeepLinkScheme,
+];
+
+bool isAppDeepLinkScheme(String scheme) =>
+    kAppDeepLinkSchemes.contains(scheme.toLowerCase());
+
 const List<String> _urlParams = <String>['url', 'link', 'to'];
 const List<String> _searchParams = <String>['q', 'query', 'text'];
 
@@ -39,10 +58,15 @@ bool looksLikeMediaLink(String value) {
 DeepLinkAction? parseSpotiFlacDeepLink(String input) {
   final trimmed = input.trim();
   final lowered = trimmed.toLowerCase();
-  if (!lowered.startsWith('spotimusic://') && !lowered.startsWith('spotimusic:')) {
-    return null;
+  String? matchedScheme;
+  for (final scheme in kAppDeepLinkSchemes) {
+    if (lowered.startsWith('$scheme:')) {
+      matchedScheme = scheme;
+      break;
+    }
   }
-  if (trimmed.length < 'spotimusic:'.length) return null;
+  if (matchedScheme == null) return null;
+  if (trimmed.length < '$matchedScheme:'.length) return null;
 
   Uri uri;
   try {
@@ -50,7 +74,7 @@ DeepLinkAction? parseSpotiFlacDeepLink(String input) {
   } on FormatException {
     return null;
   }
-  if (uri.scheme.toLowerCase() != 'spotimusic') return null;
+  if (!isAppDeepLinkScheme(uri.scheme)) return null;
 
   final host = uri.host.toLowerCase();
   final segments = uri.pathSegments
@@ -78,7 +102,7 @@ DeepLinkAction? parseSpotiFlacDeepLink(String input) {
     return DeepLinkAction(DeepLinkKind.search, query);
   }
 
-  // Canonical provider entity ids: spotimusic://track?spotify=<id>.
+  // Canonical provider entity ids: spotiflac://track?spotify=<id>.
   if (host == 'track' || host == 'album' || host == 'playlist') {
     final id = uri.queryParameters['spotify']?.trim();
     if (id != null && RegExp(r'^[A-Za-z0-9]{20,30}$').hasMatch(id)) {
@@ -89,9 +113,10 @@ DeepLinkAction? parseSpotiFlacDeepLink(String input) {
     }
   }
 
-  // Passthrough: spotimusic:// followed directly by an encoded media link,
-  // e.g. spotimusic://open.spotify.com/track/ID (query kept intact).
-  final remainder = trimmed.substring('spotimusic:'.length).replaceFirst('//', '');
+  // Passthrough: spotiflac:// followed directly by an encoded media link,
+  // e.g. spotiflac://open.spotify.com/track/ID (query kept intact).
+  final remainder =
+      trimmed.substring('$matchedScheme:'.length).replaceFirst('//', '');
   if (looksLikeMediaLink(remainder)) {
     return DeepLinkAction(DeepLinkKind.openUrl, remainder);
   }

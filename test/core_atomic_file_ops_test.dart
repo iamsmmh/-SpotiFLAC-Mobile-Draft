@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/data/atomic_file_ops.dart';
+import 'package:spotiflac_android/core/data/atomic_file_ops.dart';
 
 void main() {
   late Directory root;

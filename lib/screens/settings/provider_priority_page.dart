@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/screens/settings/provider_priority_list_page.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/screens/settings/provider_priority_list_page.dart';
 
 class ProviderPriorityPage extends StatelessWidget {
   const ProviderPriorityPage({super.key});

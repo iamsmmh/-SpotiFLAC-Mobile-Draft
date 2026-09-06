@@ -13,7 +13,7 @@
 /// entirely on-device unless the user enables the history sync scope.
 library;
 
-import 'package:spotimusic/ecosystem/ecosystem_database.dart';
+import 'package:spotiflac_android/ecosystem/ecosystem_database.dart';
 
 /// One playback session of one track.
 class PlayEvent {

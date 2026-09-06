@@ -1,4 +1,4 @@
-import 'package:spotimusic/l10n/app_localizations.dart';
+import 'package:spotiflac_android/l10n/app_localizations.dart';
 
 const List<String> audioConversionTargetFormats = [
   'ALAC',

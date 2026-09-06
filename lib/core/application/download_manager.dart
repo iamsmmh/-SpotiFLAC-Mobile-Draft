@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:spotimusic/core/application/queue_engine.dart';
-import 'package:spotimusic/core/domain/cancellation_token.dart';
-import 'package:spotimusic/core/domain/core_errors.dart';
-import 'package:spotimusic/core/domain/entities.dart';
-import 'package:spotimusic/core/domain/ports.dart';
+import 'package:spotiflac_android/core/application/queue_engine.dart';
+import 'package:spotiflac_android/core/domain/cancellation_token.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
+import 'package:spotiflac_android/core/domain/ports.dart';
 
 /// Application-layer [DownloadManager]: the transactional download pipeline
 /// scheduled by the [QueueEngine].

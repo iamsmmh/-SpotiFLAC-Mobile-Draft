@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/application/retry_policy.dart';
-import 'package:spotimusic/core/domain/core_errors.dart';
+import 'package:spotiflac_android/core/application/retry_policy.dart';
+import 'package:spotiflac_android/core/domain/core_errors.dart';
 
 void main() {
   group('RetryPolicy.delayFor', () {

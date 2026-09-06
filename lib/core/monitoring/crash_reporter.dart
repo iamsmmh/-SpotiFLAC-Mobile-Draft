@@ -12,7 +12,7 @@
 ///     here map 1:1 onto Sentry's model.
 ///   * **Disabled by default, opt-in by DSN.** No DSN configured → every entry
 ///     point is a no-op (no timers, no I/O, no battery). The DSN is *never*
-///     hardcoded: it arrives via `--dart-define=SPOTIMUSIC_SENTRY_DSN` or the
+///     hardcoded: it arrives via `--dart-define=SPOTIFLAC_SENTRY_DSN` or the
 ///     remote-config payload (Phase 11: no secrets in source).
 ///   * **Reporting must never break the app.** Every public method catches its
 ///     own failures; a reporter that throws while reporting would be its own
@@ -185,7 +185,7 @@ class CrashReporter {
 
   // Configuration (set by configure()).
   CrashReportDsn? _dsn;
-  String _clientName = 'spotimusic';
+  String _clientName = 'spotiflac-mobile';
   String? _release;
   String? _environment;
 
@@ -222,7 +222,7 @@ class CrashReporter {
   /// that as "stay disabled" and logs it.
   CrashReportDsn configure({
     required String dsn,
-    String clientName = 'spotimusic',
+    String clientName = 'spotiflac-mobile',
     String? release,
     String? environment,
     http.Client? httpClient,

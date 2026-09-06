@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/utils/logger.dart';
-import 'package:spotimusic/utils/audio_format_utils.dart';
-import 'package:spotimusic/utils/file_access.dart';
-import 'package:spotimusic/services/history_database.dart';
-import 'package:spotimusic/services/sqlite_helpers.dart' as sqlite;
+import 'package:spotiflac_android/utils/logger.dart';
+import 'package:spotiflac_android/utils/audio_format_utils.dart';
+import 'package:spotiflac_android/utils/file_access.dart';
+import 'package:spotiflac_android/services/history_database.dart';
+import 'package:spotiflac_android/services/sqlite_helpers.dart' as sqlite;
 
 part 'library_database_models.dart';
 part 'library_database_queue_sql.dart';

@@ -4,28 +4,29 @@ import 'package:audio_service/audio_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/smart_play.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/audio_effects_provider.dart';
-import 'package:spotimusic/providers/download_history_provider.dart';
-import 'package:spotimusic/providers/engine_settings_provider.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/providers/now_playing_lyrics_provider.dart';
-import 'package:spotimusic/providers/playback_telemetry_provider.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart';
-import 'package:spotimusic/screens/settings/equalizer_page.dart';
-import 'package:spotimusic/screens/track_metadata_screen.dart';
-import 'package:spotimusic/services/cover_cache_manager.dart';
-import 'package:spotimusic/services/history_database.dart';
-import 'package:spotimusic/ui/widgets/liquid_glass_player_sheet.dart';
-import 'package:spotimusic/utils/lyrics_parser.dart';
-import 'package:spotimusic/utils/string_utils.dart';
-import 'package:spotimusic/widgets/liquid/liquid_glass.dart';
-import 'package:spotimusic/widgets/liquid/liquid_visualizer.dart';
-import 'package:spotimusic/widgets/playback_telemetry_card.dart';
-import 'package:spotimusic/widgets/player_artwork.dart';
-import 'package:spotimusic/widgets/synced_lyrics_viewer.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/engine/smart_play.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/audio_effects_provider.dart';
+import 'package:spotiflac_android/providers/download_history_provider.dart';
+import 'package:spotiflac_android/providers/engine_settings_provider.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/providers/now_playing_lyrics_provider.dart';
+import 'package:spotiflac_android/providers/playback_telemetry_provider.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/screens/settings/equalizer_page.dart';
+import 'package:spotiflac_android/screens/track_metadata_screen.dart';
+import 'package:spotiflac_android/services/cover_cache_manager.dart';
+import 'package:spotiflac_android/services/history_database.dart';
+import 'package:spotiflac_android/ui/widgets/liquid_glass_player_sheet.dart';
+import 'package:spotiflac_android/utils/lyrics_parser.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
+import 'package:spotiflac_android/widgets/liquid/liquid_glass.dart';
+import 'package:spotiflac_android/widgets/liquid/liquid_visualizer.dart';
+import 'package:spotiflac_android/widgets/playback_telemetry_card.dart';
+import 'package:spotiflac_android/widgets/player_artwork.dart';
+import 'package:spotiflac_android/widgets/synced_lyrics_viewer.dart';
 
 /// Hero tag for the Liquid player artwork (kept separate from the classic
 /// player's tag so both routes can coexist).
@@ -217,7 +218,7 @@ class _LiquidPlayerScreenState extends ConsumerState<LiquidPlayerScreen>
                 ),
               ),
               Text(
-                'SpotiMusic',
+                AppInfo.appName,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -508,7 +509,7 @@ class _LiquidPlayerScreenState extends ConsumerState<LiquidPlayerScreen>
     );
   }
 
-  /// Opens the SpotiMusic dual-mode sheet: pick a streaming provider (with
+  /// Opens the dual-mode sheet: pick a streaming provider (with
   /// universal fallback) or queue a lossless FLAC download.
   Future<void> _openProvidersSheet() async {
     final mediaItem = ref.read(currentMediaItemProvider).value;

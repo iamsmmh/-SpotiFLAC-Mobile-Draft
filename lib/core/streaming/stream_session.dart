@@ -8,7 +8,7 @@
 /// Riverpod layer — this class only records *what happened*.
 library;
 
-import 'package:spotimusic/core/streaming/stream_provider.dart';
+import 'package:spotiflac_android/core/streaming/stream_provider.dart';
 
 /// Lifecycle phases of one streamed playback.
 enum StreamSessionPhase {

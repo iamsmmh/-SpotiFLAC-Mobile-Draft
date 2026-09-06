@@ -1,8 +1,8 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/providers/download_queue_provider.dart';
-import 'package:spotimusic/services/library_database.dart';
-import 'package:spotimusic/services/music_player_service.dart';
+import 'package:spotiflac_android/providers/download_queue_provider.dart';
+import 'package:spotiflac_android/services/library_database.dart';
+import 'package:spotiflac_android/services/music_player_service.dart';
 
 final currentMediaItemProvider = StreamProvider<MediaItem?>((ref) {
   return musicPlayerMediaItemEvents();

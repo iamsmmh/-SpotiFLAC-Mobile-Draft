@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/services/multi_provider_stream_service.dart';
+import 'package:spotiflac_android/services/multi_provider_stream_service.dart';
 
 ResolvedStream _stream(
   String uri, {

@@ -7,7 +7,7 @@
 /// `LocalLibraryLookupIndex` pattern in the library store.
 library;
 
-import 'package:spotimusic/ecosystem/cache/cache_models.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_models.dart';
 
 class CacheIndex {
   CacheIndex(Iterable<CacheEntry> entries)

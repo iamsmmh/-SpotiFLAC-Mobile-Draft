@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:spotimusic/services/cover_cache_manager.dart';
-import 'package:spotimusic/constants/app_info.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/utils/adaptive_layout.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/services/cover_cache_manager.dart';
+import 'package:spotiflac_android/constants/app_info.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/utils/adaptive_layout.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});

@@ -7,12 +7,12 @@ import 'package:audio_service/audio_service.dart' show MediaItem;
 import 'package:http/http.dart' as http;
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 
-import 'package:spotimusic/engine/streaming_engine.dart'
+import 'package:spotiflac_android/engine/streaming_engine.dart'
     show AdaptiveBitrateSelector, StreamVariant;
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/services/provider_credentials.dart';
-import 'package:spotimusic/core/monitoring/crash_reporter.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/services/provider_credentials.dart';
+import 'package:spotiflac_android/core/monitoring/crash_reporter.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('MultiProviderStream');
 
@@ -32,7 +32,7 @@ Future<String?> resolveStreamCredential(
   return (trimmed != null && trimmed.isNotEmpty) ? trimmed : null;
 }
 
-/// The eight ecosystem sources supported by SpotiMusic's streaming engine.
+/// The eight ecosystem sources supported by the SpotiFLAC streaming engine.
 enum StreamProviderId {
   spotify,
   youtube,

@@ -1,5 +1,5 @@
-import 'package:spotimusic/models/settings.dart';
-import 'package:spotimusic/services/library_database.dart';
+import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/services/library_database.dart';
 
 /// Field group keys understood by the Go re-enrich backend.
 class ReEnrichFields {

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:spotimusic/widgets/extension_row.dart';
-import 'package:spotimusic/utils/extension_permission_gate.dart';
-import 'package:spotimusic/theme/app_tokens.dart';
-import 'package:spotimusic/widgets/app_search_field.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/widgets/extension_row.dart';
+import 'package:spotiflac_android/utils/extension_permission_gate.dart';
+import 'package:spotiflac_android/theme/app_tokens.dart';
+import 'package:spotiflac_android/widgets/app_search_field.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/repo_provider.dart';
-import 'package:spotimusic/providers/extension_provider.dart';
-import 'package:spotimusic/l10n/staged_strings.dart';
-import 'package:spotimusic/widgets/settings_group.dart';
-import 'package:spotimusic/widgets/animation_utils.dart';
-import 'package:spotimusic/screens/repo/extension_details_screen.dart';
-import 'package:spotimusic/utils/nav_bar_inset.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/repo_provider.dart';
+import 'package:spotiflac_android/providers/extension_provider.dart';
+import 'package:spotiflac_android/l10n/staged_strings.dart';
+import 'package:spotiflac_android/widgets/settings_group.dart';
+import 'package:spotiflac_android/widgets/animation_utils.dart';
+import 'package:spotiflac_android/screens/repo/extension_details_screen.dart';
+import 'package:spotiflac_android/utils/nav_bar_inset.dart';
 
 class RepoTab extends ConsumerStatefulWidget {
   const RepoTab({super.key});

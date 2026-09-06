@@ -16,8 +16,8 @@
 ///                        provider's own result list), 0..1
 library;
 
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/utils/fuzzy_match.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/utils/fuzzy_match.dart';
 
 /// Where a result came from.
 enum UnifiedSearchSourceKind {

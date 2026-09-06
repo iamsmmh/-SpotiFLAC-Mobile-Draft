@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/engine/recommendations.dart';
+import 'package:spotiflac_android/engine/recommendations.dart';
 
 RecommendationProfile _profile({
   List<ProfilePlay>? plays,

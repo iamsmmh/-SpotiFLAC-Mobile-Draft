@@ -6,8 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/screens/settings/donate_page.dart';
-import 'package:spotimusic/services/app_remote_config_service.dart';
+import 'package:spotiflac_android/screens/settings/donate_page.dart';
+import 'package:spotiflac_android/services/app_remote_config_service.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

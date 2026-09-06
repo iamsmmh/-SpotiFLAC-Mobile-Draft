@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/core/data/secure_store.dart';
-import 'package:spotimusic/services/provider_credentials.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/core/data/secure_store.dart';
+import 'package:spotiflac_android/services/provider_credentials.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('ProviderAccounts');
 

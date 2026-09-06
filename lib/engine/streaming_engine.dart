@@ -3,8 +3,8 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:math' as math;
 
-import 'package:spotimusic/engine/audio_characteristics.dart';
-import 'package:spotimusic/utils/string_utils.dart';
+import 'package:spotiflac_android/engine/audio_characteristics.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
 
 /// The streaming engine: source discovery, ranking, health scoring, failover,
 /// URL-expiration handling, retry/backoff, preflight validation, and

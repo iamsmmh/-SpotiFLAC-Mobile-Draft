@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('MotionHeaderBanner');
 

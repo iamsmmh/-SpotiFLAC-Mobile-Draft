@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/recommendations.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/providers/playback_provider.dart';
-import 'package:spotimusic/providers/recommendation_provider.dart';
-import 'package:spotimusic/screens/artist_screen.dart';
-import 'package:spotimusic/services/cover_cache_manager.dart';
-import 'package:spotimusic/utils/adaptive_layout.dart';
-import 'package:spotimusic/utils/nav_bar_inset.dart';
-import 'package:spotimusic/widgets/animation_utils.dart';
-import 'package:spotimusic/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/engine/recommendations.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/providers/playback_provider.dart';
+import 'package:spotiflac_android/providers/recommendation_provider.dart';
+import 'package:spotiflac_android/screens/artist_screen.dart';
+import 'package:spotiflac_android/services/cover_cache_manager.dart';
+import 'package:spotiflac_android/utils/adaptive_layout.dart';
+import 'package:spotiflac_android/utils/nav_bar_inset.dart';
+import 'package:spotiflac_android/widgets/animation_utils.dart';
+import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 
 /// For You (Phase 7): personalized shelves driven by the recommendation
 /// engine — recently played, discovery mix, frequently played, artists.

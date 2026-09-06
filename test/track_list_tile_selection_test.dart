@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/l10n/app_localizations.dart';
-import 'package:spotimusic/models/track.dart';
-import 'package:spotimusic/screens/album_screen.dart';
-import 'package:spotimusic/widgets/animation_utils.dart';
-import 'package:spotimusic/widgets/selection_bottom_bar.dart';
-import 'package:spotimusic/widgets/track_detail_actions.dart';
-import 'package:spotimusic/widgets/track_list_tile.dart';
+import 'package:spotiflac_android/l10n/app_localizations.dart';
+import 'package:spotiflac_android/models/track.dart';
+import 'package:spotiflac_android/screens/album_screen.dart';
+import 'package:spotiflac_android/widgets/animation_utils.dart';
+import 'package:spotiflac_android/widgets/selection_bottom_bar.dart';
+import 'package:spotiflac_android/widgets/track_detail_actions.dart';
+import 'package:spotiflac_android/widgets/track_list_tile.dart';
 
 void main() {
   test('explicit batch selection forces one provider and quality picker', () {

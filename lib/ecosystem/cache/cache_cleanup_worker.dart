@@ -7,8 +7,8 @@
 /// cover cache.
 library;
 
-import 'package:spotimusic/ecosystem/cache/cache_models.dart';
-import 'package:spotimusic/ecosystem/cache/cache_repository.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_models.dart';
+import 'package:spotiflac_android/ecosystem/cache/cache_repository.dart';
 
 /// Outcome of one cleanup run.
 class CacheCleanupPlan {

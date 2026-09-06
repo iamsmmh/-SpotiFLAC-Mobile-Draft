@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/providers/recent_access_provider.dart';
+import 'package:spotiflac_android/providers/recent_access_provider.dart';
 
 void main() {
   group('Recent download clear boundary', () {

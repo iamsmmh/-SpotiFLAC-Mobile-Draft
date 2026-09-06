@@ -12,10 +12,10 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotimusic/engine/advanced_audio.dart';
-import 'package:spotimusic/engine/audio_effects.dart';
-import 'package:spotimusic/providers/audio_effects_provider.dart';
-import 'package:spotimusic/utils/logger.dart';
+import 'package:spotiflac_android/engine/advanced_audio.dart';
+import 'package:spotiflac_android/engine/audio_effects.dart';
+import 'package:spotiflac_android/providers/audio_effects_provider.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 final _log = AppLogger('AdvancedAudio');
 

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/domain/entities.dart';
-import 'package:spotimusic/core/presentation/core_queue_providers.dart';
+import 'package:spotiflac_android/core/domain/entities.dart';
+import 'package:spotiflac_android/core/presentation/core_queue_providers.dart';
 
 void main() {
   group('UnconfiguredDownloadManager placeholder', () {

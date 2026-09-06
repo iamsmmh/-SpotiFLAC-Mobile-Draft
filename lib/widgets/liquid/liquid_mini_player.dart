@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotimusic/engine/smart_play.dart';
-import 'package:spotimusic/l10n/l10n.dart';
-import 'package:spotimusic/providers/music_player_provider.dart';
-import 'package:spotimusic/providers/streaming_engine_provider.dart';
-import 'package:spotimusic/screens/liquid_player_screen.dart';
-import 'package:spotimusic/widgets/liquid/liquid_glass.dart';
-import 'package:spotimusic/widgets/player_artwork.dart';
+import 'package:spotiflac_android/engine/smart_play.dart';
+import 'package:spotiflac_android/l10n/l10n.dart';
+import 'package:spotiflac_android/providers/music_player_provider.dart';
+import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/screens/liquid_player_screen.dart';
+import 'package:spotiflac_android/widgets/liquid/liquid_glass.dart';
+import 'package:spotiflac_android/widgets/player_artwork.dart';
 
 /// Liquid Glass mini player.
 ///

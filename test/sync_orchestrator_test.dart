@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spotimusic/core/sync/sync_entities.dart';
-import 'package:spotimusic/core/sync/sync_orchestrator.dart';
+import 'package:spotiflac_android/core/sync/sync_entities.dart';
+import 'package:spotiflac_android/core/sync/sync_orchestrator.dart';
 
 void main() {
   final t0 = DateTime.utc(2026, 9, 1, 12);
