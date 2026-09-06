@@ -281,14 +281,15 @@ func (s *Store) revokeAllForRotated(hash string) {
 	}
 }
 
-// RevokeRefreshToken removes one token (logout) and remembers its owner so
-// a later reuse attempt is still detected.
+// RevokeRefreshToken removes one token (logout). Reuse of a logged-out
+// token is rejected without the mass-revoke: that response is reserved for
+// *rotation* reuse (a stolen token presenting itself mid-lifetime), while a
+// logged-out token is simply gone.
 func (s *Store) RevokeRefreshToken(_ context.Context, refreshToken string) {
 	hash := hashToken(refreshToken)
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	if record, ok := s.refresh[hash]; ok {
-		s.rotatedOwner[hash] = record.userID
+	if _, ok := s.refresh[hash]; ok {
 		delete(s.refresh, hash)
 		s.rotated[hash] = true
 	}

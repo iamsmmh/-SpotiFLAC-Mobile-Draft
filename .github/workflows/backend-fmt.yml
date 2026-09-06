@@ -82,6 +82,7 @@ jobs:
 
       - name: Vet
         run: |
+          set -o pipefail
           status=0
           go vet ./... 2>&1 | tee vet.log || status=$?
           if [ "$status" -ne 0 ]; then
@@ -98,9 +99,10 @@ jobs:
 
       - name: Staticcheck
         run: |
+          set -o pipefail
           go install honnef.co/go/tools/cmd/staticcheck@2026.2.1
           status=0
-          "$(go env GOPATH)/bin/staticcheck" ./... 2>&1 | tee staticcheck.log || status=${PIPESTATUS[0]}
+          "$(go env GOPATH)/bin/staticcheck" ./... 2>&1 | tee staticcheck.log || status=$?
           if [ "$status" -ne 0 ]; then
             # findings look like: path/file.go:12:3: message (S1000)
             grep -oE '[^[:space:]]+\.go:[0-9]+:[0-9]+: .*' staticcheck.log | head -40 | while IFS= read -r line; do
