@@ -11,6 +11,7 @@ import 'package:spotiflac_android/utils/local_playback.dart';
 import 'package:spotiflac_android/widgets/playlist_picker_sheet.dart';
 import 'package:spotiflac_android/widgets/track_collection_action_policy.dart';
 import 'package:spotiflac_android/widgets/track_detail_actions.dart';
+import 'package:spotiflac_android/widgets/track_gain_override_sheet.dart';
 import 'package:spotiflac_android/utils/clickable_metadata.dart';
 
 class TrackCollectionQuickActions extends ConsumerWidget {
@@ -260,6 +261,11 @@ class _TrackOptionsSheet extends ConsumerWidget {
                   showAddTrackToPlaylistSheet(context, ref, track);
                 },
               ),
+              _OptionTile(
+                icon: Icons.tune_rounded,
+                title: 'Track gain',
+                onTap: () => _showGainOverride(context, ref),
+              ),
 
               const SizedBox(height: 16),
             ],
@@ -273,6 +279,14 @@ class _TrackOptionsSheet extends ConsumerWidget {
     final rootContext = Navigator.of(context, rootNavigator: true).context;
     Navigator.pop(context);
     downloadSingleTrack(rootContext, ref, track, forceQualityPicker: true);
+  }
+
+  /// Opens the manual ReplayGain override for this track. The sheet is
+  /// presented from the root context so it survives this sheet closing.
+  void _showGainOverride(BuildContext context, WidgetRef ref) {
+    final rootContext = Navigator.of(context, rootNavigator: true).context;
+    Navigator.pop(context);
+    TrackGainOverrideSheet.show(rootContext, ref, track);
   }
 
   Future<void> _goToAlbum(BuildContext context) async {

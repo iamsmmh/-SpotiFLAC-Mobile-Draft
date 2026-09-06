@@ -39,6 +39,26 @@
 
 ### Added
 
+- **Audio settings surface for the premium audio engine.** The ReplayGain and
+  loudness-normalization engine shipped its runtime in an earlier pass but had
+  no UI: `audioEngineSettingsProvider` was watched only by the engine binding,
+  so every knob it owns was unreachable. Settings → Streaming & Glass gains a
+  **Gain & loudness** section that binds it:
+  - **ReplayGain mode** (Off / Track / Album / Smart) as single-select chips.
+  - **Pre-amp** (−6…+6 dB, 0.5 dB steps) via a new fractional stepper, and
+    **Prevent clipping**; both disable while the mode is Off.
+  - **Normalize loudness** master switch plus the −14 / −18 / −23 LUFS target
+    presets (`LoudnessTarget`).
+  - **Crossfade curve** — automatic mode plus Equal power / Linear / Smooth,
+    gated on crossfade actually being enabled.
+  - **Per-track manual gain override** (`ManualGainOverrides`, −12…+12 dB) from
+    a new *Track gain* entry in the track options sheet; the value is committed
+    on slider release, so one adjustment writes one preference blob.
+- `lib/utils/gain_format.dart` — shared signed-decibel formatter. The same
+  expression was inlined in the download ReplayGain writer, the advanced audio
+  page and the streaming settings page; the sign and precision can no longer
+  drift between surfaces.
+
 - **On-device discovery & recommendation engine (phases 1-14).** A
   Spotify-style personalised home computed entirely on the device. No network
   call is added, no existing feature is removed, and a self-hosted recommender
