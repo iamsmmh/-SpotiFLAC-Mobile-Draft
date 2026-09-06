@@ -1,6 +1,6 @@
 # SpotiFLAC Mobile — Current Status
 
-**Last updated:** 2026-09-06 · **App version:** 5.0.0+142 · **Branch:** `arena/01a07547-spotiflac-mobile`
+**Last updated:** 2026-09-06 · **App version:** 5.0.0+142 · **Branch:** `arena/01a07619-spotiflac-mobile`
 
 ## Identity
 
@@ -53,6 +53,7 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
 | Re-enrich never re-embeds filesystem artifacts (issue #562 hardening) | ✅ **new in this pass** |
 | Favorite albums (album page bookmark, Library folder, DB v3, backup) | ✅ **new in this pass** |
 | For You: on-device recommendation engine + Library tile/screen (Phase 7) | ✅ **new in this pass** |
+| **On-device discovery engine** — listening profile, 0–100 weighted scoring, Discover Weekly (Monday), Daily Mix 1–5, 9 mood playlists, similar artists with explained scores, radio mode, continue listening, trending, and a Spotify-style discovery home | ✅ **new in this pass** (phases 1–14) |
 | Search history + fuzzy local suggestions on Home (Phase 9) | ✅ **new in this pass** |
 | Cloud sync architecture: provider port, merge orchestrator, Settings page, adapter docs (Phase 6) | ✅ complete (interfaces + local machinery; backend adapters pluggable) |
 | Provider health metrics persist across sessions (counts/latency/last error; cooldowns deliberately reset) | ✅ **new in this pass** |
@@ -64,6 +65,15 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
 ## Engineering gates
 
 - `python3 scripts/local_quality_gate.py` — 50 static checks, toolchain-free, must be green.
+- `python3 scripts/check_discovery_dart.py` — lexical pass over the discovery sources
+  (bracket/literal balance, `part`/`import`/`export` targets, duplicate top-level
+  declarations, SQL `$ident` interpolation). `python3 scripts/check_discovery_symbols.py`
+  additionally checks that every type and function name the discovery sources reference
+  is declared somewhere in the repo or used by pre-existing (compiling) code — the guard
+  against calling a helper that was remembered rather than read. Neither type-checks;
+  `flutter analyze` remains the real gate.
+- `python3 scripts/discovery_schema_doc.py` — regenerates the discovery section of
+  `docs/SCHEMA.md` from `discovery_schema.dart` so doc and DDL cannot drift.
 - `python3 scripts/release_gate.py` — pre-release gate (tag↔pubspec, AltStore feed integrity
   incl. bundle-ID match with Android/iOS config and RFC3339 `date`, CHANGELOG coverage,
   staged-strings budget, locale coverage floor). Wired into both release pipelines.

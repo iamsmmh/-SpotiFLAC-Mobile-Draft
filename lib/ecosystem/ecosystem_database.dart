@@ -16,6 +16,7 @@
 library;
 
 import 'package:sqflite/sqflite.dart';
+import 'package:spotiflac_android/ecosystem/discovery/discovery_schema.dart';
 import 'package:spotiflac_android/services/sqlite_helpers.dart' as sqlite;
 import 'package:spotiflac_android/utils/logger.dart';
 
@@ -24,7 +25,7 @@ final _log = AppLogger('EcosystemDb');
 const String ecosystemDbFileName = 'ecosystem.db';
 
 /// Current schema version. Bump together with a new [EcosystemMigration].
-const int ecosystemDatabaseVersion = 5;
+const int ecosystemDatabaseVersion = 6;
 
 // ---------------------------------------------------------------------------
 // Table names
@@ -366,6 +367,16 @@ const List<EcosystemMigration> ecosystemMigrations = <EcosystemMigration>[
           "NOT NULL DEFAULT ''",
     ],
   ),
+  EcosystemMigration(
+    fromVersion: 5,
+    toVersion: 6,
+    description: 'Discovery & recommendations: day-bucketed listening '
+        'statistics, user profiles, recommendation cache, daily mixes, '
+        'discover weekly, radio sessions, artist/track similarity, mood '
+        'profiles, trending statistics and continue-listening resume points. '
+        'Purely additive — no existing table is touched.',
+    statements: discoverySchemaV6,
+  ),
 ];
 
 /// Steps required to move [from] to [to], in order.
@@ -465,6 +476,8 @@ class EcosystemDatabase {
       tableAccountState,
       tableSyncTombstones,
       tableEcosystemMeta,
+      // Discovery & recommendations (schema v6).
+      ...discoveryTables,
     ];
     final batch = db.batch();
     for (final table in tables) {

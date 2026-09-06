@@ -39,6 +39,54 @@
 
 ### Added
 
+- **On-device discovery & recommendation engine (phases 1-14).** A
+  Spotify-style personalised home computed entirely on the device. No network
+  call is added, no existing feature is removed, and a self-hosted recommender
+  registered through `RecommendationService.withProvider` still renders its own
+  shelves below the new ones.
+  - **Listening profile** (`ds_listening_statistics`, `ds_user_profiles`): an
+    incremental day-bucketed roll-up of the existing `ec_listening_events` log,
+    feeding top tracks / artists / albums / genres / tags plus skip rate,
+    repeat rate, duration, session length and daytime / night / weekend habits.
+    Refreshed at most every 6 h and debounced, so it never runs per-play.
+  - **Weighted scoring** (0-100) from play count, completion, favourite state,
+    recency, frequency and genre / artist / album / tag / co-listen / playlist
+    similarity, with three shipped presets (standard, replay, discovery).
+    Human-readable reasons travel with every score and are shown in the UI.
+  - **Discover Weekly** refreshes on the ISO Monday with 30-50 tracks, excludes
+    the last 14 days of plays and reserves quotas for hidden gems and new
+    releases. **Daily Mix 1-5** each own one genre cluster and regenerate daily.
+    **Nine mood playlists** (Chill, Focus, Workout, Relax, Sleep, Party, Travel,
+    Coding, Driving) score on BPM *only* when real `NNNbpm` metadata exists, and
+    say so when it does not.
+  - **Similar artists** blend genre, tag, co-listen, playlist and album overlap
+    and expose each component, so the percentage is explainable; pairs with no
+    grounded signal are dropped rather than shown with an invented score.
+  - **Radio mode** (artist / track / genre / mood) keeps a 25-deep dynamic
+    queue, refills in batches of <= 8, never repeats a played track, orders the
+    next track by transition cost and persists sessions across restarts.
+  - **Continue listening** restores the last track, position and context
+    (album / playlist / radio), clearing the offset at >= 95 % completion.
+  - **Trending** week / month / fastest-growing / emerging-artists shelves on
+    the home, computed from windowed play counts.
+  - Eleven new `ds_*` tables in `ecosystem.db` (**v5 -> v6, additive only**):
+    `ds_listening_statistics`, `ds_user_profiles`, `ds_recommendation_cache`,
+    `ds_daily_mixes`, `ds_discover_weekly`, `ds_radio_sessions`,
+    `ds_artist_similarity`, `ds_track_similarity`, `ds_mood_profiles`,
+    `ds_trending_statistics`, `ds_continue_listening`. Existing data is
+    untouched and a v5 database upgrades in place.
+  - **Architecture**: pure algorithms in `lib/engine/discovery/` (imports only
+    `dart:` libraries, so the whole scoring layer is unit-testable without a
+    plugin), persistence behind repositories in `lib/ecosystem/discovery/`, one
+    facade (`DiscoveryService`) and one DI surface
+    (`lib/providers/discovery_providers.dart`). Shelves are cached with
+    per-kind TTLs and an engine-version stamp.
+- `scripts/check_discovery_dart.py`, `scripts/check_discovery_symbols.py` and
+  `scripts/discovery_schema_doc.py` - toolchain-free guards over the discovery
+  sources and the generated schema doc.
+- `test/discovery_scoring_test.dart`, `test/discovery_similarity_test.dart`, and
+  new 5 -> 6 migration cases in `test/ecosystem_migrations_test.dart`.
+
 - **Crash & failure monitoring (Phase 10)**: dependency-free,
   Sentry-envelope-compatible reporter (`lib/core/monitoring/crash_reporter.dart`)
   built on `package:http` only — no new package dependencies and no change to
@@ -87,6 +135,11 @@
   parsers, the logger's own parser) are classified in `docs/architecture.md`.
 
 ### Fixed
+
+- The recommendation scorer no longer grants full recency credit to a candidate
+  with no listening activity. It defaulted the "last activity" timestamp to
+  `now`, which handed every never-heard track the maximum recency contribution
+  and compressed the ranking onto its similarity term.
 
 - **ChaCha20 §2.4.2 test asserted wrong ciphertext constants** (pre-existing
   red CI on the 2026-09-05 lineage, PR #46): the two non-leading expected
