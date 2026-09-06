@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spotiflac_android/core/sync/sync_entities.dart';
 import 'package:spotiflac_android/l10n/l10n.dart';
 import 'package:spotiflac_android/providers/sync_provider.dart';
+import 'package:spotiflac_android/screens/settings/spotiflac_cloud_page.dart';
 import 'package:spotiflac_android/widgets/app_sliver_header.dart';
 import 'package:spotiflac_android/widgets/settings_group.dart';
 
@@ -35,6 +36,16 @@ class CloudSyncPage extends ConsumerWidget {
                 children: [
                   SettingsGroup(
                     children: [
+                      SettingsItem(
+                        icon: Icons.dns_outlined,
+                        title: 'SpotiFLAC Cloud',
+                        subtitle: 'Self-hosted server, devices and backups',
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (context) => const SpotiFlacCloudPage(),
+                          ),
+                        ),
+                      ),
                       SettingsItem(
                         icon: _statusIcon(snapshot.status),
                         title: context.l10n.syncTitle,

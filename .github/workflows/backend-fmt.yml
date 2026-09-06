@@ -1,0 +1,129 @@
+name: Backend gofmt autofix
+
+# The review sandbox has no Go toolchain, so canonical `gofmt` output can only
+# be produced by CI. Run this manually against the working branch; it applies
+# `gofmt -w` to `backend/` and pushes the result back, then runs the same
+# vet/staticcheck/test battery as the CI backend job (with the same
+# annotation-first failure reporting, since job logs are not reachable from
+# every client).
+#
+# Manual only from the default branch; on pull_request it runs for same-repo
+# PRs touching backend/ and pushes the formatted result back to the PR branch
+# (GitHub suppresses downstream events for GITHUB_TOKEN pushes, so it cannot
+# loop; an empty follow-up commit re-runs the full CI on the fixed tree).
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+      - 'arena/**'
+  pull_request:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-fmt.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: backend-fmt-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  fmt:
+    name: gofmt -w + vet + test
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: backend/go.mod
+
+      - name: Apply gofmt
+        run: |
+          files="$(gofmt -l .)"
+          if [ -n "$files" ]; then
+            echo "gofmt flagged:"
+            printf '%s\n' "$files"
+            while IFS= read -r f; do
+              [ -n "$f" ] && echo "::error file=backend/$f::not gofmt-formatted (fixed by this run)"
+            done <<< "$files"
+            gofmt -w .
+          else
+            echo "gofmt: clean"
+          fi
+
+      - name: Commit and push formatting
+        # Same-repo PRs only (fork PRs arrive with a read-only token).
+        if: >-
+          github.event_name == 'workflow_dispatch' ||
+          github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          if git diff --quiet; then
+            echo "Nothing to format."
+            exit 0
+          fi
+          branch="${{ github.event.pull_request.head.ref || github.ref_name }}"
+          git config user.name "spotiflac-ci"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(backend): apply gofmt"
+          git push origin "HEAD:${branch}"
+
+      - name: Vet
+        run: |
+          status=0
+          go vet ./... 2>&1 | tee vet.log || status=$?
+          if [ "$status" -ne 0 ]; then
+            # vet errors look like: path/file.go:12:3: message
+            grep -oE '[^[:space:]]+\.go:[0-9]+:[0-9]+: .*' vet.log | head -30 | while IFS= read -r line; do
+              file=$(printf '%s' "$line" | cut -d: -f1)
+              line_no=$(printf '%s' "$line" | cut -d: -f2)
+              col=$(printf '%s' "$line" | cut -d: -f3)
+              msg=$(printf '%s' "$line" | cut -d: -f4-)
+              echo "::error file=backend/${file},line=${line_no},col=${col}::vet: ${msg}"
+            done
+          fi
+          exit "$status"
+
+      - name: Staticcheck
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@2026.2.1
+          status=0
+          "$(go env GOPATH)/bin/staticcheck" ./... 2>&1 | tee staticcheck.log || status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            # findings look like: path/file.go:12:3: message (S1000)
+            grep -oE '[^[:space:]]+\.go:[0-9]+:[0-9]+: .*' staticcheck.log | head -40 | while IFS= read -r line; do
+              file=$(printf '%s' "$line" | cut -d: -f1)
+              line_no=$(printf '%s' "$line" | cut -d: -f2)
+              col=$(printf '%s' "$line" | cut -d: -f3)
+              msg=$(printf '%s' "$line" | cut -d: -f4-)
+              echo "::error file=backend/${file},line=${line_no},col=${col}::staticcheck: ${msg}"
+            done
+          fi
+          exit "$status"
+
+      - name: Run tests
+        run: |
+          set -o pipefail
+          status=0
+          go test ./... 2>&1 | tee gotest.log || status=$?
+          if [ "$status" -ne 0 ]; then
+            grep -E "^--- FAIL|^(FAIL|ok).*[0-9]" gotest.log | head -30 | while IFS= read -r line; do
+              echo "::error::${line}"
+            done
+            grep -E "\.go:[0-9]+:" gotest.log | head -30 | while IFS= read -r line; do
+              echo "::error::${line}"
+            done
+          fi
+          exit "$status"
