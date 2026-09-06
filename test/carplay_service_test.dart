@@ -17,21 +17,13 @@ class _Source implements MediaBrowseSource {
   _Source({
     this.counts = const MediaBrowseCounts(),
     this.queue = const [],
-    this.recent = const [],
-    this.loved = const [],
     this.playlistList = const [],
-    this.playlistTracks = const {},
-    this.library = const [],
     this.throwOnChildren = false,
   });
 
   MediaBrowseCounts counts;
   List<PlayableMedia> queue;
-  List<PlayableMedia> recent;
-  List<PlayableMedia> loved;
   List<MediaBrowsePlaylist> playlistList;
-  Map<String, List<PlayableMedia>> playlistTracks;
-  List<PlayableMedia> library;
   bool throwOnChildren;
 
   @override
@@ -44,17 +36,17 @@ class _Source implements MediaBrowseSource {
   Future<List<PlayableMedia>> queueMedia() async => queue;
   @override
   Future<List<PlayableMedia>> recentMedia({required int limit}) async =>
-      recent.take(limit).toList();
+      const [];
   @override
   Future<List<PlayableMedia>> mostPlayedMedia({required int limit}) async =>
       const [];
   @override
-  Future<List<PlayableMedia>> lovedMedia() async => loved;
+  Future<List<PlayableMedia>> lovedMedia() async => const [];
   @override
   Future<List<MediaBrowsePlaylist>> playlists() async => playlistList;
   @override
   Future<List<PlayableMedia>> playlistMedia(String playlistId) async =>
-      playlistTracks[playlistId] ?? const [];
+      const [];
   @override
   Future<List<MediaBrowseAlbum>> albums({
     required int limit,
@@ -69,7 +61,7 @@ class _Source implements MediaBrowseSource {
   Future<List<PlayableMedia>> libraryMedia({
     required int limit,
     required int offset,
-  }) async => library.skip(offset).take(limit).toList();
+  }) async => const [];
   @override
   Future<List<PlayableMedia>> searchMedia(
     String query, {
