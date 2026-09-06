@@ -85,7 +85,7 @@ class FakeOutbox implements CloudSyncOutbox {
           if (op.scope == scope) op,
       ];
       if (batch.isEmpty) continue;
-      final revisions = await pusher(scope, batch);
+      await pusher(scope, batch);
       pushed += batch.length;
       accepted[scope.wireId] = <String>[
         for (final r in batch) r.recordId,
@@ -127,7 +127,6 @@ void main() {
     final provider = FakeCloudProvider()
       ..remote[SyncScope.favorites] = <SyncRecord>[record('t1', revision: 3)];
     final outbox = FakeOutbox();
-    final engine = buildEngine(provider: provider, outbox: outbox);
 
     // Seed a local write that must be pushed.
     final orchestrator = SyncOrchestrator();

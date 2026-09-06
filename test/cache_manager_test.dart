@@ -69,7 +69,7 @@ class _MemoryMetadata implements CacheMetadataStore {
 }
 
 void main() {
-  final clock = () => DateTime.utc(2026, 9, 6, 12);
+  DateTime clock() => DateTime.utc(2026, 9, 6, 12);
 
   group('SmartCacheManager.warmQueue', () {
     test('warms planned candidates in priority order and records metadata',
@@ -186,8 +186,8 @@ void main() {
         metadata: _MemoryMetadata(),
         clock: clock,
       );
-      final first = manager.runMaintenance(execute: (_, __) async {});
-      final second = await manager.runMaintenance(execute: (_, __) async {});
+      final first = manager.runMaintenance(execute: (_, _) async {});
+      final second = await manager.runMaintenance(execute: (_, _) async {});
       expect(second.isEmpty, isTrue);
       await first;
     });
@@ -199,7 +199,7 @@ void main() {
         metadata: _MemoryMetadata(),
         clock: clock,
       );
-      final report = await manager.runMaintenance(execute: (_, __) async {});
+      final report = await manager.runMaintenance(execute: (_, _) async {});
       expect(report.isEmpty, isTrue);
     });
   });
