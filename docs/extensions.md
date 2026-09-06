@@ -75,10 +75,11 @@ cd my-extension
 zip -r ../my-extension.sflx manifest.json index.js
 ```
 
-An extension package is a plain ZIP archive renamed to `.sflx`. The longer
-`.spotiflac-ext` suffix is the legacy alias; both are accepted everywhere
-(manual import, repo downloads) and the layout is identical. Use `.sflx` for
-new packages.
+An extension package is a plain ZIP archive. `.spotiflac-ext` is the
+canonical SpotiFLAC package suffix and `.sflx` is the short alias; both are
+accepted everywhere (manual import, repo downloads) and the layout is
+identical. Registry downloads that carry neither suffix are stored as
+`.spotiflac-ext`.
 
 `manifest.json` and `index.js` must be unique files at the archive root.
 SpotiFLAC Mobile rejects traversal paths, symlinks, duplicate paths, oversized
