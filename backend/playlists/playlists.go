@@ -14,7 +14,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/zarz/spotiflac_android/backend/sync"
+	syncstore "github.com/zarz/spotiflac_android/backend/sync"
 )
 
 // Limits mirror the client-side codec (SharedPlaylistSyncPayload).
@@ -108,12 +108,12 @@ type Service struct {
 	mu     sync.RWMutex
 	shares map[string]*Share // slug → share
 
-	store *sync.Store
+	store *syncstore.Store
 	clock func() time.Time
 }
 
 // NewService builds the share service over the sync store.
-func NewService(store *sync.Store, clock func() time.Time) *Service {
+func NewService(store *syncstore.Store, clock func() time.Time) *Service {
 	if clock == nil {
 		clock = time.Now
 	}
