@@ -19,14 +19,15 @@ class _Source implements MediaBrowseSource {
   _Source({
     this.counts = const MediaBrowseCounts(),
     this.recent = const <PlayableMedia>[],
-    this.top = const <PlayableMedia>[],
     this.albumList = const <MediaBrowseAlbum>[],
     this.library = const <PlayableMedia>[],
   });
 
   final MediaBrowseCounts counts;
   final List<PlayableMedia> recent;
-  final List<PlayableMedia> top;
+
+  /// No caller of this fake supplies a "most played" feed, so it stays empty.
+  final List<PlayableMedia> top = const <PlayableMedia>[];
   final List<MediaBrowseAlbum> albumList;
   final List<PlayableMedia> library;
 
