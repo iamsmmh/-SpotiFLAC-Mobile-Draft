@@ -26,7 +26,7 @@ import 'dart:io' as io;
 
 import 'package:audio_service/audio_service.dart' as audio;
 import 'package:flutter/foundation.dart' show visibleForTesting;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 
@@ -472,7 +472,7 @@ final class PlaybackSyncController {
     _log = AppLogger('PlaybackSync');
   }
 
-  final Ref _ref;
+  final WidgetRef _ref;
   late final AppLogger _log;
 
   /// How often the position is refreshed while a track plays. The backend
