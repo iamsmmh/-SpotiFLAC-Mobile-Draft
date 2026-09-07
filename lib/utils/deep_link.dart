@@ -15,7 +15,7 @@
 /// caller can fall back to the normal shared-URL pipeline.
 library;
 
-enum DeepLinkKind { openUrl, search }
+enum DeepLinkKind { openUrl, search, playlist }
 
 class DeepLinkAction {
   const DeepLinkAction(this.kind, this.payload);
@@ -111,6 +111,17 @@ DeepLinkAction? parseSpotiFlacDeepLink(String input) {
         'https://open.spotify.com/$host/$id',
       );
     }
+  }
+
+  // Local playlist share links: spotiflac://playlist/{id} (and the
+  // cloud-shared form spotiflac://playlist/shared/{shareId}). The payload is
+  // the raw path so the caller can route to the local library or the social
+  // share layer respectively.
+  if (host == 'playlist' &&
+      segments.isNotEmpty &&
+      segments.length <= 2 &&
+      RegExp(r'^[A-Za-z0-9_\-]{1,64}$').hasMatch(segments.join('/'))) {
+    return DeepLinkAction(DeepLinkKind.playlist, segments.join('/'));
   }
 
   // Passthrough: spotiflac:// followed directly by an encoded media link,

@@ -26,6 +26,12 @@ import 'package:spotiflac_android/widgets/track_list_tile.dart';
 import 'package:spotiflac_android/widgets/track_detail_actions.dart';
 import 'package:spotiflac_android/screens/collapsing_header_scroll_mixin.dart';
 import 'package:spotiflac_android/widgets/error_card.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart'
+    show ShareParams, SharePlus;
+import 'package:spotiflac_android/utils/md5.dart';
+import 'package:spotiflac_android/utils/qr_code.dart';
+import 'package:spotiflac_android/widgets/qr_code_widget.dart';
 
 class PlaylistScreen extends ConsumerStatefulWidget {
   final String playlistName;
@@ -345,8 +351,90 @@ class _PlaylistScreenState extends ConsumerState<PlaylistScreen>
           Flexible(child: _buildDownloadAllCenterButton(context)),
           const SizedBox(width: 12),
           _buildAddToPlaylistButton(context),
+          const SizedBox(width: 12),
+          IconButton(
+            onPressed: () => _showPlaylistShareDialog(context),
+            icon: const Icon(Icons.ios_share_rounded, size: 20),
+            tooltip: 'Share playlist',
+            color: colorScheme.onSurfaceVariant,
+            visualDensity: VisualDensity.compact,
+          ),
         ],
       ),
+    );
+  }
+
+  /// Share entry point (Task 12): `spotiflac://playlist/{id}` link with a
+  /// QR code, copy-to-clipboard and system share sheet.
+  String get _playlistShareUrl {
+    final id = widget.playlistId?.trim() ?? '';
+    final shareId =
+        id.isNotEmpty ? id : 'p${md5Hex(_playlistName).substring(0, 16)}';
+    return 'spotiflac://playlist/$shareId';
+  }
+
+  void _showPlaylistShareDialog(BuildContext context) {
+    final url = _playlistShareUrl;
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        final colorScheme = Theme.of(dialogContext).colorScheme;
+        return AlertDialog(
+          title: Text('Share “$_playlistName”'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 280),
+                    child: QrCodeWidget(
+                      value: url,
+                      level: QrErrorLevel.medium,
+                      pixelSize: 8,
+                      foregroundColor: colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                SelectableText(
+                  url,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Close'),
+            ),
+            TextButton(
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: url));
+                Navigator.of(dialogContext).pop();
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Link copied to clipboard')),
+                  );
+                }
+              },
+              child: const Text('Copy link'),
+            ),
+            FilledButton.tonal(
+              onPressed: () async {
+                Navigator.of(dialogContext).pop();
+                await SharePlus.instance.share(ShareParams(text: url));
+              },
+              child: const Text('Share…'),
+            ),
+          ],
+        );
+      },
     );
   }
 

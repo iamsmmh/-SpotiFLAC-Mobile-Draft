@@ -13,6 +13,7 @@ import 'package:spotiflac_android/providers/smart_cache_providers.dart';
 import 'package:spotiflac_android/providers/engine_settings_provider.dart';
 import 'package:spotiflac_android/providers/settings_provider.dart';
 import 'package:spotiflac_android/providers/repo_provider.dart';
+import 'package:spotiflac_android/providers/ecosystem_providers.dart';
 import 'package:spotiflac_android/providers/runtime_profile_provider.dart';
 import 'package:spotiflac_android/providers/track_provider.dart';
 import 'package:spotiflac_android/providers/preview_player_provider.dart';
@@ -304,6 +305,10 @@ class _MainShellState extends ConsumerState<MainShell>
       await ref.read(trackProvider.notifier).search(deepLink.payload);
       return;
     }
+    if (deepLink != null && deepLink.kind == DeepLinkKind.playlist) {
+      await _handlePlaylistDeepLink(deepLink.payload);
+      return;
+    }
     final targetUrl = (deepLink != null && deepLink.kind == DeepLinkKind.openUrl)
         ? deepLink.payload
         : url;
@@ -334,6 +339,46 @@ class _MainShellState extends ConsumerState<MainShell>
         ),
       );
     }
+  }
+
+  /// Inbound `spotiflac://playlist/{id}` share links (Task 12).
+  ///
+  /// Local playlists live on the sharing device, so a plain id cannot be
+  /// resolved on this device. The cloud-shared form
+  /// (`spotiflac://playlist/shared/{shareId}`) is resolved through the
+  /// social layer when it is enabled.
+  Future<void> _handlePlaylistDeepLink(String payload) async {
+    if (payload.startsWith('shared/')) {
+      final shareId = payload.substring('shared/'.length);
+      try {
+        final shared =
+            await ref.read(playlistSharingProvider).resolve(shareId);
+        if (!mounted) return;
+        if (shared != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                '“${shared.title}” is a shared playlist from '
+                '${shared.ownerId}. Enable the social sync in Settings to '
+                'keep it up to date.',
+              ),
+            ),
+          );
+          return;
+        }
+      } catch (error) {
+        _log.e('Shared playlist resolve failed: $error');
+      }
+    }
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'This playlist link points to a library on another device and '
+          'is not available on this one yet.',
+        ),
+      ),
+    );
   }
 
   Future<bool> _checkForUpdates() async {
