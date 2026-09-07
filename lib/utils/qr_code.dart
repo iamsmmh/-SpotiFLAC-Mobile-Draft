@@ -234,9 +234,9 @@ class QrEncoder {
     void drawFormat(List<List<bool?>> modules, int maskPattern,
         {bool test = false}) {
       final fmt = bchFormatInfo((_ecFormatBits[levelIndex] << 3) | maskPattern);
-      // vertical (copy 2 along column 8 bottom + copy 1 along column 8 top)
+      // vertical
       for (var i = 0; i < 15; i++) {
-        final mod = !test && (((fmt >> (14 - i)) & 1) == 1);
+        final mod = !test && (((fmt >> i) & 1) == 1);
         if (i < 6) {
           modules[i][8] = mod;
         } else if (i < 8) {
@@ -245,9 +245,9 @@ class QrEncoder {
           modules[size - 15 + i][8] = mod;
         }
       }
-      // horizontal (copy 2 along row 8 right + copy 1 along row 8 left)
+      // horizontal
       for (var i = 0; i < 15; i++) {
-        final mod = !test && (((fmt >> (14 - i)) & 1) == 1);
+        final mod = !test && (((fmt >> i) & 1) == 1);
         if (i < 8) {
           modules[8][size - i - 1] = mod;
         } else if (i < 9) {
