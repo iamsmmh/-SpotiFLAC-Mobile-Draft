@@ -10,10 +10,15 @@ import (
 
 	"github.com/zarz/spotiflac_android/backend/auth"
 	"github.com/zarz/spotiflac_android/backend/cloud"
+	"github.com/zarz/spotiflac_android/backend/collaboration"
+	"github.com/zarz/spotiflac_android/backend/devices"
 	"github.com/zarz/spotiflac_android/backend/history"
+	"github.com/zarz/spotiflac_android/backend/marketplace"
 	"github.com/zarz/spotiflac_android/backend/playlists"
 	"github.com/zarz/spotiflac_android/backend/settings"
 	"github.com/zarz/spotiflac_android/backend/sync"
+	"github.com/zarz/spotiflac_android/backend/telemetry"
+	"github.com/zarz/spotiflac_android/backend/users"
 )
 
 // newHandler wires the complete backend (routes + CORS). Split from main so
@@ -84,6 +89,26 @@ func newHandlerWithCloud(
 
 	backupStore := sync.NewBackupStore(clock, newID)
 	sync.NewBackupHandler(backupStore).Routes(mux, authHandler.Middleware)
+
+	// Milestone 2: User profiles.
+	usersSvc := users.NewService(&inMemoryUserStore{clock: clock})
+	users.NewHandler(usersSvc).Routes(mux, authHandler.Middleware)
+
+	// Milestone 2: Device management.
+	devicesSvc := devices.NewService(&inMemoryDeviceStore{clock: clock})
+	devices.NewHandler(devicesSvc).Routes(mux, authHandler.Middleware)
+
+	// Milestone 4: Collaborative playlists.
+	collabSvc := collaboration.NewService(&inMemoryCollabStore{clock: clock})
+	collaboration.NewHandler(collabSvc).Routes(mux, authHandler.Middleware)
+
+	// Milestone 6: Extension marketplace.
+	marketSvc := marketplace.NewService(&inMemoryMarketStore{clock: clock})
+	marketplace.NewHandler(marketSvc).Routes(mux, authHandler.Middleware)
+
+	// Milestone 11: Telemetry & observability.
+	telSvc := telemetry.NewService(&inMemoryTelStore{clock: clock})
+	telemetry.NewHandler(telSvc).Routes(mux, authHandler.Middleware)
 
 	return cors(os.Getenv("SPOTIFLAC_CORS_ORIGIN"))(mux)
 }
