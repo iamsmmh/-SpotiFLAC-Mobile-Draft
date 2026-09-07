@@ -44,7 +44,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
 /// AppDelegate: the bridge is the meeting point. All UIKit work happens on
 /// the main queue.
 @available(iOS 14.0, *)
-final class CarPlayBridge: NSObject {
+final class CarPlayBridge: NSObject, CPSearchTemplateDelegate {
     static let shared = CarPlayBridge()
 
     /// Channel name; mirrored by `lib/services/carplay_service.dart`.
@@ -219,6 +219,47 @@ final class CarPlayBridge: NSObject {
     private func pushList(title: String, parentId: String, completion: @escaping () -> Void) {
         let template = listTemplate(title: title, parentId: parentId, image: nil)
         interfaceController?.pushTemplate(template, animated: true) { _, _ in completion() }
+    }
+}
+
+// MARK: - CPSearchTemplateDelegate
+
+@available(iOS 14.0, *)
+extension CarPlayBridge {
+    /// Runs the driver's typed / voice query against Dart's offline search
+    /// (the same [MediaBrowseTree.search] Android Auto uses) and hands the
+    /// hits back as one section. Dart search rows are flat and always
+    /// playable, so a tap plays the track directly.
+    func template(
+        _ template: CPSearchTemplate,
+        didSearchForQuery query: String,
+        completionHandler: @escaping ([CPListSection]) -> Void
+    ) {
+        search(query) { items in
+            let rows = items.map { item -> CPListItem in
+                let row = CPListItem(text: item.title, detailText: item.subtitle)
+                if item.isBrowsable {
+                    row.accessoryType = .disclosureIndicator
+                }
+                row.handler = { [weak self] _, completion in
+                    guard let self = self else {
+                        completion()
+                        return
+                    }
+                    if item.isBrowsable {
+                        self.pushList(title: item.title, parentId: item.id, completion: completion)
+                    } else {
+                        self.play(itemId: item.id, parentId: item.id)
+                        // Surfacing Now Playing immediately is what a driver
+                        // expects after tapping a track.
+                        self.interfaceController?.pushTemplate(
+                            CPNowPlayingTemplate.shared, animated: true) { _, _ in completion() }
+                    }
+                }
+                return row
+            }
+            completionHandler([CPListSection(items: rows)])
+        }
     }
 }
 

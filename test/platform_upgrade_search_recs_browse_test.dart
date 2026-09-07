@@ -280,7 +280,7 @@ void main() {
             ],
           ),
         ),
-        onPlay: (_, __) async {},
+        onPlay: (_, _) async {},
       );
       final rows = await service.search('daft');
       expect(rows.single['id'], 'd1');
