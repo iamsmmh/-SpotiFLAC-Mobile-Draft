@@ -121,7 +121,7 @@ class _QrCodePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_QrCodePainter oldDelegate) =>
-      oldDelegate.code !== code ||
+      oldDelegate.code != code ||
       oldDelegate.quietZoneModules != quietZoneModules ||
       oldDelegate.foregroundColor != foregroundColor ||
       oldDelegate.backgroundColor != backgroundColor;

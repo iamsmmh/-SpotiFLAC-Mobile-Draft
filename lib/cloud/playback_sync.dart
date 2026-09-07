@@ -26,7 +26,7 @@ import 'dart:io' as io;
 
 import 'package:audio_service/audio_service.dart' as audio;
 import 'package:flutter/foundation.dart' show visibleForTesting;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 
@@ -180,8 +180,8 @@ class ContinuityEvent {
 // Client
 // ---------------------------------------------------------------------------
 
-typedef _WebSocketFactory =
-    Future<io.WebSocket> Function(io.Uri uri, Map<String, String> headers);
+typedef WebSocketFactory =
+    Future<io.WebSocket> Function(Uri uri, Map<String, String> headers);
 
 /// Thin client for the continuity endpoints. No Riverpod, no Flutter —
 /// fully unit-testable with an injected [http.Client] and WebSocket factory.
@@ -190,15 +190,15 @@ final class PlaybackContinuityClient {
     required String baseUrl,
     http.Client? httpClient,
     required Future<String?> Function() accessToken,
-    required String Function() deviceId,
-    @visibleForTesting _WebSocketFactory? webSocketFactory,
+    required Future<String> Function() deviceId,
+    @visibleForTesting WebSocketFactory? webSocketFactory,
     @visibleForTesting Duration idleTimeout = const Duration(seconds: 75),
   })  : _base = baseUrl.trim().replaceAll(RegExp(r'/+$'), ''),
         _client = httpClient ?? http.Client(),
         _accessToken = accessToken,
         _deviceId = deviceId,
         _wsFactory = webSocketFactory ??
-            ((uri, headers) => io.WebSocket.connect(uri, headers: headers)),
+            ((uri, headers) => io.WebSocket.connect(uri.toString(), headers: headers)),
         _idleTimeout = idleTimeout {
     if (_base.isEmpty) {
       throw ArgumentError.value(baseUrl, 'baseUrl', 'must not be empty');
@@ -208,16 +208,16 @@ final class PlaybackContinuityClient {
   final String _base;
   final http.Client _client;
   final Future<String?> Function() _accessToken;
-  final String Function() _deviceId;
-  final _WebSocketFactory _wsFactory;
+  final Future<String> Function() _deviceId;
+  final WebSocketFactory _wsFactory;
   final Duration _idleTimeout;
 
   _ContinuityEvents? _events;
   bool _closed = false;
 
-  Map<String, String> _headers(String token) => <String, String>{
+  Future<Map<String, String>> _headers(String token) async => <String, String>{
         'Authorization': 'Bearer $token',
-        'X-Device-Id': _deviceId(),
+        'X-Device-Id': await _deviceId(),
       };
 
   /// Returns the latest snapshot, or null when the user is not signed in or
@@ -227,9 +227,9 @@ final class PlaybackContinuityClient {
     final token = await _accessToken();
     if (token == null || token.isEmpty) return null;
     final response = await _client
-        .get(Uri.parse('$_base/v1/cloud/continuity'), headers: _headers(token));
-    if (response.statusCode == http.StatusNotImplemented) return null;
-    if (response.statusCode != http.StatusOK) {
+        .get(Uri.parse('$_base/v1/cloud/continuity'), headers: await _headers(token));
+    if (response.statusCode == 501) return null;
+    if (response.statusCode != 200) {
       throw http.ClientException(
         'continuity fetch failed (${response.statusCode})',
       );
@@ -260,19 +260,20 @@ final class PlaybackContinuityClient {
     final token = await _accessToken();
     if (token == null || token.isEmpty) return false;
     try {
+      final hdrs = await _headers(token);
       final response = await _client.put(
         Uri.parse('$_base/v1/cloud/continuity'),
         headers: <String, String>{
-          ..._headers(token),
+          ...hdrs,
           'Content-Type': 'application/json',
         },
         body: jsonEncode(snapshot.toJson()),
       );
-      if (response.statusCode == http.StatusNotImplemented) return false;
-      return response.statusCode == http.StatusOK;
+      if (response.statusCode == 501) return false;
+      return response.statusCode == 200;
     } on io.SocketException {
       return false;
-    } on io.TLSException {
+    } on io.TlsException {
       return false;
     } on http.ClientException {
       return false;
@@ -285,19 +286,22 @@ final class PlaybackContinuityClient {
   /// survives transient failures with capped exponential backoff, and is
   /// terminated by [disconnect]. Events from this device's own id are
   /// filtered out so a sender never resumes its own echo.
-  Stream<ContinuityEvent> connect() {
+  Future<Stream<ContinuityEvent>> connect() async {
     if (_closed) {
       return const Stream<ContinuityEvent>.empty();
     }
-    _events ??= _ContinuityEvents(
-      accessToken: _accessToken,
-      deviceId: _deviceId,
-      base: _base,
-      factory: _wsFactory,
-      idleTimeout: _idleTimeout,
-      selfDeviceId: _deviceId(),
-    );
-    _events!.start();
+    if (_events == null) {
+      final selfId = await _deviceId();
+      _events = _ContinuityEvents(
+        accessToken: _accessToken,
+        deviceId: _deviceId,
+        base: _base,
+        factory: _wsFactory,
+        idleTimeout: _idleTimeout,
+        selfDeviceId: selfId,
+      );
+      _events!.start();
+    }
     return _events!.stream;
   }
 
@@ -317,25 +321,24 @@ final class PlaybackContinuityClient {
 final class _ContinuityEvents {
   _ContinuityEvents({
     required Future<String?> Function() accessToken,
-    required String Function() deviceId,
+    required Future<String> Function() deviceId,
     required String base,
-    required _WebSocketFactory factory,
+    required WebSocketFactory factory,
     required Duration idleTimeout,
     required String selfDeviceId,
   })  : _accessToken = accessToken,
         _deviceId = deviceId,
         _uri = Uri.parse(
-          base.replaceFirst('https://', 'wss://').replaceFirst('http://', 'ws://') +
-              '/v1/cloud/events',
+          '${base.replaceFirst('https://', 'wss://').replaceFirst('http://', 'ws://')}/v1/cloud/events',
         ),
         _factory = factory,
         _idleTimeout = idleTimeout,
         _selfDeviceId = selfDeviceId;
 
   final Future<String?> Function() _accessToken;
-  final String Function() _deviceId;
-  final io.Uri _uri;
-  final _WebSocketFactory _factory;
+  final Future<String> Function() _deviceId;
+  final Uri _uri;
+  final WebSocketFactory _factory;
   final Duration _idleTimeout;
   final String _selfDeviceId;
 
@@ -372,7 +375,7 @@ final class _ContinuityEvents {
           _uri,
           <String, String>{
             'Authorization': 'Bearer $token',
-            'X-Device-Id': _deviceId(),
+            'X-Device-Id': await _deviceId(),
           },
         );
         _socket = socket;
@@ -385,7 +388,11 @@ final class _ContinuityEvents {
         _watchdog = watchdog;
         await for (final frame in socket) {
           if (generation != _generation || !_running) break;
-          watchdog?.restart(_idleTimeout);
+          watchdog?.cancel();
+          watchdog = Timer(_idleTimeout, () {
+            socket?.close();
+          });
+          _watchdog = watchdog;
           final event = _decode(frame);
           if (event != null && !_controller.isClosed) {
             _controller.add(event);
@@ -465,7 +472,7 @@ final class PlaybackSyncController {
     _log = AppLogger('PlaybackSync');
   }
 
-  final Ref _ref;
+  final WidgetRef _ref;
   late final AppLogger _log;
 
   /// How often the position is refreshed while a track plays. The backend
@@ -578,7 +585,7 @@ final class PlaybackSyncController {
   /// fresher snapshot from another device, resume it. Never interrupts a
   /// track that is playing locally.
   Future<void> resumeFromCloudIfIdle() async {
-    if (musicPlayerHandler?.playbackState?.playing ?? false) return;
+    if (musicPlayerHandler?.playbackState.value.playing ?? false) return;
     final client = _ensureClient();
     if (client == null) return;
     ContinuityFetchResult? result;
@@ -603,7 +610,7 @@ final class PlaybackSyncController {
     final client = _ensureClient();
     if (client == null || _eventSub != null) return;
     try {
-      _eventSub = client.connect().listen(
+      _eventSub = (await client.connect()).listen(
         (event) => unawaited(_handleHandoff(event)),
         onError: (Object error) {
           _log.w('continuity event stream error: $error');
@@ -617,7 +624,7 @@ final class PlaybackSyncController {
   Future<void> _handleHandoff(ContinuityEvent event) async {
     // Only ever auto-resume when idle: a hand-off must never interrupt the
     // user who is actively listening on this device.
-    if (musicPlayerHandler?.playbackState?.playing ?? false) return;
+    if (musicPlayerHandler?.playbackState.value.playing ?? false) return;
     final snapshot = event.snapshot;
     if (snapshot.trackId == _resumedTrackId) return;
     final resumeMs = _resumeMsFor(snapshot, event.at);
@@ -734,8 +741,8 @@ final class PlaybackSyncController {
       _pushTimer?.cancel();
       _pushTimer = null;
       unawaited(_push(client, snapshot));
-    } else if (_pushTimer == null) {
-      _pushTimer = Timer(pushInterval, () {
+    } else {
+      _pushTimer ??= Timer(pushInterval, () {
         _pushTimer = null;
         final c = _ensureClient();
         final s = _buildSnapshot();
@@ -763,7 +770,7 @@ final class PlaybackSyncController {
     final item = _lastItem;
     if (item == null || item.id.isEmpty) return null;
     if (_client != null && _cachedDeviceId.isEmpty) _refreshDeviceId();
-    final state = musicPlayerHandler?.playbackState;
+    final state = musicPlayerHandler?.playbackState.value;
     var queue = _queueIds;
     var index = queue.indexOf(item.id);
     if (index < 0) {
@@ -776,7 +783,7 @@ final class PlaybackSyncController {
       deviceId: _cachedDeviceId,
       trackId: item.id,
       title: item.title,
-      artist: item.artist,
+      artist: item.artist ?? '',
       artworkUrl: item.artUri?.toString() ?? '',
       positionMs: state?.position.inMilliseconds ?? 0,
       durationMs: (item.duration ?? Duration.zero).inMilliseconds,

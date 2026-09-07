@@ -23,6 +23,7 @@ import 'package:spotiflac_android/core/streaming/stream_resolver.dart';
 import 'package:spotiflac_android/core/streaming/stream_session.dart';
 import 'package:spotiflac_android/core/streaming/streaming_service.dart';
 import 'package:spotiflac_android/providers/advanced_audio_provider.dart';
+import 'package:spotiflac_android/cloud/playback_sync.dart';
 import 'package:spotiflac_android/providers/cloud_providers.dart';
 import 'package:spotiflac_android/providers/ecosystem_providers.dart';
 import 'package:spotiflac_android/providers/sync_provider.dart';

@@ -1,3 +1,4 @@
+// ignore_for_file: unnecessary_const
 /// Pure-Dart QR Code encoder (byte mode, versions 1-40, EC levels L/M/Q/H).
 ///
 /// No external dependencies. The implementation mirrors the reference
@@ -117,7 +118,7 @@ class QrEncoder {
       }
     }
 
-    put(0b0100, 4); // mode indicator: byte
+    put(0x4, 4); // mode indicator: byte
     put(payload.length, lenBits);
     for (final b in payload) {
       put(b, 8);
@@ -315,7 +316,7 @@ class QrEncoder {
       return modules;
     }
 
-    List<List<bool>> _finalize(List<List<bool?>> modules) {
+    List<List<bool>> finalizeModules(List<List<bool?>> modules) {
       return List<List<bool>>.generate(
         size,
         (r) => List<bool>.generate(size, (c) => modules[r][c] ?? false),
@@ -330,7 +331,7 @@ class QrEncoder {
         version: version,
         level: level,
         mask: mask,
-        modules: _finalize(modules),
+        modules: finalizeModules(modules),
       );
     }
 
@@ -354,7 +355,7 @@ class QrEncoder {
       version: version,
       level: level,
       mask: bestMask,
-      modules: _finalize(modules),
+      modules: finalizeModules(modules),
     );
   }
 }
@@ -591,7 +592,7 @@ int penaltyScore(List<List<bool?>> modules, int size) {
 
 /// EC format bits (2 bits) used in the format information, indexed by
 /// [QrErrorLevel.index] (L, M, Q, H).
-const List<int> _ecFormatBits = [0b01, 0b00, 0b11, 0b10];
+const List<int> _ecFormatBits = [0x1, 0x0, 0x3, 0x2];
 
 /// Alignment pattern centre positions per version (empty for v1).
 const List<List<int>> patternPositionTable = [
@@ -663,8 +664,8 @@ const List<List<List<int>>> rsBlockTable = [
   // version 5
   const <List<int>>[const <int>[1, 134, 108]],
   const <List<int>>[const <int>[2, 67, 43]],
-  const <List<int>>[const <int>[2, 33, 15], const <int>[2, 34, 16]],
-  const <List<int>>[const <int>[2, 33, 11], const <int>[2, 34, 12]],
+  const <List<int>>[const <int>[2, 33, 15], <int>[2, 34, 16]],
+  const <List<int>>[const <int>[2, 33, 11], <int>[2, 34, 12]],
   // version 6
   const <List<int>>[const <int>[2, 86, 68]],
   const <List<int>>[const <int>[4, 43, 27]],
@@ -673,173 +674,173 @@ const List<List<List<int>>> rsBlockTable = [
   // version 7
   const <List<int>>[const <int>[2, 98, 78]],
   const <List<int>>[const <int>[4, 49, 31]],
-  const <List<int>>[const <int>[2, 32, 14], const <int>[4, 33, 15]],
-  const <List<int>>[const <int>[4, 39, 13], const <int>[1, 40, 14]],
+  const <List<int>>[const <int>[2, 32, 14], <int>[4, 33, 15]],
+  const <List<int>>[const <int>[4, 39, 13], <int>[1, 40, 14]],
   // version 8
   const <List<int>>[const <int>[2, 121, 97]],
-  const <List<int>>[const <int>[2, 60, 38], const <int>[2, 61, 39]],
-  const <List<int>>[const <int>[4, 40, 18], const <int>[2, 41, 19]],
-  const <List<int>>[const <int>[4, 40, 14], const <int>[2, 41, 15]],
+  const <List<int>>[const <int>[2, 60, 38], <int>[2, 61, 39]],
+  const <List<int>>[const <int>[4, 40, 18], <int>[2, 41, 19]],
+  const <List<int>>[const <int>[4, 40, 14], <int>[2, 41, 15]],
   // version 9
   const <List<int>>[const <int>[2, 146, 116]],
-  const <List<int>>[const <int>[3, 58, 36], const <int>[2, 59, 37]],
-  const <List<int>>[const <int>[4, 36, 16], const <int>[4, 37, 17]],
-  const <List<int>>[const <int>[4, 36, 12], const <int>[4, 37, 13]],
+  const <List<int>>[const <int>[3, 58, 36], <int>[2, 59, 37]],
+  const <List<int>>[const <int>[4, 36, 16], <int>[4, 37, 17]],
+  const <List<int>>[const <int>[4, 36, 12], <int>[4, 37, 13]],
   // version 10
-  const <List<int>>[const <int>[2, 86, 68], const <int>[2, 87, 69]],
-  const <List<int>>[const <int>[4, 69, 43], const <int>[1, 70, 44]],
-  const <List<int>>[const <int>[6, 43, 19], const <int>[2, 44, 20]],
-  const <List<int>>[const <int>[6, 43, 15], const <int>[2, 44, 16]],
+  const <List<int>>[const <int>[2, 86, 68], <int>[2, 87, 69]],
+  const <List<int>>[const <int>[4, 69, 43], <int>[1, 70, 44]],
+  const <List<int>>[const <int>[6, 43, 19], <int>[2, 44, 20]],
+  const <List<int>>[const <int>[6, 43, 15], <int>[2, 44, 16]],
   // version 11
   const <List<int>>[const <int>[4, 101, 81]],
-  const <List<int>>[const <int>[1, 80, 50], const <int>[4, 81, 51]],
-  const <List<int>>[const <int>[4, 50, 22], const <int>[4, 51, 23]],
-  const <List<int>>[const <int>[3, 36, 12], const <int>[8, 37, 13]],
+  const <List<int>>[const <int>[1, 80, 50], <int>[4, 81, 51]],
+  const <List<int>>[const <int>[4, 50, 22], <int>[4, 51, 23]],
+  const <List<int>>[const <int>[3, 36, 12], <int>[8, 37, 13]],
   // version 12
-  const <List<int>>[const <int>[2, 116, 92], const <int>[2, 117, 93]],
-  const <List<int>>[const <int>[6, 58, 36], const <int>[2, 59, 37]],
-  const <List<int>>[const <int>[4, 46, 20], const <int>[6, 47, 21]],
-  const <List<int>>[const <int>[7, 42, 14], const <int>[4, 43, 15]],
+  const <List<int>>[const <int>[2, 116, 92], <int>[2, 117, 93]],
+  const <List<int>>[const <int>[6, 58, 36], <int>[2, 59, 37]],
+  const <List<int>>[const <int>[4, 46, 20], <int>[6, 47, 21]],
+  const <List<int>>[const <int>[7, 42, 14], <int>[4, 43, 15]],
   // version 13
   const <List<int>>[const <int>[4, 133, 107]],
-  const <List<int>>[const <int>[8, 59, 37], const <int>[1, 60, 38]],
-  const <List<int>>[const <int>[8, 44, 20], const <int>[4, 45, 21]],
-  const <List<int>>[const <int>[12, 33, 11], const <int>[4, 34, 12]],
+  const <List<int>>[const <int>[8, 59, 37], <int>[1, 60, 38]],
+  const <List<int>>[const <int>[8, 44, 20], <int>[4, 45, 21]],
+  const <List<int>>[const <int>[12, 33, 11], <int>[4, 34, 12]],
   // version 14
-  const <List<int>>[const <int>[3, 145, 115], const <int>[1, 146, 116]],
-  const <List<int>>[const <int>[4, 64, 40], const <int>[5, 65, 41]],
-  const <List<int>>[const <int>[11, 36, 16], const <int>[5, 37, 17]],
-  const <List<int>>[const <int>[11, 36, 12], const <int>[5, 37, 13]],
+  const <List<int>>[const <int>[3, 145, 115], <int>[1, 146, 116]],
+  const <List<int>>[const <int>[4, 64, 40], <int>[5, 65, 41]],
+  const <List<int>>[const <int>[11, 36, 16], <int>[5, 37, 17]],
+  const <List<int>>[const <int>[11, 36, 12], <int>[5, 37, 13]],
   // version 15
-  const <List<int>>[const <int>[5, 109, 87], const <int>[1, 110, 88]],
-  const <List<int>>[const <int>[5, 65, 41], const <int>[5, 66, 42]],
-  const <List<int>>[const <int>[5, 54, 24], const <int>[7, 55, 25]],
-  const <List<int>>[const <int>[11, 36, 12], const <int>[7, 37, 13]],
+  const <List<int>>[const <int>[5, 109, 87], <int>[1, 110, 88]],
+  const <List<int>>[const <int>[5, 65, 41], <int>[5, 66, 42]],
+  const <List<int>>[const <int>[5, 54, 24], <int>[7, 55, 25]],
+  const <List<int>>[const <int>[11, 36, 12], <int>[7, 37, 13]],
   // version 16
-  const <List<int>>[const <int>[5, 122, 98], const <int>[1, 123, 99]],
-  const <List<int>>[const <int>[7, 73, 45], const <int>[3, 74, 46]],
-  const <List<int>>[const <int>[15, 43, 19], const <int>[2, 44, 20]],
-  const <List<int>>[const <int>[3, 45, 15], const <int>[13, 46, 16]],
+  const <List<int>>[const <int>[5, 122, 98], <int>[1, 123, 99]],
+  const <List<int>>[const <int>[7, 73, 45], <int>[3, 74, 46]],
+  const <List<int>>[const <int>[15, 43, 19], <int>[2, 44, 20]],
+  const <List<int>>[const <int>[3, 45, 15], <int>[13, 46, 16]],
   // version 17
-  const <List<int>>[const <int>[1, 135, 107], const <int>[5, 136, 108]],
-  const <List<int>>[const <int>[10, 74, 46], const <int>[1, 75, 47]],
-  const <List<int>>[const <int>[1, 50, 22], const <int>[15, 51, 23]],
-  const <List<int>>[const <int>[2, 42, 14], const <int>[17, 43, 15]],
+  const <List<int>>[const <int>[1, 135, 107], <int>[5, 136, 108]],
+  const <List<int>>[const <int>[10, 74, 46], <int>[1, 75, 47]],
+  const <List<int>>[const <int>[1, 50, 22], <int>[15, 51, 23]],
+  const <List<int>>[const <int>[2, 42, 14], <int>[17, 43, 15]],
   // version 18
-  const <List<int>>[const <int>[5, 150, 120], const <int>[1, 151, 121]],
-  const <List<int>>[const <int>[9, 69, 43], const <int>[4, 70, 44]],
-  const <List<int>>[const <int>[17, 50, 22], const <int>[1, 51, 23]],
-  const <List<int>>[const <int>[2, 42, 14], const <int>[19, 43, 15]],
+  const <List<int>>[const <int>[5, 150, 120], <int>[1, 151, 121]],
+  const <List<int>>[const <int>[9, 69, 43], <int>[4, 70, 44]],
+  const <List<int>>[const <int>[17, 50, 22], <int>[1, 51, 23]],
+  const <List<int>>[const <int>[2, 42, 14], <int>[19, 43, 15]],
   // version 19
-  const <List<int>>[const <int>[3, 141, 113], const <int>[4, 142, 114]],
-  const <List<int>>[const <int>[3, 70, 44], const <int>[11, 71, 45]],
-  const <List<int>>[const <int>[17, 47, 21], const <int>[4, 48, 22]],
-  const <List<int>>[const <int>[9, 39, 13], const <int>[16, 40, 14]],
+  const <List<int>>[const <int>[3, 141, 113], <int>[4, 142, 114]],
+  const <List<int>>[const <int>[3, 70, 44], <int>[11, 71, 45]],
+  const <List<int>>[const <int>[17, 47, 21], <int>[4, 48, 22]],
+  const <List<int>>[const <int>[9, 39, 13], <int>[16, 40, 14]],
   // version 20
-  const <List<int>>[const <int>[3, 135, 107], const <int>[5, 136, 108]],
-  const <List<int>>[const <int>[3, 67, 41], const <int>[13, 68, 42]],
-  const <List<int>>[const <int>[15, 54, 24], const <int>[5, 55, 25]],
-  const <List<int>>[const <int>[15, 43, 15], const <int>[10, 44, 16]],
+  const <List<int>>[const <int>[3, 135, 107], <int>[5, 136, 108]],
+  const <List<int>>[const <int>[3, 67, 41], <int>[13, 68, 42]],
+  const <List<int>>[const <int>[15, 54, 24], <int>[5, 55, 25]],
+  const <List<int>>[const <int>[15, 43, 15], <int>[10, 44, 16]],
   // version 21
-  const <List<int>>[const <int>[4, 144, 116], const <int>[4, 145, 117]],
+  const <List<int>>[const <int>[4, 144, 116], <int>[4, 145, 117]],
   const <List<int>>[const <int>[17, 68, 42]],
-  const <List<int>>[const <int>[17, 50, 22], const <int>[6, 51, 23]],
-  const <List<int>>[const <int>[19, 46, 16], const <int>[6, 47, 17]],
+  const <List<int>>[const <int>[17, 50, 22], <int>[6, 51, 23]],
+  const <List<int>>[const <int>[19, 46, 16], <int>[6, 47, 17]],
   // version 22
-  const <List<int>>[const <int>[2, 139, 111], const <int>[7, 140, 112]],
+  const <List<int>>[const <int>[2, 139, 111], <int>[7, 140, 112]],
   const <List<int>>[const <int>[17, 74, 46]],
-  const <List<int>>[const <int>[7, 54, 24], const <int>[16, 55, 25]],
+  const <List<int>>[const <int>[7, 54, 24], <int>[16, 55, 25]],
   const <List<int>>[const <int>[34, 37, 13]],
   // version 23
-  const <List<int>>[const <int>[4, 151, 121], const <int>[5, 152, 122]],
-  const <List<int>>[const <int>[4, 75, 47], const <int>[14, 76, 48]],
-  const <List<int>>[const <int>[11, 54, 24], const <int>[14, 55, 25]],
-  const <List<int>>[const <int>[16, 45, 15], const <int>[14, 46, 16]],
+  const <List<int>>[const <int>[4, 151, 121], <int>[5, 152, 122]],
+  const <List<int>>[const <int>[4, 75, 47], <int>[14, 76, 48]],
+  const <List<int>>[const <int>[11, 54, 24], <int>[14, 55, 25]],
+  const <List<int>>[const <int>[16, 45, 15], <int>[14, 46, 16]],
   // version 24
-  const <List<int>>[const <int>[6, 147, 117], const <int>[4, 148, 118]],
-  const <List<int>>[const <int>[6, 73, 45], const <int>[14, 74, 46]],
-  const <List<int>>[const <int>[11, 54, 24], const <int>[16, 55, 25]],
-  const <List<int>>[const <int>[30, 46, 16], const <int>[2, 47, 17]],
+  const <List<int>>[const <int>[6, 147, 117], <int>[4, 148, 118]],
+  const <List<int>>[const <int>[6, 73, 45], <int>[14, 74, 46]],
+  const <List<int>>[const <int>[11, 54, 24], <int>[16, 55, 25]],
+  const <List<int>>[const <int>[30, 46, 16], <int>[2, 47, 17]],
   // version 25
-  const <List<int>>[const <int>[8, 132, 106], const <int>[4, 133, 107]],
-  const <List<int>>[const <int>[8, 75, 47], const <int>[13, 76, 48]],
-  const <List<int>>[const <int>[7, 54, 24], const <int>[22, 55, 25]],
-  const <List<int>>[const <int>[22, 45, 15], const <int>[13, 46, 16]],
+  const <List<int>>[const <int>[8, 132, 106], <int>[4, 133, 107]],
+  const <List<int>>[const <int>[8, 75, 47], <int>[13, 76, 48]],
+  const <List<int>>[const <int>[7, 54, 24], <int>[22, 55, 25]],
+  const <List<int>>[const <int>[22, 45, 15], <int>[13, 46, 16]],
   // version 26
-  const <List<int>>[const <int>[10, 142, 114], const <int>[2, 143, 115]],
-  const <List<int>>[const <int>[19, 74, 46], const <int>[4, 75, 47]],
-  const <List<int>>[const <int>[28, 50, 22], const <int>[6, 51, 23]],
-  const <List<int>>[const <int>[33, 46, 16], const <int>[4, 47, 17]],
+  const <List<int>>[const <int>[10, 142, 114], <int>[2, 143, 115]],
+  const <List<int>>[const <int>[19, 74, 46], <int>[4, 75, 47]],
+  const <List<int>>[const <int>[28, 50, 22], <int>[6, 51, 23]],
+  const <List<int>>[const <int>[33, 46, 16], <int>[4, 47, 17]],
   // version 27
-  const <List<int>>[const <int>[8, 152, 122], const <int>[4, 153, 123]],
-  const <List<int>>[const <int>[22, 73, 45], const <int>[3, 74, 46]],
-  const <List<int>>[const <int>[8, 53, 23], const <int>[26, 54, 24]],
-  const <List<int>>[const <int>[12, 45, 15], const <int>[28, 46, 16]],
+  const <List<int>>[const <int>[8, 152, 122], <int>[4, 153, 123]],
+  const <List<int>>[const <int>[22, 73, 45], <int>[3, 74, 46]],
+  const <List<int>>[const <int>[8, 53, 23], <int>[26, 54, 24]],
+  const <List<int>>[const <int>[12, 45, 15], <int>[28, 46, 16]],
   // version 28
-  const <List<int>>[const <int>[3, 147, 117], const <int>[10, 148, 118]],
-  const <List<int>>[const <int>[3, 73, 45], const <int>[23, 74, 46]],
-  const <List<int>>[const <int>[4, 54, 24], const <int>[31, 55, 25]],
-  const <List<int>>[const <int>[11, 45, 15], const <int>[31, 46, 16]],
+  const <List<int>>[const <int>[3, 147, 117], <int>[10, 148, 118]],
+  const <List<int>>[const <int>[3, 73, 45], <int>[23, 74, 46]],
+  const <List<int>>[const <int>[4, 54, 24], <int>[31, 55, 25]],
+  const <List<int>>[const <int>[11, 45, 15], <int>[31, 46, 16]],
   // version 29
-  const <List<int>>[const <int>[7, 146, 116], const <int>[7, 147, 117]],
-  const <List<int>>[const <int>[21, 73, 45], const <int>[7, 74, 46]],
-  const <List<int>>[const <int>[1, 53, 23], const <int>[37, 54, 24]],
-  const <List<int>>[const <int>[19, 45, 15], const <int>[26, 46, 16]],
+  const <List<int>>[const <int>[7, 146, 116], <int>[7, 147, 117]],
+  const <List<int>>[const <int>[21, 73, 45], <int>[7, 74, 46]],
+  const <List<int>>[const <int>[1, 53, 23], <int>[37, 54, 24]],
+  const <List<int>>[const <int>[19, 45, 15], <int>[26, 46, 16]],
   // version 30
-  const <List<int>>[const <int>[5, 145, 115], const <int>[10, 146, 116]],
-  const <List<int>>[const <int>[19, 75, 47], const <int>[10, 76, 48]],
-  const <List<int>>[const <int>[15, 54, 24], const <int>[25, 55, 25]],
-  const <List<int>>[const <int>[23, 45, 15], const <int>[25, 46, 16]],
+  const <List<int>>[const <int>[5, 145, 115], <int>[10, 146, 116]],
+  const <List<int>>[const <int>[19, 75, 47], <int>[10, 76, 48]],
+  const <List<int>>[const <int>[15, 54, 24], <int>[25, 55, 25]],
+  const <List<int>>[const <int>[23, 45, 15], <int>[25, 46, 16]],
   // version 31
-  const <List<int>>[const <int>[13, 145, 115], const <int>[3, 146, 116]],
-  const <List<int>>[const <int>[2, 74, 46], const <int>[29, 75, 47]],
-  const <List<int>>[const <int>[42, 54, 24], const <int>[1, 55, 25]],
-  const <List<int>>[const <int>[23, 45, 15], const <int>[28, 46, 16]],
+  const <List<int>>[const <int>[13, 145, 115], <int>[3, 146, 116]],
+  const <List<int>>[const <int>[2, 74, 46], <int>[29, 75, 47]],
+  const <List<int>>[const <int>[42, 54, 24], <int>[1, 55, 25]],
+  const <List<int>>[const <int>[23, 45, 15], <int>[28, 46, 16]],
   // version 32
   const <List<int>>[const <int>[17, 145, 115]],
-  const <List<int>>[const <int>[10, 74, 46], const <int>[23, 75, 47]],
-  const <List<int>>[const <int>[10, 54, 24], const <int>[35, 55, 25]],
-  const <List<int>>[const <int>[19, 45, 15], const <int>[35, 46, 16]],
+  const <List<int>>[const <int>[10, 74, 46], <int>[23, 75, 47]],
+  const <List<int>>[const <int>[10, 54, 24], <int>[35, 55, 25]],
+  const <List<int>>[const <int>[19, 45, 15], <int>[35, 46, 16]],
   // version 33
-  const <List<int>>[const <int>[17, 145, 115], const <int>[1, 146, 116]],
-  const <List<int>>[const <int>[14, 74, 46], const <int>[21, 75, 47]],
-  const <List<int>>[const <int>[29, 54, 24], const <int>[19, 55, 25]],
-  const <List<int>>[const <int>[11, 45, 15], const <int>[46, 46, 16]],
+  const <List<int>>[const <int>[17, 145, 115], <int>[1, 146, 116]],
+  const <List<int>>[const <int>[14, 74, 46], <int>[21, 75, 47]],
+  const <List<int>>[const <int>[29, 54, 24], <int>[19, 55, 25]],
+  const <List<int>>[const <int>[11, 45, 15], <int>[46, 46, 16]],
   // version 34
-  const <List<int>>[const <int>[13, 145, 115], const <int>[6, 146, 116]],
-  const <List<int>>[const <int>[14, 74, 46], const <int>[23, 75, 47]],
-  const <List<int>>[const <int>[44, 54, 24], const <int>[7, 55, 25]],
-  const <List<int>>[const <int>[59, 46, 16], const <int>[1, 47, 17]],
+  const <List<int>>[const <int>[13, 145, 115], <int>[6, 146, 116]],
+  const <List<int>>[const <int>[14, 74, 46], <int>[23, 75, 47]],
+  const <List<int>>[const <int>[44, 54, 24], <int>[7, 55, 25]],
+  const <List<int>>[const <int>[59, 46, 16], <int>[1, 47, 17]],
   // version 35
-  const <List<int>>[const <int>[12, 151, 121], const <int>[5, 152, 122]],
-  const <List<int>>[const <int>[12, 75, 47], const <int>[26, 76, 48]],
-  const <List<int>>[const <int>[39, 54, 24], const <int>[14, 55, 25]],
-  const <List<int>>[const <int>[22, 45, 15], const <int>[41, 46, 16]],
+  const <List<int>>[const <int>[12, 151, 121], <int>[5, 152, 122]],
+  const <List<int>>[const <int>[12, 75, 47], <int>[26, 76, 48]],
+  const <List<int>>[const <int>[39, 54, 24], <int>[14, 55, 25]],
+  const <List<int>>[const <int>[22, 45, 15], <int>[41, 46, 16]],
   // version 36
-  const <List<int>>[const <int>[6, 151, 121], const <int>[14, 152, 122]],
-  const <List<int>>[const <int>[6, 75, 47], const <int>[34, 76, 48]],
-  const <List<int>>[const <int>[46, 54, 24], const <int>[10, 55, 25]],
-  const <List<int>>[const <int>[2, 45, 15], const <int>[64, 46, 16]],
+  const <List<int>>[const <int>[6, 151, 121], <int>[14, 152, 122]],
+  const <List<int>>[const <int>[6, 75, 47], <int>[34, 76, 48]],
+  const <List<int>>[const <int>[46, 54, 24], <int>[10, 55, 25]],
+  const <List<int>>[const <int>[2, 45, 15], <int>[64, 46, 16]],
   // version 37
-  const <List<int>>[const <int>[17, 152, 122], const <int>[4, 153, 123]],
-  const <List<int>>[const <int>[29, 74, 46], const <int>[14, 75, 47]],
-  const <List<int>>[const <int>[49, 54, 24], const <int>[10, 55, 25]],
-  const <List<int>>[const <int>[24, 45, 15], const <int>[46, 46, 16]],
+  const <List<int>>[const <int>[17, 152, 122], <int>[4, 153, 123]],
+  const <List<int>>[const <int>[29, 74, 46], <int>[14, 75, 47]],
+  const <List<int>>[const <int>[49, 54, 24], <int>[10, 55, 25]],
+  const <List<int>>[const <int>[24, 45, 15], <int>[46, 46, 16]],
   // version 38
-  const <List<int>>[const <int>[4, 152, 122], const <int>[18, 153, 123]],
-  const <List<int>>[const <int>[13, 74, 46], const <int>[32, 75, 47]],
-  const <List<int>>[const <int>[48, 54, 24], const <int>[14, 55, 25]],
-  const <List<int>>[const <int>[42, 45, 15], const <int>[32, 46, 16]],
+  const <List<int>>[const <int>[4, 152, 122], <int>[18, 153, 123]],
+  const <List<int>>[const <int>[13, 74, 46], <int>[32, 75, 47]],
+  const <List<int>>[const <int>[48, 54, 24], <int>[14, 55, 25]],
+  const <List<int>>[const <int>[42, 45, 15], <int>[32, 46, 16]],
   // version 39
-  const <List<int>>[const <int>[20, 147, 117], const <int>[4, 148, 118]],
-  const <List<int>>[const <int>[40, 75, 47], const <int>[7, 76, 48]],
-  const <List<int>>[const <int>[43, 54, 24], const <int>[22, 55, 25]],
-  const <List<int>>[const <int>[10, 45, 15], const <int>[67, 46, 16]],
+  const <List<int>>[const <int>[20, 147, 117], <int>[4, 148, 118]],
+  const <List<int>>[const <int>[40, 75, 47], <int>[7, 76, 48]],
+  const <List<int>>[const <int>[43, 54, 24], <int>[22, 55, 25]],
+  const <List<int>>[const <int>[10, 45, 15], <int>[67, 46, 16]],
   // version 40
-  const <List<int>>[const <int>[19, 148, 118], const <int>[6, 149, 119]],
-  const <List<int>>[const <int>[18, 75, 47], const <int>[31, 76, 48]],
-  const <List<int>>[const <int>[34, 54, 24], const <int>[34, 55, 25]],
-  const <List<int>>[const <int>[20, 45, 15], const <int>[61, 46, 16]],
+  const <List<int>>[const <int>[19, 148, 118], <int>[6, 149, 119]],
+  const <List<int>>[const <int>[18, 75, 47], <int>[31, 76, 48]],
+  const <List<int>>[const <int>[34, 54, 24], <int>[34, 55, 25]],
+  const <List<int>>[const <int>[20, 45, 15], <int>[61, 46, 16]],
 ];
 
 int _dataBits(List<List<int>> blocks) {
