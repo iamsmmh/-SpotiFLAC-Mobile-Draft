@@ -190,7 +190,7 @@ final class PlaybackContinuityClient {
     required String baseUrl,
     http.Client? httpClient,
     required Future<String?> Function() accessToken,
-    required String Function() deviceId,
+    required Future<String> Function() deviceId,
     @visibleForTesting WebSocketFactory? webSocketFactory,
     @visibleForTesting Duration idleTimeout = const Duration(seconds: 75),
   })  : _base = baseUrl.trim().replaceAll(RegExp(r'/+$'), ''),
@@ -208,16 +208,16 @@ final class PlaybackContinuityClient {
   final String _base;
   final http.Client _client;
   final Future<String?> Function() _accessToken;
-  final String Function() _deviceId;
+  final Future<String> Function() _deviceId;
   final WebSocketFactory _wsFactory;
   final Duration _idleTimeout;
 
   _ContinuityEvents? _events;
   bool _closed = false;
 
-  Map<String, String> _headers(String token) => <String, String>{
+  Future<Map<String, String>> _headers(String token) async => <String, String>{
         'Authorization': 'Bearer $token',
-        'X-Device-Id': _deviceId(),
+        'X-Device-Id': await _deviceId(),
       };
 
   /// Returns the latest snapshot, or null when the user is not signed in or
@@ -227,7 +227,7 @@ final class PlaybackContinuityClient {
     final token = await _accessToken();
     if (token == null || token.isEmpty) return null;
     final response = await _client
-        .get(Uri.parse('$_base/v1/cloud/continuity'), headers: _headers(token));
+        .get(Uri.parse('$_base/v1/cloud/continuity'), headers: await _headers(token));
     if (response.statusCode == 501) return null;
     if (response.statusCode != 200) {
       throw http.ClientException(
@@ -260,10 +260,11 @@ final class PlaybackContinuityClient {
     final token = await _accessToken();
     if (token == null || token.isEmpty) return false;
     try {
+      final hdrs = await _headers(token);
       final response = await _client.put(
         Uri.parse('$_base/v1/cloud/continuity'),
         headers: <String, String>{
-          ..._headers(token),
+          ...hdrs,
           'Content-Type': 'application/json',
         },
         body: jsonEncode(snapshot.toJson()),
@@ -285,19 +286,22 @@ final class PlaybackContinuityClient {
   /// survives transient failures with capped exponential backoff, and is
   /// terminated by [disconnect]. Events from this device's own id are
   /// filtered out so a sender never resumes its own echo.
-  Stream<ContinuityEvent> connect() {
+  Future<Stream<ContinuityEvent>> connect() async {
     if (_closed) {
       return const Stream<ContinuityEvent>.empty();
     }
-    _events ??= _ContinuityEvents(
-      accessToken: _accessToken,
-      deviceId: _deviceId,
-      base: _base,
-      factory: _wsFactory,
-      idleTimeout: _idleTimeout,
-      selfDeviceId: _deviceId(),
-    );
-    _events!.start();
+    if (_events == null) {
+      final selfId = await _deviceId();
+      _events = _ContinuityEvents(
+        accessToken: _accessToken,
+        deviceId: _deviceId,
+        base: _base,
+        factory: _wsFactory,
+        idleTimeout: _idleTimeout,
+        selfDeviceId: selfId,
+      );
+      _events!.start();
+    }
     return _events!.stream;
   }
 
@@ -317,7 +321,7 @@ final class PlaybackContinuityClient {
 final class _ContinuityEvents {
   _ContinuityEvents({
     required Future<String?> Function() accessToken,
-    required String Function() deviceId,
+    required Future<String> Function() deviceId,
     required String base,
     required WebSocketFactory factory,
     required Duration idleTimeout,
@@ -332,7 +336,7 @@ final class _ContinuityEvents {
         _selfDeviceId = selfDeviceId;
 
   final Future<String?> Function() _accessToken;
-  final String Function() _deviceId;
+  final Future<String> Function() _deviceId;
   final Uri _uri;
   final WebSocketFactory _factory;
   final Duration _idleTimeout;
@@ -371,7 +375,7 @@ final class _ContinuityEvents {
           _uri,
           <String, String>{
             'Authorization': 'Bearer $token',
-            'X-Device-Id': _deviceId(),
+            'X-Device-Id': await _deviceId(),
           },
         );
         _socket = socket;
@@ -606,7 +610,7 @@ final class PlaybackSyncController {
     final client = _ensureClient();
     if (client == null || _eventSub != null) return;
     try {
-      _eventSub = client.connect().listen(
+      _eventSub = (await client.connect()).listen(
         (event) => unawaited(_handleHandoff(event)),
         onError: (Object error) {
           _log.w('continuity event stream error: $error');

@@ -117,7 +117,7 @@ class QrEncoder {
       }
     }
 
-    put(0b0100, 4); // mode indicator: byte
+    put(0x4, 4); // mode indicator: byte
     put(payload.length, lenBits);
     for (final b in payload) {
       put(b, 8);
@@ -315,7 +315,7 @@ class QrEncoder {
       return modules;
     }
 
-    List<List<bool>> _finalize(List<List<bool?>> modules) {
+    List<List<bool>> finalizeModules(List<List<bool?>> modules) {
       return List<List<bool>>.generate(
         size,
         (r) => List<bool>.generate(size, (c) => modules[r][c] ?? false),
@@ -330,7 +330,7 @@ class QrEncoder {
         version: version,
         level: level,
         mask: mask,
-        modules: _finalize(modules),
+        modules: finalizeModules(modules),
       );
     }
 
@@ -354,7 +354,7 @@ class QrEncoder {
       version: version,
       level: level,
       mask: bestMask,
-      modules: _finalize(modules),
+      modules: finalizeModules(modules),
     );
   }
 }
@@ -591,7 +591,7 @@ int penaltyScore(List<List<bool?>> modules, int size) {
 
 /// EC format bits (2 bits) used in the format information, indexed by
 /// [QrErrorLevel.index] (L, M, Q, H).
-const List<int> _ecFormatBits = [0b01, 0b00, 0b11, 0b10];
+const List<int> _ecFormatBits = [0x1, 0x0, 0x3, 0x2];
 
 /// Alignment pattern centre positions per version (empty for v1).
 const List<List<int>> patternPositionTable = [

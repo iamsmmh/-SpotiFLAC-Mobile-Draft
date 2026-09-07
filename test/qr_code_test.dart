@@ -298,11 +298,11 @@ void main() {
 
     test('BCH known values', () {
       // Format info: M (00) mask 0 == 101010000010010.
-      expect(bchFormatInfo((0b00 << 3) | 0), 0x5412);
+      expect(bchFormatInfo((0x0 << 3) | 0), 0x5412);
       // L (01) mask 0 == 1110111110000100.
-      expect(bchFormatInfo((0b01 << 3) | 0), 0x77c4);
+      expect(bchFormatInfo((0x1 << 3) | 0), 0x77c4);
       // H (10) mask 7 == 1100101010100001.
-      expect(bchFormatInfo((0b10 << 3) | 7), 0xcaa1);
+      expect(bchFormatInfo((0x2 << 3) | 7), 0xcaa1);
       // Version info: v7 == 000111110010010100, v20, v40.
       expect(bchVersionInfo(7), 0x07c94);
       expect(bchVersionInfo(20), 0x149a6);
