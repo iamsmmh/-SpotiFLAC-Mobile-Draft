@@ -178,6 +178,65 @@ void main() {
         '/',
       );
     });
+
+    test('onboarding redirect keeps a single router instead of recreating it', () {
+      expect(
+        appRedirectLocation(
+          isFirstLaunch: true,
+          hasCompletedTutorial: false,
+          location: '/setup',
+        ),
+        isNull,
+      );
+      expect(
+        appRedirectLocation(
+          isFirstLaunch: true,
+          hasCompletedTutorial: false,
+          location: '/',
+        ),
+        '/setup',
+      );
+      expect(
+        appRedirectLocation(
+          isFirstLaunch: false,
+          hasCompletedTutorial: false,
+          location: '/setup',
+        ),
+        '/tutorial',
+      );
+      expect(
+        appRedirectLocation(
+          isFirstLaunch: false,
+          hasCompletedTutorial: false,
+          location: '/tutorial',
+        ),
+        isNull,
+      );
+      expect(
+        appRedirectLocation(
+          isFirstLaunch: false,
+          hasCompletedTutorial: true,
+          location: '/tutorial',
+        ),
+        '/',
+      );
+      expect(
+        appRedirectLocation(
+          isFirstLaunch: false,
+          hasCompletedTutorial: true,
+          location: '/',
+        ),
+        isNull,
+      );
+      expect(
+        appRedirectLocation(
+          isFirstLaunch: false,
+          hasCompletedTutorial: true,
+          location: '/unknown',
+        ),
+        isNull,
+      );
+    });
   });
 
   group('strict SAF validation', () {

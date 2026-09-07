@@ -21,24 +21,65 @@ String initialLocationForAppState({
   return '/';
 }
 
+/// Redirect for the single long-lived [GoRouter].
+///
+/// Recreating the router whenever onboarding flags change re-attaches
+/// [AppNavigationService.rootNavigatorKey] to a second Navigator and crashes
+/// the first frame after setup/tutorial with a duplicate GlobalKey. Keep one
+/// router and send the user to the right place instead.
+String? appRedirectLocation({
+  required bool isFirstLaunch,
+  required bool hasCompletedTutorial,
+  required String location,
+}) {
+  final dest = initialLocationForAppState(
+    isFirstLaunch: isFirstLaunch,
+    hasCompletedTutorial: hasCompletedTutorial,
+  );
+  final path = location.isEmpty ? '/' : location;
+  if (path == dest) return null;
+
+  const onboarding = {'/setup', '/tutorial'};
+  if (dest == '/') {
+    // Fully onboarded: leave setup/tutorial, but do not steal unknown paths
+    // (errorBuilder is the safety net for those).
+    if (onboarding.contains(path)) return '/';
+    return null;
+  }
+  return dest;
+}
+
 final _routerProvider = Provider<GoRouter>((ref) {
-  final routingSettings = ref.watch(
+  final refresh = ValueNotifier<int>(0);
+  ref.onDispose(refresh.dispose);
+  ref.listen(
     settingsProvider.select(
       (settings) => (
         isFirstLaunch: settings.isFirstLaunch,
         hasCompletedTutorial: settings.hasCompletedTutorial,
       ),
     ),
+    (_, _) {
+      refresh.value++;
+    },
   );
 
-  final initialLocation = initialLocationForAppState(
-    isFirstLaunch: routingSettings.isFirstLaunch,
-    hasCompletedTutorial: routingSettings.hasCompletedTutorial,
-  );
-
+  final initial = ref.read(settingsProvider);
   return GoRouter(
     navigatorKey: AppNavigationService.rootNavigatorKey,
-    initialLocation: initialLocation,
+    initialLocation: initialLocationForAppState(
+      isFirstLaunch: initial.isFirstLaunch,
+      hasCompletedTutorial: initial.hasCompletedTutorial,
+    ),
+    refreshListenable: refresh,
+    redirect: (context, state) {
+      final settings = ref.read(settingsProvider);
+      return appRedirectLocation(
+        isFirstLaunch: settings.isFirstLaunch,
+        hasCompletedTutorial: settings.hasCompletedTutorial,
+        location: state.uri.path,
+      );
+    },
     routes: [
       GoRoute(path: '/', builder: (context, state) => const MainShell()),
       GoRoute(path: '/setup', builder: (context, state) => const SetupScreen()),
@@ -48,7 +89,7 @@ final _routerProvider = Provider<GoRouter>((ref) {
       ),
     ],
     // Safety net: if a deep link URL (e.g. Spotify/Deezer) somehow reaches
-    // GoRouter, redirect to home instead of showing "Page Not Found".
+    // GoRouter, show home instead of "Page Not Found".
     errorBuilder: (context, state) => const MainShell(),
   );
 });

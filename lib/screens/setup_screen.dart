@@ -180,7 +180,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
     } catch (e) {
       debugPrint('Permission error: $e');
     } finally {
-      setState(() => _isLoading = false);
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -229,7 +229,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
         setState(() => _notificationPermissionGranted = true);
       }
     } finally {
-      setState(() => _isLoading = false);
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -325,7 +325,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
         }
       }
     } finally {
-      setState(() => _isLoading = false);
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -499,7 +499,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
         );
       }
     } finally {
-      setState(() => _isLoading = false);
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -706,6 +706,11 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                     height: logoSize,
                     color: colorScheme.primary,
                     fit: BoxFit.contain,
+                    errorBuilder: (_, _, _) => Icon(
+                      Icons.album_rounded,
+                      size: logoSize,
+                      color: colorScheme.primary,
+                    ),
                   ),
                   SizedBox(height: titleGap),
                   Text(

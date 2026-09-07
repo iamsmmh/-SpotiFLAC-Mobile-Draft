@@ -63,12 +63,12 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
 
   void _completeTutorial() {
     ref.read(settingsProvider.notifier).setTutorialComplete();
-    context.go('/');
+    if (mounted) context.go('/');
   }
 
   void _skipTutorial() {
     ref.read(settingsProvider.notifier).setTutorialComplete();
-    context.go('/');
+    if (mounted) context.go('/');
   }
 
   @override

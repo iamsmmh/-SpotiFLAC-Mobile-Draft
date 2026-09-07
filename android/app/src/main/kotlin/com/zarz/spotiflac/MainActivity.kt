@@ -880,7 +880,14 @@ class MainActivity: FlutterFragmentActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        Gobackend.setAppVersion(BuildConfig.VERSION_NAME)
+        try {
+            Gobackend.setAppVersion(BuildConfig.VERSION_NAME)
+        } catch (t: Throwable) {
+            android.util.Log.e(
+                "SpotiFLAC",
+                "Failed to set backend version; continuing without native init: ${t.message}",
+            )
+        }
         sweepStaleCacheFiles()
 
         // Always-enabled back callback to ensure back presses reach Flutter.

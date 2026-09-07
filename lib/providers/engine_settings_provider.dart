@@ -325,8 +325,8 @@ EngineSettings engineSettingsFromPrefs(SharedPreferences prefs) {
   if (raw == null || raw.isEmpty) return const EngineSettings();
   try {
     final decoded = jsonDecode(raw);
-    if (decoded is! Map<String, dynamic>) return const EngineSettings();
-    return EngineSettings.fromJson(decoded);
+    if (decoded is! Map) return const EngineSettings();
+    return EngineSettings.fromJson(Map<String, dynamic>.from(decoded));
   } catch (_) {
     // Corrupted store must never crash the app at launch.
     return const EngineSettings();
