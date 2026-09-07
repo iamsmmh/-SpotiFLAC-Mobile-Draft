@@ -63,15 +63,15 @@ type Member struct {
 
 // Invite represents a pending invitation to join a playlist.
 type Invite struct {
-	ID         string     `json:"id"`
-	PlaylistID string     `json:"playlistId"`
-	PlaylistName string   `json:"playlistName"`
-	InviterID  string     `json:"inviterId"`
-	InviteeID  string     `json:"inviteeId"`
-	Role       Role       `json:"role"`
-	CreatedAt  time.Time  `json:"createdAt"`
-	ExpiresAt  time.Time  `json:"expiresAt"`
-	AcceptedAt *time.Time `json:"acceptedAt,omitempty"`
+	ID           string     `json:"id"`
+	PlaylistID   string     `json:"playlistId"`
+	PlaylistName string     `json:"playlistName"`
+	InviterID    string     `json:"inviterId"`
+	InviteeID    string     `json:"inviteeId"`
+	Role         Role       `json:"role"`
+	CreatedAt    time.Time  `json:"createdAt"`
+	ExpiresAt    time.Time  `json:"expiresAt"`
+	AcceptedAt   *time.Time `json:"acceptedAt,omitempty"`
 }
 
 // Change records one modification to a collaborative playlist.

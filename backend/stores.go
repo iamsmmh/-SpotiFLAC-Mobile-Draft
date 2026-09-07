@@ -357,8 +357,8 @@ func (s *inMemoryCollabStore) ListCollaborativePlaylists(_ context.Context, user
 // ---------------------------------------------------------------------------
 
 type inMemoryMarketStore struct {
-	clock     func() time.Time
-	mu        sync.RWMutex
+	clock      func() time.Time
+	mu         sync.RWMutex
 	extensions map[string]*marketplace.Extension
 	reviews    map[string][]marketplace.Review
 	installs   map[string]map[string]*marketplace.InstallRecord
@@ -488,10 +488,10 @@ func (s *inMemoryMarketStore) SetVerified(_ context.Context, extensionID string,
 // ---------------------------------------------------------------------------
 
 type inMemoryTelStore struct {
-	clock   func() time.Time
-	mu      sync.RWMutex
-	events  []telemetry.Event
-	health  map[string]*telemetry.ProviderHealth
+	clock  func() time.Time
+	mu     sync.RWMutex
+	events []telemetry.Event
+	health map[string]*telemetry.ProviderHealth
 }
 
 func (s *inMemoryTelStore) Ingest(_ context.Context, event telemetry.Event) error {

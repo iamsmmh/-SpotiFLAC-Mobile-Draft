@@ -20,7 +20,7 @@ import (
 
 // Errors.
 var (
-	ErrInvalidInput = errors.New("invalid input")
+	ErrInvalidInput  = errors.New("invalid input")
 	ErrQuotaExceeded = errors.New("telemetry quota exceeded")
 )
 
@@ -38,19 +38,19 @@ const (
 
 // Event is one telemetry report from a client.
 type Event struct {
-	ID          string            `json:"id"`
-	UserID      string            `json:"userId"`
-	DeviceID    string            `json:"deviceId"`
-	Type        EventType         `json:"type"`
-	Severity    string            `json:"severity"` // debug, info, warning, error, fatal
-	Category    string            `json:"category"`
-	Message     string            `json:"message"`
-	Stacktrace  string            `json:"stacktrace,omitempty"`
-	Metadata    map[string]string `json:"metadata,omitempty"`
-	DurationMs  int64             `json:"durationMs,omitempty"`
-	Success     *bool             `json:"success,omitempty"`
-	ProviderID  string            `json:"providerId,omitempty"`
-	CreatedAt   time.Time         `json:"createdAt"`
+	ID         string            `json:"id"`
+	UserID     string            `json:"userId"`
+	DeviceID   string            `json:"deviceId"`
+	Type       EventType         `json:"type"`
+	Severity   string            `json:"severity"` // debug, info, warning, error, fatal
+	Category   string            `json:"category"`
+	Message    string            `json:"message"`
+	Stacktrace string            `json:"stacktrace,omitempty"`
+	Metadata   map[string]string `json:"metadata,omitempty"`
+	DurationMs int64             `json:"durationMs,omitempty"`
+	Success    *bool             `json:"success,omitempty"`
+	ProviderID string            `json:"providerId,omitempty"`
+	CreatedAt  time.Time         `json:"createdAt"`
 }
 
 // Validate checks the event for basic sanity.

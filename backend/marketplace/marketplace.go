@@ -11,7 +11,8 @@
 //   - Extension analytics (install/uninstall/crash counts)
 //
 // Manifest v2 extends v1 with:
-//   rating, downloads, verified, dependencies, screenshots
+//
+//	rating, downloads, verified, dependencies, screenshots
 package marketplace
 
 import (
