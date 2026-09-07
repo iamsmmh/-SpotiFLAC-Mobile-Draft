@@ -198,7 +198,7 @@ final class PlaybackContinuityClient {
         _accessToken = accessToken,
         _deviceId = deviceId,
         _wsFactory = webSocketFactory ??
-            ((uri, headers) => io.WebSocket.connect(uri, headers: headers)),
+            ((uri, headers) => io.WebSocket.connect(uri.toString(), headers: headers)),
         _idleTimeout = idleTimeout {
     if (_base.isEmpty) {
       throw ArgumentError.value(baseUrl, 'baseUrl', 'must not be empty');
@@ -384,7 +384,11 @@ final class _ContinuityEvents {
         _watchdog = watchdog;
         await for (final frame in socket) {
           if (generation != _generation || !_running) break;
-          watchdog?.restart(_idleTimeout);
+          watchdog?.cancel();
+          watchdog = Timer(_idleTimeout, () {
+            socket?.close();
+          });
+          _watchdog = watchdog;
           final event = _decode(frame);
           if (event != null && !_controller.isClosed) {
             _controller.add(event);
@@ -577,7 +581,7 @@ final class PlaybackSyncController {
   /// fresher snapshot from another device, resume it. Never interrupts a
   /// track that is playing locally.
   Future<void> resumeFromCloudIfIdle() async {
-    if (musicPlayerHandler?.playbackState?.playing ?? false) return;
+    if (musicPlayerHandler?.playbackState.value.playing ?? false) return;
     final client = _ensureClient();
     if (client == null) return;
     ContinuityFetchResult? result;
@@ -616,7 +620,7 @@ final class PlaybackSyncController {
   Future<void> _handleHandoff(ContinuityEvent event) async {
     // Only ever auto-resume when idle: a hand-off must never interrupt the
     // user who is actively listening on this device.
-    if (musicPlayerHandler?.playbackState?.playing ?? false) return;
+    if (musicPlayerHandler?.playbackState.value.playing ?? false) return;
     final snapshot = event.snapshot;
     if (snapshot.trackId == _resumedTrackId) return;
     final resumeMs = _resumeMsFor(snapshot, event.at);
@@ -733,8 +737,8 @@ final class PlaybackSyncController {
       _pushTimer?.cancel();
       _pushTimer = null;
       unawaited(_push(client, snapshot));
-    } else if (_pushTimer == null) {
-      _pushTimer = Timer(pushInterval, () {
+    } else {
+      _pushTimer ??= Timer(pushInterval, () {
         _pushTimer = null;
         final c = _ensureClient();
         final s = _buildSnapshot();
@@ -762,7 +766,7 @@ final class PlaybackSyncController {
     final item = _lastItem;
     if (item == null || item.id.isEmpty) return null;
     if (_client != null && _cachedDeviceId.isEmpty) _refreshDeviceId();
-    final state = musicPlayerHandler?.playbackState;
+    final state = musicPlayerHandler?.playbackState.value;
     var queue = _queueIds;
     var index = queue.indexOf(item.id);
     if (index < 0) {
@@ -775,7 +779,7 @@ final class PlaybackSyncController {
       deviceId: _cachedDeviceId,
       trackId: item.id,
       title: item.title,
-      artist: item.artist,
+      artist: item.artist ?? '',
       artworkUrl: item.artUri?.toString() ?? '',
       positionMs: state?.position.inMilliseconds ?? 0,
       durationMs: (item.duration ?? Duration.zero).inMilliseconds,
