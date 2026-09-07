@@ -220,17 +220,14 @@ final class CarPlayBridge: NSObject, CPSearchTemplateDelegate {
         let template = listTemplate(title: title, parentId: parentId, image: nil)
         interfaceController?.pushTemplate(template, animated: true) { _, _ in completion() }
     }
-}
 
-// MARK: - CPSearchTemplateDelegate
+    // MARK: - CPSearchTemplateDelegate
 
-@available(iOS 14.0, *)
-extension CarPlayBridge {
     /// Runs the driver's typed / voice query against Dart's offline search
-    /// (the same [MediaBrowseTree.search] Android Auto uses) and hands the
-    /// hits back as one section. Dart search rows are flat and always
-    /// playable, so a tap plays the track directly.
-    func template(
+    /// (the same tree Android Auto uses) and hands the hits back as one
+    /// section. Dart search rows are flat and always playable, so a tap
+    /// plays the track directly.
+    @objc func template(
         _ template: CPSearchTemplate,
         didSearchForQuery query: String,
         completionHandler: @escaping ([CPListSection]) -> Void
