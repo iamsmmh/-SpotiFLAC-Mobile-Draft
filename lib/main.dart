@@ -38,6 +38,7 @@ import 'package:spotiflac_android/screens/ecosystem/unified_search_page.dart';
 import 'package:spotiflac_android/core/data/session_resource_budget.dart';
 import 'package:spotiflac_android/core/presentation/core_queue_providers.dart';
 import 'package:spotiflac_android/models/settings.dart';
+import 'package:spotiflac_android/models/theme_settings.dart';
 import 'package:spotiflac_android/providers/download_queue_provider.dart';
 import 'package:spotiflac_android/providers/discovery_providers.dart';
 import 'package:spotiflac_android/providers/audio_effects_provider.dart';
@@ -129,24 +130,20 @@ void main() {
         return true;
       };
 
-      final prefs = await SharedPreferences.getInstance();
       assert(
         ColdStartPolicy.blockingSteps.any(
           (step) => step.id == 'secure_store_init',
         ),
       );
       assert(ColdStartPolicy.isDeferred('cover_cache'));
-      await SecureStore.instance.ensureInitialized();
-      await _prepareAndroidInstallationState(prefs);
-      final bootstrapSettings = loadBootstrapSettings(prefs);
-      final bootstrapTheme = loadBootstrapThemeSettings(prefs);
-      final bootstrapEngineSettings = engineSettingsFromPrefs(prefs);
-      final initialSafAccessLost = await _detectInitialSafAccessLoss(
-        bootstrapSettings,
-      );
-      final runtimeProfile = await _resolveRuntimeProfile(prefs);
-      _configureImageCache(runtimeProfile);
-      _bindProductionHardening(runtimeProfile);
+
+      final bootstrap = await _loadLaunchBootstrap();
+      try {
+        _configureImageCache(bootstrap.runtimeProfile);
+      } catch (e) {
+        _log.w('Image cache configuration skipped: $e');
+      }
+      _bindProductionHardening(bootstrap.runtimeProfile);
       _bindEcosystemSurface();
       _bindPlatformUpgradeSurface();
       // Phase 10: opt-in crash reporting (no-op without a DSN — see
@@ -158,18 +155,18 @@ void main() {
         ProviderScope(
           overrides: [
             lowEndDeviceProvider.overrideWithValue(
-              runtimeProfile.disableOverscrollEffects,
+              bootstrap.runtimeProfile.disableOverscrollEffects,
             ),
             deviceSupportsBackdropBlurProvider.overrideWithValue(
-              runtimeProfile.enableBackdropBlur,
+              bootstrap.runtimeProfile.enableBackdropBlur,
             ),
-            initialSettingsProvider.overrideWithValue(bootstrapSettings),
+            initialSettingsProvider.overrideWithValue(bootstrap.settings),
             initialSafAccessLostProvider.overrideWithValue(
-              initialSafAccessLost,
+              bootstrap.initialSafAccessLost,
             ),
-            initialThemeSettingsProvider.overrideWithValue(bootstrapTheme),
+            initialThemeSettingsProvider.overrideWithValue(bootstrap.theme),
             initialEngineSettingsProvider.overrideWithValue(
-              bootstrapEngineSettings,
+              bootstrap.engineSettings,
             ),
             // Phase 3: bind the SpotiFLAC Cloud backend when a server is
             // configured (null ⇒ cloudSyncBackendProvider stays NoOp).
@@ -179,7 +176,8 @@ void main() {
           ],
           child: _EagerInitialization(
             child: SpotiFLACApp(
-              disableOverscrollEffects: runtimeProfile.disableOverscrollEffects,
+              disableOverscrollEffects:
+                  bootstrap.runtimeProfile.disableOverscrollEffects,
             ),
           ),
         ),
@@ -205,6 +203,55 @@ void main() {
       }
     },
   );
+}
+
+class _LaunchBootstrap {
+  const _LaunchBootstrap({
+    required this.settings,
+    required this.theme,
+    required this.engineSettings,
+    required this.initialSafAccessLost,
+    required this.runtimeProfile,
+  });
+
+  final AppSettings settings;
+  final ThemeSettings theme;
+  final EngineSettings engineSettings;
+  final bool initialSafAccessLost;
+  final _RuntimeProfile runtimeProfile;
+
+  static const defaults = _LaunchBootstrap(
+    settings: AppSettings(),
+    theme: ThemeSettings(),
+    engineSettings: EngineSettings(),
+    initialSafAccessLost: false,
+    runtimeProfile: _RuntimeProfile.standard(),
+  );
+}
+
+/// Loads prefs / secure store / runtime profile. Failures must not prevent
+/// [runApp]: a white splash with no Flutter UI is worse than default settings.
+Future<_LaunchBootstrap> _loadLaunchBootstrap() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    await SecureStore.instance.ensureInitialized();
+    await _prepareAndroidInstallationState(prefs);
+    final settings = loadBootstrapSettings(prefs);
+    final theme = loadBootstrapThemeSettings(prefs);
+    final engineSettings = engineSettingsFromPrefs(prefs);
+    final initialSafAccessLost = await _detectInitialSafAccessLoss(settings);
+    final runtimeProfile = await _resolveRuntimeProfile(prefs);
+    return _LaunchBootstrap(
+      settings: settings,
+      theme: theme,
+      engineSettings: engineSettings,
+      initialSafAccessLost: initialSafAccessLost,
+      runtimeProfile: runtimeProfile,
+    );
+  } catch (e, stack) {
+    _log.e('Launch bootstrap failed; starting with defaults: $e', e, stack);
+    return _LaunchBootstrap.defaults;
+  }
 }
 
 /// Build-time DSN (`--dart-define=SPOTIFLAC_SENTRY_DSN=…`). Empty → not
@@ -995,6 +1042,14 @@ class _EagerInitializationState extends ConsumerState<_EagerInitialization>
   }
 
   void _initializeDeferredProviders() {
+    try {
+      _initializeDeferredProvidersGuarded();
+    } catch (e, stack) {
+      _log.e('Deferred provider initialization failed: $e', e, stack);
+    }
+  }
+
+  void _initializeDeferredProvidersGuarded() {
     _downloadHistoryWarmupTimer = _scheduleProviderWarmup(
       const Duration(milliseconds: 400),
       () => ref.read(downloadHistoryProvider),
