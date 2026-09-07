@@ -18,6 +18,11 @@ class SocialFeatureFlags {
     this.playlistSharing = false,
     this.following = false,
     this.activityFeed = false,
+    this.collaborativePlaylists = false,
+    this.friendActivity = false,
+    this.realtimeSync = false,
+    this.hideListeningActivity = false,
+    this.privateSession = false,
   });
 
   final bool enabled;
@@ -25,6 +30,14 @@ class SocialFeatureFlags {
   final bool playlistSharing;
   final bool following;
   final bool activityFeed;
+
+  /// Extra social / privacy switches (Phase 11). Default off so existing
+  /// installs stay private until the user opts in.
+  final bool collaborativePlaylists;
+  final bool friendActivity;
+  final bool realtimeSync;
+  final bool hideListeningActivity;
+  final bool privateSession;
 
   /// Everything off — the shipping default.
   static const SocialFeatureFlags disabled = SocialFeatureFlags();
@@ -34,6 +47,10 @@ class SocialFeatureFlags {
   bool get canSharePlaylists => enabled && playlistSharing;
   bool get canFollow => enabled && following;
   bool get canShowFeed => enabled && activityFeed;
+  bool get canCollaborate => enabled && collaborativePlaylists;
+  bool get canShowFriendActivity =>
+      enabled && friendActivity && !privateSession && !hideListeningActivity;
+  bool get canUseRealtime => enabled && realtimeSync && !privateSession;
 
   SocialFeatureFlags copyWith({
     bool? enabled,
@@ -41,6 +58,11 @@ class SocialFeatureFlags {
     bool? playlistSharing,
     bool? following,
     bool? activityFeed,
+    bool? collaborativePlaylists,
+    bool? friendActivity,
+    bool? realtimeSync,
+    bool? hideListeningActivity,
+    bool? privateSession,
   }) {
     return SocialFeatureFlags(
       enabled: enabled ?? this.enabled,
@@ -48,6 +70,13 @@ class SocialFeatureFlags {
       playlistSharing: playlistSharing ?? this.playlistSharing,
       following: following ?? this.following,
       activityFeed: activityFeed ?? this.activityFeed,
+      collaborativePlaylists:
+          collaborativePlaylists ?? this.collaborativePlaylists,
+      friendActivity: friendActivity ?? this.friendActivity,
+      realtimeSync: realtimeSync ?? this.realtimeSync,
+      hideListeningActivity:
+          hideListeningActivity ?? this.hideListeningActivity,
+      privateSession: privateSession ?? this.privateSession,
     );
   }
 
@@ -57,6 +86,11 @@ class SocialFeatureFlags {
     'playlistSharing': playlistSharing,
     'following': following,
     'activityFeed': activityFeed,
+    'collaborativePlaylists': collaborativePlaylists,
+    'friendActivity': friendActivity,
+    'realtimeSync': realtimeSync,
+    'hideListeningActivity': hideListeningActivity,
+    'privateSession': privateSession,
   };
 
   static SocialFeatureFlags fromJson(Map<String, Object?> json) {
@@ -66,6 +100,11 @@ class SocialFeatureFlags {
       playlistSharing: json['playlistSharing'] == true,
       following: json['following'] == true,
       activityFeed: json['activityFeed'] == true,
+      collaborativePlaylists: json['collaborativePlaylists'] == true,
+      friendActivity: json['friendActivity'] == true,
+      realtimeSync: json['realtimeSync'] == true,
+      hideListeningActivity: json['hideListeningActivity'] == true,
+      privateSession: json['privateSession'] == true,
     );
   }
 
