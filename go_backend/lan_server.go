@@ -1,6 +1,9 @@
 package gobackend
 
 import (
+	"crypto/sha256"
+	"crypto/subtle"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"mime"
@@ -32,8 +35,11 @@ type lanTrack struct {
 }
 
 type lanServerConfig struct {
-	Port int    `json:"port"`
-	Root string `json:"root"`
+	Port     int    `json:"port"`
+	Root     string `json:"root"`
+	Pin      string `json:"pin,omitempty"`
+	CertFile string `json:"certFile,omitempty"`
+	KeyFile  string `json:"keyFile,omitempty"`
 }
 
 var lanWebPlayer struct {
@@ -208,6 +214,70 @@ func lanMux(root string) *http.ServeMux {
 	return mux
 }
 
+func lanTokenForPin(pin string) string {
+	sum := sha256.Sum256([]byte("spotiflac-lan-v1|" + pin))
+	return hex.EncodeToString(sum[:])
+}
+
+func lanConstEq(a, b string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	return subtle.ConstantTimeCompare([]byte(a), []byte(b)) == 1
+}
+
+func lanAuthorized(r *http.Request, pin, token string) bool {
+	if lanConstEq(r.Header.Get("X-SpotiFLAC-Pin"), pin) {
+		return true
+	}
+	auth := r.Header.Get("Authorization")
+	if len(auth) >= 7 && strings.EqualFold(auth[:7], "Bearer ") {
+		if lanConstEq(strings.TrimSpace(auth[7:]), token) {
+			return true
+		}
+	}
+	if c, err := r.Cookie("spotiflac_lan"); err == nil && lanConstEq(c.Value, token) {
+		return true
+	}
+	if q := r.URL.Query().Get("pin"); q != "" && lanConstEq(q, pin) {
+		return true
+	}
+	return false
+}
+
+// lanSecureMux wraps [lanMux] with PIN / bearer / cookie auth and a
+// read-only method gate. When [pin] is empty the inner mux is returned
+// unchanged so existing tests keep exercising the open player.
+func lanSecureMux(root, pin string) http.Handler {
+	inner := lanMux(root)
+	expected := strings.TrimSpace(pin)
+	if expected == "" {
+		return inner
+	}
+	token := lanTokenForPin(expected)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet, http.MethodHead, http.MethodOptions:
+		default:
+			http.Error(w, "read-only", http.StatusMethodNotAllowed)
+			return
+		}
+		if !lanAuthorized(r, expected, token) {
+			w.Header().Set("WWW-Authenticate", `Bearer realm="spotiflac-lan"`)
+			http.Error(w, "unauthorized", http.StatusUnauthorized)
+			return
+		}
+		http.SetCookie(w, &http.Cookie{
+			Name:     "spotiflac_lan",
+			Value:    token,
+			Path:     "/",
+			HttpOnly: true,
+			SameSite: http.SameSiteStrictMode,
+		})
+		inner.ServeHTTP(w, r)
+	})
+}
+
 // StartLanWebPlayer boots the server. configJSON: {"port":0,"root":"/dir"};
 // port 0 lets the OS pick a free one. Idempotent per root/port. Returns the
 // same JSON shape as GetLanWebPlayerStatus.
@@ -241,7 +311,15 @@ func StartLanWebPlayer(configJSON string) (bridgeOut string, bridgeErr error) {
 		lanWebPlayer.mu.Unlock()
 		return "", fmt.Errorf("could not bind %s: %w", addr, err)
 	}
-	srv := &http.Server{Handler: lanMux(cfg.Root)}
+	var handler http.Handler
+	if strings.TrimSpace(cfg.Pin) != "" {
+		handler = lanSecureMux(cfg.Root, cfg.Pin)
+	} else {
+		handler = lanMux(cfg.Root)
+	}
+	srv := &http.Server{Handler: handler}
+	certFile := strings.TrimSpace(cfg.CertFile)
+	keyFile := strings.TrimSpace(cfg.KeyFile)
 	lanWebPlayer.server = srv
 	lanWebPlayer.listener = ln
 	lanWebPlayer.root = cfg.Root
@@ -251,6 +329,10 @@ func StartLanWebPlayer(configJSON string) (bridgeOut string, bridgeErr error) {
 
 	go func() {
 		defer func() { _ = recoverBridgePanic(recover()) }()
+		if certFile != "" && keyFile != "" {
+			_ = srv.ServeTLS(ln, certFile, keyFile)
+			return
+		}
 		_ = srv.Serve(ln)
 	}()
 

@@ -45,8 +45,17 @@ class MediaBrowseTree {
   static const String albumsId = 'browse:albums';
   static const String libraryId = 'browse:library';
 
+  /// Extra Android Auto / CarPlay sections. Appended *after* the original
+  /// root so existing tests that expect `[queue, albums, library]` stay
+  /// green when the extra counts are zero (the default).
+  static const String homeId = 'browse:home';
+  static const String continueId = 'browse:continue';
+  static const String artistsId = 'browse:artists';
+  static const String recommendationsId = 'browse:recommendations';
+
   static const String playlistPrefix = 'playlist:';
   static const String albumPrefix = 'album:';
+  static const String artistPrefix = 'artist:';
 
   /// Maximum children returned per container. Head units render lists of
   /// this size comfortably; larger libraries page through `browse:library`.
@@ -108,6 +117,26 @@ class MediaBrowseTree {
         _folder(libraryId, 'Songs', subtitle: _countLabel(counts.library)),
       );
     }
+    if (counts.home > 0) {
+      items.add(_folder(homeId, 'Home'));
+    }
+    if (counts.continueListening > 0) {
+      items.add(_folder(continueId, 'Continue listening'));
+    }
+    if (counts.artists > 0) {
+      items.add(
+        _folder(
+          artistsId,
+          'Artists',
+          subtitle: '${counts.artists} '
+              '${counts.artists == 1 ? 'artist' : 'artists'}',
+          grid: true,
+        ),
+      );
+    }
+    if (counts.recommendations > 0) {
+      items.add(_folder(recommendationsId, 'For you'));
+    }
     return List<MediaItem>.unmodifiable(items);
   }
 
@@ -158,6 +187,25 @@ class MediaBrowseTree {
           await source.libraryMedia(limit: pageSize, offset: page * pageSize),
           containerId: libraryId,
         );
+      case homeId:
+        return _playable(
+          await source.recentMedia(limit: pageSize),
+          containerId: homeId,
+        );
+      case continueId:
+        return _playable(
+          await source.recentMedia(limit: pageSize),
+          containerId: continueId,
+        );
+      case recommendationsId:
+        return _playable(
+          await source.mostPlayedMedia(limit: pageSize),
+          containerId: recommendationsId,
+        );
+      case artistsId:
+        return _artistFolders(
+          await source.albums(limit: pageSize, offset: page * pageSize),
+        );
     }
     if (parentId.startsWith(playlistPrefix)) {
       final id = parentId.substring(playlistPrefix.length);
@@ -170,6 +218,21 @@ class MediaBrowseTree {
         await source.albumMedia(sourceTag: ref.source, key: ref.key),
         containerId: parentId,
       );
+    }
+    if (parentId.startsWith(artistPrefix)) {
+      final artist = _decodeArtistId(parentId);
+      if (artist == null) return const [];
+      final albums = await source.albums(limit: pageSize, offset: 0);
+      return List<MediaItem>.unmodifiable([
+        for (final album in albums)
+          if (album.artist == artist)
+            _folder(
+              '$albumPrefix${album.source}:${album.key}',
+              album.name,
+              subtitle: album.artist,
+              artUri: album.artUri,
+            ),
+      ]);
     }
     return const [];
   }
@@ -188,6 +251,11 @@ class MediaBrowseTree {
         return source.lovedMedia();
       case libraryId:
         return source.libraryMedia(limit: pageSize, offset: 0);
+      case homeId:
+      case continueId:
+        return source.recentMedia(limit: pageSize);
+      case recommendationsId:
+        return source.mostPlayedMedia(limit: pageSize);
     }
     if (containerId.startsWith(playlistPrefix)) {
       return source.playlistMedia(containerId.substring(playlistPrefix.length));
@@ -227,6 +295,31 @@ class MediaBrowseTree {
           },
         ),
     ]);
+  }
+
+  List<MediaItem> _artistFolders(List<MediaBrowseAlbum> albums) {
+    final seen = <String>{};
+    final items = <MediaItem>[];
+    for (final album in albums) {
+      final artist = album.artist.trim();
+      if (artist.isEmpty || !seen.add(artist)) continue;
+      items.add(
+        _folder(
+          '$artistPrefix${Uri.encodeComponent(artist)}',
+          artist,
+          artUri: album.artUri,
+          grid: true,
+        ),
+      );
+    }
+    return List<MediaItem>.unmodifiable(items);
+  }
+
+  static String? _decodeArtistId(String id) {
+    if (!id.startsWith(artistPrefix)) return null;
+    final rest = id.substring(artistPrefix.length);
+    if (rest.isEmpty) return null;
+    return Uri.decodeComponent(rest);
   }
 
   MediaItem _folder(
@@ -276,6 +369,13 @@ class MediaBrowseCounts {
   final int albums;
   final int library;
 
+  /// Extra sections (Phase 4). Default 0 so existing fakes / tests compile
+  /// and keep hiding empty folders.
+  final int home;
+  final int continueListening;
+  final int artists;
+  final int recommendations;
+
   const MediaBrowseCounts({
     this.queue = 0,
     this.recent = 0,
@@ -284,6 +384,10 @@ class MediaBrowseCounts {
     this.playlists = 0,
     this.albums = 0,
     this.library = 0,
+    this.home = 0,
+    this.continueListening = 0,
+    this.artists = 0,
+    this.recommendations = 0,
   });
 }
 

@@ -1,6 +1,6 @@
 # SpotiFLAC Mobile — Current Status
 
-**Last updated:** 2026-09-06 · **App version:** 5.0.0+142 · **Branch:** `arena/01a07619-spotiflac-mobile`
+**Last updated:** 2026-09-07 · **App version:** 5.0.0+142 · **Branch:** `arena/01a07cab-spotiflac-mobile-draft`
 
 ## Identity
 
@@ -61,6 +61,21 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
 | 126 previously-silent `catch (_) {}` paths now log (services, providers, metadata screens) | ✅ **new in this pass** |
 | `staticcheck ./...` (pinned 2026.2.1) added as a hard CI gate | ✅ **new in this pass** |
 | Docs consolidated: `docs/{architecture,streaming,extensions,testing,changelog}.md` (root docs are pointer stubs) | ✅ **new in this pass** |
+| Persistent stream-byte cache (1–100 GiB LRU, integrity, resume, local→cache→provider→preview ladder) | ✅ **new in this pass** |
+| Smart offline auto-download (liked / Discover Weekly / Daily Mixes / playlists; Wi-Fi+charging+battery gates) | ✅ **new in this pass** |
+| Cloud sync facade + playlist union-merge + Supabase SQL/RLS (`backend/supabase/`) | ✅ **new in this pass** (adapters still pluggable; no bundled credentials) |
+| Android Auto Home / Continue / Artists / For you (appended after existing root) | ✅ **new in this pass** |
+| CarPlay Search + Now Playing templates; Siri play artist/album/playlist/resume | ✅ **new in this pass** |
+| On-device ML mixes + Release Radar | ✅ **new in this pass** |
+| Smart search (typo / suggestions / unified kinds) | ✅ **new in this pass** |
+| Podcast OPML + sleep timer + new-episode alerts | ✅ **new in this pass** |
+| Audiobook library (chapters, resume, bookmarks, progress sync) | ✅ **new in this pass** |
+| Social privacy (private session, friend activity, collaborative; default off) | ✅ **new in this pass** |
+| History analytics recaps, audio-quality inspector badges | ✅ **new in this pass** |
+| LAN player PIN / token / read-only gate (open mux when PIN unset) | ✅ **new in this pass** |
+| iOS AVAudioEngine EQ policy (optional; AVPlayer path unchanged) | ✅ **new in this pass** |
+| Performance budgets (100k tracks, search <150 ms, startup <2 s, 60 fps paging/isolates) | ✅ **new in this pass** |
+| Observability facade over CrashReporter (redact pin/token/DSN) | ✅ **new in this pass** |
 
 ## Engineering gates
 
@@ -98,9 +113,9 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
   settings page). Enabling it requires registering a `CloudSyncProvider`
   (Firebase/Supabase/self-hosted) with real project credentials —
   intentionally not bundled.
-- **Persistent stream-byte caching** (play counts as offline copy) is designed
-  in `ARCHITECTURE.md` but deferred: it must be validated against the
-  verified audio pipeline with device coverage before shipping.
+- **Persistent stream-byte caching** now ships as the Dart ledger + playback
+  ladder (`lib/services/cache/`). Device coverage against the verified audio
+  pipeline is still the remaining validation before treating it as default-on.
 
 - **Downloads** require at least one download extension (now one tap away via
   setup or the Store card). There is intentionally no built-in download
@@ -109,8 +124,10 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
 - **Lossless streams** require the user's own account tokens (provider
   accounts page) or provider extensions. Without them the engine falls back
   to YouTube/SoundCloud/previews by design.
-- **iOS equalizer** stays unavailable (AVPlayer cannot host AudioUnit
-  effects without an AVAudioEngine re-route); the UI reports this honestly.
+- **iOS equalizer**: AVPlayer still cannot host AudioUnit effects; the
+  settings UI keeps reporting the main chain unavailable. An optional
+  AVAudioEngine parametric EQ (`IosAvAudioEngineEqualizer`) is registered
+  beside it for a future engine graph and does not replace the pipeline.
 - **CI APKs are debug-signed.** Play-Store artifacts need `key.properties` /
   signing secrets (documented in `BUILD_REPORT.md`).
 - The **upstream `spotiflacapp` repository** still needs
@@ -127,7 +144,8 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
 3. **Android 15 `dataSync` budget strategy** (WorkManager migration) for very
    long queues; denial is currently handled gracefully, not scheduled around.
 4. Executed DB-migration tests (`sqflite_common_ffi`) to replace the current
-   source-contract assertions; iOS EQ engine; car mode.
+   source-contract assertions. iOS EQ / car extras now have Dart policy +
+   tests; native AVAudioEngine graph and CarPlay UI still need device QA.
 5. Make the Go suite order-independent enough to enable `-shuffle=on` (a
    first attempt in CI exposed shared package-level state between tests);
    `-race` stays on regardless.

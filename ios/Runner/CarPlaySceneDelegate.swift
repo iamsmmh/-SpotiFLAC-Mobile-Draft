@@ -138,6 +138,7 @@ final class CarPlayBridge: NSObject {
                          image: UIImage(systemName: "music.note.house")),
             listTemplate(title: "Recent", parentId: "browse:recent",
                          image: UIImage(systemName: "clock")),
+            searchTab(),
             nowPlayingTab(),
         ])
 
@@ -154,6 +155,25 @@ final class CarPlayBridge: NSObject {
         template.tabTitle = "Now Playing"
         template.tabImage = UIImage(systemName: "play.circle")
         return template
+    }
+
+    private func searchTab() -> CPSearchTemplate {
+        let template = CPSearchTemplate()
+        template.tabTitle = "Search"
+        template.tabImage = UIImage(systemName: "magnifyingglass")
+        template.delegate = self
+        return template
+    }
+
+    /// Asks Dart for voice / typed search hits.
+    private func search(_ query: String, completion: @escaping ([CarPlayItem]) -> Void) {
+        guard let channel = channel else {
+            completion([])
+            return
+        }
+        channel.invokeMethod("search", arguments: ["query": query]) { response in
+            completion(CarPlayItem.parseList(response))
+        }
     }
 
     /// Builds a list template that lazily fills itself from Dart.

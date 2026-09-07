@@ -53,8 +53,26 @@ import 'package:spotiflac_android/providers/settings_provider.dart';
 import 'package:spotiflac_android/providers/multi_provider_stream_provider.dart';
 import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
 import 'package:spotiflac_android/providers/theme_provider.dart';
+import 'package:spotiflac_android/services/audio/audio_quality_inspector.dart';
+import 'package:spotiflac_android/services/audio/ios_avaudio_engine_eq.dart';
+import 'package:spotiflac_android/services/audiobook/audiobook.dart';
+import 'package:spotiflac_android/services/cache/cache.dart';
+import 'package:spotiflac_android/services/carplay_service.dart';
+import 'package:spotiflac_android/services/cloud/cloud_sync_service.dart';
+import 'package:spotiflac_android/services/cloud/merge_engine.dart';
+import 'package:spotiflac_android/services/history/history_analytics_service.dart';
+import 'package:spotiflac_android/services/lan/lan_player_security.dart';
+import 'package:spotiflac_android/services/media_browse_tree.dart';
 import 'package:spotiflac_android/services/notification_service.dart';
+import 'package:spotiflac_android/services/observability/observability.dart';
+import 'package:spotiflac_android/services/offline/offline.dart';
+import 'package:spotiflac_android/services/performance/performance.dart';
 import 'package:spotiflac_android/services/platform_bridge.dart';
+import 'package:spotiflac_android/services/podcasts/podcasts.dart';
+import 'package:spotiflac_android/services/recommendation/ml/ml.dart';
+import 'package:spotiflac_android/services/recommendation/release_radar_service.dart';
+import 'package:spotiflac_android/services/search/search.dart';
+import 'package:spotiflac_android/services/social/social.dart';
 import 'package:spotiflac_android/services/app_remote_config_service.dart';
 import 'package:spotiflac_android/services/share_intent_service.dart';
 import 'package:spotiflac_android/services/cover_cache_manager.dart';
@@ -128,7 +146,8 @@ void main() {
       final runtimeProfile = await _resolveRuntimeProfile(prefs);
       _configureImageCache(runtimeProfile);
       _bindProductionHardening(runtimeProfile);
-  _bindEcosystemSurface();
+      _bindEcosystemSurface();
+      _bindPlatformUpgradeSurface();
       // Phase 10: opt-in crash reporting (no-op without a DSN — see
       // [_configureCrashReporting]). Runs before runApp so the very first
       // frame errors are already captured.
@@ -667,6 +686,146 @@ void _bindEcosystemSurface() {
 
   assert(pinned.isNotEmpty);
   _log.d('ecosystem surface pinned: ${pinned.length} declarations');
+}
+
+/// Pins the production-upgrade modules (stream cache, offline, cloud, car,
+/// recs, search, podcasts, audiobooks, social, LAN, iOS EQ, performance,
+/// observability) so `unreachable_from_main` cannot delete them.
+void _bindPlatformUpgradeSurface() {
+  Type type<T>() => T;
+
+  final pinned = <Object?>[
+    // ---- stream cache (Phase 1) ------------------------------------------
+    type<CachedTrackRecord>(),
+    CachedTrackRecord.fromRow,
+    StreamCacheBudget.minBytes,
+    StreamCacheBudget.maxSupportedBytes,
+    StreamCacheBudget.defaultBytes,
+    StreamCacheBudget.bytes,
+    StreamCacheBudget.gigabytes,
+    streamCacheTracksDdl,
+    type<CachedTrackRepository>(),
+    MemoryCachedTrackRepository.new,
+    PlaybackSourceKind.values,
+    const PlaybackSourceLadder(),
+    CacheIntegrity.values,
+    type<PartialCacheState>(),
+    type<StreamCacheIo>(),
+    MemoryStreamCacheIo.new,
+    type<StreamCacheManager>(),
+    type<CacheEvictionCandidate>(),
+    type<CacheEvictionPlan>(),
+    const CacheEvictionService(),
+
+    // ---- smart offline (Phase 2) -----------------------------------------
+    OfflineCollectionKind.values,
+    const OfflineSyncRules(),
+    const OfflineSyncPolicy(),
+    type<OfflineDeviceState>(),
+    type<OfflineAdmission>(),
+    type<OfflinePlaylistTarget>(),
+    type<OfflineTrackWork>(),
+    type<OfflinePlaylistSyncService>(),
+    type<OfflineRecommendationShelf>(),
+    type<OfflineRecommendationSyncService>(),
+    type<OfflineSyncPlan>(),
+    type<OfflineSyncScheduler>(),
+
+    // ---- cloud sync (Phase 3) --------------------------------------------
+    cloudSyncScopes,
+    type<CloudSyncCycleReport>(),
+    type<CloudSyncService>(),
+    type<MergedPlaylistPayload>(),
+    const SyncMergeEngine(),
+
+    // ---- recs / radar (Phases 6–7) ---------------------------------------
+    type<TasteSignal>(),
+    type<UserTasteModel>(),
+    type<UserTasteBuilder>(),
+    type<SimilarTrack>(),
+    type<MlSimilarityEngine>(),
+    GeneratedMixKind.values,
+    type<GeneratedMix>(),
+    type<PlaylistGenerator>(),
+    ListeningContext.values,
+    const ContextClock(),
+    type<ContextAwareRecommendations>(),
+    type<ArtistRelease>(),
+    type<ReleaseRadarSnapshot>(),
+    type<ReleaseRadarService>(),
+
+    // ---- smart search (Phase 8) ------------------------------------------
+    type<TypoCorrection>(),
+    type<TypoCorrector>(),
+    SuggestionSource.values,
+    type<SearchSuggestion>(),
+    type<SearchSuggestionEngine>(),
+    SmartSearchKind.values,
+    type<SmartSearchHit>(),
+    type<SmartSearchResponse>(),
+    type<SmartSearchCatalog>(),
+    type<SmartSearchEngine>(),
+
+    // ---- Android Auto / CarPlay extras (Phases 4–5) ----------------------
+    MediaBrowseTree.homeId,
+    MediaBrowseTree.continueId,
+    MediaBrowseTree.artistsId,
+    MediaBrowseTree.recommendationsId,
+    MediaBrowseTree.artistPrefix,
+    type<CarPlayService>(),
+
+    // ---- podcasts / audiobooks / social (Phases 9–11) --------------------
+    type<OpmlOutline>(),
+    type<OpmlCodec>(),
+    SleepTimerMode.values,
+    type<SleepTimer>(),
+    type<PodcastEpisodeAlert>(),
+    type<PodcastNotificationPolicy>(),
+    type<AudiobookChapter>(),
+    type<AudiobookBookmark>(),
+    type<Audiobook>(),
+    const AudiobookProgressMerge(),
+    playableFromAudiobook,
+    type<AudiobookLibrary>(),
+    type<AudiobookPlayer>(),
+    type<SocialPrivacyDecision>(),
+    type<SocialPrivacyPolicy>(),
+    type<FriendActivityEvent>(),
+    type<FriendActivityPublisher>(),
+    type<CollaborativePlaylistGate>(),
+
+    // ---- history / quality / LAN / iOS EQ (Phases 12–15) -----------------
+    type<HistoryAnalyticsSnapshot>(),
+    type<HistoryAnalyticsService>(),
+    AudioQualityBadge.values,
+    type<AudioQualityReport>(),
+    type<AudioQualityInspector>(),
+    kLanPinMinLength,
+    kLanPinHeader,
+    kLanTrustedDeviceCookie,
+    type<LanPlayerSecurity>(),
+    type<IosParametricBand>(),
+    type<IosAvAudioEngineEqPayload>(),
+    type<IosAvAudioEngineEqPolicy>(),
+
+    // ---- performance / observability (Phases 16–17) ----------------------
+    PerformanceBudget.search,
+    PerformanceBudget.startup,
+    PerformanceBudget.frame,
+    type<PerformanceSample>(),
+    type<PerformanceProbe>(),
+    type<LibraryWorkingSet>(),
+    type<IsolateWork<Object?, Object?>>(),
+    const IsolateCompute(useIsolate: false),
+    type<PageSlice<String>>(),
+    type<PagedLibrary<String>>(),
+    type<ObservabilityService>(),
+    type<SecretRedactor>(),
+    ObservabilitySurface.values,
+  ];
+
+  assert(pinned.isNotEmpty);
+  _log.d('platform upgrade surface pinned: ${pinned.length} declarations');
 }
 
 void _configureImageCache(_RuntimeProfile runtimeProfile) {

@@ -50,14 +50,22 @@ class AppMediaBrowseSource implements MediaBrowseSource {
     } catch (e) {
       _log.w('Library counts unavailable for browse root: $e');
     }
+    final recentCount =
+        stats.trackStats.isEmpty ? 0 : stats.recentTracks.length;
+    final topCount =
+        stats.trackStats.isEmpty ? 0 : stats.mostPlayedTracks.length;
     return MediaBrowseCounts(
       queue: queue,
-      recent: stats.trackStats.isEmpty ? 0 : stats.recentTracks.length,
-      top: stats.trackStats.isEmpty ? 0 : stats.mostPlayedTracks.length,
+      recent: recentCount,
+      top: topCount,
       loved: loved,
       playlists: playlists,
       albums: albums,
       library: library,
+      home: recentCount > 0 || library > 0 ? 1 : 0,
+      continueListening: recentCount,
+      artists: albums,
+      recommendations: topCount,
     );
   }
 

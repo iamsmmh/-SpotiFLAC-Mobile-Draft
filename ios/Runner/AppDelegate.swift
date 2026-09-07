@@ -1593,6 +1593,9 @@ extension AppDelegate {
         if #available(iOS 15.0, *) {
             siriIntentHandler = SiriIntentHandler(messenger: messenger)
         }
+        if #available(iOS 13.0, *) {
+            iosEqController = IosAvAudioEngineEqualizer(messenger: messenger)
+        }
         if #available(iOS 14.0, *) {
             CarPlayBridge.shared.register(messenger: messenger)
         }

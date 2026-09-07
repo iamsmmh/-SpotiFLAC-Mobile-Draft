@@ -121,3 +121,66 @@ func TestLanMuxEndpoints(t *testing.T) {
 		t.Fatal("player page not served at /")
 	}
 }
+
+func TestLanSecureMuxRequiresPin(t *testing.T) {
+	root := writeLanFixture(t)
+	srv := httptest.NewServer(lanSecureMux(root, "2468"))
+	defer srv.Close()
+
+	resp, err := http.Get(srv.URL + "/api/tracks")
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp.Body.Close()
+	if resp.StatusCode != http.StatusUnauthorized {
+		t.Fatalf("open request status %d, want 401", resp.StatusCode)
+	}
+
+	req, _ := http.NewRequest(http.MethodGet, srv.URL+"/api/tracks", nil)
+	req.Header.Set("X-SpotiFLAC-Pin", "2468")
+	resp, err = http.DefaultClient.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("pin request status %d, want 200", resp.StatusCode)
+	}
+
+	token := lanTokenForPin("2468")
+	req, _ = http.NewRequest(http.MethodGet, srv.URL+"/api/tracks", nil)
+	req.Header.Set("Authorization", "Bearer "+token)
+	resp, err = http.DefaultClient.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("bearer request status %d, want 200", resp.StatusCode)
+	}
+
+	req, _ = http.NewRequest(http.MethodPost, srv.URL+"/api/tracks", nil)
+	req.Header.Set("X-SpotiFLAC-Pin", "2468")
+	resp, err = http.DefaultClient.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp.Body.Close()
+	if resp.StatusCode != http.StatusMethodNotAllowed {
+		t.Fatalf("write status %d, want 405", resp.StatusCode)
+	}
+}
+
+func TestLanSecureMuxEmptyPinIsOpen(t *testing.T) {
+	root := writeLanFixture(t)
+	srv := httptest.NewServer(lanSecureMux(root, ""))
+	defer srv.Close()
+	resp, err := http.Get(srv.URL + "/api/tracks")
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("empty-pin status %d, want 200", resp.StatusCode)
+	}
+}

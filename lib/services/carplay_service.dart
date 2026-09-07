@@ -74,6 +74,14 @@ class CarPlayService {
         final parentId = args['parentId']?.toString() ?? '';
         await _play(itemId, parentId);
         return true;
+      case 'search':
+        final args = call.arguments;
+        final query = args is Map ? args['query']?.toString() ?? '' : '';
+        return search(query);
+      case 'nowPlaying':
+        return nowPlayingTemplate();
+      case 'recommendations':
+        return browse(MediaBrowseTree.recommendationsId);
       default:
         return null;
     }
@@ -149,6 +157,33 @@ class CarPlayService {
       return false;
     }
   }
+
+  /// Voice / Search tab: reuse the same offline [MediaBrowseTree.search]
+  /// Android Auto already uses. Never throws.
+  Future<List<Map<String, Object?>>> search(String query) async {
+    try {
+      final children = await _tree.search(query, limit: maxRows);
+      final rows = <Map<String, Object?>>[];
+      for (final item in children.take(maxRows)) {
+        rows.add(<String, Object?>{
+          'id': item.id,
+          'title': item.title,
+          'subtitle': _subtitleFor(item),
+          'isBrowsable': false,
+        });
+      }
+      return rows;
+    } catch (error, stack) {
+      _log.e('CarPlay search failed for "$query"', error, stack);
+      return const <Map<String, Object?>>[];
+    }
+  }
+
+  /// Now Playing template payload. The Swift side still owns the live
+  /// `CPNowPlayingTemplate`; this is the Dart hint that the tab exists.
+  Map<String, Object?> nowPlayingTemplate() => const <String, Object?>{
+        'template': 'nowPlaying',
+      };
 
   void dispose() {
     if (!_registered) return;

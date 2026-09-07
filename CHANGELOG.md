@@ -39,6 +39,38 @@
 
 ### Added
 
+- **Production music-platform upgrade (phases 1–18), additive.** Existing
+  download / playback / browse / sync APIs are unchanged. New modules wrap
+  them:
+  - **Streaming cache** (`lib/services/cache/`): LRU 1–100 GiB ledger,
+    SHA-256 integrity, resume of partials, `PlaybackSourceLadder`
+    (local → cache → provider → preview) beside `HybridPlaybackPlanner`.
+  - **Smart offline** (`lib/services/offline/`): Wi-Fi + charging + battery
+    gates (unknown battery does not block); auto-download liked / Discover
+    Weekly / Daily Mixes / marked playlists.
+  - **Cloud sync** (`lib/services/cloud/` + `backend/supabase/`): LWW records,
+    playlist union-merge, Daily Mix under `SyncScope.settings` `dailymix:`
+    keys (no new SyncScope). Supabase SQL + RLS.
+  - **Android Auto / CarPlay**: Home, Continue listening, Artists, For you
+    appended after the existing browse root; CarPlay Search tab
+    (`CPSearchTemplate`) + `CPNowPlayingTemplate`; Siri play
+    artist/album/playlist/resume already wired.
+  - **ML recs + Release Radar** (`lib/services/recommendation/`): on-device
+    taste model, `MlSimilarityEngine`, Discover Weekly / Daily Mix / mood /
+    artist mixes, weekly radar.
+  - **Smart search** (`lib/services/search/`): typo correction, suggestions,
+    unified tracks/albums/artists/playlists/podcasts/servers wrapping
+    `UnifiedSearchEngine`.
+  - **Podcasts**: OPML import/export, sleep timer, new-episode notification
+    policy around the existing `PodcastPlayer`.
+  - **Audiobooks**: chapters, resume, bookmarks, LWW progress merge.
+  - **Social privacy**: collaborative / friend-activity / realtime flags
+    default off; private session wins.
+  - **History analytics, audio quality inspector, LAN PIN/token/read-only
+    gate** (open `lanMux` unchanged when no PIN), **iOS AVAudioEngine EQ
+    policy** (does not replace AVPlayer), **performance budgets** (search
+    <150 ms, startup <2 s, 60 fps, 100k-track paging), **observability**
+    wrapping `CrashReporter` with extra secret redaction.
 - **Audio settings surface for the premium audio engine.** The ReplayGain and
   loudness-normalization engine shipped its runtime in an earlier pass but had
   no UI: `audioEngineSettingsProvider` was watched only by the engine binding,
