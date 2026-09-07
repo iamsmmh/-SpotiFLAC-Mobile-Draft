@@ -476,6 +476,7 @@ jobs:
           body_path: /tmp/release_notes.md
           files: |
             dist/*.apk
+            dist/*.aab
             dist/*.ipa
             dist/SHA256SUMS.txt
           prerelease: ${{ needs.meta.outputs.prerelease == 'true' }}

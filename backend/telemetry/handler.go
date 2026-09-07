@@ -19,14 +19,14 @@ func NewHandler(svc *Service) *Handler {
 }
 
 // MiddlewareFunc is the signature for auth middleware.
-type MiddlewareFunc func(http.HandlerFunc) http.HandlerFunc
+type MiddlewareFunc func(http.Handler) http.Handler
 
 // Routes registers telemetry endpoints.
 func (h *Handler) Routes(mux *http.ServeMux, auth MiddlewareFunc) {
-	mux.HandleFunc("POST /v1/telemetry/events", auth(h.ingest))
-	mux.HandleFunc("GET /v1/telemetry/events", auth(h.query))
-	mux.HandleFunc("GET /v1/telemetry/summary", auth(h.summary))
-	mux.HandleFunc("GET /v1/telemetry/providers", auth(h.providerHealth))
+	mux.Handle("POST /v1/telemetry/events", auth(http.HandlerFunc(h.ingest)))
+	mux.Handle("GET /v1/telemetry/events", auth(http.HandlerFunc(h.query)))
+	mux.Handle("GET /v1/telemetry/summary", auth(http.HandlerFunc(h.summary)))
+	mux.Handle("GET /v1/telemetry/providers", auth(http.HandlerFunc(h.providerHealth)))
 }
 
 func (h *Handler) ingest(w http.ResponseWriter, r *http.Request) {

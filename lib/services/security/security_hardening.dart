@@ -15,9 +15,7 @@
 library;
 
 import 'dart:convert';
-import 'dart:io' show Platform;
 import 'dart:math' as math;
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:spotiflac_android/utils/logger.dart';
@@ -33,7 +31,7 @@ final _log = AppLogger('SecurityHardening');
 /// In production, pins are loaded from the remote config or compiled in.
 /// This implementation validates leaf certificate SPKI hashes.
 class CertificatePinner {
-  CertificatePinger._();
+  CertificatePinner._();
 
   /// Known-good SPKI SHA-256 hashes for the SpotiFLAC Cloud.
   static const Set<String> cloudPins = <String>{
@@ -53,6 +51,7 @@ class CertificatePinner {
     for (final cert in certificateChain) {
       // In production: compute SPKI SHA-256 and compare against cloudPins.
       // This stub documents the contract.
+      if (cert.isEmpty) continue;
     }
     return false;
   }
@@ -103,6 +102,9 @@ class JwtRotationManager {
       final refreshToken = await _getRefreshToken();
       if (refreshToken == null || refreshToken.isEmpty) return null;
       final newAccessToken = await _refresh(refreshToken);
+      if (newAccessToken == null || newAccessToken.isEmpty) return null;
+      // Persist the rotated pair so the next launch uses the fresh tokens.
+      await _storeTokens(newAccessToken, refreshToken);
       return newAccessToken;
     } catch (error, stack) {
       _log.e('JWT rotation failed', error, stack);

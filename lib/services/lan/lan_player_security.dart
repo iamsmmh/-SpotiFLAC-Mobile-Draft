@@ -80,11 +80,14 @@ class LanPlayerSecurity {
     bool tls = false,
   }) {
     final normalized = normalizePin(pin);
-    return <String, Object?>{
+    final config = <String, Object?>{
       'port': port,
       'root': root,
-      if (normalized != null) 'pin': normalized,
       'tls': tls && normalized != null,
     };
+    if (normalized != null) {
+      config['pin'] = normalized;
+    }
+    return config;
   }
 }

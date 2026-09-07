@@ -19,17 +19,17 @@ func NewHandler(svc *Service) *Handler {
 }
 
 // MiddlewareFunc is the signature for auth middleware.
-type MiddlewareFunc func(http.HandlerFunc) http.HandlerFunc
+type MiddlewareFunc func(http.Handler) http.Handler
 
 // Routes registers marketplace endpoints.
 func (h *Handler) Routes(mux *http.ServeMux, auth MiddlewareFunc) {
 	mux.HandleFunc("GET /v1/marketplace/extensions", h.search)
 	mux.HandleFunc("GET /v1/marketplace/extensions/{id}", h.getExtension)
-	mux.HandleFunc("POST /v1/marketplace/extensions/{id}/install", auth(h.install))
-	mux.HandleFunc("DELETE /v1/marketplace/extensions/{id}/install", auth(h.uninstall))
+	mux.Handle("POST /v1/marketplace/extensions/{id}/install", auth(http.HandlerFunc(h.install)))
+	mux.Handle("DELETE /v1/marketplace/extensions/{id}/install", auth(http.HandlerFunc(h.uninstall)))
 	mux.HandleFunc("GET /v1/marketplace/extensions/{id}/reviews", h.getReviews)
-	mux.HandleFunc("POST /v1/marketplace/extensions/{id}/reviews", auth(h.addReview))
-	mux.HandleFunc("GET /v1/marketplace/updates", auth(h.checkUpdates))
+	mux.Handle("POST /v1/marketplace/extensions/{id}/reviews", auth(http.HandlerFunc(h.addReview)))
+	mux.Handle("GET /v1/marketplace/updates", auth(http.HandlerFunc(h.checkUpdates)))
 	mux.HandleFunc("GET /v1/marketplace/extensions/{id}/dependencies", h.getDependencies)
 }
 

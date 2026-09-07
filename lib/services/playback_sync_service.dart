@@ -208,7 +208,7 @@ class PlaybackSyncService {
     if (current?.trackId == cloudSnapshot.trackId) return false;
 
     try {
-      await _onResume!(cloudSnapshot);
+      await _onResume(cloudSnapshot);
       _log.i(
         'Resumed from cloud: "${cloudSnapshot.title}" @ '
         '${cloudSnapshot.positionMs}ms',

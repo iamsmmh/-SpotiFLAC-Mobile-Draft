@@ -47,7 +47,8 @@ import 'package:spotiflac_android/providers/extension_provider.dart';
 import 'package:spotiflac_android/providers/local_library_provider.dart';
 import 'package:spotiflac_android/providers/media_browse_provider.dart';
 import 'package:spotiflac_android/providers/playback_statistics_provider.dart';
-import 'package:spotiflac_android/providers/search_history_provider.dart';
+import 'package:spotiflac_android/providers/search_history_provider.dart'
+    hide SearchSuggestion;
 import 'package:spotiflac_android/providers/runtime_profile_provider.dart';
 import 'package:spotiflac_android/providers/settings_provider.dart';
 import 'package:spotiflac_android/providers/multi_provider_stream_provider.dart';

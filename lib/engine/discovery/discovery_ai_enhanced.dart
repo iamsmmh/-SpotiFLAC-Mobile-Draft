@@ -56,7 +56,6 @@ class UserVector {
     int dimensions = 64,
   }) {
     final weights = List<double>.filled(dimensions, 0);
-    final random = math.Random(userId.hashCode);
 
     // Hash artist affinities into the vector space.
     for (final entry in profile.artists.take(50)) {

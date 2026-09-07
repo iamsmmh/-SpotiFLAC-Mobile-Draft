@@ -63,7 +63,7 @@ jobs:
           go install golang.org/x/mobile/cmd/gomobile
           gomobile init
           mkdir -p ../android/app/libs
-          gomobile bind -target=android/x86_64 -androidapi 24 \
+          gomobile bind -target=android/amd64 -androidapi 24 \
             -o ../android/app/libs/gobackend.aar .
 
       - name: Get Flutter dependencies

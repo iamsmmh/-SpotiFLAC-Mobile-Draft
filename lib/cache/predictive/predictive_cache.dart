@@ -272,7 +272,7 @@ class PredictiveCacheManager {
   void _runCleanup() {
     _checkStorageLimits();
     _log.d(
-      'Cache cleanup: ${trackCount} tracks, '
+      'Cache cleanup: $trackCount tracks, '
       '${totalSizeBytes ~/ (1024 * 1024)} MB',
     );
   }

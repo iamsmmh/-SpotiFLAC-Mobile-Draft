@@ -20,14 +20,14 @@ func NewHandler(svc *Service) *Handler {
 }
 
 // MiddlewareFunc is the signature for auth middleware.
-type MiddlewareFunc func(http.HandlerFunc) http.HandlerFunc
+type MiddlewareFunc func(http.Handler) http.Handler
 
 // Routes registers user endpoints on the given mux.
 func (h *Handler) Routes(mux *http.ServeMux, auth MiddlewareFunc) {
-	mux.HandleFunc("GET /v1/users/me", auth(h.getMe))
-	mux.HandleFunc("PUT /v1/users/me", auth(h.updateMe))
-	mux.HandleFunc("DELETE /v1/users/me", auth(h.deleteMe))
-	mux.HandleFunc("GET /v1/users/public", auth(h.listPublic))
+	mux.Handle("GET /v1/users/me", auth(http.HandlerFunc(h.getMe)))
+	mux.Handle("PUT /v1/users/me", auth(http.HandlerFunc(h.updateMe)))
+	mux.Handle("DELETE /v1/users/me", auth(http.HandlerFunc(h.deleteMe)))
+	mux.Handle("GET /v1/users/public", auth(http.HandlerFunc(h.listPublic)))
 }
 
 type profileResponse struct {

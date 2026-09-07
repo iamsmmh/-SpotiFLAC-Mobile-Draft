@@ -19,16 +19,16 @@ func NewHandler(svc *Service) *Handler {
 }
 
 // MiddlewareFunc is the signature for auth middleware.
-type MiddlewareFunc func(http.HandlerFunc) http.HandlerFunc
+type MiddlewareFunc func(http.Handler) http.Handler
 
 // Routes registers device endpoints on the given mux.
 func (h *Handler) Routes(mux *http.ServeMux, auth MiddlewareFunc) {
-	mux.HandleFunc("POST /v1/devices", auth(h.register))
-	mux.HandleFunc("GET /v1/devices", auth(h.list))
-	mux.HandleFunc("GET /v1/devices/{id}", auth(h.get))
-	mux.HandleFunc("DELETE /v1/devices/{id}", auth(h.revoke))
-	mux.HandleFunc("PUT /v1/devices/{id}/trust", auth(h.setTrust))
-	mux.HandleFunc("DELETE /v1/devices", auth(h.revokeAll))
+	mux.Handle("POST /v1/devices", auth(http.HandlerFunc(h.register)))
+	mux.Handle("GET /v1/devices", auth(http.HandlerFunc(h.list)))
+	mux.Handle("GET /v1/devices/{id}", auth(http.HandlerFunc(h.get)))
+	mux.Handle("DELETE /v1/devices/{id}", auth(http.HandlerFunc(h.revoke)))
+	mux.Handle("PUT /v1/devices/{id}/trust", auth(http.HandlerFunc(h.setTrust)))
+	mux.Handle("DELETE /v1/devices", auth(http.HandlerFunc(h.revokeAll)))
 }
 
 func (h *Handler) register(w http.ResponseWriter, r *http.Request) {
