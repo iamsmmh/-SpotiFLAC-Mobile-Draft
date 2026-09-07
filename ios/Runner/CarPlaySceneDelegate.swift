@@ -44,7 +44,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
 /// AppDelegate: the bridge is the meeting point. All UIKit work happens on
 /// the main queue.
 @available(iOS 14.0, *)
-final class CarPlayBridge: NSObject {
+final class CarPlayBridge: NSObject, CPSearchTemplateDelegate {
     static let shared = CarPlayBridge()
 
     /// Channel name; mirrored by `lib/services/carplay_service.dart`.
@@ -57,6 +57,10 @@ final class CarPlayBridge: NSObject {
     /// can refresh instead of re-installing (which would pop the user's
     /// navigation stack out from under them).
     private var rootInstalled = false
+
+    /// Most recent search hits. CarPlay's selection callback only hands back
+    /// the row, never the Dart-side id, so this is how a tap is resolved.
+    private var lastSearchResults: [CarPlayItem] = []
 
     private override init() { super.init() }
 
@@ -219,6 +223,58 @@ final class CarPlayBridge: NSObject {
     private func pushList(title: String, parentId: String, completion: @escaping () -> Void) {
         let template = listTemplate(title: title, parentId: parentId, image: nil)
         interfaceController?.pushTemplate(template, animated: true) { _, _ in completion() }
+    }
+
+    // MARK: - CPSearchTemplateDelegate
+
+    /// Live search: every keystroke asks Dart for offline hits (the same
+    /// tree Android Auto uses). The hits are flat and playable, so a tap
+    /// plays the track straight from the row handler.
+    func searchTemplate(
+        _ searchTemplate: CPSearchTemplate,
+        updatedSearchText text: String,
+        completionHandler: @escaping ([CPListItem]) -> Void
+    ) {
+        search(text) { [weak self] items in
+            self?.lastSearchResults = items
+            let rows = items.map { item -> CPListItem in
+                let row = CPListItem(text: item.title, detailText: item.subtitle)
+                if item.isBrowsable {
+                    row.accessoryType = .disclosureIndicator
+                }
+                row.handler = { [weak self] _, completion in
+                    guard let self = self else {
+                        completion()
+                        return
+                    }
+                    if item.isBrowsable {
+                        self.pushList(title: item.title, parentId: item.id, completion: completion)
+                    } else {
+                        self.play(itemId: item.id, parentId: item.id)
+                        // Surfacing Now Playing immediately is what a driver
+                        // expects after tapping a track.
+                        self.interfaceController?.pushTemplate(
+                            CPNowPlayingTemplate.shared, animated: true) { _, _ in completion() }
+                    }
+                }
+                return row
+            }
+            completionHandler(rows)
+        }
+    }
+
+    /// Fired when CarPlay itself selects a row that has no handler (for
+    /// example keyboard navigation). Rows from this template all carry a
+    /// handler, so this only needs to resolve the hit by title and play it.
+    func searchTemplate(
+        _ searchTemplate: CPSearchTemplate,
+        selectedResult item: CPListItem,
+        completionHandler: @escaping () -> Void
+    ) {
+        if let hit = lastSearchResults.first(where: { $0.title == (item.text ?? "") }) {
+            play(itemId: hit.id, parentId: hit.id)
+        }
+        completionHandler()
     }
 }
 

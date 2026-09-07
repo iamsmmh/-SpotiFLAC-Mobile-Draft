@@ -148,10 +148,10 @@ void main() {
       final remote = book.copyWith(
         position: const Duration(minutes: 15),
         updatedAt: DateTime.utc(2026, 9, 8),
-        bookmarks: const <AudiobookBookmark>[
+        bookmarks: <AudiobookBookmark>[
           AudiobookBookmark(
             id: 'm2',
-            position: Duration(minutes: 3),
+            position: const Duration(minutes: 3),
             createdAt: DateTime.utc(2026, 9, 8),
           ),
         ],

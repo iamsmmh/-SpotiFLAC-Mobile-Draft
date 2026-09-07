@@ -78,7 +78,7 @@ func (h *Handler) query(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(events)
 	} else {
-		http.Error(w, "query failed", http.StatusInternalServerError)
+		writeTelError(w, err)
 	}
 }
 
@@ -90,7 +90,7 @@ func (h *Handler) summary(w http.ResponseWriter, r *http.Request) {
 	since := time.Now().Add(-24 * time.Hour)
 	summary, err := h.svc.Summary(r.Context(), period, since)
 	if err != nil {
-		http.Error(w, "summary failed", http.StatusInternalServerError)
+		writeTelError(w, err)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -100,7 +100,7 @@ func (h *Handler) summary(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) providerHealth(w http.ResponseWriter, r *http.Request) {
 	health, err := h.svc.GetProviderHealth(r.Context())
 	if err != nil {
-		http.Error(w, "health check failed", http.StatusInternalServerError)
+		writeTelError(w, err)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")

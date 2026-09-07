@@ -67,6 +67,7 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
     private var airPlayController: AirPlayController?
     private var liveActivityController: LiveActivityController?
     private var siriIntentHandler: AnyObject?
+    private var iosEqController: IosAvAudioEngineEqualizer?
     
     override func application(
         _ application: UIApplication,

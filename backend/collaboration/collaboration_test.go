@@ -93,9 +93,10 @@ func TestRecordTrackChange(t *testing.T) {
 
 // fakeStore implements the Store interface for testing.
 type fakeStore struct {
-	members map[string][]Member
-	invites map[string]*Invite
-	changes map[string][]Change
+	members   map[string][]Member
+	invites   map[string]*Invite
+	changes   map[string][]Change
+	revisions map[string]int64
 }
 
 func (s *fakeStore) GetMember(_ context.Context, playlistID, userID string) (*Member, error) {
@@ -170,6 +171,16 @@ func (s *fakeStore) DeleteInvite(_ context.Context, inviteID string) error {
 }
 
 func (s *fakeStore) RecordChange(_ context.Context, change Change) error {
+	if s.changes == nil {
+		s.changes = make(map[string][]Change)
+	}
+	if s.revisions == nil {
+		s.revisions = make(map[string]int64)
+	}
+	// The real store assigns the per-playlist revision; mirror that so the
+	// "since revision" filter in ListChanges behaves like production.
+	s.revisions[change.PlaylistID]++
+	change.Revision = s.revisions[change.PlaylistID]
 	s.changes[change.PlaylistID] = append(s.changes[change.PlaylistID], change)
 	return nil
 }

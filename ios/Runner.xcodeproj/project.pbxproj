@@ -18,6 +18,7 @@
 		A11CE0162F00000000000016 /* SiriIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE0172F00000000000017 /* SiriIntentHandler.swift */; };
 		A11CE0182F00000000000018 /* LiveActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE0192F00000000000019 /* LiveActivityController.swift */; };
 		A11CE01A2F0000000000001A /* SpotiFLACActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE01B2F0000000000001B /* SpotiFLACActivityAttributes.swift */; };
+		A11CE01C2F0000000000001C /* IosAvAudioEngineEqualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE01D2F0000000000001D /* IosAvAudioEngineEqualizer.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
@@ -69,6 +70,7 @@
 		A11CE0172F00000000000017 /* SiriIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriIntentHandler.swift; sourceTree = "<group>"; };
 		A11CE0192F00000000000019 /* LiveActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityController.swift; sourceTree = "<group>"; };
 		A11CE01B2F0000000000001B /* SpotiFLACActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SpotiFLACActivityAttributes.swift; path = ../SpotiFLACActivity/SpotiFLACActivityAttributes.swift; sourceTree = "<group>"; };
+		A11CE01D2F0000000000001D /* IosAvAudioEngineEqualizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosAvAudioEngineEqualizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				A11CE0172F00000000000017 /* SiriIntentHandler.swift */,
 				A11CE0192F00000000000019 /* LiveActivityController.swift */,
 				A11CE01B2F0000000000001B /* SpotiFLACActivityAttributes.swift */,
+				A11CE01D2F0000000000001D /* IosAvAudioEngineEqualizer.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 			);
 			path = Runner;
@@ -297,6 +300,7 @@
 				A11CE0162F00000000000016 /* SiriIntentHandler.swift in Sources */,
 				A11CE0182F00000000000018 /* LiveActivityController.swift in Sources */,
 				A11CE01A2F0000000000001A /* SpotiFLACActivityAttributes.swift in Sources */,
+				A11CE01C2F0000000000001C /* IosAvAudioEngineEqualizer.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
