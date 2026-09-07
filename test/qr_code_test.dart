@@ -211,8 +211,8 @@ void main() {
       expect(code.modules[0][0], isTrue);
       expect(code.modules[0][s - 1], isTrue);
       expect(code.modules[s - 1][0], isTrue);
-      expect(code.modules[8][0] == false, isTrue); // separator row (top-left)
-      expect(code.modules[0][8] == false, isTrue); // separator col (top-left)
+      expect(code.modules[7][0], isFalse); // separator row (top-left)
+      expect(code.modules[0][7], isFalse); // separator col (top-left)
       // Timing pattern (v2+): even index = dark, from 8 to size-9.
       for (var i = 8; i <= s - 9; i++) {
         expect(code.modules[6][i], i.isEven, reason: 'timing col $i');
