@@ -746,6 +746,7 @@ class _EagerInitializationState extends ConsumerState<_EagerInitialization>
     with WidgetsBindingObserver {
   ProviderSubscription<bool>? _localLibraryEnabledSub;
   DiscoverySubscriptions? _discoverySubscriptions;
+  PlaybackSyncController? _playbackSync;
   Timer? _downloadHistoryWarmupTimer;
   Timer? _localLibraryWarmupTimer;
   bool _localLibraryWarmupScheduled = false;
@@ -769,6 +770,7 @@ class _EagerInitializationState extends ConsumerState<_EagerInitialization>
     WidgetsBinding.instance.removeObserver(this);
     _localLibraryEnabledSub?.close();
     _discoverySubscriptions?.close();
+    _playbackSync?.stop();
     _downloadHistoryWarmupTimer?.cancel();
     _localLibraryWarmupTimer?.cancel();
     super.dispose();
@@ -790,6 +792,12 @@ class _EagerInitializationState extends ConsumerState<_EagerInitialization>
             .read(downloadQueueProvider.notifier)
             .resumePendingDownloadsOnForeground();
       }
+      // Playback continuity (Task 10): if another device left a fresh
+      // hand-off and this device is idle, resume from the cloud.
+      final playbackSync = _playbackSync;
+      if (playbackSync != null) {
+        unawaited(playbackSync.resumeFromCloudIfIdle());
+      }
     } else if (state == AppLifecycleState.paused) {
       // Last reliable moment before the OS may kill the process: make sure
       // any debounced download-queue persistence reaches disk.
@@ -797,6 +805,12 @@ class _EagerInitializationState extends ConsumerState<_EagerInitialization>
         unawaited(
           ref.read(downloadQueueProvider.notifier).flushQueuePersistence(),
         );
+      }
+      // Last chance to persist the playback position for cross-device
+      // continuity before the OS may suspend us.
+      final playbackSync = _playbackSync;
+      if (playbackSync != null) {
+        unawaited(playbackSync.onBackground());
       }
       // Backgrounded: return the Go heap's high-water mark to the OS so the
       // process is a smaller kill target.
@@ -913,6 +927,12 @@ class _EagerInitializationState extends ConsumerState<_EagerInitialization>
     if (syncEngine.policy.syncOnStartup) {
       syncEngine.start(runImmediately: true);
     }
+
+    // Playback continuity (Task 10): push the current position to the
+    // cloud and auto-resume hand-offs from other devices when idle.
+    // Entirely a no-op until a cloud server is configured and signed in.
+    _playbackSync = PlaybackSyncController(ref);
+    _playbackSync!.start();
 
     // Android Auto / AVRCP browse tree (queue, recents, loved, playlists,
     // albums, songs) backed by the offline stores; voice search included.
