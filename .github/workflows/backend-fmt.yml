@@ -48,6 +48,10 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version-file: backend/go.mod
+          # backend/ is stdlib-only (no go.sum exists), so there is nothing
+          # to cache; without this setup-go emits a "Restore cache failed"
+          # warning on every run.
+          cache: false
 
       - name: Apply gofmt
         run: |

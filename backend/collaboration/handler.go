@@ -18,17 +18,17 @@ func NewHandler(svc *Service) *Handler {
 }
 
 // MiddlewareFunc is the signature for auth middleware.
-type MiddlewareFunc func(http.HandlerFunc) http.HandlerFunc
+type MiddlewareFunc func(http.Handler) http.Handler
 
 // Routes registers collaboration endpoints.
 func (h *Handler) Routes(mux *http.ServeMux, auth MiddlewareFunc) {
-	mux.HandleFunc("POST /v1/collaboration/playlists/{id}/invite", auth(h.invite))
-	mux.HandleFunc("POST /v1/collaboration/invites/{id}/accept", auth(h.acceptInvite))
-	mux.HandleFunc("GET /v1/collaboration/playlists/{id}/members", auth(h.listMembers))
-	mux.HandleFunc("DELETE /v1/collaboration/playlists/{id}/members/{userId}", auth(h.removeMember))
-	mux.HandleFunc("PUT /v1/collaboration/playlists/{id}/members/{userId}/role", auth(h.changeRole))
-	mux.HandleFunc("GET /v1/collaboration/playlists/{id}/changes", auth(h.getChanges))
-	mux.HandleFunc("POST /v1/collaboration/playlists/{id}/changes", auth(h.recordChange))
+	mux.Handle("POST /v1/collaboration/playlists/{id}/invite", auth(http.HandlerFunc(h.invite)))
+	mux.Handle("POST /v1/collaboration/invites/{id}/accept", auth(http.HandlerFunc(h.acceptInvite)))
+	mux.Handle("GET /v1/collaboration/playlists/{id}/members", auth(http.HandlerFunc(h.listMembers)))
+	mux.Handle("DELETE /v1/collaboration/playlists/{id}/members/{userId}", auth(http.HandlerFunc(h.removeMember)))
+	mux.Handle("PUT /v1/collaboration/playlists/{id}/members/{userId}/role", auth(http.HandlerFunc(h.changeRole)))
+	mux.Handle("GET /v1/collaboration/playlists/{id}/changes", auth(http.HandlerFunc(h.getChanges)))
+	mux.Handle("POST /v1/collaboration/playlists/{id}/changes", auth(http.HandlerFunc(h.recordChange)))
 }
 
 func (h *Handler) invite(w http.ResponseWriter, r *http.Request) {
