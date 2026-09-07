@@ -11,11 +11,17 @@ import ActivityKit
 /// playback stops. Rendering lives in the widget extension
 /// (`ios/SpotiFLACActivity`).
 ///
-/// Availability: ActivityKit is iOS 16.1+. On anything older every method
+/// Availability: ActivityKit is iOS 16.1+, but the lifecycle APIs were
+/// reshaped in iOS 16.2 — `request(attributes:content:pushType:)`,
+/// `update(_:)` and `end(_:dismissalPolicy:)` (the `ActivityContent`-based
+/// variants) are 16.2-only. On 16.1 the equivalent calls take the content
+/// state directly (`contentState:` / `update(using:)` / `end(using:)`);
+/// those were deprecated in 16.2 but remain present in the SDK, so we call
+/// them inside the 16.1 branch. On anything older than 16.1 every method
 /// resolves `false` rather than erroring, so Dart can call them
 /// unconditionally and simply observe that activities are unsupported.
 final class LiveActivityController: NSObject {
-    /// Channel name; mirrored by `lib/services/live_activity_service.dart`.
+    /// Channel name; mirrored by `lib/services/apple_integration_service.dart`.
     static let channelName = "com.zarz.spotiflac/live_activity"
 
     private let channel: FlutterMethodChannel
@@ -79,10 +85,21 @@ final class LiveActivityController: NSObject {
         let state = Self.contentState(from: map)
 
         do {
-            let activity = try Activity.request(
-                attributes: attributes,
-                content: .init(state: state, staleDate: nil),
-                pushType: nil)
+            let activity: Activity<SpotiFLACActivityAttributes>
+            if #available(iOS 16.2, *) {
+                // iOS 16.2+: the ActivityContent-based request API.
+                activity = try Activity.request(
+                    attributes: attributes,
+                    content: .init(state: state, staleDate: nil),
+                    pushType: nil)
+            } else {
+                // iOS 16.1: the original contentState-based request API.
+                // Deprecated in 16.2 but still present; used only on 16.1.
+                activity = try Activity.request(
+                    attributes: attributes,
+                    contentState: state,
+                    pushType: nil)
+            }
             currentActivity = activity
             result(true)
         } catch {
@@ -107,7 +124,12 @@ final class LiveActivityController: NSObject {
         }
         let state = Self.contentState(from: map)
         Task {
-            await activity.update(.init(state: state, staleDate: nil))
+            if #available(iOS 16.2, *) {
+                await activity.update(.init(state: state, staleDate: nil))
+            } else {
+                // iOS 16.1-only API (deprecated in 16.2).
+                await activity.update(using: state)
+            }
             await MainActor.run { result(true) }
         }
         #else
@@ -138,7 +160,12 @@ final class LiveActivityController: NSObject {
         Task {
             // .immediate: leaving the island populated after playback stops
             // is exactly the artefact users complain about.
-            await activity.end(nil, dismissalPolicy: .immediate)
+            if #available(iOS 16.2, *) {
+                await activity.end(nil, dismissalPolicy: .immediate)
+            } else {
+                // iOS 16.1-only API (deprecated in 16.2).
+                await activity.end(using: nil, dismissalPolicy: .immediate)
+            }
         }
     }
 
