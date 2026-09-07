@@ -1,5 +1,7 @@
 import AuthenticationServices
+import CarPlay
 import Flutter
+import Intents
 import UIKit
 import UniformTypeIdentifiers
 import Gobackend
@@ -54,6 +56,17 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
     /// Strong reference to the in-flight ASWebAuthenticationSession; the
     /// session is deallocated (and its sheet dismissed) without it.
     private var activeWebAuthSession: AnyObject?
+
+    // MARK: - Apple ecosystem (Milestone 2)
+    //
+    // Each controller owns one method channel and is retained for the app's
+    // lifetime. They are created only once a binary messenger exists, so a
+    // messenger-less launch degrades to "feature unavailable" rather than a
+    // crash — the same policy the backend channel already follows.
+    private var audioSessionController: AudioSessionController?
+    private var airPlayController: AirPlayController?
+    private var liveActivityController: LiveActivityController?
+    private var siriIntentHandler: AnyObject?
     
     override func application(
         _ application: UIApplication,
@@ -123,6 +136,8 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
             )
         )
         
+        registerAppleIntegrations(messenger: messenger)
+
         GeneratedPluginRegistrant.register(with: self)
         if let url = launchOptions?[.url] as? URL {
             _ = handleExtensionOAuthRedirect(url: url)
@@ -1557,5 +1572,64 @@ private final class ClosureStreamHandler: NSObject, FlutterStreamHandler {
 
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
         onCancelHandler(arguments)
+    }
+}
+
+// MARK: - Apple ecosystem integration (Milestone 2)
+
+extension AppDelegate {
+    /// Creates the AirPlay / CarPlay / Siri / Live Activity channels.
+    ///
+    /// Called once, after a binary messenger is known to exist. Ordering
+    /// matters only for CarPlay: the scene may already be connected (CarPlay
+    /// can launch the app), so `CarPlayBridge.register` refreshes the
+    /// templates if it finds an interface controller waiting.
+    func registerAppleIntegrations(messenger: FlutterBinaryMessenger) {
+        audioSessionController = AudioSessionController(messenger: messenger)
+        airPlayController = AirPlayController(
+            messenger: messenger, host: window?.rootViewController)
+        liveActivityController = LiveActivityController(messenger: messenger)
+
+        if #available(iOS 15.0, *) {
+            siriIntentHandler = SiriIntentHandler(messenger: messenger)
+        }
+        if #available(iOS 14.0, *) {
+            CarPlayBridge.shared.register(messenger: messenger)
+        }
+    }
+
+    /// Routes "Hey Siri, play …" to the in-process intent handler.
+    ///
+    /// Handling the intent in the app (rather than in a separate Intents
+    /// extension) means the handler can talk straight to the live Flutter
+    /// engine, and one fewer target needs provisioning.
+    override func application(
+        _ application: UIApplication,
+        handlerFor intent: INIntent
+    ) -> Any? {
+        if #available(iOS 15.0, *), intent is INPlayMediaIntent {
+            return siriIntentHandler
+        }
+        return super.application(application, handlerFor: intent)
+    }
+
+    /// Declares the CarPlay scene so UIKit instantiates our delegate for it.
+    ///
+    /// CarPlay scenes carry the `CPTemplateApplicationSceneSessionRoleApplication`
+    /// role; everything else falls through to Flutter's default handling.
+    override func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        if #available(iOS 14.0, *),
+           connectingSceneSession.role == .carTemplateApplication {
+            let configuration = UISceneConfiguration(
+                name: "CarPlay", sessionRole: connectingSceneSession.role)
+            configuration.delegateClass = CarPlaySceneDelegate.self
+            return configuration
+        }
+        return UISceneConfiguration(
+            name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 }
