@@ -58,6 +58,10 @@ final class CarPlayBridge: NSObject, CPSearchTemplateDelegate {
     /// navigation stack out from under them).
     private var rootInstalled = false
 
+    /// Most recent search hits. CarPlay's selection callback only hands back
+    /// the row, never the Dart-side id, so this is how a tap is resolved.
+    private var lastSearchResults: [CarPlayItem] = []
+
     private override init() { super.init() }
 
     // MARK: - Wiring
@@ -223,16 +227,16 @@ final class CarPlayBridge: NSObject, CPSearchTemplateDelegate {
 
     // MARK: - CPSearchTemplateDelegate
 
-    /// Runs the driver's typed / voice query against Dart's offline search
-    /// (the same tree Android Auto uses) and hands the hits back as one
-    /// section. Dart search rows are flat and always playable, so a tap
-    /// plays the track directly.
-    @objc func template(
-        _ template: CPSearchTemplate,
-        didSearchForQuery query: String,
-        completionHandler: @escaping ([CPListSection]) -> Void
+    /// Live search: every keystroke asks Dart for offline hits (the same
+    /// tree Android Auto uses). The hits are flat and playable, so a tap
+    /// plays the track straight from the row handler.
+    func searchTemplate(
+        _ searchTemplate: CPSearchTemplate,
+        updatedSearchText text: String,
+        completionHandler: @escaping ([CPListItem]) -> Void
     ) {
-        search(query) { items in
+        search(text) { [weak self] items in
+            self?.lastSearchResults = items
             let rows = items.map { item -> CPListItem in
                 let row = CPListItem(text: item.title, detailText: item.subtitle)
                 if item.isBrowsable {
@@ -255,8 +259,22 @@ final class CarPlayBridge: NSObject, CPSearchTemplateDelegate {
                 }
                 return row
             }
-            completionHandler([CPListSection(items: rows)])
+            completionHandler(rows)
         }
+    }
+
+    /// Fired when CarPlay itself selects a row that has no handler (for
+    /// example keyboard navigation). Rows from this template all carry a
+    /// handler, so this only needs to resolve the hit by title and play it.
+    func searchTemplate(
+        _ searchTemplate: CPSearchTemplate,
+        selectedResult item: CPListItem,
+        completionHandler: @escaping () -> Void
+    ) {
+        if let hit = lastSearchResults.first(where: { $0.title == (item.text ?? "") }) {
+            play(itemId: hit.id, parentId: hit.id)
+        }
+        completionHandler()
     }
 }
 
