@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:spotiflac_android/utils/logger.dart';
+
+final _log = AppLogger('PathMatchKeys');
 
 const _androidStoragePathAliases = <String>[
   '/storage/emulated/0',
@@ -104,13 +107,17 @@ Set<String> _buildPathMatchKeys(
         if (decoded != trimmed) {
           addNormalized(decoded);
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.w('Ignoring undecodable percent-encoding in path key: $e');
+      }
     }
 
     Uri? parsed;
     try {
       parsed = Uri.parse(trimmed);
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Ignoring unparsable URI while building path keys: $e');
+    }
 
     if (parsed != null && parsed.hasScheme) {
       final withoutQueryOrFragment = parsed.replace(
@@ -124,7 +131,9 @@ Set<String> _buildPathMatchKeys(
       if (parsed.scheme == 'file') {
         try {
           addNormalized(parsed.toFilePath());
-        } catch (_) {}
+        } catch (e) {
+          _log.w('Failed to convert file URI to a path key: $e');
+        }
       }
 
       for (final alias in _androidExternalStorageDocumentPaths(parsed)) {
@@ -135,7 +144,9 @@ Set<String> _buildPathMatchKeys(
         final asFileUri = Uri.file(trimmed).toString();
         keys.add(asFileUri);
         keys.add(asFileUri.toLowerCase());
-      } catch (_) {}
+      } catch (e) {
+        _log.w('Failed to build file URI from path key: $e');
+      }
     }
 
     if (Platform.isAndroid) {
@@ -183,7 +194,9 @@ Iterable<String> _androidExternalStorageDocumentPaths(Uri uri) {
   var documentId = segments.sublist(idIndex).join('/');
   try {
     documentId = Uri.decodeComponent(documentId);
-  } catch (_) {}
+  } catch (e) {
+    _log.w('Failed to decode path segment ($documentId): $e');
+  }
   final separator = documentId.indexOf(':');
   if (separator < 0 ||
       documentId.substring(0, separator).toLowerCase() != 'primary') {

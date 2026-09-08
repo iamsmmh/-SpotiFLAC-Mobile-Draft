@@ -14,10 +14,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:spotiflac_android/l10n/l10n.dart';
 import 'package:spotiflac_android/services/platform_bridge.dart';
 import 'package:spotiflac_android/utils/string_utils.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 part 'audio_analysis_models.dart';
 part 'audio_analysis_info_card.dart';
 part 'audio_analysis_spectrogram.dart';
+
+final _log = AppLogger('AudioAnalysis');
 
 const int audioSpectrogramWidth = 1600;
 const int audioSpectrogramHeight = 800;
@@ -684,7 +687,9 @@ class _AudioAnalysisCardState extends State<AudioAnalysisCard> {
         }
         return;
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Spectrogram cache load failed ($expectedPath); regenerating: $e');
+    }
     if (isCurrentRequest()) {
       setState(() => _checkingCache = false);
     }
@@ -806,7 +811,9 @@ class _AudioAnalysisCardState extends State<AudioAnalysisCard> {
           await entity.delete();
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Failed to clear audio analysis spectrogram cache: $e');
+    }
   }
 
   static String _cacheKey(String filePath) {
@@ -866,7 +873,9 @@ class _AudioAnalysisCardState extends State<AudioAnalysisCard> {
       final key = _cacheKey(filePath);
       final file = File('${dir.path}/$key.json');
       await file.writeAsString(jsonEncode(data.toJson()));
-    } catch (_) {}
+    } catch (e, stack) {
+      _log.e('Failed to persist audio analysis cache ($filePath): $e', e, stack);
+    }
   }
 
   static Future<void> _saveSpectrogramToCache(
@@ -884,7 +893,9 @@ class _AudioAnalysisCardState extends State<AudioAnalysisCard> {
         );
         await file.writeAsBytes(byteData.buffer.asUint8List());
       }
-    } catch (_) {}
+    } catch (e, stack) {
+      _log.e('Failed to persist spectrogram PNG cache ($filePath): $e', e, stack);
+    }
   }
 
   static String _spectrogramCacheFileName(String key, int channel) =>
@@ -1001,7 +1012,9 @@ class _AudioAnalysisCardState extends State<AudioAnalysisCard> {
       if (tempCopy != null) {
         try {
           await File(tempCopy).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.w('Failed to delete spectrogram temp copy $tempCopy: $e');
+        }
       }
     }
   }
@@ -1035,7 +1048,9 @@ class _AudioAnalysisCardState extends State<AudioAnalysisCard> {
       if (tempCopy != null) {
         try {
           await File(tempCopy).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.w('Failed to delete spectrogram temp copy $tempCopy: $e');
+        }
       }
     }
   }
@@ -1115,11 +1130,15 @@ class _AudioAnalysisCardState extends State<AudioAnalysisCard> {
     } finally {
       try {
         await File(rawPath).delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.w('Failed to delete spectrogram raw temp file $rawPath: $e');
+      }
       if (cutoffPath != null) {
         try {
           await File(cutoffPath).delete();
-        } catch (_) {}
+        } catch (e) {
+          _log.w('Failed to delete spectrogram cutoff temp file $cutoffPath: $e');
+        }
       }
     }
   }
@@ -1189,7 +1208,9 @@ class _AudioAnalysisCardState extends State<AudioAnalysisCard> {
     int fileSize = 0;
     try {
       fileSize = await File(filePath).length();
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Failed to stat audio file ($filePath); size treated as unknown: $e');
+    }
 
     final streams = info.getStreams();
     final audioStream = streams.firstWhere(
@@ -1390,7 +1411,9 @@ class _AudioAnalysisCardState extends State<AudioAnalysisCard> {
     } finally {
       try {
         if (await metadataFile.exists()) await metadataFile.delete();
-      } catch (_) {}
+      } catch (e) {
+        _log.w('Failed to delete analysis metadata temp file: $e');
+      }
     }
   }
 

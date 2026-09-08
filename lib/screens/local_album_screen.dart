@@ -38,6 +38,9 @@ import 'package:spotiflac_android/widgets/selection_action_button.dart';
 import 'package:spotiflac_android/widgets/selection_bottom_bar.dart';
 import 'package:spotiflac_android/widgets/disc_separator_chip.dart';
 import 'package:spotiflac_android/widgets/album_detail_header.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+
+final _log = AppLogger('LocalAlbumScreen');
 
 class LocalAlbumScreen extends ConsumerStatefulWidget {
   final String albumName;
@@ -686,7 +689,9 @@ class _LocalAlbumScreenState extends ConsumerState<LocalAlbumScreen>
             changes: changes,
           ),
         );
-      } catch (_) {}
+      } catch (e) {
+        _log.w('Skipped re-enrich preview for ${item.trackName}: $e');
+      }
     }
 
     if (!mounted) return;
@@ -741,7 +746,9 @@ class _LocalAlbumScreenState extends ConsumerState<LocalAlbumScreen>
           resolvedMetadata: preview.enrichedMetadata,
         );
         if (ok) successCount++;
-      } catch (_) {}
+      } catch (e, stack) {
+        _log.e('Re-enrich failed for ${preview.item.trackName}: $e', e, stack);
+      }
     }
 
     if (!mounted) return;

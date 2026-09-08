@@ -4,6 +4,9 @@ import 'package:spotiflac_android/services/ffmpeg_service.dart';
 import 'package:spotiflac_android/services/library_database.dart';
 import 'package:spotiflac_android/services/platform_bridge.dart';
 import 'package:spotiflac_android/utils/lyrics_metadata_helper.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+
+final _log = AppLogger('FfmpegReenrich');
 
 bool _hasValue(String? value) => value != null && value.trim().isNotEmpty;
 
@@ -13,7 +16,9 @@ Future<void> _safeDeleteFile(String path) async {
     if (await file.exists()) {
       await file.delete();
     }
-  } catch (_) {}
+  } catch (e) {
+    _log.w('Failed to delete temp re-enrich file $path: $e');
+  }
 }
 
 Future<void> _cleanupTempFileAndParent(String path) async {
@@ -23,7 +28,9 @@ Future<void> _cleanupTempFileAndParent(String path) async {
     if (await parent.exists()) {
       await parent.delete();
     }
-  } catch (_) {}
+  } catch (e) {
+    _log.w('Failed to delete temp re-enrich parent directory for $path: $e');
+  }
 }
 
 /// Embeds [result]'s metadata/cover into [item] via FFmpeg while preserving
@@ -64,9 +71,13 @@ Future<bool> applyFfmpegReEnrichResult({
         } else {
           try {
             await tempDir.delete(recursive: true);
-          } catch (_) {}
+          } catch (e) {
+            _log.w('Failed to delete re-enrich cover temp directory: $e');
+          }
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.w('Cover extraction failed; continuing without embedded cover: $e');
+      }
     }
 
     final metadata = (result['metadata'] as Map<String, dynamic>?)?.map(

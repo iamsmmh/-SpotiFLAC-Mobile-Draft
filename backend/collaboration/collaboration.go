@@ -76,14 +76,14 @@ type Invite struct {
 
 // Change records one modification to a collaborative playlist.
 type Change struct {
-	ID         string    `json:"id"`
-	PlaylistID string    `json:"playlistId"`
-	UserID     string    `json:"userId"`
+	ID         string `json:"id"`
+	PlaylistID string `json:"playlistId"`
+	UserID     string `json:"userId"`
 	Action     string    `json:"action"` // "add", "remove", "reorder", "rename"
-	TrackID    string    `json:"trackId,omitempty"`
-	Position   int       `json:"position,omitempty"`
-	Revision   int64     `json:"revision"`
-	CreatedAt  time.Time `json:"createdAt"`
+	TrackID   string    `json:"trackId,omitempty"`
+	Position  int       `json:"position,omitempty"`
+	Revision  int64     `json:"revision"`
+	CreatedAt time.Time `json:"createdAt"`
 }
 
 // Store abstracts the persistence layer.

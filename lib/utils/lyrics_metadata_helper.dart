@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:spotiflac_android/services/platform_bridge.dart';
 import 'package:spotiflac_android/utils/file_access.dart';
 import 'package:spotiflac_android/utils/string_utils.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+
+final _log = AppLogger('LyricsMetadataHelper');
 
 final RegExp _lrcDisplayTimestampPattern = RegExp(
   r'^\[\d{1,3}:\d{1,2}(?:[.:]\d{1,3})?\]',
@@ -160,7 +163,9 @@ Future<void> ensureLyricsMetadataForConversion({
           lyrics = content;
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Failed to read sidecar .lrc file: $e');
+    }
   }
 
   if (lyrics == null || lyrics.isEmpty) {
@@ -176,7 +181,9 @@ Future<void> ensureLyricsMetadataForConversion({
           normalized.toLowerCase() != '[instrumental:true]') {
         lyrics = normalized;
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Lyrics fetch failed; continuing without embedded lyrics: $e');
+    }
   }
 
   if (lyrics == null || lyrics.isEmpty) {

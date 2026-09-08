@@ -134,7 +134,7 @@ func TestContinuityStaleWriteDoesNotRewind(t *testing.T) {
 	}, nil)
 	// An out-of-order delivery from a device whose snapshot is older.
 	doJSON(t, http.MethodPut, server.URL+"/v1/cloud/continuity", ContinuityState{
-		TrackID: "old", PositionMs: 1_000, DurationMs: 240_000,
+		TrackID:   "old", PositionMs: 1_000, DurationMs: 240_000,
 		UpdatedAt: now.Add(-time.Minute),
 	}, nil)
 
@@ -178,7 +178,7 @@ func seedDevices(t *testing.T, storage *fakeStorage) {
 	now := time.Now().UTC()
 	for i, id := range []string{"android-1", "ios-1"} {
 		if err := storage.UpsertDevice(t.Context(), DeviceRow{
-			ID: id, UserID: "usr_1", Name: id, Platform: "test",
+			ID:        id, UserID: "usr_1", Name: id, Platform: "test",
 			CreatedAt: now, LastSeenAt: now.Add(time.Duration(i) * time.Minute),
 		}); err != nil {
 			t.Fatal(err)
@@ -258,7 +258,7 @@ func TestRevokeDeviceDropsItsSessions(t *testing.T) {
 	storage := newFakeStorage()
 	seedDevices(t, storage)
 	if err := storage.PutRefresh(t.Context(), RefreshRow{
-		Hash: "hash-a", UserID: "usr_1", DeviceID: "android-1",
+		Hash:      "hash-a", UserID: "usr_1", DeviceID: "android-1",
 		ExpiresAt: time.Now().Add(time.Hour),
 	}); err != nil {
 		t.Fatal(err)
@@ -314,7 +314,7 @@ func TestSyncLogIsNewestFirst(t *testing.T) {
 	storage := newFakeStorage()
 	for i := 1; i <= 3; i++ {
 		if err := storage.AppendSyncLog(t.Context(), SyncLogRow{
-			UserID: "usr_1", Scope: "playlists", RecordID: "p" + itoa(i),
+			UserID:     "usr_1", Scope: "playlists", RecordID: "p" + itoa(i),
 			Resolution: ResolutionAccepted, Revision: int64(i), At: time.Now(),
 		}); err != nil {
 			t.Fatal(err)
@@ -342,7 +342,7 @@ func TestSyncLogHonoursLimit(t *testing.T) {
 	storage := newFakeStorage()
 	for i := 0; i < 10; i++ {
 		_ = storage.AppendSyncLog(t.Context(), SyncLogRow{
-			UserID: "usr_1", Scope: "favorites", RecordID: itoa(i),
+			UserID:     "usr_1", Scope: "favorites", RecordID: itoa(i),
 			Resolution: ResolutionAccepted, At: time.Now(),
 		})
 	}
@@ -414,9 +414,9 @@ func TestWebSocketContinuityPushPersistsAndFansOut(t *testing.T) {
 	defer listener.Close()
 
 	event := NewContinuityEvent(ContinuityState{
-		DeviceID: "android-1", TrackID: "t-1",
+		DeviceID:   "android-1", TrackID: "t-1",
 		PositionMs: 12_000, DurationMs: 200_000, Playing: true,
-		UpdatedAt: time.Now().UTC(),
+		UpdatedAt:  time.Now().UTC(),
 	}, time.Now())
 	raw, err := event.Encode()
 	if err != nil {

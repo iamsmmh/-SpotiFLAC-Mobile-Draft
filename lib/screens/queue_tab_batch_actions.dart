@@ -264,7 +264,9 @@ extension _QueueTabBatchActions on _QueueTabState {
             changes: changes,
           ),
         );
-      } catch (_) {}
+      } catch (e) {
+        _log.w('Skipped re-enrich preview for ${item.trackName}: $e');
+      }
     }
 
     if (!mounted) return;
@@ -319,7 +321,9 @@ extension _QueueTabBatchActions on _QueueTabState {
           resolvedMetadata: preview.enrichedMetadata,
         );
         if (ok) successCount++;
-      } catch (_) {}
+      } catch (e, stack) {
+        _log.e('Re-enrich failed for ${preview.item.trackName}: $e', e, stack);
+      }
     }
 
     if (!mounted) return;

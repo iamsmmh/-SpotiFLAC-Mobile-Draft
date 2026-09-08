@@ -66,9 +66,29 @@ DECL_FIELD_FN_RE = re.compile(
     r"""^\s*(?:final|late|var|required)?[^=;]*\bFunction\b[^=;]*\b([a-z_][A-Za-z0-9_]*)\s*[;=,)]""",
     re.VERBOSE,
 )
+# `static`/`const`/… are optional because a method declaration inside a
+# class has no modifier. A statement such as `return foo(` must not count as a
+# declaration of `foo` — control-flow keywords are excluded up front (the type
+# part below would otherwise swallow `return` as a return type).
 DECL_FN_RE = re.compile(
-    r"""^\s*(?:(?:static|const|final|external|abstract)\s+)*
+    r"""^(?!\s*(?:return|throw|await|yield|case|assert)\b)
+        \s*(?:(?:static|const|final|external|abstract)\s+)*
         [A-Za-z_][A-Za-z0-9_<>,?\[\].\s]*?\b([a-z_][A-Za-z0-9_]*)\s*[(<]""",
+    re.VERBOSE,
+)
+# Dart record types (`({String a, double b})`) embed `(` inside the return
+# type, which defeats the general DECL_FN_RE above (its type class excludes
+# parens). Method declarations such as
+# `List<({String userId, double similarity})> findNeighbors(` are therefore
+# not recognised as declarations and their names are mis-reported as unknown
+# *calls*. This supplement collects the method name after the closing `})`
+# (with an optional trailing `>` for generics such as `List<({...})>`).
+DECL_RECORD_FN_RE = re.compile(
+    r"""^\s*(?:(?:static|const|final|external|abstract)\s+)*
+        [A-Za-z_][A-Za-z0-9_<>,?\[\].\s]*?\(\{
+        ([^{}()]*?)\}\s*\)
+        (?:\s*>)?\s*
+        ([a-z_][A-Za-z0-9_]*)\s*[(<]""",
     re.VERBOSE,
 )
 CAP_RE = re.compile(r"\b([A-Z][A-Za-z0-9_]*)\b")
@@ -193,6 +213,9 @@ def main(argv: list[str]) -> int:
             fn = DECL_FN_RE.match(line)
             if fn:
                 declared.add(fn.group(1))
+            record_fn = DECL_RECORD_FN_RE.match(line)
+            if record_fn:
+                declared.add(record_fn.group(2))
             field_fn = DECL_FIELD_FN_RE.match(line)
             if field_fn:
                 declared.add(field_fn.group(1))
@@ -220,6 +243,9 @@ def main(argv: list[str]) -> int:
             fn = DECL_FN_RE.match(line)
             if fn:
                 local_declared.add(fn.group(1))
+            record_fn = DECL_RECORD_FN_RE.match(line)
+            if record_fn:
+                local_declared.add(record_fn.group(2))
         for name in sorted(set(CAP_RE.findall(text))):
             if name.startswith("_") or name.isupper():
                 continue
