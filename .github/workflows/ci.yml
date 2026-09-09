@@ -273,12 +273,21 @@ jobs:
           else
             git commit -m "ci-evidence: flutter job (run ${GITHUB_RUN_ID})" || true
           fi
-          for i in 1 2 3 4 5; do
-            if git push; then exit 0; fi
-            git pull --rebase || git rebase --abort || true
-            sleep $((i * 5))
+          # Retry because sibling CI jobs push their evidence to the same
+          # branch concurrently; --autostash tolerates a dirty tree (flutter
+          # tooling touches workspace files), and the explicit refspec
+          # removes any upstream-tracking dependency. The final warning
+          # carries the push error text so failures are diagnosable from
+          # annotations alone (raw logs are unreachable from the sandbox).
+          i=0
+          while [ $i -lt 8 ]; do
+            i=$((i+1))
+            if ERR=$(git push origin "HEAD:${GITHUB_REF_NAME}" 2>&1); then exit 0; fi
+            git fetch origin "${GITHUB_REF_NAME}" || true
+            git rebase --autostash "origin/${GITHUB_REF_NAME}" || { git rebase --abort || true; }
+            sleep $((i * 3))
           done
-          echo "::warning::failed to push evidence"
+          echo "::warning::failed to push evidence: $(printf '%s' "$ERR" | tail -n 3)"
           exit 0
   go:
     name: Go vet & test
@@ -402,12 +411,21 @@ jobs:
           else
             git commit -m "ci-evidence: go job (run ${GITHUB_RUN_ID})" || true
           fi
-          for i in 1 2 3 4 5; do
-            if git push; then exit 0; fi
-            git pull --rebase || git rebase --abort || true
-            sleep $((i * 5))
+          # Retry because sibling CI jobs push their evidence to the same
+          # branch concurrently; --autostash tolerates a dirty tree (flutter
+          # tooling touches workspace files), and the explicit refspec
+          # removes any upstream-tracking dependency. The final warning
+          # carries the push error text so failures are diagnosable from
+          # annotations alone (raw logs are unreachable from the sandbox).
+          i=0
+          while [ $i -lt 8 ]; do
+            i=$((i+1))
+            if ERR=$(git push origin "HEAD:${GITHUB_REF_NAME}" 2>&1); then exit 0; fi
+            git fetch origin "${GITHUB_REF_NAME}" || true
+            git rebase --autostash "origin/${GITHUB_REF_NAME}" || { git rebase --abort || true; }
+            sleep $((i * 3))
           done
-          echo "::warning::failed to push evidence"
+          echo "::warning::failed to push evidence: $(printf '%s' "$ERR" | tail -n 3)"
           exit 0
         working-directory: go_backend
 
@@ -521,12 +539,21 @@ jobs:
           else
             git commit -m "ci-evidence: backend job (run ${GITHUB_RUN_ID})" || true
           fi
-          for i in 1 2 3 4 5; do
-            if git push; then exit 0; fi
-            git pull --rebase || git rebase --abort || true
-            sleep $((i * 5))
+          # Retry because sibling CI jobs push their evidence to the same
+          # branch concurrently; --autostash tolerates a dirty tree (flutter
+          # tooling touches workspace files), and the explicit refspec
+          # removes any upstream-tracking dependency. The final warning
+          # carries the push error text so failures are diagnosable from
+          # annotations alone (raw logs are unreachable from the sandbox).
+          i=0
+          while [ $i -lt 8 ]; do
+            i=$((i+1))
+            if ERR=$(git push origin "HEAD:${GITHUB_REF_NAME}" 2>&1); then exit 0; fi
+            git fetch origin "${GITHUB_REF_NAME}" || true
+            git rebase --autostash "origin/${GITHUB_REF_NAME}" || { git rebase --abort || true; }
+            sleep $((i * 3))
           done
-          echo "::warning::failed to push evidence"
+          echo "::warning::failed to push evidence: $(printf '%s' "$ERR" | tail -n 3)"
           exit 0
 
   android:
@@ -651,11 +678,20 @@ jobs:
           else
             git commit -m "ci-evidence: android job (run ${GITHUB_RUN_ID})" || true
           fi
-          for i in 1 2 3 4 5; do
-            if git push; then exit 0; fi
-            git pull --rebase || git rebase --abort || true
-            sleep $((i * 5))
+          # Retry because sibling CI jobs push their evidence to the same
+          # branch concurrently; --autostash tolerates a dirty tree (flutter
+          # tooling touches workspace files), and the explicit refspec
+          # removes any upstream-tracking dependency. The final warning
+          # carries the push error text so failures are diagnosable from
+          # annotations alone (raw logs are unreachable from the sandbox).
+          i=0
+          while [ $i -lt 8 ]; do
+            i=$((i+1))
+            if ERR=$(git push origin "HEAD:${GITHUB_REF_NAME}" 2>&1); then exit 0; fi
+            git fetch origin "${GITHUB_REF_NAME}" || true
+            git rebase --autostash "origin/${GITHUB_REF_NAME}" || { git rebase --abort || true; }
+            sleep $((i * 3))
           done
-          echo "::warning::failed to push evidence"
+          echo "::warning::failed to push evidence: $(printf '%s' "$ERR" | tail -n 3)"
           exit 0
 

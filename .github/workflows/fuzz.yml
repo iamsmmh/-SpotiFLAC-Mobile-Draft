@@ -16,6 +16,9 @@ on:
         required: false
         default: "120"
         type: string
+  push:
+    branches:
+      - "arena/**"
 
 concurrency:
   group: nightly-fuzz
