@@ -302,10 +302,24 @@ jobs:
             done
 
       - name: Build app for iOS simulator
+        # `flutter build ios --simulator` drives a plain xcodebuild that hits
+        # the Xcode 26 CocoaPods framework-search-path quirk the device
+        # archive already works around (see archive-ios.sh). Mirror that
+        # machinery: flutter config-only + pods, then xcodebuild with the
+        # resolved Flutter.xcframework simulator slice.
         run: |
           set -euo pipefail
-          flutter build ios --simulator --debug 2>&1 | tee flutter-ios-build.log
-          test -d build/ios/iphonesimulator/Runner.app
+          flutter build ios --simulator --debug --config-only
+          (cd ios && pod install)
+          bash .github/scripts/simulator-ios-build.sh \
+            "$RUNNER_TEMP/derived" \
+            "$RUNNER_TEMP/xcodebuild-simulator.log" \
+            2>&1 | tee flutter-ios-build.log
+          APP="$RUNNER_TEMP/derived/Build/Products/Debug-iphonesimulator/Runner.app"
+          test -d "$APP"
+          mkdir -p build/ios/iphonesimulator
+          rm -rf build/ios/iphonesimulator/Runner.app
+          cp -R "$APP" build/ios/iphonesimulator/Runner.app
 
       - name: Boot simulator and verify app renders past the splash
         run: |
@@ -398,9 +412,13 @@ jobs:
           mkdir -p ci-evidence/emulator-ios
           for f in ios_shot1_10s.png ios_shot2_25s.png ios_shot3_relaunch.png \
                    ios-smoke-status.txt ios-syslog.txt launch.txt launch2.txt \
-                   flutter-ios-build.log go_backend/gomobile-ios-build.log; do
+                   flutter-ios-build.log; do
             [ -f "$f" ] && cp "$f" "ci-evidence/emulator-ios/$f"
           done
+          [ -f go_backend/gomobile-ios-build.log ] && \
+            cp go_backend/gomobile-ios-build.log ci-evidence/emulator-ios/gomobile-ios-build.log
+          [ -f "$RUNNER_TEMP/xcodebuild-simulator.log" ] && \
+            cp "$RUNNER_TEMP/xcodebuild-simulator.log" ci-evidence/emulator-ios/ || true
           {
             echo "# iOS simulator smoke — evidence"
             echo "- run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
