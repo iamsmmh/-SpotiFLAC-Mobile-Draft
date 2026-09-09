@@ -1,6 +1,6 @@
 # Flutter analyze & test — evidence
-- run: https://github.com/iamsmmh/-SpotiFLAC-Mobile-Draft/actions/runs/34405327035
-- sha: ad6e6f651192f535acbaa49ba5a9817ce7745133
+- run: https://github.com/iamsmmh/-SpotiFLAC-Mobile-Draft/actions/runs/34410494710
+- sha: 7e59cb0a34533d6b97dd86c2540442471214d9dd
 
 ## Steps
 - success: Set up job
@@ -60,7 +60,7 @@ Got dependencies!
 38 packages have newer versions incompatible with dependency constraints.
 Try `flutter pub outdated` for more information.
 Analyzing -SpotiFLAC-Mobile-Draft...                            
-No issues found! (ran in 40.3s)
+No issues found! (ran in 51.8s)
 
 ## flutter test — summary
 🎉 1604 tests passed.
@@ -97,11 +97,11 @@ No issues found! (ran in 40.3s)
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/shell_navigation_service_test.dart: ShellNavigationService tab requests forwards a named tab request to the registered shell
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/shell_navigation_service_test.dart: ShellNavigationService tab requests does not remove a newer shell handler
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/shell_navigation_service_test.dart: ShellNavigationService tab requests reports when no shell can handle the request
-✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/shell_navigation_service_test.dart: ShellNavigationService tab requests View Queue snackbar action requests the Library tab
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/gain_format_test.dart: formatGainDb positive gains carry an explicit + sign
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/gain_format_test.dart: formatGainDb negative gains carry a - sign
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/gain_format_test.dart: formatGainDb zero is rendered unsigned, including negative zero
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/gain_format_test.dart: formatGainDb decimals controls precision
+✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/shell_navigation_service_test.dart: ShellNavigationService tab requests View Queue snackbar action requests the Library tab
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/progress_stream_poller_test.dart: stop and restart ignore stale in-flight poll results
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/progress_stream_poller_test.dart: a stale stream error cannot start polling after stop
 ✅ /home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/test/download_history_logic_test.dart: download history identity serializes download timestamps with an explicit UTC offset
