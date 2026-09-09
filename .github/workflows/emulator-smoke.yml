@@ -7,6 +7,9 @@ name: Emulator smoke test
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - "arena/**"
   schedule:
     - cron: "25 4 * * 1"
 
@@ -210,7 +213,7 @@ jobs:
         # The Arena review sandbox can fetch this branch over git but cannot
         # download workflow artifacts, so the screenshots and logs are
         # committed under ci-evidence/emulator/ for review in chat.
-        if: always() && github.event_name == 'workflow_dispatch'
+        if: always() && (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/'))
         run: |
           set -uo pipefail
           mkdir -p ci-evidence/emulator

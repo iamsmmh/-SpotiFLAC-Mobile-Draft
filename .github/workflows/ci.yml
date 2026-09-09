@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - "arena/**"
   # Manual full battery for the Arena review sandbox: no PR is created, so the
   # whole matrix (dart/go/backend/android) is forced on dispatch and each job
   # commits a compact evidence file (ci-evidence/*.md) back to this branch,
@@ -70,7 +71,7 @@ jobs:
     name: Flutter analyze & test
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.dart == 'true' || github.event_name == 'workflow_dispatch'
+    if: needs.changes.outputs.dart == 'true' || github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/')
 
     steps:
       - name: Checkout repository
@@ -223,7 +224,7 @@ jobs:
       - name: Record evidence (dispatch only)
         # Raw job logs / artifacts cannot be downloaded from the Arena review
         # sandbox, so mirror a compact result summary back onto the branch.
-        if: always() && github.event_name == 'workflow_dispatch'
+        if: always() && (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/'))
         env:
           GH_TOKEN: ${{ github.token }}
           JOB_NAME: "Flutter analyze & test"
@@ -283,7 +284,7 @@ jobs:
     name: Go vet & test
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+    if: needs.changes.outputs.go == 'true' || github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/')
 
     defaults:
       run:
@@ -360,7 +361,7 @@ jobs:
         run: go test -race -count=1 ./...
 
       - name: Record evidence (dispatch only)
-        if: always() && github.event_name == 'workflow_dispatch'
+        if: always() && (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/'))
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -414,7 +415,7 @@ jobs:
     name: SpotiFLAC Cloud backend (vet & test)
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.backend == 'true' || github.event_name == 'workflow_dispatch'
+    if: needs.changes.outputs.backend == 'true' || github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/')
 
     defaults:
       run:
@@ -479,7 +480,7 @@ jobs:
         run: go test -race -count=1 ./...
 
       - name: Record evidence (dispatch only)
-        if: always() && github.event_name == 'workflow_dispatch'
+        if: always() && (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/'))
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -532,7 +533,7 @@ jobs:
     name: Android compile & native tests
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.android == 'true' || github.event_name == 'workflow_dispatch'
+    if: needs.changes.outputs.android == 'true' || github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/')
 
     steps:
       - name: Checkout repository
@@ -616,7 +617,7 @@ jobs:
           fi
 
       - name: Record evidence (dispatch only)
-        if: always() && github.event_name == 'workflow_dispatch'
+        if: always() && (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/'))
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
