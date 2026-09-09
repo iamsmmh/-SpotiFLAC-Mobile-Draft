@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   smoke:
@@ -63,8 +63,12 @@ jobs:
           go install golang.org/x/mobile/cmd/gomobile
           gomobile init
           mkdir -p ../android/app/libs
+          # Tee the build log so the Arena review sandbox (which cannot fetch
+          # raw job logs) can read the failure from the committed evidence.
+          set -o pipefail
           gomobile bind -target=android/amd64 -androidapi 24 \
-            -o ../android/app/libs/gobackend.aar .
+            -o ../android/app/libs/gobackend.aar . 2>&1 | tee gomobile-build.log
+          test -f ../android/app/libs/gobackend.aar
 
       - name: Get Flutter dependencies
         run: flutter pub get
@@ -82,27 +86,106 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: |
             set -euo pipefail
+            STATUS=smoke-status.txt
+            : > "$STATUS"
+            phase() { echo "phase=$1" >> "$STATUS"; echo "=== $1"; }
+
+            fail() {
+              echo "::error::$*"
+              echo "result=FAIL: $*" >> "$STATUS"
+              adb logcat -d -b crash > crash-log.txt 2>/dev/null || true
+              adb logcat -d > logcat.txt 2>/dev/null || true
+              exit 1
+            }
+
+            phase "wait-for-device"
             adb wait-for-device
             timeout 300 bash -c 'until adb shell getprop sys.boot_completed 2>/dev/null | grep -q 1; do sleep 3; done'
-            adb install -r build/app/outputs/flutter-apk/app-debug.apk
+
+            phase "install-apk"
+            adb install -r build/app/outputs/flutter-apk/app-debug.apk \
+              || fail "APK install failed"
             adb logcat -c
+            adb shell svc power stayon true || true
             adb shell pm grant "$APP_ID" android.permission.POST_NOTIFICATIONS || true
             adb shell pm grant "$APP_ID" android.permission.READ_MEDIA_AUDIO || true
             adb shell pm grant "$APP_ID" android.permission.WRITE_EXTERNAL_STORAGE || true
+
+            phase "launch-app"
             adb shell am start -n "$APP_ID/.MainActivity"
-            sleep 45
+            sleep 25
             PID=$(adb shell pidof "$APP_ID" | tr -d '\r')
-            if [ -z "$PID" ]; then
-              echo "::error::app process not alive after launch"
-              adb logcat -d -b crash || true
-              exit 1
-            fi
+            [ -n "$PID" ] || fail "app process not alive after launch"
             echo "app alive (pid $PID)"
+            adb shell dumpsys window 2>/dev/null | grep -E "mCurrentFocus|mFocusedApp" | head -2 > focus.txt || true
+            grep -q "$APP_ID" focus.txt \
+              || echo "::warning::app may not be in foreground: $(cat focus.txt 2>/dev/null)"
+            adb shell screencap -p /sdcard/shot1_boot.png
+            adb pull /sdcard/shot1_boot.png shot1_boot.png || true
+            adb shell uiautomator dump /sdcard/ui1.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui1.xml ui1.xml >/dev/null 2>&1 || true
+
+            # ---- Exercise the bottom NavigationBar (Home / Library / Store / Settings)
+            phase "navigate-tabs"
+            SIZE=$(adb shell wm size | grep -oE '[0-9]+x[0-9]+' | head -1)
+            W=${SIZE%x*}; H=${SIZE#*x}
+            echo "screen ${W}x${H}"
+            NY=$((H - 84))          # NavigationBar band
+            i=0
+            for frac in 0.125 0.375 0.625 0.875; do
+              i=$((i+1))
+              X=$(awk -v w="$W" -v f="$frac" 'BEGIN{printf "%d", w*f}')
+              adb shell input tap "$X" "$NY"
+              sleep 4
+              adb shell screencap -p "/sdcard/shot2_tab${i}.png"
+              adb pull "/sdcard/shot2_tab${i}.png" "shot2_tab${i}.png" || true
+            done
+            adb shell uiautomator dump /sdcard/ui2.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui2.xml ui2.xml >/dev/null 2>&1 || true
+            PID=$(adb shell pidof "$APP_ID" | tr -d '\r')
+            [ -n "$PID" ] || fail "app process died during tab navigation"
+
+            # ---- Rotation stress (portrait -> landscape -> portrait)
+            phase "rotation"
+            adb shell settings put system accelerometer_rotation 0 || true
+            adb shell settings put system user_rotation 1 || true
+            sleep 4
+            adb shell screencap -p /sdcard/shot3_landscape.png
+            adb pull /sdcard/shot3_landscape.png shot3_landscape.png || true
+            adb shell settings put system user_rotation 0 || true
+            sleep 3
+            PID=$(adb shell pidof "$APP_ID" | tr -d '\r')
+            [ -n "$PID" ] || fail "app process died during rotation"
+
+            # ---- Monkey stress (app package only; crashes surface as FATAL)
+            phase "monkey-stress"
+            adb shell monkey -p "$APP_ID" --throttle 120 \
+              --pct-touch 60 --pct-motion 25 --pct-nav 5 --pct-majornav 5 \
+              --pct-appswitch 0 --pct-trackball 0 --pct-anything 5 \
+              -s 20260909 400 > monkey.txt 2>&1 || true
+            tail -n 5 monkey.txt || true
+            sleep 5
+            adb shell screencap -p /sdcard/shot4_after_monkey.png
+            adb pull /sdcard/shot4_after_monkey.png shot4_after_monkey.png || true
+            PID=$(adb shell pidof "$APP_ID" | tr -d '\r')
+            [ -n "$PID" ] || fail "app process died during monkey stress"
+
+            # ---- Final analysis
+            phase "final-analysis"
             adb logcat -d > logcat.txt
+            if grep -q "FATAL EXCEPTION" logcat.txt; then
+              grep -A 40 "FATAL EXCEPTION" logcat.txt | head -80 > fatal.txt || true
+              fail "FATAL EXCEPTION detected (see fatal.txt)"
+            fi
+            if grep -qE "ANR in .*${APP_ID}|Input dispatching timed out .*${APP_ID}" logcat.txt; then
+              fail "ANR detected for ${APP_ID}"
+            fi
             grep -qiE "flutter|SpotiFLAC" logcat.txt \
-              || { echo "::error::no app log output captured"; exit 1; }
+              || fail "no app log output captured"
             adb shell screencap -p /sdcard/smoke.png
-            adb pull /sdcard/smoke.png smoke.png
+            adb pull /sdcard/smoke.png smoke.png || true
+            echo "result=PASS" >> "$STATUS"
+            echo "SMOKE PASSED"
 
       - name: Upload smoke evidence
         if: always()
@@ -111,6 +194,76 @@ jobs:
           name: emulator-smoke
           path: |
             smoke.png
+            shot*.png
             logcat.txt
+            smoke-status.txt
+            fatal.txt
+            crash-log.txt
+            monkey.txt
+            focus.txt
+            ui*.xml
+            go_backend/gomobile-build.log
           if-no-files-found: ignore
           retention-days: 7
+
+      - name: Commit emulator evidence to branch
+        # The Arena review sandbox can fetch this branch over git but cannot
+        # download workflow artifacts, so the screenshots and logs are
+        # committed under ci-evidence/emulator/ for review in chat.
+        if: always() && github.event_name == 'workflow_dispatch'
+        run: |
+          set -uo pipefail
+          mkdir -p ci-evidence/emulator
+          for f in smoke-status.txt focus.txt monkey.txt fatal.txt crash-log.txt \
+                   shot1_boot.png shot2_tab1.png shot2_tab2.png shot2_tab3.png \
+                   shot2_tab4.png shot3_landscape.png shot4_after_monkey.png \
+                   smoke.png ui1.xml ui2.xml; do
+            [ -f "$f" ] && cp "$f" "ci-evidence/emulator/$f"
+          done
+          [ -f go_backend/gomobile-build.log ] && \
+            cp go_backend/gomobile-build.log ci-evidence/emulator/gomobile-build.log
+          if [ -f logcat.txt ]; then
+            grep -iE "flutter|spotiflac|zarz|gobackend|bridge|FATAL|ANR|AndroidRuntime" \
+              logcat.txt | tail -n 500 > ci-evidence/emulator/logcat-app.txt || true
+            tail -n 120 logcat.txt > ci-evidence/emulator/logcat-tail.txt || true
+          fi
+          {
+            echo "# Emulator smoke — evidence"
+            echo "- run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- sha: ${GITHUB_SHA}"
+            echo "- device: API 34 google_apis x86_64 (swiftshader)"
+            echo
+            echo "## Phase log"
+            cat smoke-status.txt 2>/dev/null || echo "(no status file)"
+            echo
+            echo "## Focus"
+            cat focus.txt 2>/dev/null || echo "(no focus captured)"
+            echo
+            echo "## Monkey"
+            tail -n 12 monkey.txt 2>/dev/null || echo "(not run)"
+            echo
+            echo "## Fatal"
+            cat fatal.txt 2>/dev/null || echo "(none)"
+            echo
+            echo "## gomobile build"
+            if [ -f go_backend/gomobile-build.log ]; then
+              if [ -s go_backend/gomobile-build.log ]; then tail -n 30 go_backend/gomobile-build.log; else echo "(ok, no output)"; fi
+            else
+              echo "(no log)"
+            fi
+          } > ci-evidence/emulator/summary.md || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci-evidence || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "ci-evidence: emulator smoke (run ${GITHUB_RUN_ID})" || true
+          fi
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git pull --rebase || git rebase --abort || true
+            sleep $((i * 5))
+          done
+          echo "::warning::failed to push evidence"
+          exit 0

@@ -5,13 +5,18 @@ on:
   push:
     branches:
       - main
+  # Manual full battery for the Arena review sandbox: no PR is created, so the
+  # whole matrix (dart/go/backend/android) is forced on dispatch and each job
+  # commits a compact evidence file (ci-evidence/*.md) back to this branch,
+  # because raw job logs and artifacts are not downloadable from the sandbox.
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
@@ -65,7 +70,7 @@ jobs:
     name: Flutter analyze & test
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.dart == 'true'
+    if: needs.changes.outputs.dart == 'true' || github.event_name == 'workflow_dispatch'
 
     steps:
       - name: Checkout repository
@@ -214,11 +219,71 @@ jobs:
           fi
           fi
           exit "$status"
+
+      - name: Record evidence (dispatch only)
+        # Raw job logs / artifacts cannot be downloaded from the Arena review
+        # sandbox, so mirror a compact result summary back onto the branch.
+        if: always() && github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          JOB_NAME: "Flutter analyze & test"
+        run: |
+          set -uo pipefail
+          mkdir -p ci-evidence
+          {
+            echo "# Flutter analyze & test — evidence"
+            echo "- run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- sha: ${GITHUB_SHA}"
+            echo
+            echo "## Steps"
+            gh run view "$GITHUB_RUN_ID" --json jobs \
+              --jq '.jobs[] | select(.name=="Flutter analyze & test") | .steps[]
+                    | select(.conclusion != "skipped")
+                    | "- \(.conclusion // "running"): \(.name)"' 2>/dev/null || true
+            echo
+            echo "## flutter analyze"
+            if [ -f analyze.log ]; then tail -n 60 analyze.log; else echo "(no analyze.log)"; fi
+            echo
+            echo "## flutter test — summary"
+            if [ -f test.log ]; then
+              grep -E "All tests passed|Some tests failed|[0-9]+ tests? passed" test.log | tail -n 3 || true
+              echo
+              echo "### failing tests (reporter titles)"
+              grep -oE '::group::❌.*' test.log | sed 's/^::group::❌ //' | sort -u || echo "(none captured)"
+              echo
+              echo "### last 80 lines of test output"
+              tail -n 80 test.log
+            else
+              echo "(no test.log)"
+            fi
+            echo
+            echo "## coverage"
+            if [ -f coverage/lcov.info ]; then
+              awk -F: '/^LF:/{lf+=$2} /^LH:/{lh+=$2} END{if(lf>0) printf "line coverage: %d/%d — %.1f%%\n", lh, lf, 100.0*lh/lf; else print "(empty)"}' coverage/lcov.info
+            else
+              echo "(no coverage/lcov.info)"
+            fi
+          } > ci-evidence/flutter.md || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci-evidence || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "ci-evidence: flutter job (run ${GITHUB_RUN_ID})" || true
+          fi
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git pull --rebase || git rebase --abort || true
+            sleep $((i * 5))
+          done
+          echo "::warning::failed to push evidence"
+          exit 0
   go:
     name: Go vet & test
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.go == 'true'
+    if: needs.changes.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
 
     defaults:
       run:
@@ -294,11 +359,62 @@ jobs:
         # (tracked in STATUS.md follow-ups).
         run: go test -race -count=1 ./...
 
+      - name: Record evidence (dispatch only)
+        if: always() && github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          mkdir -p ci-evidence
+          {
+            echo "# Go vet & test (go_backend) — evidence"
+            echo "- run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- sha: ${GITHUB_SHA}"
+            echo
+            echo "## Steps"
+            gh run view "$GITHUB_RUN_ID" --json jobs \
+              --jq '.jobs[] | select(.name=="Go vet & test") | .steps[]
+                    | select(.conclusion != "skipped")
+                    | "- \(.conclusion // "running"): \(.name)"' 2>/dev/null || true
+            echo
+            echo "## gofmt"
+            OUT=$(gofmt -l .); if [ -z "$OUT" ]; then echo "clean"; else echo "$OUT"; fi
+            echo
+            echo "## staticcheck"
+            [ -f staticcheck.log ] && tail -n 40 staticcheck.log || echo "(no staticcheck.log)"
+            echo
+            echo "## go test"
+            [ -f gotest.log ] && tail -n 60 gotest.log || echo "(no gotest.log)"
+            echo
+            echo "## coverage"
+            if [ -f coverage.out ]; then
+              go tool cover -func=coverage.out | tail -n 1 || true
+            else
+              echo "(no coverage.out)"
+            fi
+          } > ci-evidence/go.md || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci-evidence || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "ci-evidence: go job (run ${GITHUB_RUN_ID})" || true
+          fi
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git pull --rebase || git rebase --abort || true
+            sleep $((i * 5))
+          done
+          echo "::warning::failed to push evidence"
+          exit 0
+        working-directory: go_backend
+
   backend:
     name: SpotiFLAC Cloud backend (vet & test)
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.backend == 'true'
+    if: needs.changes.outputs.backend == 'true' || github.event_name == 'workflow_dispatch'
 
     defaults:
       run:
@@ -362,11 +478,61 @@ jobs:
       - name: Run tests (race)
         run: go test -race -count=1 ./...
 
+      - name: Record evidence (dispatch only)
+        if: always() && github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          mkdir -p ci-evidence
+          {
+            echo "# SpotiFLAC Cloud backend (vet & test) — evidence"
+            echo "- run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- sha: ${GITHUB_SHA}"
+            echo
+            echo "## Steps"
+            gh run view "$GITHUB_RUN_ID" --json jobs \
+              --jq '.jobs[] | select(.name=="SpotiFLAC Cloud backend (vet & test)") | .steps[]
+                    | select(.conclusion != "skipped")
+                    | "- \(.conclusion // "running"): \(.name)"' 2>/dev/null || true
+            echo
+            echo "## gofmt"
+            OUT=$(gofmt -l .); if [ -z "$OUT" ]; then echo "clean"; else echo "$OUT"; fi
+            echo
+            echo "## staticcheck"
+            [ -f staticcheck.log ] && tail -n 40 staticcheck.log || echo "(no staticcheck.log)"
+            echo
+            echo "## go test"
+            [ -f gotest.log ] && tail -n 60 gotest.log || echo "(no gotest.log)"
+            echo
+            echo "## coverage"
+            if [ -f coverage.out ]; then
+              go tool cover -func=coverage.out | tail -n 1 || true
+            else
+              echo "(no coverage.out)"
+            fi
+          } > ci-evidence/backend.md || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci-evidence || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "ci-evidence: backend job (run ${GITHUB_RUN_ID})" || true
+          fi
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git pull --rebase || git rebase --abort || true
+            sleep $((i * 5))
+          done
+          echo "::warning::failed to push evidence"
+          exit 0
+
   android:
     name: Android compile & native tests
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.android == 'true'
+    if: needs.changes.outputs.android == 'true' || github.event_name == 'workflow_dispatch'
 
     steps:
       - name: Checkout repository
@@ -448,4 +614,47 @@ jobs:
             echo "::error::${encoded}"
             exit 1
           fi
+
+      - name: Record evidence (dispatch only)
+        if: always() && github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          mkdir -p ci-evidence
+          {
+            echo "# Android compile & native tests — evidence"
+            echo "- run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- sha: ${GITHUB_SHA}"
+            echo
+            echo "## Steps"
+            gh run view "$GITHUB_RUN_ID" --json jobs \
+              --jq '.jobs[] | select(.name=="Android compile & native tests") | .steps[]
+                    | select(.conclusion != "skipped")
+                    | "- \(.conclusion // "running"): \(.name)"' 2>/dev/null || true
+            echo
+            echo "## flutter build apk --debug"
+            [ -f build.log ] && tail -n 40 build.log || echo "(no build.log)"
+            echo
+            echo "## gradle :app:testDebugUnitTest"
+            [ -f android/gradle-test.log ] && tail -n 40 android/gradle-test.log || echo "(no gradle-test.log)"
+            echo
+            echo "## APK output"
+            ls -la build/app/outputs/flutter-apk/ 2>/dev/null || echo "(no apk output)"
+          } > ci-evidence/android.md || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci-evidence || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "ci-evidence: android job (run ${GITHUB_RUN_ID})" || true
+          fi
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git pull --rebase || git rebase --abort || true
+            sleep $((i * 5))
+          done
+          echo "::warning::failed to push evidence"
+          exit 0
 
