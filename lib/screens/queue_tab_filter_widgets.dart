@@ -165,7 +165,9 @@ extension _QueueTabFilterWidgets on _QueueTabState {
                   context,
                 );
               }
-            } catch (_) {}
+            } catch (e) {
+              _log.w('Queue cover precache failed: $e');
+            }
           });
         }
       }

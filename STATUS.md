@@ -1,6 +1,6 @@
 # SpotiFLAC Mobile — Current Status
 
-**Last updated:** 2026-09-07 · **App version:** 5.0.0+142 · **Branch:** `arena/01a07cab-spotiflac-mobile-draft`
+**Last updated:** 2026-09-08 · **App version:** 5.0.0+142 · **Branch:** `arena/01a080cb-spotiflac-mobile-draft`
 
 ## Identity
 
@@ -59,6 +59,9 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
 | Provider health metrics persist across sessions (counts/latency/last error; cooldowns deliberately reset) | ✅ **new in this pass** |
 | Crash & failure monitoring: dependency-free Sentry-compatible reporter (opt-in DSN, playback/download/provider/native events, breadcrumbs, redaction) | ✅ **new in this pass** (needs a Sentry DSN to activate — by design none ships) |
 | 126 previously-silent `catch (_) {}` paths now log (services, providers, metadata screens) | ✅ **new in this pass** |
+| Zero silent `catch (_) {}` blocks remain — final 35 sites in screens/widgets/utils now log via `AppLogger` | ✅ **2026-09-08 hardening pass** |
+| Startup watchdog: 20 s `Future.timeout` around the pre-`runApp` bootstrap + 5 s bound on crash-reporting config read; app always reaches `runApp` | ✅ **2026-09-08 hardening pass** |
+| Every toolchain-free repo gate green incl. `go_align_check` (8 Go files gofmt-aligned) and `check_discovery_symbols` (record-return + `return`-statement blind spots fixed; 0 problems) | ✅ **2026-09-08 hardening pass** |
 | `staticcheck ./...` (pinned 2026.2.1) added as a hard CI gate | ✅ **new in this pass** |
 | Docs consolidated: `docs/{architecture,streaming,extensions,testing,changelog}.md` (root docs are pointer stubs) | ✅ **new in this pass** |
 | Persistent stream-byte cache (1–100 GiB LRU, integrity, resume, local→cache→provider→preview ladder) | ✅ **new in this pass** |

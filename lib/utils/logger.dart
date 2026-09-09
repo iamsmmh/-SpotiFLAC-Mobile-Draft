@@ -212,7 +212,12 @@ class LogBuffer extends ChangeNotifier {
                 secParts.length > 1 ? int.parse(secParts[1]) : 0,
               );
             }
-          } catch (_) {}
+          } catch (_) {
+            // Malformed Go-side log timestamps must never break log
+            // ingestion; the entry keeps the current wall-clock time as its
+            // explicit fallback.
+            parsedTime = DateTime.now();
+          }
         }
 
         add(

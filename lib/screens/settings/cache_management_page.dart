@@ -17,6 +17,9 @@ import 'package:spotiflac_android/services/platform_bridge.dart';
 import 'package:spotiflac_android/utils/string_utils.dart';
 import 'package:spotiflac_android/widgets/settings_group.dart';
 import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+
+final _log = AppLogger('CacheManagementPage');
 
 class CacheManagementPage extends ConsumerStatefulWidget {
   const CacheManagementPage({super.key});
@@ -144,7 +147,9 @@ class _CacheManagementPageState extends ConsumerState<CacheManagementPage> {
           totalSize += await entity.length();
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Directory scan incomplete (partial cache stats returned): $e');
+    }
 
     return _DirectoryStats(fileCount: fileCount, totalSizeBytes: totalSize);
   }
@@ -177,15 +182,21 @@ class _CacheManagementPageState extends ConsumerState<CacheManagementPage> {
           chunk.map((entity) async {
             try {
               await entity.delete(recursive: true);
-            } catch (_) {}
+            } catch (e) {
+              _log.w('Failed to delete cache entity ${entity.path}: $e');
+            }
           }),
         );
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Failed to clear cache directory $path: $e');
+    }
 
     try {
       await directory.create(recursive: true);
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Failed to recreate cache directory $path: $e');
+    }
   }
 
   Future<void> _clearAppCache() async {

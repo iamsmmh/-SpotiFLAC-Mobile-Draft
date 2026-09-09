@@ -63,6 +63,7 @@ import 'package:spotiflac_android/widgets/selection_action_button.dart';
 import 'package:spotiflac_android/widgets/selection_bottom_bar.dart';
 import 'package:spotiflac_android/widgets/smoothed_progress.dart';
 import 'package:spotiflac_android/widgets/scroll_edge_fade.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 part 'queue_tab_helpers.dart';
 part 'queue_tab_widgets.dart';
@@ -73,6 +74,8 @@ part 'queue_tab_filter_widgets.dart';
 part 'queue_tab_batch_actions.dart';
 part 'queue_tab_item_widgets.dart';
 part 'queue_tab_transfer.dart';
+
+final _log = AppLogger('QueueTab');
 
 String _formatDownloadSizeMB(num bytes) => '${formatMegabytes(bytes)} MB';
 

@@ -45,6 +45,7 @@ import 'package:spotiflac_android/widgets/in_library_badge.dart';
 import 'package:spotiflac_android/widgets/preview_button.dart';
 import 'package:spotiflac_android/widgets/settings_group.dart';
 import 'package:spotiflac_android/widgets/view_queue_snackbar_action.dart';
+import 'package:spotiflac_android/utils/logger.dart';
 
 part 'home_tab_helpers.dart';
 part 'home_tab_explore.dart';
@@ -52,6 +53,8 @@ part 'home_tab_recent.dart';
 part 'home_tab_import.dart';
 part 'home_tab_search_results.dart';
 part 'home_tab_widgets.dart';
+
+final _log = AppLogger('HomeTab');
 
 class HomeTab extends ConsumerStatefulWidget {
   const HomeTab({super.key});

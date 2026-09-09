@@ -137,7 +137,26 @@ void main() {
       );
       assert(ColdStartPolicy.isDeferred('cover_cache'));
 
-      final bootstrap = await _loadLaunchBootstrap();
+      // Startup watchdog: the launch window must never hang indefinitely on the
+      // native splash. If any blocking bootstrap step (SharedPreferences,
+      // secure store, install marker, runtime profile) stalls beyond the
+      // budget, fall back to default settings so runApp always executes. The
+      // bootstrap body is individually failure-tolerant and keeps completing
+      // in the background; its results are simply superseded by the defaults.
+      final bootstrap = await _loadLaunchBootstrap().timeout(
+        const Duration(seconds: 20),
+        onTimeout: () {
+          _log.w(
+            'Launch bootstrap exceeded the 20s startup watchdog; '
+            'continuing with default settings',
+          );
+          return _LaunchBootstrap.defaults;
+        },
+      );
+      _log.d(
+        'Launch bootstrap completed within watchdog budget '
+        '(tier: ${bootstrap.runtimeProfile.tier})',
+      );
       try {
         _configureImageCache(bootstrap.runtimeProfile);
       } catch (e) {
@@ -283,9 +302,15 @@ Future<void> _configureCrashReporting() async {
 
   var dsn = _kCrashReportingDsnDefine.trim();
   if (dsn.isEmpty) {
+    // Bounded read: remote-config data is a cold-start non-critical cache and
+    // must never hold up runApp past the 5s budget (startup watchdog).
     try {
-      final snapshot = await AppRemoteConfigService().readCachedConfig();
+      final snapshot = await AppRemoteConfigService()
+          .readCachedConfig()
+          .timeout(const Duration(seconds: 5));
       dsn = snapshot?.config.crashReportingDsn?.trim() ?? '';
+    } on TimeoutException {
+      _log.w('Crash reporting config read timed out; staying disabled');
     } catch (e) {
       _log.w('Crash reporting config read failed: $e');
     }
