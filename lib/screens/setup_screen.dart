@@ -168,7 +168,9 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
           }
         }
 
-        setState(() => _storagePermissionGranted = allGranted);
+        if (mounted) {
+          setState(() => _storagePermissionGranted = allGranted);
+        }
         if (!allGranted && mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.setupPermissionDeniedMessage)),
@@ -214,19 +216,25 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
       if (Platform.isIOS) {
         final status = await Permission.notification.request();
         if (status.isGranted || status.isProvisional) {
-          setState(() => _notificationPermissionGranted = true);
+          if (mounted) {
+            setState(() => _notificationPermissionGranted = true);
+          }
         } else if (status.isPermanentlyDenied) {
           await _showPermissionDeniedDialog(permissionNotification);
         }
       } else if (_androidPermissions.notificationsAreRuntime) {
         final status = await Permission.notification.request();
         if (status.isGranted) {
-          setState(() => _notificationPermissionGranted = true);
+          if (mounted) {
+            setState(() => _notificationPermissionGranted = true);
+          }
         } else if (status.isPermanentlyDenied) {
           await _showPermissionDeniedDialog(permissionNotification);
         }
       } else {
-        setState(() => _notificationPermissionGranted = true);
+        if (mounted) {
+          setState(() => _notificationPermissionGranted = true);
+        }
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -283,12 +291,14 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
           final treeUri = result['tree_uri'] as String? ?? '';
           final displayName = result['display_name'] as String? ?? '';
           if (treeUri.isNotEmpty) {
-            setState(() {
-              _selectedTreeUri = treeUri;
-              _selectedDirectory = displayName.isNotEmpty
-                  ? displayName
-                  : treeUri;
-            });
+            if (mounted) {
+              setState(() {
+                _selectedTreeUri = treeUri;
+                _selectedDirectory = displayName.isNotEmpty
+                    ? displayName
+                    : treeUri;
+              });
+            }
           }
         }
 
@@ -315,7 +325,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                 ],
               ),
             );
-            if (useDefault == true) {
+            if (useDefault == true && mounted) {
               setState(() {
                 _selectedTreeUri = '';
                 _selectedDirectory = defaultDir;
@@ -361,10 +371,12 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
               title: Text(context.l10n.setupAppDocumentsFolder),
               onTap: () async {
                 final dir = await _getDefaultDirectory();
-                setState(() {
-                  _selectedDirectory = dir;
-                  _selectedDirectoryBookmark = null;
-                });
+                if (mounted) {
+                  setState(() {
+                    _selectedDirectory = dir;
+                    _selectedDirectoryBookmark = null;
+                  });
+                }
                 if (ctx.mounted) Navigator.pop(ctx);
               },
             ),
@@ -425,10 +437,12 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                 }
 
                 final pickedDir = picked;
-                setState(() {
-                  _selectedDirectory = pickedDir.path;
-                  _selectedDirectoryBookmark = pickedDir.bookmark;
-                });
+                if (mounted) {
+                  setState(() {
+                    _selectedDirectory = pickedDir.path;
+                    _selectedDirectoryBookmark = pickedDir.bookmark;
+                  });
+                }
               },
             ),
             const SizedBox(height: 16),

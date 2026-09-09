@@ -136,10 +136,6 @@ void _expectSameMatrix(QrCode actual, List<List<bool>> expected) {
 }
 
 void main() {
-  // Pre-existing encoder bugs: format info placement and mask selection
-  // do not match ISO/IEC 18004. These tests compare against a reference
-  // encoder and will pass once the encoder is rewritten to spec.
-  // Tracked as a follow-up — not blocking the analyze-fix PR.
   group('QR golden matrices (exact vs reference encoder)', () {
     for (final g in _goldens) {
       test(
@@ -153,7 +149,6 @@ void main() {
           expect(code.size, g.size);
           _expectSameMatrix(code, _decodeMatrix(g.matrixB64, g.size));
         },
-        skip: 'Pre-existing QR encoder bug (format info / mask selection)',
       );
     }
 
@@ -165,7 +160,7 @@ void main() {
         expect(code.version, g.version);
         _expectSameMatrix(code, _decodeMatrix(g.forcedZeroB64!, g.size));
       }
-    }, skip: 'Pre-existing QR encoder bug (format info / mask selection)');
+    });
 
     test('all eight forced masks are valid square grids', () {
       final code0 = QrEncoder.encode('AZO24', level: QrErrorLevel.low, mask: 0);
@@ -173,10 +168,14 @@ void main() {
         final code = QrEncoder.encode('AZO24', level: QrErrorLevel.low, mask: m);
         expect(code.mask, m);
         expect(code.size, code0.size);
-        // Function patterns must be identical across masks.
+        // Mask-independent function patterns (finders, separators, timing,
+        // alignment, version info, dark module) must not change with the
+        // mask. Format info is deliberately excluded: those 30 cells encode
+        // the selected mask, so they differ across masks by design.
         for (var r = 0; r < code.size; r++) {
           for (var c = 0; c < code.size; c++) {
-            if (_isFunctionCell(r, c, code.size)) {
+            if (_isFunctionPatternCell(r, c, code.size, code.version) &&
+                !_isFormatInfoCell(r, c, code.size)) {
               expect(code.modules[r][c], code0.modules[r][c],
                   reason: 'function pattern at ($r, $c) differs between '
                       'mask 0 and mask $m');
@@ -184,7 +183,7 @@ void main() {
           }
         }
       }
-    }, skip: 'Pre-existing QR encoder bug (format info / mask selection)');
+    });
   });
 
   group('QR encoder invariants', () {
@@ -339,27 +338,56 @@ void main() {
   });
 }
 
-/// True for cells covered by finder patterns + separators, timing, format
-/// info, version info (v7+, i.e. size >= 41) and the dark module. Alignment
-/// patterns (v2+) are function patterns too but are conservatively skipped.
-bool _isFunctionCell(int r, int c, int s) {
-  final inTopLeft = r <= 8 && c <= 8;
-  final inTopRight = r <= 8 && c >= s - 9;
-  final inBottomLeft = r >= s - 9 && c <= 8;
+/// True for the 30 format-info cells, which encode the selected mask and are
+/// therefore expected to differ between codes that use different masks.
+bool _isFormatInfoCell(int r, int c, int s) {
+  // Copy 1 (L-shape around the top-left finder): bits 0..6 in column 8
+  // (row 6 is the horizontal timing line), bit 7 at (8, 8), bits 8..14 in
+  // row 8 (col 6 is the vertical timing line).
+  if (c == 8 && r < 8 && r != 6) return true;
+  if (r == 8 && c < 8 && c != 6) return true;
+  if (r == 8 && c == 8) return true;
+  // Copy 2: bits 0..7 in row 8 at the right edge, bits 8..14 in column 8 at
+  // the bottom edge.
+  if (r == 8 && c >= s - 8) return true;
+  if (c == 8 && r >= s - 7) return true;
+  return false;
+}
+
+/// Exact function-pattern predicate: finder patterns + separators (three
+/// 8x8 regions), timing, alignment patterns (from the version's centre
+/// table, minus the ones overlapped by finders), format info, version info
+/// (v7+) and the always-dark module. Matches the encoder's own placement.
+bool _isFunctionPatternCell(int r, int c, int s, int version) {
+  final inTopLeft = r < 8 && c < 8;
+  final inTopRight = r < 8 && c >= s - 8;
+  final inBottomLeft = r >= s - 8 && c < 8;
   final onTiming = r == 6 || c == 6;
-  final onFormatRow = r == 8 && (c <= 8 || c >= s - 8);
-  final onFormatCol = c == 8 && (r <= 8 || r >= s - 7 || r == s - 8);
-  final hasVersionInfo = s >= 41;
-  final inVersionTr = hasVersionInfo && r <= 5 && c >= s - 11;
-  final inVersionBl = hasVersionInfo && r >= s - 11 && c <= 5;
-  return inTopLeft ||
+  final onFormat = _isFormatInfoCell(r, c, s);
+  final isDarkModule = r == s - 8 && c == 8;
+  if (inTopLeft ||
       inTopRight ||
       inBottomLeft ||
       onTiming ||
-      onFormatRow ||
-      onFormatCol ||
-      inVersionTr ||
-      inVersionBl;
+      onFormat ||
+      isDarkModule) {
+    return true;
+  }
+  for (final row in patternPositionTable[version - 1]) {
+    for (final col in patternPositionTable[version - 1]) {
+      // Centres inside a finder 8x8 region are never drawn (the encoder
+      // skips cells that the finder patterns already filled).
+      if (row < 8 && col < 8) continue;
+      if (row < 8 && col >= s - 8) continue;
+      if (row >= s - 8 && col < 8) continue;
+      if ((r - row).abs() <= 2 && (c - col).abs() <= 2) return true;
+    }
+  }
+  if (version >= 7) {
+    if (r <= 5 && c >= s - 11) return true;
+    if (r >= s - 11 && c <= 5) return true;
+  }
+  return false;
 }
 
 // ---------------------------------------------------------------------------

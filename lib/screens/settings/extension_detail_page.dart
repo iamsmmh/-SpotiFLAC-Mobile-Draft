@@ -39,6 +39,7 @@ class _ExtensionDetailPageState extends ConsumerState<ExtensionDetailPage> {
     final settings = await ref
         .read(extensionProvider.notifier)
         .getExtensionSettings(widget.extensionId);
+    if (!mounted) return;
     setState(() {
       _settings = settings;
       _isLoadingSettings = false;

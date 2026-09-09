@@ -276,7 +276,14 @@ class QrEncoder {
       var bitIndex = 7;
       var byteIndex = 0;
       for (var col = size - 1; col > 0; col -= 2) {
-        if (col <= 6) col -= 1;
+        // Skip the vertical timing column exactly once: when the descending
+        // column pair would start at 6, drop to 5 so the pair (5, 4) is used
+        // and column 6 (timing) is never a data column. This must trigger
+        // ONLY for col == 6: firing for every col <= 6 also rewrote the
+        // (3, 2) pair into (2, 1), which left data columns 3 and 0 unfilled
+        // and shifted the tail of the codeword stream — every code rendered
+        // before this fix was unscannable.
+        if (col == 6) col = 5;
         while (true) {
           for (final c in <int>[col, col - 1]) {
             if (modules[row][c] == null) {
