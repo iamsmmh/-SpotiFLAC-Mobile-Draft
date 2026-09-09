@@ -20,6 +20,8 @@
 /// Source selection (local → cache → stream) lives in the decision engine
 /// ([PlaybackManager]); source ranking within one origin lives in the
 /// existing planners ([PlaybackSourceLadder], [StreamProtocolResolver]).
+library;
+
 import 'dart:async';
 
 import 'package:spotiflac_android/models/track.dart';

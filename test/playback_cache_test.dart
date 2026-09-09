@@ -229,7 +229,7 @@ void main() {
       expect(second.artworkPath, endsWith('.jpg'));
 
       await cache.setPinned(_track('t'), pinned: false);
-      expect((await cache.lookup(_track('t'))?.entry.pinned, isFalse);
+      expect((await cache.lookup(_track('t')))?.entry.pinned, isFalse);
     });
 
     test('concurrent stores for distinct tracks all land', () async {

@@ -70,6 +70,7 @@ String playbackTransportToken(ConnectivityResult result) {
     case ConnectivityResult.none:
       return NetworkTransport.none;
     case ConnectivityResult.bluetooth:
+    case ConnectivityResult.satellite:
     case ConnectivityResult.other:
       return NetworkTransport.other;
   }

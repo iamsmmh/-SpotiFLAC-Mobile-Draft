@@ -405,7 +405,7 @@ void main() {
       await manager.initialize();
 
       await manager.notifyDownloadCompleted(trackId: 's');
-      await manager.notifyDownloadCompleted();
+      await manager.notifyDownloadCompleted(trackId: '');
     });
   });
 

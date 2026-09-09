@@ -121,7 +121,9 @@ void main() {
       final media = source.mediaFor(_track('t'), '/music/t.flac');
 
       final restored = PlayableMedia.fromJson(
-        Map<String, dynamic>.from(jsonDecode(jsonEncode(media.toJson()))),
+        Map<String, dynamic>.from(
+          jsonDecode(jsonEncode(media.toJson())) as Map<String, dynamic>,
+        ),
       );
       expect(restored, isNotNull);
       expect(restored!.id, media.id);
@@ -145,7 +147,9 @@ void main() {
       final media = source.mediaFor(_track('t'), hit);
 
       final restored = PlayableMedia.fromJson(
-        Map<String, dynamic>.from(jsonDecode(jsonEncode(media.toJson()))),
+        Map<String, dynamic>.from(
+          jsonDecode(jsonEncode(media.toJson())) as Map<String, dynamic>,
+        ),
       );
       expect(restored, isNotNull);
       expect(restored!.id, hit.entry.key);
@@ -183,7 +187,9 @@ void main() {
       );
 
       final restored = PlayableMedia.fromJson(
-        Map<String, dynamic>.from(jsonDecode(jsonEncode(media.toJson()))),
+        Map<String, dynamic>.from(
+          jsonDecode(jsonEncode(media.toJson())) as Map<String, dynamic>,
+        ),
       );
       expect(restored, isNotNull);
       expect(restored!.id, 't');
@@ -198,7 +204,9 @@ void main() {
       expect(media.isDeferredStream, isTrue);
 
       final restored = PlayableMedia.fromJson(
-        Map<String, dynamic>.from(jsonDecode(jsonEncode(media.toJson()))),
+        Map<String, dynamic>.from(
+          jsonDecode(jsonEncode(media.toJson())) as Map<String, dynamic>,
+        ),
       );
       expect(restored, isNotNull);
       expect(restored!.id, 't');
@@ -274,7 +282,7 @@ void main() {
         'repeat': 'off',
       };
       final decoded = Map<String, dynamic>.from(
-        jsonDecode(jsonEncode(envelope)),
+        jsonDecode(jsonEncode(envelope)) as Map<String, dynamic>,
       );
 
       expect(decoded['version'], 1);

@@ -21,6 +21,8 @@
 /// cache complements the ecosystem's encrypted stream cache (which owns
 /// provider-terms-gated caching); entries here are only written when the
 /// manager was told caching is permitted for the source.
+library;
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -255,6 +257,7 @@ class PlaybackCacheManager {
     _maxSizeBytes = value < 0 ? 0 : value;
     unawaited(_enforceBudget().catchError((Object _) {
       // Best-effort: the next lookup/store/maintenance pass retries.
+      return const <String>[];
     }));
   }
 
