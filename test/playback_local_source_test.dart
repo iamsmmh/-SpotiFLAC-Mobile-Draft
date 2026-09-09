@@ -14,6 +14,11 @@ class _FakeBackend implements PlaybackBackend {
   final StreamController<PlaybackProgress> ticks =
       StreamController<PlaybackProgress>.broadcast();
 
+  // The SDK's `controller.stream` returns a fresh wrapper on every access;
+  // the tests pin the "one shared state stream" identity, so cache it.
+  late final Stream<PlaybackSourceState> stateStream = states.stream;
+  late final Stream<PlaybackProgress> progressStream = ticks.stream;
+
   bool ready = false;
   bool disposed = false;
   final List<PlayableMedia> played = <PlayableMedia>[];
@@ -41,10 +46,10 @@ class _FakeBackend implements PlaybackBackend {
   }
 
   @override
-  Stream<PlaybackSourceState> get state => states.stream;
+  Stream<PlaybackSourceState> get state => stateStream;
 
   @override
-  Stream<PlaybackProgress> get progress => ticks.stream;
+  Stream<PlaybackProgress> get progress => progressStream;
 
   @override
   Duration get currentPosition => position;
