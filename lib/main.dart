@@ -53,7 +53,9 @@ import 'package:spotiflac_android/providers/search_history_provider.dart'
 import 'package:spotiflac_android/providers/runtime_profile_provider.dart';
 import 'package:spotiflac_android/providers/settings_provider.dart';
 import 'package:spotiflac_android/providers/multi_provider_stream_provider.dart';
+import 'package:spotiflac_android/providers/playback_manager_provider.dart';
 import 'package:spotiflac_android/providers/streaming_engine_provider.dart';
+import 'package:spotiflac_android/services/playback/playback.dart';
 import 'package:spotiflac_android/providers/theme_provider.dart';
 import 'package:spotiflac_android/services/audio/audio_quality_inspector.dart';
 import 'package:spotiflac_android/services/audio/ios_avaudio_engine_eq.dart';
@@ -899,6 +901,74 @@ void _bindPlatformUpgradeSurface() {
 
   assert(pinned.isNotEmpty);
   _log.d('platform upgrade surface pinned: ${pinned.length} declarations');
+}
+
+/// Pins the unified hybrid playback layer (`lib/services/playback/**` plus
+/// its provider wiring) so `unreachable_from_main` cannot delete it.
+void _bindPlaybackSurface() {
+  Type type<T>() => T;
+
+  final pinned = <Object?>[
+    // ---- source contract -------------------------------------------------
+    PlaybackSourceStatus.values,
+    PlaybackSourceState.new,
+    PlaybackSourceState.idle,
+    PlaybackProgress.new,
+    PlaybackSourceException.new,
+    type<PlaybackSource>(),
+    type<PlaybackBackend>(),
+    type<SharedBackendPlaybackSource>(),
+    playableMediaForTrack,
+
+    // ---- local source ----------------------------------------------------
+    LocalPlaybackSource.new,
+    LocalPlaybackSource.mediaIdForPath,
+    defaultLocalTrackPathResolver,
+    defaultLocalTrackPathBatchResolver,
+
+    // ---- streaming source ------------------------------------------------
+    ResolvedStreamUrl.new,
+    StreamUrlResolver.new,
+    StreamUrlResolver.retryDelays,
+    StreamUrlResolver.maxRetries,
+    StreamingPlaybackSource.new,
+    StreamingPlaybackSource.mediaIdForTrack,
+
+    // ---- cache source ----------------------------------------------------
+    playbackCacheKeyForTrack,
+    PlaybackCacheEntry.new,
+    PlaybackCacheHit.new,
+    PlaybackCacheMaintenanceReport.new,
+    PlaybackCacheManager.new,
+    PlaybackCacheManager.atRoot,
+    PlaybackCacheManager.defaultMaxCacheBytes,
+    CachePlaybackSource.new,
+    CachePlaybackSource.mediaIdForCacheKey,
+
+    // ---- decision engine -------------------------------------------------
+    PlaybackPolicy.new,
+    const PlaybackPolicy(),
+    PlaybackDecision.new,
+    PlaybackDownloadEvent.new,
+    playbackDownloadListener,
+    shouldPreloadAt,
+    deferredMediaForTrack,
+    PlaybackManager.new,
+    PlaybackManager.defaultPreloadThreshold,
+    MusicPlayerPlaybackBackend.new,
+
+    // ---- provider wiring -------------------------------------------------
+    playbackPolicyFromEngineSettings,
+    playbackTransportToken,
+    playbackNetworkTransports,
+    resolvePlaybackCacheDirectory,
+    fetchPlaybackManifestText,
+    playbackStreamSourceFromDescriptor,
+    playbackManagerProvider,
+  ];
+
+  assert(pinned.isNotEmpty);
+  _log.d('playback surface pinned: ${pinned.length} declarations');
 }
 
 void _configureImageCache(_RuntimeProfile runtimeProfile) {
