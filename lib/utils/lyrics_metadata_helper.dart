@@ -25,8 +25,11 @@ final RegExp _lrcDisplayBackgroundLinePattern = RegExp(
   caseSensitive: false,
 );
 
-bool isInstrumentalLyricsMarker(String lyrics) =>
-    lyrics.trim().toLowerCase() == '[instrumental:true]';
+bool isInstrumentalLyricsMarker(String lyrics) {
+  final value = lyrics.trim().toLowerCase();
+  // Both the bare marker and the flag form are treated as instrumental.
+  return value == '[instrumental]' || value == '[instrumental:true]';
+}
 
 /// Converts embedded or fetched LRC into text suitable for the metadata UI.
 /// Header-only payloads intentionally produce an empty string.

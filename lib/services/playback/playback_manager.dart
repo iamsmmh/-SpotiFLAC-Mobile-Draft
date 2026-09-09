@@ -890,6 +890,13 @@ class PlaybackManager {
       );
       _backend.noteSourceExpiry(replacement.id, fresh.source.expiresAt);
       await _backend.replaceCurrent(replacement, resumeAt: resumeAt);
+      // The fresh URL travels under the stream media id (the track id), so a
+      // cache-originated item changes identity on failover: adopt the
+      // replacement so the current item, queue order, and the bounded
+      // recovery count all follow it.
+      final attemptsSoFar = _recoveries.remove(media.id);
+      if (attemptsSoFar != null) _recoveries[replacement.id] = attemptsSoFar;
+      _adoptReplacementId(media.id, replacement.id);
       _logPlayback.i('Recovered "${item.track.name}" with a fresh stream URL');
     } catch (recoveryError) {
       _logPlayback.w(
@@ -933,6 +940,12 @@ class MusicPlayerPlaybackBackend implements PlaybackBackend {
   late final StreamController<PlaybackProgress> _ticks =
       StreamController<PlaybackProgress>.broadcast();
 
+  // The SDK's `controller.stream` returns a fresh wrapper on every access;
+  // the layer's contract is one stable state/progress stream object per
+  // backend, so the instances are cached once.
+  late final Stream<PlaybackSourceState> _stateStream = _states.stream;
+  late final Stream<PlaybackProgress> _tickStream = _ticks.stream;
+
   PlaybackSourceState _latest = PlaybackSourceState.idle;
   Duration _position = Duration.zero;
   Duration _duration = Duration.zero;
@@ -952,10 +965,10 @@ class MusicPlayerPlaybackBackend implements PlaybackBackend {
   }
 
   @override
-  Stream<PlaybackSourceState> get state => _states.stream;
+  Stream<PlaybackSourceState> get state => _stateStream;
 
   @override
-  Stream<PlaybackProgress> get progress => _ticks.stream;
+  Stream<PlaybackProgress> get progress => _tickStream;
 
   @override
   Duration get currentPosition => _position;

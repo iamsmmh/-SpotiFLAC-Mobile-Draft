@@ -243,9 +243,9 @@ class StreamUrlResolver {
       ),
     );
     for (final candidate in ranked) {
-      if (candidate.isExpired) continue;
+      if (_isExpiredAt(candidate, now)) continue;
       final narrowed = await _narrow(candidate);
-      if (narrowed.isExpired) continue;
+      if (_isExpiredAt(narrowed, now)) continue;
       if (await validate(narrowed)) {
         final resolved = ResolvedStreamUrl(
           trackId: track.id,
@@ -272,6 +272,15 @@ class StreamUrlResolver {
     } catch (_) {
       return candidate;
     }
+  }
+
+  /// Expiry test against the injected clock. [StreamSource.isExpired] reads
+  /// the wall clock, which would desync candidate filtering from a fake
+  /// clock and skip candidates that are still valid at [now].
+  bool _isExpiredAt(StreamSource source, DateTime now) {
+    final expiry = source.expiresAt;
+    if (expiry == null) return false;
+    return !now.isBefore(expiry);
   }
 
   void _store(String trackId, ResolvedStreamUrl resolved) {
