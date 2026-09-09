@@ -1,6 +1,6 @@
 # Go vet & test (go_backend) — evidence
-- run: https://github.com/iamsmmh/-SpotiFLAC-Mobile-Draft/actions/runs/34404092675
-- sha: 661ec0a97170f8a96626ca82d0a64c7ed3a518c1
+- run: https://github.com/iamsmmh/-SpotiFLAC-Mobile-Draft/actions/runs/34405327035
+- sha: ad6e6f651192f535acbaa49ba5a9817ce7745133
 
 ## Steps
 - success: Set up job
@@ -21,7 +21,7 @@ clean
 ## staticcheck
 
 ## go test
-ok  	github.com/zarz/spotiflac_android/go_backend	7.339s	coverage: 68.6% of statements
+ok  	github.com/zarz/spotiflac_android/go_backend	7.900s	coverage: 68.6% of statements
 
 ## coverage
 total:											(statements)							68.6%
