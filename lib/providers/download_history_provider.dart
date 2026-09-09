@@ -295,18 +295,42 @@ class DownloadHistoryNotifier extends Notifier<DownloadHistoryState> {
     required bool preserveTrackVariant,
   }) async {
     try {
+      final DownloadHistoryItem persisted;
       if (preserveTrackVariant) {
         await _db.upsert(item.toJson());
-        _putInMemoryTrackVariant(item);
+        persisted = _putInMemoryTrackVariant(item);
       } else {
         final resolved = await _resolveHistoryItem(item);
         await _db.upsert(resolved.item.toJson());
         _putResolvedHistoryInMemory(resolved.item, resolved.existingId);
+        persisted = resolved.item;
       }
       _scheduleIndexBump();
+      _notifyPlaybackOfRegistration(persisted);
     } catch (e, stack) {
       _historyLog.e('Failed to $action: $e', e, stack);
       rethrow;
+    }
+  }
+
+  /// Notifies the unified playback layer that a download was registered, so
+  /// future plays of the track resolve locally (and a live stream of the
+  /// same track hot-swaps to the file). Best-effort and exception-free:
+  /// persistence already succeeded, and playback availability must never
+  /// fail the history write.
+  void _notifyPlaybackOfRegistration(DownloadHistoryItem item) {
+    final listener = playbackDownloadListener;
+    if (listener == null) return;
+    try {
+      listener(
+        PlaybackDownloadEvent(
+          trackId: item.spotifyId?.trim() ?? '',
+          isrc: item.isrc?.trim() ?? '',
+          filePath: item.filePath,
+        ),
+      );
+    } catch (_) {
+      // Playback availability is advisory; the history write stands.
     }
   }
 
