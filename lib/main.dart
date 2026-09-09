@@ -167,6 +167,7 @@ void main() {
       _bindProductionHardening(bootstrap.runtimeProfile);
       _bindEcosystemSurface();
       _bindPlatformUpgradeSurface();
+      _bindPlaybackSurface();
       // Phase 10: opt-in crash reporting (no-op without a DSN — see
       // [_configureCrashReporting]). Runs before runApp so the very first
       // frame errors are already captured.

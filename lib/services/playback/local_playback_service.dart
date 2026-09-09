@@ -5,6 +5,8 @@
 /// app reads — the local library database and the download history database —
 /// behind the injectable [LocalTrackPathResolver] port, so tests never touch
 /// SQLite and production never maintains a second library index.
+library;
+
 import 'dart:async';
 
 import 'package:spotiflac_android/models/track.dart';

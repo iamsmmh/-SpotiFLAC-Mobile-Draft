@@ -24,6 +24,8 @@
 /// *outside* whatever is installed when [installHooks] runs (production
 /// boots the engine first) and delegates every foreign media id, so both
 /// engines keep working regardless of install order.
+library;
+
 import 'dart:async';
 
 import 'package:audio_service/audio_service.dart'
@@ -916,8 +918,7 @@ class PlaybackManager {
 /// crossfading, ReplayGain, lyrics, and session persistence all stay inside
 /// the handler — this adapter only forwards and projects state.
 class MusicPlayerPlaybackBackend implements PlaybackBackend {
-  MusicPlayerPlaybackBackend({String Function(String mediaId)? trackIdForMediaId})
-    : trackIdForMediaId = trackIdForMediaId;
+  MusicPlayerPlaybackBackend({this.trackIdForMediaId});
 
   /// Maps queue media ids back to logical track ids (manager-owned).
   String Function(String mediaId)? trackIdForMediaId;

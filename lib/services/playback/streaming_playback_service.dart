@@ -10,6 +10,8 @@
 /// Mid-playback failures (expired signed URLs, CDN drops, network changes)
 /// are recovered by the manager's chained failure hook, which refreshes the
 /// URL through this same resolver and hot-swaps it at the live position.
+library;
+
 import 'dart:async';
 import 'dart:collection';
 
@@ -362,9 +364,11 @@ class StreamingPlaybackSource extends SharedBackendPlaybackSource {
     final format = source.format.trim().toUpperCase();
     if (format.isNotEmpty) parts.add(format);
     if (source.bitrate > 0) parts.add('${source.bitrate}kbps');
-    if (parts.isEmpty) return source.protocol == StreamProtocol.progressive
-        ? null
-        : source.protocol.label;
+    if (parts.isEmpty) {
+      return source.protocol == StreamProtocol.progressive
+          ? null
+          : source.protocol.label;
+    }
     return parts.join(' ');
   }
 }

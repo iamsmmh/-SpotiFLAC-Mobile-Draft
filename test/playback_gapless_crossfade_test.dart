@@ -6,6 +6,8 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:spotiflac_android/engine/crossfade_policy.dart'
     show CrossfadeSettings;
+import 'package:spotiflac_android/core/streaming/stream_provider.dart'
+    show StreamSource;
 import 'package:spotiflac_android/models/track.dart';
 import 'package:spotiflac_android/services/music_player_service.dart'
     show
