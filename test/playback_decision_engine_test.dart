@@ -27,8 +27,8 @@ class _FakeBackend implements PlaybackBackend {
 
   // The SDK's `controller.stream` returns a fresh wrapper on every access;
   // the tests pin the "one shared state stream" identity, so cache it.
-  final Stream<PlaybackSourceState> stateStream = states.stream;
-  final Stream<PlaybackProgress> progressStream = ticks.stream;
+  late final Stream<PlaybackSourceState> stateStream = states.stream;
+  late final Stream<PlaybackProgress> progressStream = ticks.stream;
 
   bool ready = false;
   bool disposed = false;
