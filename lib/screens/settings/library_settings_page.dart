@@ -81,7 +81,9 @@ class _LibrarySettingsPageState extends ConsumerState<LibrarySettingsPage> {
     final status = await Permission.storage.request();
 
     if (status.isGranted) {
-      setState(() => _hasStoragePermission = true);
+      if (mounted) {
+        setState(() => _hasStoragePermission = true);
+      }
       return true;
     } else if (status.isPermanentlyDenied) {
       if (mounted) {

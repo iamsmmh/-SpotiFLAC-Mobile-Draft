@@ -1,6 +1,6 @@
 # SpotiFLAC Mobile — Current Status
 
-**Last updated:** 2026-09-08 · **App version:** 5.0.0+142 · **Branch:** `arena/01a080cb-spotiflac-mobile-draft`
+**Last updated:** 2026-09-10 · **App version:** 5.0.0+142 · **Branch:** `arena/01a08735-spotiflac-mobile-draft`
 
 ## Identity
 
@@ -60,6 +60,10 @@ CI/build evidence lives in `docs/testing.md` and `BUILD_REPORT.md`; the
 | Crash & failure monitoring: dependency-free Sentry-compatible reporter (opt-in DSN, playback/download/provider/native events, breadcrumbs, redaction) | ✅ **new in this pass** (needs a Sentry DSN to activate — by design none ships) |
 | 126 previously-silent `catch (_) {}` paths now log (services, providers, metadata screens) | ✅ **new in this pass** |
 | Zero silent `catch (_) {}` blocks remain — final 35 sites in screens/widgets/utils now log via `AppLogger` | ✅ **2026-09-08 hardening pass** |
+| **QR encoder repaired (ISO/IEC 18004):** the zig-zag placement left data columns 3/0 unwritten, so every rendered QR (playlist share, LAN pairing) was unscannable; one-line root-cause fix, all 6 reference goldens now pass bit-exact and the 3 skipped QR tests are un-skipped with a corrected cross-mask invariant | ✅ **2026-09-10 stability pass** (`docs/stabilization_report_2026-09-10.md`) |
+| **Download queue can no longer wedge:** an escape from the queue loop or a failing completion notification/iOS background-task call used to leave `isProcessing=true` forever; the teardown (incl. the reset) now always runs, with logging + crash report | ✅ **2026-09-10 stability pass** |
+| **`setState`-after-await guarded** in the setup screen (permission/SAF/iOS folder flows), extension detail page and library storage permission path | ✅ **2026-09-10 stability pass** |
+| `go_align_check.py` local gate false-positives fixed (trailing comments, raw strings, tagless/embedded fields, non-alignable literal lines) and its default scope now covers `go_backend/` too | ✅ **2026-09-10 stability pass** |
 | Startup watchdog: 20 s `Future.timeout` around the pre-`runApp` bootstrap + 5 s bound on crash-reporting config read; app always reaches `runApp` | ✅ **2026-09-08 hardening pass** |
 | Every toolchain-free repo gate green incl. `go_align_check` (8 Go files gofmt-aligned) and `check_discovery_symbols` (record-return + `return`-statement blind spots fixed; 0 problems) | ✅ **2026-09-08 hardening pass** |
 | `staticcheck ./...` (pinned 2026.2.1) added as a hard CI gate | ✅ **new in this pass** |

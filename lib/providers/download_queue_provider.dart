@@ -1713,11 +1713,31 @@ class DownloadQueueNotifier extends Notifier<DownloadQueueState> {
 
     try {
       await _runQueueLoop();
+    } catch (e, stack) {
+      // A queue-loop escape must never wedge the queue: without this catch
+      // the cleanup below is skipped, isProcessing stays true forever and
+      // no new download can ever start (queue corruption until restart).
+      _log.e('Queue loop ended with an unexpected error: $e', e, stack);
+      if (CrashReporter.instance.isEnabled) {
+        unawaited(
+          CrashReporter.instance.captureError(
+            e,
+            stack,
+            category: CrashCategory.download,
+            severity: CrashSeverity.error,
+            fingerprint: ['download-queue-loop'],
+          ),
+        );
+      }
     } finally {
       if (iosDownloadBookmarkAccess != null) {
-        await PlatformBridge.stopAccessingIosBookmark(
-          iosDownloadBookmarkAccess,
-        );
+        try {
+          await PlatformBridge.stopAccessingIosBookmark(
+            iosDownloadBookmarkAccess,
+          );
+        } catch (e) {
+          _log.w('Failed to release iOS bookmark access: $e');
+        }
         iosDownloadBookmarkAccess = null;
       }
     }
@@ -1741,7 +1761,11 @@ class DownloadQueueNotifier extends Notifier<DownloadQueueState> {
     }
 
     if (Platform.isIOS) {
-      await PlatformBridge.endBackgroundDownloadTask();
+      try {
+        await PlatformBridge.endBackgroundDownloadTask();
+      } catch (e) {
+        _log.e('Failed to end iOS background task: $e');
+      }
     }
 
     if (_downloadCount > 0) {
@@ -1759,10 +1783,16 @@ class DownloadQueueNotifier extends Notifier<DownloadQueueState> {
     );
     final hasSessionResults = _completedInSession > 0 || _failedInSession > 0;
     if (!stoppedWhilePaused && _totalQueuedAtStart > 0 && hasSessionResults) {
-      await _notificationService.showQueueComplete(
-        completedCount: _completedInSession,
-        failedCount: _failedInSession,
-      );
+      try {
+        await _notificationService.showQueueComplete(
+          completedCount: _completedInSession,
+          failedCount: _failedInSession,
+        );
+      } catch (e) {
+        // A notification failure must not prevent the isProcessing reset
+        // below (which is what un-wedges the queue for the next batch).
+        _log.e('Failed to show queue-complete notification: $e');
+      }
 
       final settings = ref.read(settingsProvider);
       if (settings.autoExportFailedDownloads && _failedInSession > 0) {
@@ -1772,9 +1802,13 @@ class DownloadQueueNotifier extends Notifier<DownloadQueueState> {
         }
       }
     } else if (!stoppedWhilePaused && _totalQueuedAtStart > 0) {
-      await _notificationService.showQueueCanceled(
-        canceledCount: _totalQueuedAtStart,
-      );
+      try {
+        await _notificationService.showQueueCanceled(
+          canceledCount: _totalQueuedAtStart,
+        );
+      } catch (e) {
+        _log.e('Failed to show queue-canceled notification: $e');
+      }
     }
 
     if (stoppedWhilePaused) {

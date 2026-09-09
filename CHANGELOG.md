@@ -188,6 +188,45 @@
 
 ### Fixed
 
+- **QR codes are scannable again (ISO/IEC 18004 compliance).** The in-app
+  encoder (`lib/utils/qr_code.dart`, used for playlist share links and the
+  LAN web player pairing) mis-placed the final codeword bits: the zig-zag
+  placement decremented *every* remaining column pair after the timing
+  column (`if (col <= 6) col -= 1`), which rewrote the last pairs
+  `(3, 2)`/`(1, 0)` into `(2, 1)`/`(0, -1)`. Data columns 3 and 0 were never
+  filled and the tail of the codeword stream landed in the wrong modules,
+  so every code the app rendered failed to decode. The skip now fires only
+  for the timing column itself (`if (col == 6) col = 5`). Verified
+  module-for-module against the reference-encoder golden vectors for
+  versions 1/2/3/5/9, all four EC levels, UTF-8 payloads and forced masks;
+  the three previously-skipped golden tests in `test/qr_code_test.dart` are
+  un-skipped (their cross-mask invariant was also corrected to exclude the
+  30 format-info cells, which encode the mask by design).
+- **Download queue can no longer wedge after an unexpected error.** If any
+  await between the queue loop and the final state reset threw (e.g. the
+  iOS `endBackgroundDownloadTask` bridge call or a queue-complete
+  notification on a platform-channel failure), `_processQueue` propagated
+  the error and never reset `isProcessing`, leaving the queue frozen —
+  accepting no new items — until an app restart. The loop escape is now
+  caught, logged and reported (crash category `download`), the iOS bookmark
+  release, background-task end and completion notifications are each
+  individually failure-tolerant, and the `isProcessing` reset always runs.
+- **No more `setState` on unmounted widgets in the first-run flow.** The
+  setup screen updated permission/directory state after `await`s without a
+  `mounted` check (storage + notification permission results, SAF tree
+  pick, iOS folder pick, use-default-folder dialog); the extension detail
+  page and the library storage-permission path did the same. Disposing the
+  screen mid-flow threw `setState() called after dispose()` — noise in the
+  crash reporter and a debug-mode error. All sites now guard on `mounted`.
+- **`go_align_check.py` false positives fixed (local gate).** The sandbox
+  gofmt-alignment checker split alignment blocks on struct fields with
+  trailing comments, rewrote `X := `raw string`` lines as if they were
+  struct fields, missed tagless/embedded-struct members, aligned
+  multi-pair and multi-line-continuation composite-literal lines that
+  gofmt deliberately leaves alone, and matched inside raw string literals.
+  It now reproduces gofmt behavior for all of these (verified against the
+  CI-formatted tree; `--fix` is idempotent) and its default scope covers
+  `go_backend/` in addition to `backend/`.
 - The recommendation scorer no longer grants full recency credit to a candidate
   with no listening activity. It defaulted the "last activity" timestamp to
   `now`, which handed every never-heard track the maximum recency contribution
