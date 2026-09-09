@@ -438,6 +438,49 @@
   are now treated as missing everywhere — search queries, same-release
   guards, and the final embed step — instead of being faithfully rewritten
   onto the file by batch re-enrich.
+### Fixed
+
+- **All remaining empty `catch (_) {}` blocks are gone (35 sites across 13
+  files).** Best-effort cleanup and fallback paths now log through `AppLogger`
+  (`w` for tolerated/cleanup failures, `e` with stack for real ones) instead
+  of failing silently:
+  - Batch re-enrich preview/build + per-track apply failures now name the
+    affected track (`LocalAlbumScreen`, `QueueTab`).
+  - Cache-management directory scan/clear/recreate failures
+    (`CacheManagementPage`), cache entity paths, and files-settings default
+    Music directory fallbacks are logged.
+  - Spectrogram/audio-analysis cache read/write/delete and temp-file cleanup
+    failures are logged (`AudioAnalysis`); temp re-enrich cover/file cleanup
+    and cover-extraction failures are logged (`FfmpegReenrich`).
+  - Sidecar `.lrc` read and lyrics fetch failures are logged
+    (`LyricsMetadataHelper`); malformed path/URI keys are logged instead of
+    swallowed (`PathMatchKeys`); CSV import progress-dialog dismissal and
+    queue cover precache failures are logged (`HomeTab` / `QueueTab`).
+  - `LogBuffer` Go-log timestamp parsing keeps an explicit wall-clock
+    fallback instead of an empty catch (log ingestion can never throw).
+- **Startup watchdog (Phase 2).** The pre-`runApp` launch bootstrap now runs
+  under a 20 s `Future.timeout` — the app always reaches `runApp` with default
+  settings instead of hanging indefinitely on the native splash if a blocking
+  step stalls (prefs / secure store / install marker / device profile). The
+  crash-reporting remote-config cache read is bounded to 5 s as well. A
+  watchdog-completion debug log records the resolved runtime tier.
+
+- **Discovery symbol guard hardened** (`scripts/check_discovery_symbols.py`):
+  method declarations with Dart record return types (`List<({…})> name(`) are
+  now recognised as declarations instead of being reported as unknown calls
+  (3 false positives eliminated), and control-flow statements (`return`/
+  `throw`/`await`/`yield`/`case`/`assert`) are excluded from declaration
+  matching so genuinely missing helpers inside `return` statements can no
+  longer slip through. Gate: 30 files, 0 problems; positive probes confirm
+  real unknowns still fail.
+- **Go backend formatting aligned to gofmt** across 8 files
+  (`backend/cloud/handler_test.go`, `backend/collaboration/collaboration.go`,
+  `backend/devices/devices_test.go`, `backend/marketplace/marketplace.go`,
+  `backend/playlists/playlists_test.go`, `backend/server_test.go`,
+  `backend/sync/observer_test.go`, `backend/telemetry/telemetry.go`) via the
+  repo gofmt-alignment checker — keyed composite-literal columns now match
+  gofmt tabwriter output; `go_align_check.py` reports all aligned.
+
 ### Removed
 
 - **Dead `just_audio` player**: `MultiProviderPlayer` / `StreamResumePoint`

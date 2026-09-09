@@ -42,7 +42,7 @@ func (o *capturingObserver) ObservePush(
 	o.mu.Lock()
 	defer o.mu.Unlock()
 	o.pushes = append(o.pushes, pushCall{
-		userID: userID, deviceID: deviceID, scope: scope, recordID: recordID,
+		userID:   userID, deviceID: deviceID, scope: scope, recordID: recordID,
 		revision: revision, accepted: accepted, deleted: deleted,
 	})
 }

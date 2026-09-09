@@ -62,7 +62,9 @@ extension _HomeTabCsvImport on _HomeTabState {
             navigator.pop();
           }
         }
-      } catch (_) {}
+      } catch (e) {
+        _log.w('Failed to dismiss CSV import progress dialog: $e');
+      }
       progressDialogVisible = false;
       progressDialogContext = null;
     }

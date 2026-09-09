@@ -38,10 +38,10 @@ const (
 
 // Event is one telemetry report from a client.
 type Event struct {
-	ID         string            `json:"id"`
-	UserID     string            `json:"userId"`
-	DeviceID   string            `json:"deviceId"`
-	Type       EventType         `json:"type"`
+	ID       string    `json:"id"`
+	UserID   string    `json:"userId"`
+	DeviceID string    `json:"deviceId"`
+	Type     EventType `json:"type"`
 	Severity   string            `json:"severity"` // debug, info, warning, error, fatal
 	Category   string            `json:"category"`
 	Message    string            `json:"message"`

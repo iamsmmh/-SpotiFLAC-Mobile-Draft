@@ -15,6 +15,9 @@ import 'package:spotiflac_android/services/platform_bridge.dart';
 import 'package:spotiflac_android/utils/file_access.dart';
 import 'package:spotiflac_android/widgets/settings_group.dart';
 import 'package:spotiflac_android/widgets/app_sliver_header.dart';
+import 'package:spotiflac_android/utils/logger.dart';
+
+final _log = AppLogger('FilesSettingsPage');
 
 class FilesSettingsPage extends ConsumerStatefulWidget {
   const FilesSettingsPage({super.key});
@@ -476,7 +479,9 @@ class _FilesSettingsPageState extends ConsumerState<FilesSettingsPage> {
       final musicDir = Directory(directMusicPath);
       if (!await musicDir.exists()) await musicDir.create(recursive: true);
       return musicDir.path;
-    } catch (_) {}
+    } catch (e) {
+      _log.w('Direct Music directory unavailable ($directMusicPath), trying fallbacks: $e');
+    }
     try {
       final externalDir = await getExternalStorageDirectory();
       if (externalDir != null) {
@@ -486,7 +491,9 @@ class _FilesSettingsPageState extends ConsumerState<FilesSettingsPage> {
         if (!await musicDir.exists()) await musicDir.create(recursive: true);
         return musicDir.path;
       }
-    } catch (_) {}
+    } catch (e) {
+      _log.w('External storage directory fallback failed: $e');
+    }
     final appDir = await getApplicationDocumentsDirectory();
     final fallbackDir = Directory('${appDir.path}/SpotiFLAC');
     if (!await fallbackDir.exists()) await fallbackDir.create(recursive: true);
