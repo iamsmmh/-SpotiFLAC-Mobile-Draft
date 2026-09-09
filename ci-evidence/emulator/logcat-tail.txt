@@ -1,0 +1,120 @@
+09-09 23:23:53.879  8076  8488 W bwft    : Succeeded but not registered: com.google.ar.sceneviewer.android.user#com.google.android.googlequicksearchbox [CONTEXT service_id=51 ]
+09-09 23:23:53.906  8789  8789 D nativeloader: Configuring clns-7 for other apk /system/framework/org.apache.http.legacy.jar. target_sdk_version=33, uses_libraries=ALL, library_path=/product/priv-app/GoogleDialer/lib/x86_64:/product/priv-app/GoogleDialer/GoogleDialer.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.dialer
+09-09 23:23:53.916  8789  8789 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+09-09 23:23:53.923  8789  8789 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+09-09 23:23:54.098  8546  8560 I DynamiteModule: Considering local module com.google.android.gms.googlecertificates:7 and remote module com.google.android.gms.googlecertificates:7
+09-09 23:23:54.099  8546  8560 I DynamiteModule: Selected local version of com.google.android.gms.googlecertificates
+09-09 23:23:54.123  8546  8561 W gle.android.gms: Long monitor contention with owner binder:8546_1 (8560) at void aamq.d()(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6) waiters=0 in void aamq.d() for 7.114s
+09-09 23:23:54.215   559  2308 W ActivityManager: Scheduling restart of crashed service com.android.phone/.TelephonyDebugService in 0ms for persistent
+09-09 23:23:54.275  8789  8789 D nativeloader: Configuring product-clns-8 for unbundled product apk /product/priv-app/GoogleDialer/GoogleDialer.apk. target_sdk_version=33, uses_libraries=, library_path=/product/priv-app/GoogleDialer/lib/x86_64:/product/priv-app/GoogleDialer/GoogleDialer.apk!/lib/x86_64:/product/lib64:/system/product/lib64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.dialer:/product/lib64:/system/product/lib64
+09-09 23:23:54.313   559  2308 I Watchdog: Interesting Java process com.android.phone died. Pid 8634
+09-09 23:23:54.380  8076  8471 E WakeLock: CMWakeLock ** IS FORCE-RELEASED ON TIMEOUT **
+09-09 23:23:54.465   559   585 W system_server: Long monitor contention with owner binder:559_16 (2308) at boolean android.os.MessageQueue.enqueueMessage(android.os.Message, long)(MessageQueue.java:600) waiters=0 in android.os.Message android.os.MessageQueue.next() for 144ms
+09-09 23:23:54.481  8679  8832 I bt_osi_thread: packages/modules/Bluetooth/system/osi/src/thread.cc:210 run_thread: run_thread: thread id 8832, thread name alarm_default_ca started
+09-09 23:23:54.522   559  2308 W ActivityManager: Re-adding persistent process ProcessRecord{9195b60 8634:com.android.phone/1001}
+09-09 23:23:54.530   559   585 D DisplayManagerService: Drop pending events for gone uid 1001
+09-09 23:23:54.595  8789  8789 V GraphicsEnvironment: Currently set values for:
+09-09 23:23:54.611  8789  8789 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+09-09 23:23:54.611  8789  8789 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+09-09 23:23:54.615  8789  8789 V GraphicsEnvironment: ANGLE GameManagerService for com.google.android.dialer: false
+09-09 23:23:54.615  8789  8789 V GraphicsEnvironment: com.google.android.dialer is not listed in per-application setting
+09-09 23:23:54.618  8789  8789 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+09-09 23:23:54.653   559  2308 W ActivityManager: Slow operation: 130ms so far, now at startProcess: removing from pids map
+09-09 23:23:54.655  8679  8833 I bt_osi_thread: packages/modules/Bluetooth/system/osi/src/thread.cc:210 run_thread: run_thread: thread id 8833, thread name alarm_dispatcher started
+09-09 23:23:54.659  8679  8825 I bt_core_module: packages/modules/Bluetooth/system/btcore/src/module.cc:86 module_start_up: module_start_up Starting module "gd_shim_module"
+09-09 23:23:54.659  8679  8825 I bt_gd_shim: packages/modules/Bluetooth/system/main/shim/stack.cc:81 StartEverything: StartEverything Starting Gd stack
+09-09 23:23:54.690   559  2308 W ActivityManager: Slow operation: 166ms so far, now at startProcess: done removing from pids map
+09-09 23:23:54.690   559  2308 W ActivityManager: Slow operation: 167ms so far, now at startProcess: starting to update cpu stats
+09-09 23:23:54.691   559  2308 W ActivityManager: Slow operation: 167ms so far, now at startProcess: done updating cpu stats
+09-09 23:23:54.691   559  2308 W ActivityManager: Slow operation: 168ms so far, now at startProcess: getting gids from package manager
+09-09 23:23:54.777  8679  8825 I bt_gd_shim: packages/modules/Bluetooth/system/main/shim/stack.cc:160 Start: Start Starting Gd stack
+09-09 23:23:54.805  8789  8789 I MultiDex: Installing application
+09-09 23:23:54.807  8789  8789 I MultiDex: VM with version 2.1.0 has multidex support
+09-09 23:23:54.808  8789  8789 I MultiDex: VM has multidex support, MultiDex support library is disabled.
+09-09 23:23:54.831  8789  8789 I DialerProvider: enter
+09-09 23:23:54.760   559  2308 W ActivityManager: Slow operation: 236ms so far, now at startProcess: building args
+09-09 23:23:54.856   559  2308 D CompatibilityChangeReporter: Compat change id reported: 135634846; UID 1001; state: DISABLED
+09-09 23:23:54.857   559  2308 D CompatibilityChangeReporter: Compat change id reported: 177438394; UID 1001; state: DISABLED
+09-09 23:23:54.858   559  2308 D CompatibilityChangeReporter: Compat change id reported: 135772972; UID 1001; state: DISABLED
+09-09 23:23:54.858   559  2308 D CompatibilityChangeReporter: Compat change id reported: 135754954; UID 1001; state: ENABLED
+09-09 23:23:53.099  3650  3828 D PickerSyncController: syncAllMedia
+09-09 23:23:54.926  3650  3828 D PickerSyncController: syncAllMediaFromProvider() LOCAL, auth=com.android.providers.media.photopicker, retry=true
+09-09 23:23:54.926  3650  3828 D PickerSyncController: getSyncRequestParams() LOCAL, auth=com.android.providers.media.photopicker
+09-09 23:23:54.930  8679  8825 I BtGdWakelockNative: packages/modules/Bluetooth/system/gd/os/android/wakelock_native.cc:79 Initialize: Initializing native wake locks
+09-09 23:23:54.952  1229  1268 W Looper  : Drained
+09-09 23:23:54.952  1229  1268 W Looper  : Slow dispatch took 439ms wmshell.main h=android.view.ViewRootImpl$ViewRootHandler c=android.view.accessibility.AccessibilityManager$$ExternalSyntheticLambda1@cdbed2 m=0
+09-09 23:23:54.953  1229  1268 W Looper  : Slow delivery took 666ms wmshell.main h=android.view.ViewRootImpl$ViewRootHandler c=null m=21
+09-09 23:23:55.037   559   596 W ActivityManager: Slow operation: 514ms so far, now at startProcess: asking zygote to start proc
+09-09 23:23:55.107  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+09-09 23:23:55.121  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of BluetoothCounterMetrics
+09-09 23:23:55.121  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of BluetoothCounterMetrics
+09-09 23:23:55.122  8679  8835 I BluetoothCounterMetrics: packages/modules/Bluetooth/system/gd/metrics/counter_metrics.cc:40 Start: Counter metrics initialized
+09-09 23:23:55.122  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:99 Start: Started BluetoothCounterMetrics
+09-09 23:23:55.123  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+09-09 23:23:55.123  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of HciHalHidl
+09-09 23:23:55.123  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+09-09 23:23:55.283  8679  8835 I bluetooth: packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:1432 GetBtSnoopMode: btsnoop_mode_empty: 1
+09-09 23:23:55.302   339   339 D Zygote  : Forked child process 8837
+09-09 23:23:55.467  8679  8835 I bluetooth: packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:520 SnoopLogger: Snoop Logs disabled
+09-09 23:23:55.473  8679  8835 I bluetooth: packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:334 delete_btsnoop_files: Deleting logs if they exist
+09-09 23:23:55.501   339   339 I Zygote  : Process 8634 exited due to signal 9 (Killed)
+09-09 23:23:55.507   559   596 W ActivityManager: Slow operation: 983ms so far, now at startProcess: returned from zygote!
+09-09 23:23:55.718  1229  1229 D StatusBarIconController: ignoring old pipeline callback because the new wifi icon is enabled
+09-09 23:23:55.742  1229  1302 W Looper  : Drained
+09-09 23:23:55.743  1229  1302 W Looper  : Slow dispatch took 10949ms SysUiBg h=android.os.Handler c=com.android.systemui.broadcast.ActionReceiver$onReceive$1$1$1@2a6ba3 m=0
+09-09 23:23:55.743  1229  1302 W Looper  : Slow delivery took 7469ms SysUiBg h=android.os.Handler c=com.android.systemui.broadcast.ActionReceiver$onReceive$1$1$1@1edaea0 m=0
+09-09 23:23:55.834   559   595 W system_server: Long monitor contention with owner binder:559_16 (2308) at void com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied()(ActivityManagerService.java:1584) waiters=1 in boolean com.android.server.am.BroadcastQueueModernImpl.lambda$new$0(android.os.Message) for 2.212s
+09-09 23:23:55.851   559  1297 W system_server: Long monitor contention with owner binder:559_16 (2308) at void com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied()(ActivityManagerService.java:1584) waiters=3 in void com.android.server.am.ActivityManagerService.publishService(android.os.IBinder, android.content.Intent, android.os.IBinder) for 1.709s
+09-09 23:23:55.898   559  2309 W system_server: Long monitor contention with owner binder:559_16 (2308) at void com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied()(ActivityManagerService.java:1584) waiters=4 in int com.android.server.am.ActivityManagerService.getMemoryTrimLevel() for 1.349s
+09-09 23:23:55.899   559   585 W system_server: Long monitor contention with owner binder:559_16 (2308) at void com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied()(ActivityManagerService.java:1584) waiters=5 in void com.android.server.am.BroadcastQueueModernImpl$1.onUidStateChanged(int, int, long, int) for 330ms
+09-09 23:23:55.902   559   585 W Looper  : Slow dispatch took 339ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@199825a m=0
+09-09 23:23:55.903   559   596 W system_server: Long monitor contention with owner binder:559_16 (2308) at void com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied()(ActivityManagerService.java:1584) waiters=6 in void com.android.server.am.ProcessList.lambda$handleProcessStart$1(com.android.server.am.ProcessRecord, java.lang.String, int[], int, int, int, java.lang.String, java.lang.String, java.lang.String, long) for 270ms
+09-09 23:23:55.934   559   596 W ActivityManager: Slow operation: 1410ms so far, now at startProcess: done updating battery stats
+09-09 23:23:55.935   559   596 I Watchdog: Interesting Java process com.android.phone started. Pid 8837
+09-09 23:23:55.978   559   596 W ActivityManager: Slow operation: 1412ms so far, now at startProcess: building log message
+09-09 23:23:55.984   559   596 I ActivityManager: Start proc 8837:com.android.phone/1001 for restart com.android.phone
+09-09 23:23:55.985   559   596 W ActivityManager: Slow operation: 1461ms so far, now at startProcess: starting to update pids map
+09-09 23:23:56.018   559   596 W ActivityManager: Slow operation: 1494ms so far, now at startProcess: done updating pids map
+09-09 23:23:56.070   559  1294 W system_server: Long monitor contention with owner binder:559_16 (2308) at void com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied()(ActivityManagerService.java:1584) waiters=2 in java.lang.String com.android.server.am.ActivityManagerService.getTagForIntentSender(android.content.IIntentSender, java.lang.String) for 1.897s
+09-09 23:23:56.086   559   597 I libprocessgroup: Successfully killed process cgroup uid 1001 pid 8634 in 930ms
+09-09 23:23:56.258  8546  8546 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.constellation.service.START pkg=com.google.android.gms }
+09-09 23:23:56.521  8789  8789 I AtlasPixelTipsContentPr: enter
+09-09 23:23:56.661  8837  8837 I m.android.phone: Using CollectorTypeCC GC.
+09-09 23:23:56.873  8837  8837 W m.android.phone: Unexpected CPU variant for x86: x86_64.
+09-09 23:23:56.873  8837  8837 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:23:57.091  8837  8837 E m.android.phone: Not starting debugger since process cannot load the jdwp agent.
+09-09 23:23:57.130   559   584 I GnssLocationProvider: WakeLock acquired by handleDownloadPsdsData()
+09-09 23:23:57.417   559  1297 W system_server: Long monitor contention with owner binder:559_17 (2309) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:13404) waiters=1 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int) for 1.146s
+09-09 23:23:57.423   559   576 W system_server: Long monitor contention with owner binder:559_17 (2309) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:13404) waiters=2 in android.app.ContentProviderHolder com.android.server.am.ContentProviderHelper.getContentProviderImpl(android.app.IApplicationThread, java.lang.String, android.os.IBinder, int, java.lang.String, java.lang.String, boolean, int) for 578ms
+09-09 23:23:57.449   559   584 W Looper  : Slow dispatch took 1205ms android.fg h=android.os.Handler c=com.android.server.location.gnss.GnssLocationProvider$$ExternalSyntheticLambda26@7779f5f m=0
+09-09 23:23:57.739   559  8844 E GnssPsdsDownloader: No Long-Term PSDS servers were specified in the GnssConfiguration
+09-09 23:23:57.989   559   605 W system_server: Long monitor contention with owner ActivityManager (595) at boolean android.os.MessageQueue.enqueueMessage(android.os.Message, long)(MessageQueue.java:600) waiters=0 in android.os.Message android.os.MessageQueue.next() for 284ms
+09-09 23:23:58.062  1210  1210 I wpa_supplicant: wlan0: CTRL-EVENT-BEACON-LOSS 
+09-09 23:23:58.187  8679  8825 I bluetooth: packages/modules/Bluetooth/system/gd/stack_manager.cc:52 StartUp: init_status == 1
+09-09 23:23:58.250  8076  8076 W SystemServiceRegistry: No service published for: contexthub
+09-09 23:23:58.280  8679  8825 F bluetooth: assertion 'init_status == std::future_status::ready' failed - Can't start stack, last instance: starting BluetoothCounterMetrics
+09-09 23:23:58.283  8789  8789 I RevelioTipsContentProvi: enter
+09-09 23:23:58.285  8789  8789 I TidepodsRevelioTipsCont: enter
+09-09 23:23:58.291  8679  8825 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 8825 (bt_stack_manage), pid 8679 (droid.bluetooth)
+09-09 23:23:58.451  8679  8835 I bluetooth: packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:334 delete_btsnoop_files: Deleting logs if they exist
+09-09 23:23:58.535  8679  8835 I bluetooth: packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:340 delete_btsnoop_files: Main log file does not exist at "/data/misc/bluetooth/logs/btsnoop_hci.log"
+09-09 23:23:58.541  8679  8835 I bluetooth: packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:348 delete_btsnoop_files: Last log file does not exist at "/data/misc/bluetooth/logs/btsnoop_hci.log"
+09-09 23:23:58.542  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of SnoopLogger
+09-09 23:23:58.573  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of SnoopLogger
+09-09 23:23:58.593  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:99 Start: Started SnoopLogger
+09-09 23:23:58.598  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+09-09 23:23:58.601  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of Btaa Module
+09-09 23:23:58.618  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of Btaa Module
+09-09 23:23:58.647     0     0 E servicemanager: VINTF HALs require names in the format type/instance (e.g. some.package.foo.IFoo/default) but got: suspend_control
+09-09 23:23:58.633  8679  8835 E btaa    : packages/modules/Bluetooth/system/gd/btaa/android/activity_attribution.cc:107 impl: No suspend control service available.
+09-09 23:23:58.633  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:99 Start: Started Btaa Module
+09-09 23:23:58.633  8679  8835 I BtGdModule: packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of HciHalHidl
+09-09 23:23:58.691     0     0 I servicemanager: Found android.hardware.bluetooth.IBluetoothHci/default in device VINTF manifest.
+09-09 23:23:58.710  1229  1302 W Looper  : Slow dispatch took 1139ms SysUiBg h=android.os.Handler c=com.android.systemui.statusbar.connectivity.NetworkControllerImpl$$ExternalSyntheticLambda0@d284a59 m=0
+09-09 23:23:58.714   559   595 W system_server: Long monitor contention with owner binder:559_14 (2287) at android.util.Pair com.android.server.am.ProcessList.getNumForegroundServices()(ProcessList.java:5416) waiters=0 in boolean com.android.server.am.BroadcastQueueModernImpl.lambda$new$0(android.os.Message) for 381ms
+09-09 23:23:58.718   559  2500 W system_server: Long monitor contention with owner binder:559_14 (2287) at android.util.Pair com.android.server.am.ProcessList.getNumForegroundServices()(ProcessList.java:5416) waiters=1 in android.content.Intent com.android.server.am.ActivityManagerService.registerReceiverWithFeature(android.app.IApplicationThread, java.lang.String, java.lang.String, java.lang.String, android.content.IIntentReceiver, android.content.IntentFilter, java.lang.String, int, int) for 254ms
+09-09 23:23:58.749   559  2500 D CompatibilityChangeReporter: Compat change id reported: 161145287; UID 10132; state: ENABLED
+09-09 23:23:58.768   559  2500 D CompatibilityChangeReporter: Compat change id reported: 161145287; UID 10132; state: DISABLED
+09-09 23:23:58.825  8679  8835 I bluetooth: packages/modules/Bluetooth/system/gd/hal/hci_hal_android_hidl.cc:417 start_aidl: Using the AIDL interface
+09-09 23:23:58.933   559   559 W Looper  : Slow dispatch took 5406ms main h=android.app.ActivityThread$H c=android.app.LoadedApk$ServiceDispatcher$RunConnection@68a5644 m=0
+09-09 23:23:59.062   368   368 I android.hardware.bluetooth.service.default: initialize

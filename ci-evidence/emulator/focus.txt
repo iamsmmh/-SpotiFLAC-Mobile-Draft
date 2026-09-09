@@ -1,0 +1,2 @@
+  mCurrentFocus=Window{90b8dff u0 com.android.settings/com.android.settings.FallbackHome}
+  mFocusedApp=ActivityRecord{c6a5c90 u0 com.android.settings/.FallbackHome t5}

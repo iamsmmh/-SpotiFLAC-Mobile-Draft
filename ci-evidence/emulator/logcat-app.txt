@@ -1,0 +1,449 @@
+09-09 23:14:15.728  5622  5622 W android.camera2: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:14:23.148  5625  5625 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+09-09 23:14:23.675  5625  5625 I AndroidRuntime: Using default boot image
+09-09 23:14:23.683  5625  5625 I AndroidRuntime: Leaving lock profiling enabled
+09-09 23:14:28.221  4533  5644 E BackupHelper: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:14:28.221  4533  5644 E BackupHelper: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:14:28.751   559  5650 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_6030916601270569361.txt
+09-09 23:14:28.751   559  5650 I ActivityManager: Collecting stacks for pid 5578 into temporary file temp_anr_6030916601270569361.txt
+09-09 23:14:31.014  5625  5625 W app_process: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:14:32.426  5625  5625 D AndroidRuntime: Calling main entry com.android.commands.svc.Svc
+09-09 23:14:33.382  5625  5625 D AndroidRuntime: Shutting down VM
+09-09 23:14:34.527  5671  5671 W droid.dynsystem: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:14:37.389   559  5651 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-14-36-864
+09-09 23:14:37.835  5687  5687 W d.process.acore: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:14:41.821  3650  3952 D MediaGrants: Removed 0 media_grants for 0 user for com.zarz.spotiflac. Reason: Mode changed: android:read_external_storage
+09-09 23:14:43.057  5718  5718 W ystem:dynsystem: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:14:45.069  5728  5728 W viceentitlement: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:14:48.677   559   597 W system_server: Long monitor contention with owner AnrConsumer (5651) at void com.android.server.am.PhantomProcessList.updateProcessCpuStatesLocked(com.android.internal.os.ProcessCpuTracker)(PhantomProcessList.java:562) waiters=0 in int com.android.server.am.PhantomProcessList.onPhantomProcessFdEvent(java.io.FileDescriptor, int) for 404ms
+09-09 23:14:48.825   559  5651 E ActivityManager: ANR in com.android.phone
+09-09 23:14:51.515   559  1299 V SplashScreenExceptionList: SplashScreen checking exception for package com.zarz.spotiflac (target sdk:35) -> false
+09-09 23:14:51.830  1229  1268 V WindowManagerShell: Transition requested: android.os.BinderProxy@6a5388b TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.zarz.spotiflac/.MainActivity } baseActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} topActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} origActivity=null realActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} numActivities=1 lastActiveTime=1547932 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@2159d68} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{f99e581 com.zarz.spotiflac.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+09-09 23:14:52.169   559  1299 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.zarz.spotiflac/.MainActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+09-09 23:14:54.042   559   584 V WindowManager: Sent Transition #10 createdAt=09-09 23:14:50.894 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.zarz.spotiflac/.MainActivity } baseActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} topActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} origActivity=null realActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} numActivities=1 lastActiveTime=1547932 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{74d24e5 Task{5013038 #8 type=standard A=10192:com.zarz.spotiflac}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{b34abba com.zarz.spotiflac.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+09-09 23:14:54.642   559   584 V WindowManager:     info={id=10 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{RemoteToken{74d24e5 Task{5013038 #8 type=standard A=10192:com.zarz.spotiflac}}} m=OPEN f=NONE leash=Surface(name=Task=8)/@0xc1612ae sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) d=0},{WCT{RemoteToken{871c986 Task{6e7870b #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xec26326 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) d=0}]}
+09-09 23:14:55.099  5553  5773 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 5773 (bt_stack_manage), pid 5553 (droid.bluetooth)
+09-09 23:14:55.329   559  5651 I ActivityManager: Killing 5578:com.android.phone/1001 (adj -800): bg anr
+09-09 23:14:55.413   559  5794 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_7497175668749485711.txt
+09-09 23:14:55.414   559  5794 I ActivityManager: Collecting stacks for pid 5525 into temporary file temp_anr_7497175668749485711.txt
+09-09 23:14:55.482   559  5651 D ActivityManager: Completed ANR of com.android.phone in 26679ms, latency 193ms
+09-09 23:14:56.871  5799  5799 I .zarz.spotiflac: Using CollectorTypeCC GC.
+09-09 23:14:57.263   559   596 I ActivityManager: Start proc 5799:com.zarz.spotiflac/u0a192 for next-top-activity {com.zarz.spotiflac/com.zarz.spotiflac.MainActivity}
+09-09 23:14:57.483  5799  5799 W .zarz.spotiflac: Unexpected CPU variant for x86: x86_64.
+09-09 23:14:57.483  5799  5799 W .zarz.spotiflac: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:14:57.599  5799  5799 E .zarz.spotiflac: Not starting debugger since process cannot load the jdwp agent.
+09-09 23:14:58.632  5817  5817 W d.process.acore: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:14:59.639   559  5651 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-14-59-620
+09-09 23:15:00.038  5799  5799 D nativeloader: Configuring clns-6 for other apk /data/app/~~F3gHfTMk3IpW7d9T4YltiA==/com.zarz.spotiflac-xwx5UeztpzcUrW5X-U5r6A==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~F3gHfTMk3IpW7d9T4YltiA==/com.zarz.spotiflac-xwx5UeztpzcUrW5X-U5r6A==/lib/x86_64:/data/app/~~F3gHfTMk3IpW7d9T4YltiA==/com.zarz.spotiflac-xwx5UeztpzcUrW5X-U5r6A==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.zarz.spotiflac
+09-09 23:15:00.317  5799  5799 V GraphicsEnvironment: ANGLE GameManagerService for com.zarz.spotiflac: false
+09-09 23:15:00.320  5799  5799 V GraphicsEnvironment: com.zarz.spotiflac is not listed in per-application setting
+09-09 23:15:01.402  5835  5835 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:15:01.762  5837  5837 W .intentresolver: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:15:04.910   559   576 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (5798) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=1 in void com.android.server.am.ActivityManagerService.addPackageDependency(java.lang.String) for 321ms
+09-09 23:15:04.926   559   577 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (5798) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=0 in int com.android.server.am.ActiveServices.bindServiceLocked(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 843ms
+09-09 23:15:04.924  5799  5799 W .zarz.spotiflac: type=1400 audit(0.0:18): avc:  denied  { read } for  name="max_map_count" dev="proc" ino=88637 scontext=u:r:untrusted_app:s0:c192,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=com.zarz.spotiflac
+09-09 23:15:06.239  5799  5799 D ffmpeg-kit-flutter: FFmpegKitFlutterPlugin created com.antonkarpenko.ffmpegkit.FFmpegKitFlutterPlugin@da141ae.
+09-09 23:15:07.539  5799  5799 D ffmpeg-kit-flutter: FFmpegKitFlutterPlugin com.antonkarpenko.ffmpegkit.FFmpegKitFlutterPlugin@da141ae initialised with context android.app.Application@89eb2dc.
+09-09 23:15:08.614  5799  5873 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+09-09 23:15:12.387   559  5651 E ActivityManager: ANR in com.google.android.gms
+09-09 23:15:12.387   559  5651 E ActivityManager:   44% 5799/com.zarz.spotiflac: 13% user + 30% kernel / faults: 3644 minor 141 major
+09-09 23:15:13.346   559  5904 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:15:13.687   559  5651 I ActivityManager: Killing 5525:com.google.android.gms/u0a132 (adj 0): bg anr
+09-09 23:15:13.728   559  5651 D ActivityManager: Completed ANR of com.google.android.gms in 18246ms, latency 90ms
+09-09 23:15:15.625  5799  5799 D ffmpeg-kit-flutter: FFmpegKitFlutterPlugin com.antonkarpenko.ffmpegkit.FFmpegKitFlutterPlugin@da141ae attached to activity com.zarz.spotiflac.MainActivity@f99348d.
+09-09 23:15:16.690  5912  5912 W d.process.acore: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:15:19.586  5932  5932 W gedprovisioning: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:15:27.154  5799  5799 I .zarz.spotiflac: Waiting for a blocking GC ClassLinker
+09-09 23:15:27.351  5799  5810 I .zarz.spotiflac: Background concurrent copying GC freed 27875(1539KB) AllocSpace objects, 19(764KB) LOS objects, 49% free, 2816KB/5633KB, paused 5.234ms,219us total 1.521s
+09-09 23:15:27.363  5799  5799 I .zarz.spotiflac: WaitForGcToComplete blocked ClassLinker on Background for 209.132ms
+09-09 23:15:28.235   559   740 D CoreBackPreview: Window{4bd68 u0 com.zarz.spotiflac/com.zarz.spotiflac.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@9984a0c, mPriority=-1, mIsAnimationCallback=false}
+09-09 23:15:29.021   559   740 D CoreBackPreview: Window{4bd68 u0 com.zarz.spotiflac/com.zarz.spotiflac.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@1539bd1, mPriority=0, mIsAnimationCallback=true}
+09-09 23:15:29.555  5967  5967 W gle.android.gms: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:15:30.982   559  5976 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_1772321463769029790.txt
+09-09 23:15:30.982   559  5976 I ActivityManager: Collecting stacks for pid 5835 into temporary file temp_anr_1772321463769029790.txt
+09-09 23:15:34.727  5993  5993 W com.android.nfc: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:15:37.524   559  5977 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-15-37-015
+09-09 23:15:38.507  5799  6012 D ProfileInstaller: Installing profile for com.zarz.spotiflac
+09-09 23:15:38.569   559  1295 I MediaSessionStack: addSession to bottom of stack | record: com.zarz.spotiflac/media-session (userId=0)
+09-09 23:15:39.330  5799  5799 I System.out: flutterEngine warmed up
+09-09 23:15:40.044  6019  6019 W d.process.acore: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:15:48.298  6045  6045 W viders.calendar: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:15:49.433   559  6044 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_1533327937317839263.txt
+09-09 23:15:49.437   559  6044 I ActivityManager: Collecting stacks for pid 5504 into temporary file temp_anr_1533327937317839263.txt
+09-09 23:15:51.477  6059  6059 W droid.bluetooth: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:15:53.657   559  2629 W system_server: Long monitor contention with owner AnrConsumer (5977) at void com.android.server.am.PhantomProcessList.lookForPhantomProcessesLocked()(PhantomProcessList.java:145) waiters=0 in void com.android.server.am.ActivityManagerService.attachApplicationLocked(android.app.IApplicationThread, int, int, long) for 745ms
+09-09 23:15:54.231  5799  5799 I flutter : CoverCacheManager: Initializing at /data/user/0/com.zarz.spotiflac/files/cover_cache
+09-09 23:15:54.320  5799  5799 I flutter : CoverCacheManager: Initialized successfully
+09-09 23:15:54.696   559  5977 E ActivityManager: ANR in com.android.phone
+09-09 23:15:54.696   559  5977 E ActivityManager:   17% 5799/com.zarz.spotiflac: 10% user + 7.2% kernel / faults: 1009 minor 95 major
+09-09 23:15:56.501   559  6082 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:15:57.030   559  1294 D ConnectivityService: requestNetwork for uid/pid:10192/5799 activeRequest: null callbackRequest: 64 [NetworkRequest [ REQUEST id=65, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.zarz.spotiflac UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+09-09 23:15:58.086   559  1136 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=65, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.zarz.spotiflac UnderlyingNetworks: Null] ]
+09-09 23:15:58.260   559  1136 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=65, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.zarz.spotiflac UnderlyingNetworks: Null] ]
+09-09 23:15:58.267   559  1136 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=65, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.zarz.spotiflac UnderlyingNetworks: Null] ]
+09-09 23:15:58.270   559  1136 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=65, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.zarz.spotiflac UnderlyingNetworks: Null] ]
+09-09 23:15:59.033   559   756 I ActivityManager: Skip ANR being predumped, pid=5504 Timed out while trying to bind
+09-09 23:15:59.071   559  5977 I ActivityManager: Killing 5835:com.android.phone/1001 (adj -800): bg anr
+09-09 23:15:59.107   559  5977 D ActivityManager: Completed ANR of com.android.phone in 28266ms, latency 631ms
+09-09 23:16:00.734   559   738 W InputManager-JNI: Input channel object '63d1768 Splash Screen com.zarz.spotiflac (client)' was disposed without first being removed with the input manager!
+09-09 23:16:03.585   559   584 I ActivityTaskManager: Displayed com.zarz.spotiflac/.MainActivity for user 0: +1m14s31ms
+09-09 23:16:03.637   559  5977 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-16-03-616
+09-09 23:16:05.393  5799  5799 I flutter : error DatabaseException(duplicate column name: played_seconds (code 1 SQLITE_ERROR): , while compiling: ALTER TABLE ec_podcast_episodes ADD COLUMN played_seconds INTEGER NOT NULL DEFAULT 0) sql 'ALTER TABLE ec_podcast_episodes ADD COLUMN played_seconds INTEGER NOT NULL DEFAULT 0' args [] during open, closing...
+09-09 23:16:05.419  6126  6126 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:07.335  6139  6139 W .android.as.oss: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:08.309   559  5977 E ActivityManager: ANR in com.google.android.as
+09-09 23:16:08.309   559  5977 E ActivityManager:   21% 5799/com.zarz.spotiflac: 16% user + 4.5% kernel / faults: 280 minor 1 major
+09-09 23:16:08.598   559  6156 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:16:08.841  6155  6155 W .gms.persistent: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:09.422   559  5977 I ActivityManager: Killing 5504:com.google.android.as/u0a125 (adj 0): bg anr
+09-09 23:16:09.445   559  5977 D ActivityManager: Completed ANR of com.google.android.as in 10332ms, latency 12020ms (expired, only dump ANR app)
+09-09 23:16:10.369  6172  6172 W m.android.shell: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:14.149  6198  6198 W earchbox:search: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:14.633  6203  6203 W putmethod.latin: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:15.149  6223  6223 W .apps.wallpaper: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:19.730  6258  6258 W ogle.android.as: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:20.738   559   595 I ActivityManager: Killing 5799:com.zarz.spotiflac/u0a192 (adj 0): depends on provider com.google.android.gms/.chimera.container.GmsModuleProvider in dying proc com.google.android.gms.persistent (adj 0)
+09-09 23:16:23.535   559  6292 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_1881059229930461206.txt
+09-09 23:16:23.607   559  6292 I ActivityManager: Collecting stacks for pid 6258 into temporary file temp_anr_1881059229930461206.txt
+09-09 23:16:23.723   559  3251 I WindowManager: WIN DEATH: Window{4bd68 u0 com.zarz.spotiflac/com.zarz.spotiflac.MainActivity}
+09-09 23:16:23.753   559  1294 I MediaSessionStack: removeSession | record: com.zarz.spotiflac/media-session (userId=0)
+09-09 23:16:23.755   559  1145 D ConnectivityService: releasing NetworkRequest [ REQUEST id=65, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.zarz.spotiflac UnderlyingNetworks: Null] ] (release request)
+09-09 23:16:23.763   559  3251 W InputManager-JNI: Input channel object '4bd68 com.zarz.spotiflac/com.zarz.spotiflac.MainActivity (client)' was disposed without first being removed with the input manager!
+09-09 23:16:27.333   559  6293 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-16-27-326
+09-09 23:16:27.582   559  1297 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (6294) at void com.android.server.am.PhantomProcessList.lookForPhantomProcessesLocked()(PhantomProcessList.java:145) waiters=0 in boolean com.android.server.am.ActivityManagerService.removePidLocked(int, com.android.server.am.ProcessRecord) for 1.107s
+09-09 23:16:27.639   559  1297 W ActivityTaskManager: Force removing ActivityRecord{2984795 u0 com.zarz.spotiflac/.MainActivity t8}: app died, no saved state
+09-09 23:16:28.048  1229  1268 V WindowManagerShell: Transition requested: android.os.BinderProxy@619d88 TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.zarz.spotiflac/.MainActivity } baseActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} topActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} origActivity=null realActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} numActivities=1 lastActiveTime=1555276 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@6bfb321} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{4b98346 com.zarz.spotiflac.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+09-09 23:16:28.654   559  6293 E ActivityManager: ANR in com.google.android.as
+09-09 23:16:30.010   559  6321 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:16:31.189   559  6293 I ActivityManager: Killing 6258:com.google.android.as/u0a125 (adj 905): bg anr
+09-09 23:16:31.219   559  6293 D ActivityManager: Completed ANR of com.google.android.as in 7862ms, latency 137ms
+09-09 23:16:31.575  6323  6323 W .gms.persistent: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:31.805   559   584 V WindowManager: Sent Transition #11 createdAt=09-09 23:16:27.813 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.zarz.spotiflac/.MainActivity } baseActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} topActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} origActivity=null realActivity=ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.MainActivity} numActivities=1 lastActiveTime=1555276 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{74d24e5 Task{5013038 #8 type=standard A=10192:com.zarz.spotiflac}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{b34abba com.zarz.spotiflac.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+09-09 23:16:34.815  6350  6350 W ogle.android.as: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:35.983   559  6377 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_7843452924653904890.txt
+09-09 23:16:35.983   559  6377 I ActivityManager: Collecting stacks for pid 6126 into temporary file temp_anr_7843452924653904890.txt
+09-09 23:16:36.010   559  6381 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_5492048343001957245.txt
+09-09 23:16:36.024   559  6381 I ActivityManager: Collecting stacks for pid 6139 into temporary file temp_anr_5492048343001957245.txt
+09-09 23:16:38.819   559  6378 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-16-38-089
+09-09 23:16:40.309  6398  6398 W hbox:interactor: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:40.663  6059  6382 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 6382 (bt_stack_manage), pid 6059 (droid.bluetooth)
+09-09 23:16:40.885  6410  6410 W d.configupdater: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:43.088   559   576 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (6294) at void com.android.server.am.PhantomProcessList.lookForPhantomProcessesLocked()(PhantomProcessList.java:145) waiters=0 in void com.android.server.am.ActivityManagerService.attachApplicationLocked(android.app.IApplicationThread, int, int, long) for 355ms
+09-09 23:16:43.642  6198  6312 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:16:43.642  6198  6312 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:16:48.548  6474  6474 W ndroid.contacts: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:48.894   559  6378 E ActivityManager: ANR in com.android.phone
+09-09 23:16:48.928   559  6490 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:16:49.103   559  6378 I ActivityManager: Killing 6126:com.android.phone/1001 (adj -800): bg anr
+09-09 23:16:49.143   559  1929 W system_server: Long monitor contention with owner AnrConsumer (6378) at void com.android.server.am.ProcessErrorStateRecord.appNotResponding(java.lang.String, android.content.pm.ApplicationInfo, java.lang.String, com.android.server.wm.WindowProcessController, boolean, com.android.internal.os.TimeoutRecord, java.util.concurrent.ExecutorService, boolean, boolean, java.util.concurrent.Future)(ProcessErrorStateRecord.java:637) waiters=0 in void com.android.server.am.ActivityManagerService.finishReceiver(android.os.IBinder, int, java.lang.String, android.os.Bundle, boolean, int) for 211ms
+09-09 23:16:49.255   559  6378 D ActivityManager: Completed ANR of com.android.phone in 13079ms, latency 423ms
+09-09 23:16:49.403   559   595 W system_server: Long monitor contention with owner AnrConsumer (6378) at void com.android.server.am.ProcessErrorStateRecord.appNotResponding(java.lang.String, android.content.pm.ApplicationInfo, java.lang.String, com.android.server.wm.WindowProcessController, boolean, com.android.internal.os.TimeoutRecord, java.util.concurrent.ExecutorService, boolean, boolean, java.util.concurrent.Future)(ProcessErrorStateRecord.java:403) waiters=1 in boolean com.android.server.am.BroadcastQueueModernImpl.lambda$new$0(android.os.Message) for 478ms
+09-09 23:16:49.886   559  6378 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-16-49-780
+09-09 23:16:52.833  6515  6515 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:54.903  6538  6538 W elockcontroller: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:16:59.954   559   738 W system_server: Long monitor contention with owner AnrConsumer (6378) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=0 in int com.android.server.am.ActiveServices.bindServiceLocked(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 945ms
+09-09 23:17:00.399   559  6378 E ActivityManager: ANR in com.google.android.as.oss
+09-09 23:17:01.020   559  6378 I ActivityManager: Killing 6139:com.google.android.as.oss/u0a121 (adj 915): bg anr
+09-09 23:17:01.160   559  6378 D ActivityManager: Completed ANR of com.google.android.as.oss in 11904ms, latency 13287ms (expired, only dump ANR app)
+09-09 23:17:01.479   559  6580 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:17:02.871  6587  6587 W id.partnersetup: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:17:04.209  6198  6198 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:17:04.213  6198  6198 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:17:06.594  6602  6602 W d.process.acore: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:17:10.673  6627  6627 W gearhead:shared: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:17:15.727   559  6662 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_588076652512131473.txt
+09-09 23:17:15.777   559  6662 I ActivityManager: Collecting stacks for pid 6515 into temporary file temp_anr_588076652512131473.txt
+09-09 23:17:19.587  6672  6672 W .android.dialer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:17:19.926   559  6663 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-17-18-081
+09-09 23:17:21.670   559  6692 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_7399630039871934229.txt
+09-09 23:17:21.794   559  6692 I ActivityManager: Collecting stacks for pid 6323 into temporary file temp_anr_7399630039871934229.txt
+09-09 23:17:23.315  6693  6693 W android.rkpdapp: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:17:26.026  6707  6707 W ogle.android.gm: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:17:27.663  6724  6724 W droid.bluetooth: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:17:28.759  6737  6737 W gs.intelligence: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:17:28.990   559  6663 E ActivityManager: ANR in com.android.phone
+09-09 23:17:29.480   559  6744 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:17:29.627   559  6663 I ActivityManager: Killing 6515:com.android.phone/1001 (adj -800): bg anr
+09-09 23:17:29.736   559   595 W system_server: Long monitor contention with owner AnrConsumer (6663) at void com.android.server.am.ProcessErrorStateRecord.appNotResponding(java.lang.String, android.content.pm.ApplicationInfo, java.lang.String, com.android.server.wm.WindowProcessController, boolean, com.android.internal.os.TimeoutRecord, java.util.concurrent.ExecutorService, boolean, boolean, java.util.concurrent.Future)(ProcessErrorStateRecord.java:637) waiters=0 in boolean com.android.server.am.BroadcastQueueModernImpl.lambda$new$0(android.os.Message) for 105ms
+09-09 23:17:29.788   559  6663 D ActivityManager: Completed ANR of com.android.phone in 13989ms, latency 134ms
+09-09 23:17:31.950  6771  6771 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:17:32.030   559  6663 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-17-31-438
+09-09 23:17:33.059   559  6787 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_8657527290774898692.txt
+09-09 23:17:33.069   559  6787 I ActivityManager: Collecting stacks for pid 6198 into temporary file temp_anr_8657527290774898692.txt
+09-09 23:17:44.791   559  6841 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_9124435974210244902.txt
+09-09 23:17:44.791   559  6841 I ActivityManager: Collecting stacks for pid 6587 into temporary file temp_anr_9124435974210244902.txt
+09-09 23:17:47.336   559  2342 W system_server: Long monitor contention with owner AnrConsumer (6663) at void com.android.server.am.PhantomProcessList.lookForPhantomProcessesLocked()(PhantomProcessList.java:145) waiters=0 in java.lang.String com.android.server.am.ContentProviderHelper.checkContentProviderAccess(java.lang.String, int) for 278ms
+09-09 23:17:48.433   559  6663 E ActivityManager: ANR in com.google.android.gms.persistent
+09-09 23:17:50.770   559  6874 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:17:52.574   559  6663 I ActivityManager: Killing 6323:com.google.android.gms.persistent/u0a132 (adj 0): bg anr
+09-09 23:17:52.887   559  6663 D ActivityManager: Completed ANR of com.google.android.gms.persistent in 23012ms, latency 8191ms
+09-09 23:17:53.733   559  6885 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_3368811549291903218.txt
+09-09 23:17:53.886   559  6885 I ActivityManager: Collecting stacks for pid 5967 into temporary file temp_anr_3368811549291903218.txt
+09-09 23:17:57.276   559  1698 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (6884) at void com.android.server.am.PhantomProcessList.lookForPhantomProcessesLocked()(PhantomProcessList.java:145) waiters=0 in int com.android.server.am.ActiveServices.bindServiceLocked(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 517ms
+09-09 23:17:58.754   559  6663 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-17-58-519
+09-09 23:18:00.967  6910  6910 W .gms.persistent: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:02.324   559  6663 E ActivityManager: ANR in com.google.android.googlequicksearchbox:search
+09-09 23:18:02.575   559  6936 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_1078877974083712254.txt
+09-09 23:18:02.607   559  6936 I ActivityManager: Collecting stacks for pid 6771 into temporary file temp_anr_1078877974083712254.txt
+09-09 23:18:02.727   559  6934 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:18:03.051   559  6663 D ActivityManager: Completed ANR of com.google.android.googlequicksearchbox:search in 10159ms, latency 19898ms (expired, only dump ANR app)
+09-09 23:18:04.027   559  6885 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_1939695545566748523.txt
+09-09 23:18:04.029   559  6885 I ActivityManager: Collecting stacks for pid 6672 into temporary file temp_anr_1939695545566748523.txt
+09-09 23:18:05.606   559  6663 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-18-05-419
+09-09 23:18:05.781  6950  6950 W putmethod.latin: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:06.623  6962  6962 W earchbox:search: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:06.645  6672  6902 I DialerCanRecord: com.android.dialer.callrecording.impl.canrecord.CanRecord.canRecordCall:76 Call recording is disabled in the current country
+09-09 23:18:07.157  6978  6978 W gs.intelligence: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:08.182  4533  4533 I SafetyLabelChangedBroadcastReceiver: received broadcast packageName: com.zarz.spotiflac, current user: UserHandle{0}, packageChangeEvent: NEW_INSTALL, intent user: UserHandle{0}
+09-09 23:18:10.533  6724  6957 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 6957 (bt_stack_manage), pid 6724 (droid.bluetooth)
+09-09 23:18:11.519   559  1194 I SdkSandboxManager: No SDKs used. Skipping SDK data reconcilation for CallingInfo{mUid=10192, mPackageName='com.zarz.spotiflac, mAppProcessToken='null'}
+09-09 23:18:17.176   559   595 W system_server: Long monitor contention with owner AnrConsumer (6663) at void com.android.server.am.PhantomProcessList.updateProcessCpuStatesLocked(com.android.internal.os.ProcessCpuTracker)(PhantomProcessList.java:562) waiters=0 in void com.android.server.am.PhantomProcessList.trimPhantomProcessesIfNecessary() for 213ms
+09-09 23:18:17.243   559  6663 E ActivityManager: ANR in com.google.android.partnersetup
+09-09 23:18:17.617   559  6663 I ActivityManager: Killing 6587:com.google.android.partnersetup/u0a124 (adj 905): bg anr
+09-09 23:18:17.631   559  6663 D ActivityManager: Completed ANR of com.google.android.partnersetup in 14570ms, latency 18670ms (expired, only dump ANR app)
+09-09 23:18:17.636   559  6663 I ActivityManager: Skip ANR with mismatched pid=5967, current pid=0
+09-09 23:18:17.858   559  7048 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:18:19.612  7055  7055 W .gms.persistent: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:20.202   559  6663 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-18-20-025
+09-09 23:18:24.847  7099  7099 W ackageinstaller: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:26.680   559   596 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (7049) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=0 in boolean com.android.server.am.ProcessList.handleProcessStartedLocked(com.android.server.am.ProcessRecord, int, boolean, long, boolean) for 565ms
+09-09 23:18:30.515   559  7142 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_2821776761422283179.txt
+09-09 23:18:30.552   559  7142 I ActivityManager: Collecting stacks for pid 6350 into temporary file temp_anr_2821776761422283179.txt
+09-09 23:18:32.864  7149  7149 W hbox:interactor: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:35.254  7173  7173 W gle.android.gms: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:37.032   559   595 W system_server: Long monitor contention with owner AnrConsumer (6663) at void com.android.server.am.AppProfiler.updateCpuStatsNow()(AppProfiler.java:2118) waiters=0 in void com.android.server.am.AppProfiler.updateCpuStatsNow() for 3.130s
+09-09 23:18:37.095   559  6663 E ActivityManager: ANR in com.android.phone
+09-09 23:18:38.059  6962  7097 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:18:38.059  6962  7097 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:18:38.415   559  7198 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:18:38.843   559  6663 I ActivityManager: Killing 6771:com.android.phone/1001 (adj -800): bg anr
+09-09 23:18:39.053   559   595 I ActivityManager: Skip ANR being predumped, pid=6350 Broadcast of Intent { act=android.intent.action.BOOT_COMPLETED flg=0x89000010 cmp=com.google.android.as/com.google.intelligence.sense.common.SystemBroadcastReceiver (has extras) }
+09-09 23:18:39.075   559  6663 D ActivityManager: Completed ANR of com.android.phone in 21422ms, latency 15174ms (expired, only dump ANR app)
+09-09 23:18:39.081   559  2656 W system_server: Long monitor contention with owner AnrConsumer (6663) at void com.android.server.am.ProcessErrorStateRecord.appNotResponding(java.lang.String, android.content.pm.ApplicationInfo, java.lang.String, com.android.server.wm.WindowProcessController, boolean, com.android.internal.os.TimeoutRecord, java.util.concurrent.ExecutorService, boolean, boolean, java.util.concurrent.Future)(ProcessErrorStateRecord.java:637) waiters=5 in boolean com.android.server.am.ActivityManagerService.stopServiceToken(android.content.ComponentName, android.os.IBinder, int) for 167ms
+09-09 23:18:41.551   559   756 I ActivityManager: Skip ANR being predumped, pid=6350 Timed out while trying to bind
+09-09 23:18:42.302  7210  7210 W ogle.android.gm: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:43.570   559  6663 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-18-43-558
+09-09 23:18:45.546  7233  7233 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:18:55.209   559  2050 W system_server: Long monitor contention with owner AnrConsumer (6663) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=0 in void com.android.server.am.ActivityManagerService.setRenderThread(int) for 844ms
+09-09 23:18:55.214   559   584 W system_server: Long monitor contention with owner AnrConsumer (6663) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=1 in int com.android.server.am.ActiveServices.bindServiceLocked(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 798ms
+09-09 23:18:55.220   559  2656 W system_server: Long monitor contention with owner AnrConsumer (6663) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=2 in void com.android.server.am.ActivityManagerService.addPackageDependency(java.lang.String) for 611ms
+09-09 23:18:55.392   559   597 W system_server: Long monitor contention with owner AnrConsumer (6663) at void com.android.server.am.PhantomProcessList.updateProcessCpuStatesLocked(com.android.internal.os.ProcessCpuTracker)(PhantomProcessList.java:562) waiters=0 in int com.android.server.am.PhantomProcessList.onPhantomProcessFdEvent(java.io.FileDescriptor, int) for 871ms
+09-09 23:18:55.413   559  6663 E ActivityManager: ANR in com.google.android.dialer
+09-09 23:18:55.925   559  6663 I ActivityManager: Killing 6672:com.google.android.dialer/u0a128 (adj 250): bg anr
+09-09 23:18:56.315   559  6663 D ActivityManager: Completed ANR of com.google.android.dialer in 17200ms, latency 35105ms (expired, only dump ANR app)
+09-09 23:18:56.747   559  7274 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:18:58.416   559   594 D AppWidgetServiceImpl: Provider info from ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.DownloadQueueWidgetProvider} won't be persisted.
+09-09 23:19:00.980   559  6663 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-19-00-963
+09-09 23:19:01.361   559   756 I ActivityManager: Skip duplicated ANR, pid=6350 Timed out while trying to bind
+09-09 23:19:03.165  7298  7298 W droid.bluetooth: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:19:03.675  7309  7309 W ndroid.settings: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:19:05.092   559   584 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (7277) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=0 in int com.android.server.am.ActiveServices.bindServiceLocked(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 578ms
+09-09 23:19:05.219  6962  6962 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:19:05.233   559   607 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (7277) at void com.android.server.am.AppProfiler.updateCpuStatsNow()(AppProfiler.java:2118) waiters=0 in void com.android.server.am.AppProfiler.updateCpuStatsNow() for 703ms
+09-09 23:19:05.256  6962  6962 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:19:07.333   559  7336 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_3961769778371552006.txt
+09-09 23:19:07.335   559  7336 I ActivityManager: Collecting stacks for pid 7173 into temporary file temp_anr_3961769778371552006.txt
+09-09 23:19:07.836  7283  7283 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+09-09 23:19:08.406  7283  7283 I AndroidRuntime: Using default boot image
+09-09 23:19:08.406  7283  7283 I AndroidRuntime: Leaving lock profiling enabled
+09-09 23:19:09.656   559   594 D AppWidgetServiceImpl: Provider info from ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.DownloadQueueWidgetProvider} won't be persisted.
+09-09 23:19:11.763   559  7348 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_5622038527744338864.txt
+09-09 23:19:11.834   559  7348 I ActivityManager: Collecting stacks for pid 7233 into temporary file temp_anr_5622038527744338864.txt
+09-09 23:19:15.741  7283  7283 W app_process: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:19:18.329  7283  7283 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+09-09 23:19:22.345  7283  7283 D AndroidRuntime: Shutting down VM
+09-09 23:19:24.631  7415  7415 W .android.as.oss: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: FATAL EXCEPTION: Blocking Thread #11
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: Process: com.google.android.gm, PID: 7210
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: android.os.RemoteException: The com.google.android.gms.auth.accounts provider is not available.
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at qwz.k(PG:7)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at aaaa.a(PG:4)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at zxe.g(PG:9)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at zxa.invokeSuspend(PG:4)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at zxa.invoke(PG:2)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at zxc.invokeSuspend(PG:3)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbcd.resumeWith(PG:5)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbjb.run(PG:8)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbjo.k(PG:15)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbej.t(PG:10)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbej.w(PG:2)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at kle.apply(PG:29)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at aemz.a(PG:17)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at avfd.a(PG:3)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at avep.c(PG:2)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at aver.run(PG:9)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at yqa.run(PG:1)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at wvy.run(PG:9)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:1012)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at yqd.run(PG:6)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	Suppressed: bbiz: [bbku{Cancelling}@c834cee, ErrorLogging[avgy@36c758f[ypr@c99d01c[Running, pool size = 12, active threads = 8, queued tasks = 0, completed tasks = 38]]]]
+09-09 23:19:31.505   559   607 W system_server: Long monitor contention with owner AnrConsumer (6663) at void com.android.server.am.AppProfiler.updateCpuStatsNow()(AppProfiler.java:2118) waiters=0 in void com.android.server.am.AppProfiler.updateCpuStatsNow() for 8.230s
+09-09 23:19:34.733   559  6663 E ActivityManager: ANR in com.google.android.as
+09-09 23:19:34.787   559  7461 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x2
+09-09 23:19:35.394   559  6663 I ActivityManager: Killing 6350:com.google.android.as/u0a125 (adj 0): bg anr
+09-09 23:19:35.423   559  6663 D ActivityManager: Completed ANR of com.google.android.as in 38902ms, latency 26203ms (expired, only dump ANR app)
+09-09 23:19:37.570   559  6663 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-19-36-809
+09-09 23:19:41.774  7477  7477 W ogle.android.as: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:19:45.558   559  6663 E ActivityManager: ANR in com.google.android.gms
+09-09 23:19:46.178   559  7510 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:19:47.946   559  6663 I ActivityManager: Killing 7173:com.google.android.gms/u0a132 (adj 0): bg anr
+09-09 23:19:48.274   559  6663 D ActivityManager: Completed ANR of com.google.android.gms in 12846ms, latency 28438ms (expired, only dump ANR app)
+09-09 23:19:49.903  7522  7522 W .android.chrome: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:19:51.249   559  6663 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-19-51-241
+09-09 23:19:52.455   559  6663 E ActivityManager: ANR in com.android.phone
+09-09 23:19:53.218   559  7543 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:19:53.671   559  6663 I ActivityManager: Killing 7233:com.android.phone/1001 (adj -800): bg anr
+09-09 23:19:53.685   559  6663 D ActivityManager: Completed ANR of com.android.phone in 5404ms, latency 36605ms (expired, only dump ANR app)
+09-09 23:19:53.789  7545  7545 W ogle.android.gm: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:19:56.907  7564  7564 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:19:57.321  7570  7570 W gle.android.gms: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:20:02.662  7298  7596 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 7596 (bt_stack_manage), pid 7298 (droid.bluetooth)
+09-09 23:20:10.153  6962  6962 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:20:10.153  6962  6962 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:20:12.006  6962  7436 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:20:12.006  6962  7436 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:20:16.195   559  7701 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_3977123089141079370.txt
+09-09 23:20:16.195   559  7701 I ActivityManager: Collecting stacks for pid 7522 into temporary file temp_anr_3977123089141079370.txt
+09-09 23:20:19.781   559  7702 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-20-19-371
+09-09 23:20:21.805   559  7716 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_1801814539932454517.txt
+09-09 23:20:21.843   559  7716 I ActivityManager: Collecting stacks for pid 7564 into temporary file temp_anr_1801814539932454517.txt
+09-09 23:20:22.803  7149  7624 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:20:22.803  7149  7624 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:20:25.501   559  7702 E ActivityManager: ANR in com.android.chrome
+09-09 23:20:26.102   559  7702 I ActivityManager: Killing 7522:com.android.chrome/u0a150 (adj 905): bg anr
+09-09 23:20:27.284   559  7702 D ActivityManager: Completed ANR of com.android.chrome in 10608ms, latency 388ms
+09-09 23:20:27.738   559  7731 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:20:28.877   559   594 D AppWidgetServiceImpl: Provider info from ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.DownloadQueueWidgetProvider} won't be persisted.
+09-09 23:20:30.409   559  7702 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-20-30-232
+09-09 23:20:31.655  7743  7743 W .android.chrome: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:20:36.559  6962  7044 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:20:36.559  6962  7044 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:20:40.430   559  7702 E ActivityManager: ANR in com.android.phone
+09-09 23:20:41.060   559  7772 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:20:41.785   559  7702 I ActivityManager: Killing 7564:com.android.phone/1001 (adj -800): bg anr
+09-09 23:20:41.837   559  7702 D ActivityManager: Completed ANR of com.android.phone in 14552ms, latency 5791ms
+09-09 23:20:42.410   559  7778 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_5116252360137266069.txt
+09-09 23:20:42.410   559  7778 I ActivityManager: Collecting stacks for pid 7055 into temporary file temp_anr_5116252360137266069.txt
+09-09 23:20:44.097   559  1698 W system_server: Long monitor contention with owner AnrConsumer (7779) at void com.android.server.am.ProcessErrorStateRecord.appNotResponding(java.lang.String, android.content.pm.ApplicationInfo, java.lang.String, com.android.server.wm.WindowProcessController, boolean, com.android.internal.os.TimeoutRecord, java.util.concurrent.ExecutorService, boolean, boolean, java.util.concurrent.Future)(ProcessErrorStateRecord.java:403) waiters=4 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int) for 274ms
+09-09 23:20:45.857   559  7779 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-20-45-508
+09-09 23:20:47.402  7800  7800 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:20:50.194  7821  7821 W droid.bluetooth: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:20:55.203  7852  7852 W id.ext.services: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:04.624   559   584 W system_server: Long monitor contention with owner AnrConsumer (7779) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=0 in int com.android.server.am.ActiveServices.bindServiceLocked(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 437ms
+09-09 23:21:05.025   559  7779 E ActivityManager: ANR in com.google.android.gms.persistent
+09-09 23:21:05.681   559  7900 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x2
+09-09 23:21:05.734   559  7779 I ActivityManager: Killing 7055:com.google.android.gms.persistent/u0a132 (adj 0): bg anr
+09-09 23:21:05.759   559  7779 D ActivityManager: Completed ANR of com.google.android.gms.persistent in 23357ms, latency 99ms
+09-09 23:21:06.082  7901  7901 W d.process.acore: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:10.727  7933  7933 W .gms.persistent: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:10.968   559  7941 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_6358830737719532056.txt
+09-09 23:21:10.968   559  7941 I ActivityManager: Collecting stacks for pid 7800 into temporary file temp_anr_6358830737719532056.txt
+09-09 23:21:12.275  7950  7950 W earchbox:search: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:13.247   559  7942 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-21-13-227
+09-09 23:21:15.899   559  7942 E ActivityManager: ANR in com.android.phone
+09-09 23:21:16.500   559  7942 I ActivityManager: Killing 7800:com.android.phone/1001 (adj -800): bg anr
+09-09 23:21:16.597   559  7942 D ActivityManager: Completed ANR of com.android.phone in 5786ms, latency 20ms
+09-09 23:21:18.761  7994  7994 W putmethod.latin: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:19.149  8010  8010 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:20.454  7821  7990 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 7990 (bt_stack_manage), pid 7821 (droid.bluetooth)
+09-09 23:21:24.469   559  8045 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_24712765628377116.txt
+09-09 23:21:24.484   559  8045 I ActivityManager: Collecting stacks for pid 7477 into temporary file temp_anr_24712765628377116.txt
+09-09 23:21:24.890  8048  8048 W ndroid.contacts: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:26.845   559  8046 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-21-26-839
+09-09 23:21:28.813  8076  8076 W .gms.persistent: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:29.220   559   756 I ActivityManager: Skip duplicated ANR, pid=7477 Timed out while trying to bind
+09-09 23:21:31.410   559   584 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (8047) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=0 in int com.android.server.am.ActiveServices.bindServiceLocked(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 1.247s
+09-09 23:21:31.417   559  2308 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (8047) at boolean com.android.server.am.PhantomProcessList.isAppProcess(int)(PhantomProcessList.java:363) waiters=1 in void com.android.server.am.ActivityManagerService.getMyMemoryState(android.app.ActivityManager$RunningAppProcessInfo) for 1.163s
+09-09 23:21:31.584   559   597 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (8047) at void com.android.server.am.PhantomProcessList.updateProcessCpuStatesLocked(com.android.internal.os.ProcessCpuTracker)(PhantomProcessList.java:562) waiters=0 in int com.android.server.am.PhantomProcessList.onPhantomProcessFdEvent(java.io.FileDescriptor, int) for 342ms
+09-09 23:21:35.963   559   756 I ActivityManager: Skip duplicated ANR, pid=7477 Timed out while trying to bind
+09-09 23:21:36.781  8138  8138 W gle.android.gms: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:38.455  8153  8153 W ogle.android.gm: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:38.842  7950  8070 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:21:38.842  7950  8070 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:21:39.973  8168  8168 W d.process.acore: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:44.479   559  8203 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_9209808871103537971.txt
+09-09 23:21:44.479   559  8203 I ActivityManager: Collecting stacks for pid 8010 into temporary file temp_anr_9209808871103537971.txt
+09-09 23:21:51.816   559  2306 W system_server: Long monitor contention with owner AnrConsumer (8046) at void com.android.server.am.PhantomProcessList.lookForPhantomProcessesLocked()(PhantomProcessList.java:145) waiters=0 in int com.android.server.am.ActiveServices.bindServiceLocked(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 291ms
+09-09 23:21:52.563  8252  8252 W .android.dialer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:21:52.949   559  8046 E ActivityManager: ANR in com.google.android.as
+09-09 23:21:54.307   559  8265 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x2
+09-09 23:21:56.221   559  8046 I ActivityManager: Killing 7477:com.google.android.as/u0a125 (adj 0): bg anr
+09-09 23:21:56.396   559  8046 D ActivityManager: Completed ANR of com.google.android.as in 31986ms, latency 140ms
+09-09 23:22:02.252   559  8046 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-22-02-013
+09-09 23:22:03.747   559  8307 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_6161855478054310229.txt
+09-09 23:22:03.747   559  8307 I ActivityManager: Collecting stacks for pid 7477 into temporary file temp_anr_6161855478054310229.txt
+09-09 23:22:04.084  8305  8305 W droid.bluetooth: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:22:05.122   559  8320 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_771890182702833599.txt
+09-09 23:22:05.264   559  8320 I ActivityManager: Collecting stacks for pid 8153 into temporary file temp_anr_771890182702833599.txt
+09-09 23:22:14.694  7950  7950 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:22:14.716  7950  7950 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:22:15.518   559  8320 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_7764898960890347203.txt
+09-09 23:22:15.519   559  8320 I ActivityManager: Collecting stacks for pid 8138 into temporary file temp_anr_7764898960890347203.txt
+09-09 23:22:18.226   559  8307 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_9589816901541566.txt
+09-09 23:22:18.239   559  8307 I ActivityManager: Collecting stacks for pid 8252 into temporary file temp_anr_9589816901541566.txt
+09-09 23:22:19.005   559  8046 E ActivityManager: ANR in com.android.phone
+09-09 23:22:21.165   559  8046 I ActivityManager: Killing 8010:com.android.phone/1001 (adj -800): bg anr
+09-09 23:22:21.367   559  8046 D ActivityManager: Completed ANR of com.android.phone in 24669ms, latency 12284ms (expired, only dump ANR app)
+09-09 23:22:23.185   559  8046 I ActivityManager: Skipping duplicate ANR: com.android.server.am.ProcessErrorStateRecord@d3f3fb4 Timed out while trying to bind
+09-09 23:22:23.192   559  8046 D ActivityManager: Completed ANR of com.google.android.as in 1674ms, latency 17964ms (expired, only dump ANR app)
+09-09 23:22:25.137  8371  8371 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:22:28.291   559  8046 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-22-28-207
+09-09 23:22:32.821   559  8400 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_5540676707436626784.txt
+09-09 23:22:32.822   559  8400 I ActivityManager: Collecting stacks for pid 7477 into temporary file temp_anr_5540676707436626784.txt
+09-09 23:22:34.561  8252  8397 I DialerCanRecord: com.android.dialer.callrecording.impl.canrecord.CanRecord.canRecordCall:76 Call recording is disabled in the current country
+09-09 23:22:38.006  8415  8415 W d.process.acore: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:22:41.981   559  2306 W system_server: Long monitor contention with owner AnrConsumer (8046) at void com.android.server.am.PhantomProcessList.lookForPhantomProcessesLocked()(PhantomProcessList.java:145) waiters=0 in int com.android.server.am.ActiveServices.bindServiceLocked(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 435ms
+09-09 23:22:42.394   559  8046 E ActivityManager: ANR in com.google.android.gm
+09-09 23:22:43.761   559  8046 I ActivityManager: Killing 8153:com.google.android.gm/u0a140 (adj 0): bg anr
+09-09 23:22:43.881   559  8454 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:22:44.062   559  8046 D ActivityManager: Completed ANR of com.google.android.gm in 20760ms, latency 18292ms (expired, only dump ANR app)
+09-09 23:22:46.582  8470  8470 W ogle.android.as: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:22:47.791   559  8485 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_2693753045546452597.txt
+09-09 23:22:47.791   559  8485 I ActivityManager: Collecting stacks for pid 8371 into temporary file temp_anr_2693753045546452597.txt
+09-09 23:22:47.863   559  8046 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-22-47-771
+09-09 23:22:52.490   559  8046 E ActivityManager: ANR in com.google.android.gms
+09-09 23:22:52.743   559  8514 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:22:52.938   559  8046 I ActivityManager: Killing 8138:com.google.android.gms/u0a132 (adj 0): bg anr
+09-09 23:22:53.022   559  8046 D ActivityManager: Completed ANR of com.google.android.gms in 8943ms, latency 31421ms (expired, only dump ANR app)
+09-09 23:22:54.595   559  8046 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-22-54-558
+09-09 23:22:56.447   559   594 D AppWidgetServiceImpl: Provider info from ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.DownloadQueueWidgetProvider} won't be persisted.
+09-09 23:22:56.482  8527  8527 W ogle.android.gm: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:22:57.993  8546  8546 W gle.android.gms: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:22:59.239   559  2030 W system_server: Long monitor contention with owner AnrConsumer (8046) at void com.android.server.am.PhantomProcessList.lookForPhantomProcessesLocked()(PhantomProcessList.java:145) waiters=0 in java.lang.String com.android.server.am.ContentProviderHelper.checkContentProviderAccess(java.lang.String, int) for 266ms
+09-09 23:22:59.253   559  1698 W system_server: Long monitor contention with owner AnrConsumer (8046) at void com.android.server.am.PhantomProcessList.lookForPhantomProcessesLocked()(PhantomProcessList.java:145) waiters=1 in void com.android.server.am.ActivityManagerService.attachApplicationLocked(android.app.IApplicationThread, int, int, long) for 236ms
+09-09 23:22:59.389   559  8046 E ActivityManager: ANR in com.google.android.dialer
+09-09 23:22:59.419   559  8564 I DropBoxManagerService: add tag=system_app_anr isTagEnabled=true flags=0x6
+09-09 23:23:00.266   559  8046 I ActivityManager: Killing 8252:com.google.android.dialer/u0a128 (adj 250): bg anr
+09-09 23:23:00.276   559  8046 D ActivityManager: Completed ANR of com.google.android.dialer in 7253ms, latency 34806ms (expired, only dump ANR app)
+09-09 23:23:00.277   559  8046 I ActivityManager: Skip ANR with mismatched pid=7477, current pid=0
+09-09 23:23:01.546   559  8046 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-23-01-538
+09-09 23:23:08.127   559  8046 E ActivityManager: ANR in com.android.phone
+09-09 23:23:08.505   559  8046 I ActivityManager: Killing 8371:com.android.phone/1001 (adj -800): bg anr
+09-09 23:23:08.573   559  8046 D ActivityManager: Completed ANR of com.android.phone in 8241ms, latency 12489ms (expired, only dump ANR app)
+09-09 23:23:10.569  8305  8525 D AdapterProperties: BT_PROPERTY_LOCAL_LE_FEATURES: update from BT controller mNumOfAdvertisementInstancesSupported = 16 mRpaOffloadSupported = false mNumOfOffloadedIrkSupported = 16 mNumOfOffloadedScanFilterSupported = 16 mOffloadedScanResultStorageBytes= 0 mIsActivityAndEnergyReporting = false mVersSupported = 262 mTotNumOfTrackableAdv = 16 mIsExtendedScanSupported = false mIsDebugLogSupported = false mIsLe2MPhySupported = true mIsLeCodedPhySupported = true mIsLeExtendedAdvertisingSupported = true mIsLePeriodicAdvertisingSupported = true mLeMaximumAdvertisingDataLength = 512 mDynamicAudioBufferSizeSupportedCodecsGroup1 = 0 mDynamicAudioBufferSizeSupportedCodecsGroup2 = 0 mIsLePeriodicAdvertisingSyncTransferSenderSupported = false mIsLeConnectedIsochronousStreamCentralSupported = true mIsLeIsochronousBroadcasterSupported = true mIsLePeriodicAdvertisingSyncTransferRecipientSupported = false mIsOffloadedTransportDiscoveryDataScanSupported = false
+09-09 23:23:11.711  8634  8634 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:23:12.861   559   594 D AppWidgetServiceImpl: Provider info from ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.DownloadQueueWidgetProvider} won't be persisted.
+09-09 23:23:17.098  8305  8305 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+09-09 23:23:19.933  8679  8679 W droid.bluetooth: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:23:21.095   559   594 D AppWidgetServiceImpl: Provider info from ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.DownloadQueueWidgetProvider} won't be persisted.
+09-09 23:23:23.329   559   594 D AppWidgetServiceImpl: Provider info from ComponentInfo{com.zarz.spotiflac/com.zarz.spotiflac.DownloadQueueWidgetProvider} won't be persisted.
+09-09 23:23:24.847  7950  8035 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-09 23:23:24.847  7950  8035 W SnapshotHandler: 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-09 23:23:34.474   559  8752 D ActivityManager: created ANR temporary file:/data/anr/temp_anr_5102612599843094014.txt
+09-09 23:23:34.490   559  8752 I ActivityManager: Collecting stacks for pid 8634 into temporary file temp_anr_5102612599843094014.txt
+09-09 23:23:34.970  8733  8733 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+09-09 23:23:35.237  8733  8733 I AndroidRuntime: Using default boot image
+09-09 23:23:35.237  8733  8733 I AndroidRuntime: Leaving lock profiling enabled
+09-09 23:23:38.196   559  8753 I ActivityManager: Dumping to /data/anr/anr_2026-09-09-23-23-38-036
+09-09 23:23:39.538  8733  8733 W app_process: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:23:40.687  8733  8733 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+09-09 23:23:41.633   559   595 W system_server: Long monitor contention with owner AnrAuxiliaryTaskExecutor (8754) at void com.android.server.am.AppProfiler.updateCpuStatsNow()(AppProfiler.java:2118) waiters=0 in void com.android.server.am.AppProfiler.updateCpuStatsNow() for 2.763s
+09-09 23:23:43.912  8733  8733 D AndroidRuntime: Shutting down VM
+09-09 23:23:44.502   559  8753 E ActivityManager: ANR in com.android.phone
+09-09 23:23:45.414   559  8753 I ActivityManager: Killing 8634:com.android.phone/1001 (adj -800): bg anr
+09-09 23:23:45.533   559  8753 D ActivityManager: Completed ANR of com.android.phone in 11148ms, latency 346ms
+09-09 23:23:45.801  8789  8789 W .android.dialer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:23:56.873  8837  8837 W m.android.phone: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-09 23:23:58.291  8679  8825 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 8825 (bt_stack_manage), pid 8679 (droid.bluetooth)

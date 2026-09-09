@@ -1,0 +1,5 @@
+phase=wait-for-device
+phase=install-apk
+phase=launch-app
+phase=navigate-tabs
+result=FAIL: app process died during tab navigation

@@ -1,0 +1,32 @@
+--------- beginning of crash
+09-09 23:14:55.099  5553  5773 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 5773 (bt_stack_manage), pid 5553 (droid.bluetooth)
+09-09 23:16:40.663  6059  6382 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 6382 (bt_stack_manage), pid 6059 (droid.bluetooth)
+09-09 23:18:10.533  6724  6957 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 6957 (bt_stack_manage), pid 6724 (droid.bluetooth)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: FATAL EXCEPTION: Blocking Thread #11
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: Process: com.google.android.gm, PID: 7210
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: android.os.RemoteException: The com.google.android.gms.auth.accounts provider is not available.
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at qwz.k(PG:7)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at aaaa.a(PG:4)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at zxe.g(PG:9)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at zxa.invokeSuspend(PG:4)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at zxa.invoke(PG:2)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at zxc.invokeSuspend(PG:3)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbcd.resumeWith(PG:5)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbjb.run(PG:8)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbjo.k(PG:15)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbej.t(PG:10)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at bbej.w(PG:2)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at kle.apply(PG:29)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at aemz.a(PG:17)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at avfd.a(PG:3)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at avep.c(PG:2)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at aver.run(PG:9)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at yqa.run(PG:1)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at wvy.run(PG:9)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:1012)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	at yqd.run(PG:6)
+09-09 23:19:30.870  7210  7354 E AndroidRuntime: 	Suppressed: bbiz: [bbku{Cancelling}@c834cee, ErrorLogging[avgy@36c758f[ypr@c99d01c[Running, pool size = 12, active threads = 8, queued tasks = 0, completed tasks = 38]]]]
+09-09 23:20:02.662  7298  7596 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 7596 (bt_stack_manage), pid 7298 (droid.bluetooth)
+09-09 23:21:20.454  7821  7990 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 7990 (bt_stack_manage), pid 7821 (droid.bluetooth)
