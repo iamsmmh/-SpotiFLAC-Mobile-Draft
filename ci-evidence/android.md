@@ -1,6 +1,6 @@
 # Android compile & native tests — evidence
-- run: https://github.com/iamsmmh/-SpotiFLAC-Mobile-Draft/actions/runs/34410494710
-- sha: 7e59cb0a34533d6b97dd86c2540442471214d9dd
+- run: https://github.com/iamsmmh/-SpotiFLAC-Mobile-Draft/actions/runs/34413232146
+- sha: e15d618e872f20df5bae247147bb0752d9f24e4e
 
 ## Steps
 - success: Set up job
@@ -60,14 +60,14 @@ untranslated-messages-file: desiredFileName.txt
 
 This will generate a JSON format file containing all messages that 
 need to be translated.
-Running Gradle task 'assembleDebug'...                            330.7s
+Running Gradle task 'assembleDebug'...                            361.4s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
 
 ## gradle :app:testDebugUnitTest
-> Task :flutter_local_notifications:processDebugJavaRes NO-SOURCE
-> Task :flutter_secure_storage:processDebugJavaRes NO-SOURCE
 > Task :flutter_local_notifications:bundleLibRuntimeToJarDebug
+> Task :flutter_local_notifications:processDebugJavaRes NO-SOURCE
 > Task :flutter_secure_storage:bundleLibRuntimeToJarDebug
+> Task :flutter_secure_storage:processDebugJavaRes NO-SOURCE
 > Task :jni:processDebugJavaRes NO-SOURCE
 > Task :jni:bundleLibRuntimeToJarDebug
 > Task :jni_flutter:processDebugJavaRes NO-SOURCE
@@ -76,23 +76,23 @@ Running Gradle task 'assembleDebug'...                            330.7s
 > Task :open_filex:bundleLibRuntimeToJarDebug
 > Task :permission_handler_android:processDebugJavaRes NO-SOURCE
 > Task :permission_handler_android:bundleLibRuntimeToJarDebug
-> Task :receive_sharing_intent:processDebugJavaRes UP-TO-DATE
 > Task :receive_sharing_intent:bundleLibRuntimeToJarDebug
-> Task :share_plus:bundleLibRuntimeToJarDebug
+> Task :receive_sharing_intent:processDebugJavaRes UP-TO-DATE
 > Task :share_plus:processDebugJavaRes UP-TO-DATE
 > Task :shared_preferences_android:processDebugJavaRes UP-TO-DATE
+> Task :share_plus:bundleLibRuntimeToJarDebug
 > Task :sqflite_android:processDebugJavaRes NO-SOURCE
-> Task :shared_preferences_android:bundleLibRuntimeToJarDebug
 > Task :sqflite_android:bundleLibRuntimeToJarDebug
-> Task :url_launcher_android:processDebugJavaRes UP-TO-DATE
+> Task :shared_preferences_android:bundleLibRuntimeToJarDebug
 > Task :url_launcher_android:bundleLibRuntimeToJarDebug
+> Task :url_launcher_android:processDebugJavaRes UP-TO-DATE
 > Task :video_player_android:processDebugJavaRes UP-TO-DATE
 > Task :video_player_android:bundleLibRuntimeToJarDebug
 > Task :app:compileDebugUnitTestKotlin
 > Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
 > Task :app:processDebugUnitTestJavaRes
 > Task :app:testDebugUnitTest
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_5-1788992018654.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_5-1788994006545.json
 
 [Incubating] Problems report is available at: file:///home/runner/work/-SpotiFLAC-Mobile-Draft/-SpotiFLAC-Mobile-Draft/build/reports/problems/problems-report.html
 
@@ -106,8 +106,8 @@ BUILD SUCCESSFUL in 36s
 348 actionable tasks: 30 executed, 318 up-to-date
 
 ## APK output
-total 355436
-drwxr-xr-x 2 runner runner      4096 Sep  9 22:13 .
-drwxr-xr-x 6 runner runner      4096 Sep  9 22:13 ..
--rw-r--r-- 1 runner runner 363950770 Sep  9 22:13 app-debug.apk
--rw-r--r-- 1 runner runner        40 Sep  9 22:13 app-debug.apk.sha1
+total 355440
+drwxr-xr-x 2 runner runner      4096 Sep  9 22:46 .
+drwxr-xr-x 6 runner runner      4096 Sep  9 22:46 ..
+-rw-r--r-- 1 runner runner 363950770 Sep  9 22:46 app-debug.apk
+-rw-r--r-- 1 runner runner        40 Sep  9 22:46 app-debug.apk.sha1
