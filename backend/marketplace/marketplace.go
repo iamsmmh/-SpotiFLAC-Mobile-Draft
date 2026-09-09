@@ -54,13 +54,13 @@ type Extension struct {
 
 // Review is a user's rating + text for an extension.
 type Review struct {
-	ID          string `json:"id"`
-	ExtensionID string `json:"extensionId"`
-	UserID      string `json:"userId"`
+	ID          string    `json:"id"`
+	ExtensionID string    `json:"extensionId"`
+	UserID      string    `json:"userId"`
 	Rating      int       `json:"rating"` // 1-5
-	Text      string    `json:"text"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	Text        string    `json:"text"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
 // InstallRecord tracks one user's install state.
@@ -77,10 +77,10 @@ type InstallRecord struct {
 type AnalyticsRecord struct {
 	ExtensionID string    `json:"extensionId"`
 	Period      string    `json:"period"` // "day", "week", "month"
-	Installs   int64     `json:"installs"`
-	Uninstalls int64     `json:"uninstalls"`
-	Crashes    int64     `json:"crashes"`
-	At         time.Time `json:"at"`
+	Installs    int64     `json:"installs"`
+	Uninstalls  int64     `json:"uninstalls"`
+	Crashes     int64     `json:"crashes"`
+	At          time.Time `json:"at"`
 }
 
 // SearchRequest contains filter parameters for marketplace search.
@@ -88,8 +88,8 @@ type SearchRequest struct {
 	Query    string `json:"query"`
 	Category string `json:"category"`
 	Sort     string `json:"sort"` // "popularity", "rating", "recent"
-	Limit  int `json:"limit"`
-	Offset int `json:"offset"`
+	Limit    int    `json:"limit"`
+	Offset   int    `json:"offset"`
 }
 
 // Store abstracts persistence.

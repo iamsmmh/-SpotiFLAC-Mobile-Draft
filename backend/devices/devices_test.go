@@ -89,7 +89,7 @@ func (s *fakeDeviceStore) Register(_ context.Context, userID string, req Registe
 	}
 	now := time.Now()
 	d := &Device{
-		ID:       req.ID, UserID: userID, Name: req.Name,
+		ID: req.ID, UserID: userID, Name: req.Name,
 		Platform: req.Platform, CreatedAt: now, LastSeenAt: now,
 	}
 	s.devs[userID][req.ID] = d
