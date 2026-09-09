@@ -139,11 +139,18 @@
 
 	<!-- CarPlay audio app (Milestone 2). The matching
 	     com.apple.developer.carplay-audio entitlement must be granted by
-	     Apple before a build can run in CarPlay; see docs/apple_targets.md. -->
+	     Apple before a build can run in CarPlay; see docs/apple_targets.md.
+
+	     IMPORTANT: declaring UIApplicationSceneManifest opts the whole app
+	     into the UIScene lifecycle, so the main phone UI needs its own scene
+	     configuration with a delegate that creates the window
+	     (MainSceneDelegate). Without it the launch screen stays forever.
+	     Multiple scenes stay disabled — the legacy Flutter engine backs
+	     exactly one main window; the CarPlay scene is configured separately. -->
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
-		<true/>
+		<false/>
 		<key>UISceneConfigurations</key>
 		<dict>
 			<key>CPTemplateApplicationSceneSessionRoleApplication</key>
@@ -155,6 +162,15 @@
 					<string>CarPlay</string>
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate</string>
+				</dict>
+			</array>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).MainSceneDelegate</string>
 				</dict>
 			</array>
 		</dict>

@@ -27,6 +27,21 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
 @main
 @objc class AppDelegate: FlutterAppDelegate {
     private let CHANNEL = "com.zarz.spotiflac/backend"
+
+    /// Pre-warmed engine backing the main UI.
+    ///
+    /// The UIScene lifecycle (required by the CarPlay scene manifest) connects
+    /// the main scene — and with it the FlutterViewController — only *after*
+    /// `didFinishLaunchingWithOptions` returns, so plugin registration and the
+    /// backend channels cannot rely on a storyboard view controller existing
+    /// at launch. The engine is started in `didFinishLaunchingWithOptions` and
+    /// `MainSceneDelegate` attaches its FlutterViewController to it; running
+    /// the engine headless also starts the Dart bootstrap while the scene
+    /// window is still being created.
+    static let sharedFlutterEngine = FlutterEngine(
+        name: "SpotiFLACMainEngine",
+        project: nil,
+        allowHeadlessExecution: true)
     private let DOWNLOAD_PROGRESS_STREAM_CHANNEL = "com.zarz.spotiflac/download_progress_stream"
     private let LIBRARY_SCAN_PROGRESS_STREAM_CHANNEL = "com.zarz.spotiflac/library_scan_progress_stream"
     private let LARGE_JSON_RESULT_FILE_KEY = "__json_file"
@@ -76,18 +91,19 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             GobackendSetAppVersion(version)
         }
-        
-        // Never force-cast the root view controller: `window` is nil at this
-        // point in a UIScene-based launch (and in unit-test hosts), which
-        // turned a recoverable setup failure into a launch crash. Fall back to
-        // the engine owned by the app delegate's registrar, and finally bail
-        // out gracefully - Dart-side calls then surface as MissingPluginException
-        // instead of the process dying before the first frame.
-        guard let messenger = resolveBinaryMessenger() else {
-            NSLog("[SpotiFLAC] No FlutterBinaryMessenger available at launch; backend channels are disabled.")
-            GeneratedPluginRegistrant.register(with: self)
-            return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-        }
+
+        // The UIScene lifecycle (required by the CarPlay scene manifest)
+        // creates the main scene — and with it the FlutterViewController —
+        // only after this method returns, so plugin registration and the
+        // backend channels must attach to an engine that already exists at
+        // launch instead of the not-yet-created storyboard view controller
+        // (`registrarForPlugin:` resolves through `rootFlutterViewController`,
+        // which is nil at this point in a scene-based launch).
+        let engine = Self.sharedFlutterEngine
+        engine.run()
+        GeneratedPluginRegistrant.register(with: engine)
+
+        let messenger = engine.binaryMessenger
         let channel = FlutterMethodChannel(
             name: CHANNEL,
             binaryMessenger: messenger
@@ -139,7 +155,10 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
         
         registerAppleIntegrations(messenger: messenger)
 
-        GeneratedPluginRegistrant.register(with: self)
+        // The scene delegate owns cold-launch URLs in the UIScene lifecycle
+        // (they arrive in `scene(_:willConnectTo:options:)` instead of
+        // `launchOptions`), but keep the legacy read for non-scene hosts
+        // (e.g. unit-test harnesses) — it is a no-op there.
         if let url = launchOptions?[.url] as? URL {
             _ = handleExtensionOAuthRedirect(url: url)
         }
@@ -149,12 +168,12 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
     /// Resolves a binary messenger without force-casting `window`.
     ///
     /// Order of preference:
-    ///   1. the root `FlutterViewController` (classic, non-scene launch),
-    ///   2. any `FlutterViewController` reachable from a connected scene
-    ///      (iOS 13+ / UIScene lifecycle, where `window` is still nil in
-    ///      `didFinishLaunchingWithOptions`),
-    ///   3. the registrar backed by FlutterAppDelegate's engine,
-    ///   4. `nil` - the caller degrades gracefully instead of crashing.
+    ///   1. the root `FlutterViewController` (once the main scene attached it
+    ///      and published the window on the app delegate),
+    ///   2. any `FlutterViewController` reachable from a connected scene,
+    ///   3. the pre-warmed shared engine — always available from
+    ///      `didFinishLaunchingWithOptions` onwards, so channel registration
+    ///      can never silently degrade to "channels disabled".
     private func resolveBinaryMessenger() -> FlutterBinaryMessenger? {
         if let controller = window?.rootViewController as? FlutterViewController {
             return controller.binaryMessenger
@@ -167,13 +186,20 @@ private func goCall<T>(_ body: (NSErrorPointer) -> T) throws -> T {
                 }
             }
         }
-        // UIScene may not have attached any window yet, while FlutterAppDelegate
-        // already owns the engine/plugin registry. Its registrar provides the
-        // same messenger without requiring a view controller or a force-cast.
-        if let registrar = registrar(forPlugin: "SpotiFLACBackendChannels") {
-            return registrar.messenger()
-        }
-        return nil
+        return Self.sharedFlutterEngine.binaryMessenger
+    }
+
+    /// UIScene forwarding for NSUserActivity continuations (share sheet,
+    /// universal links). In the scene lifecycle these are delivered to
+    /// `UISceneDelegate.scene(_:continue:)` — routed back through the plugin
+    /// lifecycle delegate here so plugins observe the same events as in the
+    /// legacy lifecycle.
+    func handleSceneUserActivity(_ activity: NSUserActivity) {
+        let delegate = self as UIApplicationDelegate
+        _ = delegate.application?(
+            UIApplication.shared,
+            continue: activity,
+            restorationHandler: { _ in })
     }
 
     /// Extension return URLs:
@@ -1620,7 +1646,11 @@ extension AppDelegate {
     /// Declares the CarPlay scene so UIKit instantiates our delegate for it.
     ///
     /// CarPlay scenes carry the `CPTemplateApplicationSceneSessionRoleApplication`
-    /// role; everything else falls through to Flutter's default handling.
+    /// role. The main phone UI runs in its own UIWindowScene backed by
+    /// `MainSceneDelegate` — the configuration *must* carry a delegate class,
+    /// otherwise the scene connects without anyone creating a window and the
+    /// app stays on the launch screen forever (the Flutter engine creates no
+    /// UI on its own).
     override func application(
         _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,
@@ -1633,7 +1663,9 @@ extension AppDelegate {
             configuration.delegateClass = CarPlaySceneDelegate.self
             return configuration
         }
-        return UISceneConfiguration(
+        let configuration = UISceneConfiguration(
             name: "Default Configuration", sessionRole: connectingSceneSession.role)
+        configuration.delegateClass = MainSceneDelegate.self
+        return configuration
     }
 }

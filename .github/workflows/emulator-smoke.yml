@@ -1,9 +1,22 @@
 name: Emulator smoke test
 
-# Device-level smoke test for the paths unit tests cannot reach: app boot,
-# permission grants, the Flutter↔Kotlin↔gomobile bridge initializing, and a
-# foreground-service notification being available. Informational by design —
-# not a required check — so a flaky emulator never blocks a merge.
+# Device-level smoke tests for the paths unit tests cannot reach.
+#
+#  android — boots an x86_64 emulator, installs the RELEASE APK (the same
+#            artifact shape users sideload), exercises the bottom navigation,
+#            rotation and a bounded monkey stress, and fails on crash/ANR or
+#            a dead process. Screenshots + logs are committed to
+#            ci-evidence/emulator-android/ on arena/** branches.
+#
+#  ios     — boots an iPhone simulator, installs the app built for the
+#            simulator and verifies it renders past the launch screen
+#            (the UIScene manifest bug left it stuck on the splash screen
+#            forever while the process ran headless). Screenshots are
+#            committed to ci-evidence/emulator-ios/.
+#
+# Informational by design on main (scheduled) — not a required check — so a
+# flaky emulator never blocks a merge. On arena/** review branches every
+# failure is a real finding and the evidence lands on the branch.
 
 on:
   workflow_dispatch:
@@ -76,8 +89,11 @@ jobs:
       - name: Get Flutter dependencies
         run: flutter pub get
 
-      - name: Build debug APK (x86_64)
-        run: flutter build apk --debug --target-platform android-x64
+      - name: Build release APK (x86_64)
+        # Release, not debug: this is the artifact shape users install, and
+        # debug builds use the ".debug" applicationId suffix which would not
+        # match APP_ID.
+        run: flutter build apk --release --target-platform android-x64
 
       - name: Emulator smoke
         uses: reactivecircus/android-emulator-runner@v2
@@ -87,108 +103,9 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: |
-            set -euo pipefail
-            STATUS=smoke-status.txt
-            : > "$STATUS"
-            phase() { echo "phase=$1" >> "$STATUS"; echo "=== $1"; }
-
-            fail() {
-              echo "::error::$*"
-              echo "result=FAIL: $*" >> "$STATUS"
-              adb logcat -d -b crash > crash-log.txt 2>/dev/null || true
-              adb logcat -d > logcat.txt 2>/dev/null || true
-              exit 1
-            }
-
-            phase "wait-for-device"
-            adb wait-for-device
-            timeout 300 bash -c 'until adb shell getprop sys.boot_completed 2>/dev/null | grep -q 1; do sleep 3; done'
-
-            phase "install-apk"
-            adb install -r build/app/outputs/flutter-apk/app-debug.apk \
-              || fail "APK install failed"
-            adb logcat -c
-            adb shell svc power stayon true || true
-            adb shell pm grant "$APP_ID" android.permission.POST_NOTIFICATIONS || true
-            adb shell pm grant "$APP_ID" android.permission.READ_MEDIA_AUDIO || true
-            adb shell pm grant "$APP_ID" android.permission.WRITE_EXTERNAL_STORAGE || true
-
-            phase "launch-app"
-            adb shell am start -n "$APP_ID/.MainActivity"
-            sleep 25
-            PID=$(adb shell pidof "$APP_ID" | tr -d '\r')
-            [ -n "$PID" ] || fail "app process not alive after launch"
-            echo "app alive (pid $PID)"
-            adb shell dumpsys window 2>/dev/null | grep -E "mCurrentFocus|mFocusedApp" | head -2 > focus.txt || true
-            grep -q "$APP_ID" focus.txt \
-              || echo "::warning::app may not be in foreground: $(cat focus.txt 2>/dev/null)"
-            adb shell screencap -p /sdcard/shot1_boot.png
-            adb pull /sdcard/shot1_boot.png shot1_boot.png || true
-            adb shell uiautomator dump /sdcard/ui1.xml >/dev/null 2>&1 || true
-            adb pull /sdcard/ui1.xml ui1.xml >/dev/null 2>&1 || true
-
-            # ---- Exercise the bottom NavigationBar (Home / Library / Store / Settings)
-            phase "navigate-tabs"
-            SIZE=$(adb shell wm size | grep -oE '[0-9]+x[0-9]+' | head -1)
-            W=${SIZE%x*}; H=${SIZE#*x}
-            echo "screen ${W}x${H}"
-            NY=$((H - 84))          # NavigationBar band
-            i=0
-            for frac in 0.125 0.375 0.625 0.875; do
-              i=$((i+1))
-              X=$(awk -v w="$W" -v f="$frac" 'BEGIN{printf "%d", w*f}')
-              adb shell input tap "$X" "$NY"
-              sleep 4
-              adb shell screencap -p "/sdcard/shot2_tab${i}.png"
-              adb pull "/sdcard/shot2_tab${i}.png" "shot2_tab${i}.png" || true
-            done
-            adb shell uiautomator dump /sdcard/ui2.xml >/dev/null 2>&1 || true
-            adb pull /sdcard/ui2.xml ui2.xml >/dev/null 2>&1 || true
-            PID=$(adb shell pidof "$APP_ID" | tr -d '\r')
-            [ -n "$PID" ] || fail "app process died during tab navigation"
-
-            # ---- Rotation stress (portrait -> landscape -> portrait)
-            phase "rotation"
-            adb shell settings put system accelerometer_rotation 0 || true
-            adb shell settings put system user_rotation 1 || true
-            sleep 4
-            adb shell screencap -p /sdcard/shot3_landscape.png
-            adb pull /sdcard/shot3_landscape.png shot3_landscape.png || true
-            adb shell settings put system user_rotation 0 || true
-            sleep 3
-            PID=$(adb shell pidof "$APP_ID" | tr -d '\r')
-            [ -n "$PID" ] || fail "app process died during rotation"
-
-            # ---- Monkey stress (app package only; crashes surface as FATAL)
-            phase "monkey-stress"
-            adb shell monkey -p "$APP_ID" --throttle 120 \
-              --pct-touch 60 --pct-motion 25 --pct-nav 5 --pct-majornav 5 \
-              --pct-appswitch 0 --pct-trackball 0 --pct-anything 5 \
-              -s 20260909 400 > monkey.txt 2>&1 || true
-            tail -n 5 monkey.txt || true
-            sleep 5
-            adb shell screencap -p /sdcard/shot4_after_monkey.png
-            adb pull /sdcard/shot4_after_monkey.png shot4_after_monkey.png || true
-            PID=$(adb shell pidof "$APP_ID" | tr -d '\r')
-            [ -n "$PID" ] || fail "app process died during monkey stress"
-
-            # ---- Final analysis
-            phase "final-analysis"
-            adb logcat -d > logcat.txt
-            if grep -q "FATAL EXCEPTION" logcat.txt; then
-              grep -A 40 "FATAL EXCEPTION" logcat.txt | head -80 > fatal.txt || true
-              fail "FATAL EXCEPTION detected (see fatal.txt)"
-            fi
-            if grep -qE "ANR in .*${APP_ID}|Input dispatching timed out .*${APP_ID}" logcat.txt; then
-              fail "ANR detected for ${APP_ID}"
-            fi
-            grep -qiE "flutter|SpotiFLAC" logcat.txt \
-              || fail "no app log output captured"
-            adb shell screencap -p /sdcard/smoke.png
-            adb pull /sdcard/smoke.png smoke.png || true
-            echo "result=PASS" >> "$STATUS"
-            echo "SMOKE PASSED"
+          # The action runs this input LINE BY LINE via `sh -c`; it must stay
+          # a single line. All logic lives in the script file.
+          script: bash "$GITHUB_WORKSPACE/.github/scripts/emulator-device-test.sh"
 
       - name: Upload smoke evidence
         if: always()
@@ -234,7 +151,7 @@ jobs:
             echo "# Emulator smoke — evidence"
             echo "- run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
             echo "- sha: ${GITHUB_SHA}"
-            echo "- device: API 34 google_apis x86_64 (swiftshader)"
+            echo "- device: API 34 google_apis x86_64 (swiftshader), release APK"
             echo
             echo "## Phase log"
             cat smoke-status.txt 2>/dev/null || echo "(no status file)"
@@ -278,4 +195,241 @@ jobs:
             sleep $((i * 3))
           done
           echo "::warning::failed to push evidence: $(printf '%s' "$ERR" | tail -n 3)"
-          exit 0
+
+  ios-simulator:
+    name: iOS simulator boot test
+    runs-on: macos-latest
+    timeout-minutes: 75
+    env:
+      APP_ID: com.zarz.spotiflac
+      XCODE_VERSION: "26.1.1"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Select Xcode ${{ env.XCODE_VERSION }}
+        run: bash .github/scripts/select-xcode.sh
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go_backend/go.mod
+          cache-dependency-path: go_backend/go.sum
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cocoapods
+            ios/Pods
+            ios/Runner.xcworkspace/xcshareddata
+          key: pods-${{ runner.os }}-${{ hashFiles('ios/Podfile', 'ios/Podfile.lock', 'pubspec.lock') }}
+          restore-keys: |
+            pods-${{ runner.os }}-
+            pods-ios-
+
+      - name: Build Go backend for iOS
+        working-directory: go_backend
+        env:
+          CGO_ENABLED: 1
+        run: |
+          set -euo pipefail
+          export PATH="$(go env GOPATH)/bin:$PATH"
+          go install golang.org/x/mobile/cmd/gomobile
+          gomobile init
+          mkdir -p ../ios/Frameworks
+          gomobile bind -target=ios -tags ios \
+            -o ../ios/Frameworks/Gobackend.xcframework . 2>&1 | tee gomobile-ios-build.log
+          test -d ../ios/Frameworks/Gobackend.xcframework
+
+      - name: Link XCFramework into the Xcode project
+        run: |
+          set -euo pipefail
+          gem list -i xcodeproj >/dev/null 2>&1 || sudo gem install xcodeproj --no-document
+          cat > /tmp/add_framework.rb <<'RUBY'
+          require 'xcodeproj'
+          project = Xcodeproj::Project.open('ios/Runner.xcodeproj')
+          target  = project.targets.find { |t| t.name == 'Runner' } or abort('Runner target not found')
+          group = project.main_group.find_subpath('Frameworks', true)
+          path  = 'Frameworks/Gobackend.xcframework'
+          if group.files.any? { |f| f.path == path }
+            puts 'Gobackend.xcframework already linked'
+            exit 0
+          end
+          ref = group.new_file(path, :project)
+          target.frameworks_build_phase.add_file_reference(ref)
+          embed = target.build_phases.find do |p|
+            p.is_a?(Xcodeproj::Project::Object::PBXCopyFilesBuildPhase) && p.name == 'Embed Frameworks'
+          end
+          if embed
+            embed.add_file_reference(ref).settings = {
+              'ATTRIBUTES' => %w[CodeSignOnCopy RemoveHeadersOnCopy]
+            }
+          end
+          project.save
+          puts 'Linked Gobackend.xcframework'
+          RUBY
+          ruby /tmp/add_framework.rb
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Install CocoaPods dependencies
+        run: |
+          cd ios
+          pod install --repo-update
+
+      - name: Normalize ffmpeg plugin shell scripts (strip CRLF)
+        run: |
+          find "$HOME/.pub-cache/hosted" -path "*ffmpeg_kit_flutter_new_full*/scripts/*.sh" -type f -print0 |
+            while IFS= read -r -d '' f; do
+              perl -pi -e 's/\r$//' "$f"
+              chmod +x "$f"
+            done
+
+      - name: Build app for iOS simulator
+        run: |
+          set -euo pipefail
+          flutter build ios --simulator --debug 2>&1 | tee flutter-ios-build.log
+          test -d build/ios/iphonesimulator/Runner.app
+
+      - name: Boot simulator and verify app renders past the splash
+        run: |
+          set -uo pipefail
+          STATUS=ios-smoke-status.txt
+          : > "$STATUS"
+          phase() { echo "phase=$1" >> "$STATUS"; echo "=== $1"; }
+          fail() {
+            echo "::error::$*"
+            echo "result=FAIL: $*" >> "$STATUS"
+            exit 1
+          }
+
+          phase "choose-simulator"
+          DEVICE=$(xcrun simctl list devices available | grep -oE "iPhone [0-9]+ [^()]*\([0-9A-F-]+\)" | head -1 | grep -oE "\([0-9A-F-]+\)" | tr -d '()')
+          [ -n "$DEVICE" ] || fail "no available iPhone simulator"
+          echo "simulator UDID: $DEVICE"
+          xcrun simctl boot "$DEVICE" 2>/dev/null || true
+          xcrun simctl bootstatus "$DEVICE" -b || fail "simulator failed to boot"
+
+          phase "install-app"
+          xcrun simctl install "$DEVICE" build/ios/iphonesimulator/Runner.app \
+            || fail "app install failed"
+
+          phase "launch-app"
+          xcrun simctl launch "$DEVICE" "$APP_ID" > launch.txt 2>&1 \
+            || { cat launch.txt; fail "app failed to launch"; }
+          cat launch.txt
+          sleep 10
+          xcrun simctl io "$DEVICE" screenshot ios_shot1_10s.png || true
+          sleep 15
+          xcrun simctl io "$DEVICE" screenshot ios_shot2_25s.png || true
+
+          # The app must render past the launch screen: two screenshots taken
+          # well after launch should differ from the pure launch screen, and
+          # the process must still be alive. (The UIScene bug left the app on
+          # the launch screen forever with the process running headless.)
+          phase "render-check"
+          APP_PID=$(cat launch.txt | grep -oE "[0-9]+$" || true)
+          if [ -n "$APP_PID" ] && ! ps -p "$APP_PID" > /dev/null 2>&1; then
+            fail "app process $APP_PID died after launch"
+          fi
+          if cmp -s ios_shot1_10s.png ios_shot2_25s.png; then
+            echo "::warning::screenshots at 10s and 25s are byte-identical — screen may be static (stuck on launch screen?)"
+            echo "render=static (identical screenshots)" >> "$STATUS"
+          else
+            echo "render=dynamic (screenshots differ — UI is drawing)" >> "$STATUS"
+          fi
+
+          phase "relaunch"
+          # Warm start: terminate and relaunch; the app must come back up
+          # (regression check for scene/session teardown).
+          xcrun simctl terminate "$DEVICE" "$APP_ID" 2>/dev/null || true
+          sleep 3
+          xcrun simctl launch "$DEVICE" "$APP_ID" > launch2.txt 2>&1 \
+            || { cat launch2.txt; fail "app failed to relaunch (warm start)"; }
+          sleep 15
+          xcrun simctl io "$DEVICE" screenshot ios_shot3_relaunch.png || true
+
+          phase "system-log"
+          xcrun simctl spawn "$DEVICE" log show --last 5m \
+            --predicate "process == 'Runner'" > ios-syslog.txt 2>&1 || true
+          if grep -qE "Terminating app|uncaught exception" ios-syslog.txt; then
+            fail "app terminated with an exception (see ios-syslog.txt)"
+          fi
+
+          echo "result=PASS" >> "$STATUS"
+          echo "iOS SIMULATOR SMOKE PASSED"
+
+      - name: Upload iOS smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: emulator-smoke-ios
+          path: |
+            ios_shot*.png
+            ios-smoke-status.txt
+            ios-syslog.txt
+            launch.txt
+            launch2.txt
+            flutter-ios-build.log
+            go_backend/gomobile-ios-build.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Commit iOS simulator evidence to branch
+        if: always() && (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/arena/'))
+        run: |
+          set -uo pipefail
+          mkdir -p ci-evidence/emulator-ios
+          for f in ios_shot1_10s.png ios_shot2_25s.png ios_shot3_relaunch.png \
+                   ios-smoke-status.txt ios-syslog.txt launch.txt launch2.txt \
+                   flutter-ios-build.log go_backend/gomobile-ios-build.log; do
+            [ -f "$f" ] && cp "$f" "ci-evidence/emulator-ios/$f"
+          done
+          {
+            echo "# iOS simulator smoke — evidence"
+            echo "- run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- sha: ${GITHUB_SHA}"
+            echo "- device: iPhone simulator (macos-latest), debug simulator build"
+            echo
+            echo "## Phase log"
+            cat ios-smoke-status.txt 2>/dev/null || echo "(no status file)"
+            echo
+            echo "## Launch"
+            cat launch.txt 2>/dev/null || echo "(no launch output)"
+            echo
+            echo "## System log (tail)"
+            tail -n 80 ios-syslog.txt 2>/dev/null || echo "(no log)"
+          } > ci-evidence/emulator-ios/summary.md || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci-evidence || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "ci-evidence: ios simulator smoke (run ${GITHUB_RUN_ID})" || true
+          fi
+          i=0
+          while [ $i -lt 8 ]; do
+            i=$((i+1))
+            if ERR=$(git push origin "HEAD:${GITHUB_REF_NAME}" 2>&1); then exit 0; fi
+            git fetch origin "${GITHUB_REF_NAME}" || true
+            git rebase --autostash "origin/${GITHUB_REF_NAME}" || { git rebase --abort || true; }
+            sleep $((i * 3))
+          done
+          echo "::warning::failed to push evidence: $(printf '%s' "$ERR" | tail -n 3)"
