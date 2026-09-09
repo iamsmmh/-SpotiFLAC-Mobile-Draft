@@ -888,6 +888,7 @@ class PlaybackManager {
         ),
         replacement.id,
       );
+      _adoptReplacementId(media.id, replacement.id);
       _backend.noteSourceExpiry(replacement.id, fresh.source.expiresAt);
       await _backend.replaceCurrent(replacement, resumeAt: resumeAt);
       _logPlayback.i('Recovered "${item.track.name}" with a fresh stream URL');
@@ -932,6 +933,11 @@ class MusicPlayerPlaybackBackend implements PlaybackBackend {
       StreamController<PlaybackSourceState>.broadcast();
   late final StreamController<PlaybackProgress> _ticks =
       StreamController<PlaybackProgress>.broadcast();
+  // Dart >= 3.12: controller.stream returns a new wrapper on every access,
+  // so the shared instances are cached once to keep [state]/[progress] the
+  // identical object for every consumer of this backend.
+  late final Stream<PlaybackSourceState> _stateStream = _states.stream;
+  late final Stream<PlaybackProgress> _progressStream = _ticks.stream;
 
   PlaybackSourceState _latest = PlaybackSourceState.idle;
   Duration _position = Duration.zero;
@@ -952,10 +958,10 @@ class MusicPlayerPlaybackBackend implements PlaybackBackend {
   }
 
   @override
-  Stream<PlaybackSourceState> get state => _states.stream;
+  Stream<PlaybackSourceState> get state => _stateStream;
 
   @override
-  Stream<PlaybackProgress> get progress => _ticks.stream;
+  Stream<PlaybackProgress> get progress => _progressStream;
 
   @override
   Duration get currentPosition => _position;

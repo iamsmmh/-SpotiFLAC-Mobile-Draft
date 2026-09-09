@@ -24,6 +24,10 @@ class _FakeBackend implements PlaybackBackend {
       StreamController<PlaybackSourceState>.broadcast();
   final StreamController<PlaybackProgress> ticks =
       StreamController<PlaybackProgress>.broadcast();
+  // Dart >= 3.12: controller.stream returns a new wrapper on every access;
+  // cache one instance so the shared-stream identity contract is testable.
+  late final Stream<PlaybackSourceState> _state = states.stream;
+  late final Stream<PlaybackProgress> _progress = ticks.stream;
 
   bool ready = false;
   bool disposed = false;
@@ -50,10 +54,10 @@ class _FakeBackend implements PlaybackBackend {
   }
 
   @override
-  Stream<PlaybackSourceState> get state => states.stream;
+  Stream<PlaybackSourceState> get state => _state;
 
   @override
-  Stream<PlaybackProgress> get progress => ticks.stream;
+  Stream<PlaybackProgress> get progress => _progress;
 
   @override
   Duration get currentPosition => position;

@@ -25,8 +25,13 @@ final RegExp _lrcDisplayBackgroundLinePattern = RegExp(
   caseSensitive: false,
 );
 
-bool isInstrumentalLyricsMarker(String lyrics) =>
-    lyrics.trim().toLowerCase() == '[instrumental:true]';
+/// Recognizes the instrumental placeholders providers and embedded tags use
+/// instead of real lyrics: the `[Instrumental:TRUE]` metadata tag and the
+/// bare `[Instrumental]` LRC marker.
+bool isInstrumentalLyricsMarker(String lyrics) {
+  final normalized = lyrics.trim().toLowerCase();
+  return normalized == '[instrumental:true]' || normalized == '[instrumental]';
+}
 
 /// Converts embedded or fetched LRC into text suitable for the metadata UI.
 /// Header-only payloads intentionally produce an empty string.

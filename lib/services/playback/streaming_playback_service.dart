@@ -148,6 +148,14 @@ class StreamUrlResolver {
     }
   }
 
+  /// Expiry check against the resolver's clock. [StreamSource.isExpired]
+  /// reads the wall clock, which would break every resolution decision made
+  /// under an injected [clock] (tests, backdated URLs).
+  bool _isExpiredAt(StreamSource source, DateTime now) {
+    final expiry = source.expiresAt;
+    return expiry != null && !now.isBefore(expiry);
+  }
+
   /// Resolves [track] to a validated stream URL.
   ///
   /// Serves a fresh cache hit without network; regenerates URLs that are
@@ -243,9 +251,9 @@ class StreamUrlResolver {
       ),
     );
     for (final candidate in ranked) {
-      if (candidate.isExpired) continue;
+      if (_isExpiredAt(candidate, now)) continue;
       final narrowed = await _narrow(candidate);
-      if (narrowed.isExpired) continue;
+      if (_isExpiredAt(narrowed, now)) continue;
       if (await validate(narrowed)) {
         final resolved = ResolvedStreamUrl(
           trackId: track.id,
