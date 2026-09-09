@@ -1,6 +1,6 @@
 # Flutter analyze & test — evidence
-- run: https://github.com/iamsmmh/-SpotiFLAC-Mobile-Draft/actions/runs/34410494710
-- sha: 7e59cb0a34533d6b97dd86c2540442471214d9dd
+- run: https://github.com/iamsmmh/-SpotiFLAC-Mobile-Draft/actions/runs/34413232146
+- sha: e15d618e872f20df5bae247147bb0752d9f24e4e
 
 ## Steps
 - success: Set up job
@@ -35,6 +35,7 @@ Downloading packages...
   dynamic_color 1.9.0 (2.1.0 available)
   flutter_riverpod 3.3.2 (3.4.3 available)
   flutter_secure_storage_darwin 0.4.0 (0.4.1 available)
+  flutter_secure_storage_platform_interface 2.0.3 (2.1.0 available)
   go_router 17.5.0 (18.0.1 available)
   hooks 2.0.2 (2.2.0 available)
   intl 0.20.2 (0.20.3 available)
@@ -57,10 +58,10 @@ Downloading packages...
   xml 6.6.1 (7.0.1 available)
   youtube_explode_dart 2.5.3 (3.1.0 available)
 Got dependencies!
-38 packages have newer versions incompatible with dependency constraints.
+39 packages have newer versions incompatible with dependency constraints.
 Try `flutter pub outdated` for more information.
 Analyzing -SpotiFLAC-Mobile-Draft...                            
-No issues found! (ran in 51.8s)
+No issues found! (ran in 50.2s)
 
 ## flutter test — summary
 🎉 1604 tests passed.
